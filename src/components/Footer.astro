@@ -1,0 +1,41 @@
+---
+import ExternalLink from "./ExternalLink.astro";
+import Icon from "./Icon.astro";
+
+export interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<footer class={className}>
+  <span>LuaLS</span>
+  <div class="socials">
+    <ExternalLink
+      url="https://github.com/luals/lua-language-server"
+      noIcon={true}
+    >
+      <Icon name="github" group="brands" />
+    </ExternalLink>
+  </div>
+</footer>
+
+<style lang="scss">
+  footer {
+    background-color: #020910;
+    padding: 1em 1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .socials {
+      font-size: 2em;
+      color: white;
+
+      a {
+        color: inherit;
+      }
+    }
+  }
+</style>

@@ -1,0 +1,69 @@
+---
+import ExternalLink from "./ExternalLink.astro";
+import Icon from "./Icon.astro";
+import Tooltip from "./Tooltip.astro";
+export interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<header class={className}>
+  <nav>
+    <a href="/" class="home">
+      <Tooltip text="Home">
+        <Icon name="house" group="solid" />
+      </Tooltip>
+    </a>
+    <div>
+      <a href="/wiki">
+        <Tooltip text="Wiki">
+          <Icon name="book" group="solid" />
+        </Tooltip>
+      </a>
+    </div>
+    <span class="github">
+      <ExternalLink url="https://github.com/LuaLS/lua-language-server">
+        <Icon name="github" group="brands" />
+      </ExternalLink>
+    </span>
+  </nav>
+</header>
+
+<style lang="scss">
+  header {
+    position: sticky;
+    top: 0px;
+    font-size: 1.5em;
+    background-color: #0f2e4b;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    box-sizing: border-box;
+
+    nav {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+
+      & > div {
+        width: 100%;
+        display: inline-flex;
+        justify-content: center;
+        margin: auto;
+      }
+
+      a,
+      a.external {
+        color: white;
+        text-decoration: none;
+      }
+
+      .github {
+        width: fit-content;
+        margin: 0px 2rem 0px auto;
+        font-size: 1.2em;
+      }
+    }
+  }
+</style>

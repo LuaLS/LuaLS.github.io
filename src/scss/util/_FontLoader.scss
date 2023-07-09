@@ -1,0 +1,69 @@
+@use "sass:map";
+@use "sass:string";
+
+$weightNames: (
+  "100": "Thin",
+  "200": "ExtraLight",
+  "300": "Light",
+  "400": "Regular",
+  "500": "Medium",
+  "600": "SemiBold",
+  "700": "Bold",
+  "800": "ExtraBold",
+  "900": "Black",
+);
+
+@function removeSpaces($str) {
+  $i: string.index($str, " ");
+  @while $i != null {
+    $str: "#{string.slice($str, 1, $i - 1)}#{string.slice($str, $i + 1)}";
+    $i: string.index($str, " ");
+  }
+  @return $str;
+}
+
+@mixin loadFont(
+  $name,
+  $isVariable: false,
+  $weights: 100 900,
+  $hasItalics: false
+) {
+  $normalizedName: removeSpaces($name);
+  @if ($isVariable) {
+    @font-face {
+      font-family: $name;
+      font-weight: $weights;
+      src: url("/fonts/#{$normalizedName}/#{$normalizedName}-VariableFont_wght.ttf");
+    }
+
+    @if ($hasItalics) {
+      @font-face {
+        font-family: $name;
+        font-style: italic;
+        font-weight: $weights;
+        src: url("/fonts/#{$normalizedName}/#{$normalizedName}-Italic-VariableFont_wght.ttf");
+      }
+    }
+  } @else {
+    @each $weight in $weights {
+      $weightName: map.get($weightNames, #{$weight});
+      @font-face {
+        font-family: $name;
+        font-weight: $weight;
+        src: url("/fonts/#{$normalizedName}/#{$normalizedName}-#{$weightName}.ttf");
+      }
+    }
+
+    @if ($hasItalics) {
+      @each $weight in $weights {
+        $weightName: map.get($weightNames, #{$weight});
+        @font-face {
+          font-family: $name;
+          font-weight: $weight;
+          font-style: italic;
+          src: url("/fonts/#{$normalizedName}/#{$normalizedName}-#{$weightName}Italic.ttf");
+        }
+      }
+    }
+  }
+}

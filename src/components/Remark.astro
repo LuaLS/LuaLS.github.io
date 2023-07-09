@@ -1,0 +1,64 @@
+---
+import Icon from "./Icon.astro";
+
+export interface Props {
+  type: "note" | "warning" | "important";
+}
+
+const { type } = Astro.props;
+
+const types = {
+  note: { displayName: "Note", icon: "note-sticky" },
+  warning: { displayName: "Warning", icon: "warning" },
+  important: { displayName: "Important", icon: "exclamation" },
+};
+---
+
+<div class={type + " remark"}>
+  <div>
+    <Icon name={types[type].icon} group="solid" />
+    {types[type].displayName}
+  </div>
+  <slot />
+</div>
+
+<style lang="scss">
+  .remark {
+    padding: 0.6em;
+    border-radius: 0.4em;
+    border-width: 0.3em;
+    border-style: outset;
+    margin: 0.5em 3em;
+    box-shadow: var(--remark-color) 1px 1px 15px 0px;
+    border-color: var(--remark-color);
+    background-color: color-mix(in srgb, var(--remark-color), #000000 50%);
+
+    &.note {
+      --remark-color: #0099ff;
+    }
+
+    &.warning {
+      --remark-color: #ffa600;
+    }
+
+    &.important {
+      --remark-color: #e60000;
+    }
+
+    & > div {
+      font-size: 1.1em;
+      display: flex;
+      gap: 0.5em;
+      align-items: center;
+      font-weight: bold;
+    }
+
+    i {
+      font-size: 1.3em;
+    }
+
+    & > p {
+      margin: 0.5em auto 0.2em auto;
+    }
+  }
+</style>

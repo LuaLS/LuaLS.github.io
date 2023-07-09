@@ -1,15 +1,26 @@
 {
-  "name": "",
+  "name": "luals-website",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "start": "astro dev",
+    "dev-host": "astro dev --host",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^2.7.2"
+    "@astrojs/mdx": "^0.19.7",
+    "@fortawesome/fontawesome-free": "^6.4.0",
+    "astro": "^2.7.3",
+    "autoprefixer": "^10.4.14",
+    "axios": "^1.4.0",
+    "highlight.js": "^11.8.0",
+    "jsdom": "^22.1.0",
+    "sass": "^1.63.6",
+    "tippy.js": "^6.3.7"
+  },
+  "devDependencies": {
+    "@types/jsdom": "^21.1.1"
   }
 }

@@ -1,0 +1,21 @@
+---
+const { group, name, class: className, color } = Astro.props;
+
+const displayName = name.replaceAll("-", " ");
+
+const styles = color ? `color: ${color}` : null;
+
+export interface Props {
+  group: "brands" | "solid";
+  name: string;
+  class?: string;
+  color?: string;
+}
+---
+
+<i
+  class:list={[`fa-${group}`, `fa-${name}`, className]}
+  aria-label={displayName}
+  style={styles}
+>
+</i>

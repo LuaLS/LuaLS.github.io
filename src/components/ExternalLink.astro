@@ -1,0 +1,59 @@
+---
+import Tooltip from "./Tooltip.astro";
+
+const {
+  url,
+  newTab = true,
+  class: className,
+  refer = false,
+  noIcon = false,
+} = Astro.props;
+
+const hostname = new URL(url).hostname;
+
+let child = await Astro.slots.render("default");
+child = child.trim();
+
+export interface Props {
+  url: string;
+  newTab?: boolean;
+  refer?: boolean;
+  noIcon?: boolean;
+  class?: string;
+}
+
+const classes = [className, "external"];
+if (noIcon) {
+  classes.push("no-icon");
+}
+
+const relationships = ["noopener", "nofollow"];
+if (!refer) {
+  relationships.push("noreferrer");
+}
+---
+
+<Tooltip text={hostname}>
+  <a
+    href={url}
+    target={newTab ? "_blank" : null}
+    rel={relationships.join(" ")}
+    class={classes.join(" ")} set:html={child}></a
+  >
+</Tooltip>
+
+<style lang="scss">
+  a.external {
+    color: var(--link-color);
+    font-weight: 500;
+    white-space: normal;
+  }
+  a.external:not(.no-icon)::after {
+    content: "\f08e";
+    vertical-align: top;
+    font-family: "Font Awesome 6 Free";
+    font-size: 0.5em;
+    display: inline-block;
+    padding-left: 0.2em;
+  }
+</style>

@@ -1,0 +1,126 @@
+---
+import hljs from "highlight.js";
+import jsdom from "jsdom";
+import Icon from "./Icon.astro";
+import Tooltip from "./Tooltip.astro";
+
+export interface Props {
+  language: string;
+}
+
+const { language } = Astro.props;
+
+// Rendering the slot gives us an HTML string, but it still contains the <pre>.
+let code = await Astro.slots.render("default");
+
+// Using jsdom, we can pass everything escaped properly in a <pre> element and
+// then extract just the code as text.
+const DOM = new jsdom.JSDOM(code);
+const html = DOM.window.document.body.children[0].textContent;
+
+if (!html) {
+  throw new Error("Failed to parse code!");
+}
+
+code = hljs.highlight(html, { language }).value;
+---
+
+<div class="code-block">
+  <span class="language">{language}</span>
+  <button class="copy">
+    <Tooltip text="Copy to Clipboard">
+      <Icon name="copy" group="solid" />
+      <Icon name="check" group="solid" />
+    </Tooltip>
+  </button>
+  <pre><code class="hljs" class={`language-${language}`} set:html={code} /></pre>
+</div>
+
+<script>
+  const copyButtons = document.querySelectorAll("div.code-block button.copy");
+
+  for (const button of copyButtons) {
+    button.addEventListener("click", async () => {
+      const codeElement = button.parentElement?.querySelector("pre > code");
+      const code = codeElement?.textContent;
+
+      if (!code) {
+        throw new Error("Failed to copy code to clipboard!");
+      }
+
+      try {
+        await navigator.clipboard.writeText(code);
+        button.classList.add("success");
+        setTimeout(() => button.classList.remove("success"), 1000);
+      } catch (e) {
+        console.error(e);
+      }
+    });
+  }
+</script>
+
+<style lang="scss">
+  div.code-block {
+    position: relative;
+    margin: 0.5em auto;
+    text-align: left;
+    max-height: inherit;
+
+    span.language {
+      font-size: 0.8em;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      padding: 0px 0.5em;
+      background-color: #222233;
+      border-radius: 0.3em 0px 0.3em 0px;
+    }
+
+    button.copy {
+      font-size: 1.2em;
+      background-color: #222233;
+      color: white;
+      border: none;
+      border-radius: 0.3em;
+      position: absolute;
+      top: 0.3em;
+      right: 0.3em;
+      width: 1.5em;
+      height: 1.5em;
+      text-align: center;
+      opacity: 0;
+      transition: opacity ease-in-out 0.3s;
+
+      i.fa-check {
+        display: none;
+      }
+
+      &.success {
+        i.fa-copy {
+          display: none;
+        }
+        i.fa-check {
+          display: block;
+        }
+      }
+    }
+
+    &:hover {
+      button.copy {
+        opacity: 1;
+      }
+    }
+
+    pre {
+      border-radius: 0.3em;
+      overflow-y: auto;
+      max-height: inherit;
+    }
+    pre > code.hljs {
+      font-family: "Fira Code", "Source Code Pro", "Consolas", monospace;
+      padding: 1.3em 0.5em 0.5em 0.5em;
+      border-radius: 0.3em;
+      tab-size: 4;
+    }
+  }
+</style>

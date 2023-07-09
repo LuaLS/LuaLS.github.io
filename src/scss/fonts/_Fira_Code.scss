@@ -1,0 +1,3 @@
+@use "../util/FontLoader" as *;
+
+@include loadFont("Fira Code", true);

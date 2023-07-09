@@ -1,81 +1,601 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Card from '../components/Card.astro';
+import ScrollSnapLayout from "../layouts/ScrollSnapMain.astro";
+import ExternalLink from "../components/ExternalLink.astro";
+import Icon from "../components/Icon.astro";
+import CodeBlock from "../components/CodeBlock.astro";
+import Remark from "../components/Remark.astro";
+
+import "../scss/fonts/_Prompt.scss";
 ---
 
-<Layout title="Welcome to Astro.">
-	<main>
-		<h1>Welcome to <span class="text-gradient">Astro</span></h1>
-		<p class="instructions">
-			To get started, open the directory <code>src/pages</code> in your project.<br />
-			<strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
-		</p>
-		<ul role="list" class="link-card-grid">
-			<Card
-				href="https://docs.astro.build/"
-				title="Documentation"
-				body="Learn how Astro works and explore the official API docs."
-			/>
-			<Card
-				href="https://astro.build/integrations/"
-				title="Integrations"
-				body="Supercharge your project with new frameworks and libraries."
-			/>
-			<Card
-				href="https://astro.build/themes/"
-				title="Themes"
-				body="Explore a galaxy of community-built starter themes."
-			/>
-			<Card
-				href="https://astro.build/chat/"
-				title="Community"
-				body="Come say hi to our amazing Discord community. ❤️"
-			/>
-		</ul>
-	</main>
-</Layout>
+<ScrollSnapLayout title="Lua Language Server">
+  <main>
+    <section id="intro">
+      <h1>Lua Language Server</h1>
+      <p>
+        The Lua Language Server uses the <ExternalLink
+          url="https://microsoft.github.io/language-server-protocol/"
+        >
+          Language Server Protocol
+        </ExternalLink> to provide various features for <ExternalLink
+          url="https://www.lua.org/"
+        >
+          Lua
+        </ExternalLink> in your <ExternalLink
+          url="https://microsoft.github.io/language-server-protocol/implementors/tools/"
+        >
+          favourite code editors
+        </ExternalLink>, making development easier and faster!
+      </p>
 
-<style>
-	main {
-		margin: auto;
-		padding: 1.5rem;
-		max-width: 60ch;
-	}
-	h1 {
-		font-size: 3rem;
-		font-weight: 800;
-		margin: 0;
-	}
-	.text-gradient {
-		background-image: var(--accent-gradient);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-size: 400%;
-		background-position: 0%;
-	}
-	.instructions {
-		line-height: 1.6;
-		margin: 1rem 0;
-		border: 1px solid rgba(var(--accent), 25%);
-		background-color: white;
-		padding: 1rem;
-		border-radius: 0.4rem;
-	}
-	.instructions code {
-		font-size: 0.875em;
-		font-weight: bold;
-		background: rgba(var(--accent), 12%);
-		color: rgb(var(--accent));
-		border-radius: 4px;
-		padding: 0.3em 0.45em;
-	}
-	.instructions strong {
-		color: rgb(var(--accent));
-	}
-	.link-card-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
-		gap: 1rem;
-		padding: 0;
-	}
+      <div class="grid">
+        <div>
+          <Icon name="at" group="solid" />
+          <h3>Powerful Annotations</h3>
+          <p>
+            Over 20 annotations to mark parameters, returns, classes, and more!
+          </p>
+        </div>
+        <div>
+          <Icon name="bolt" group="solid" />
+          <h3>Dynamic Type System</h3>
+          <p>
+            A type system fit for Lua that helps improve safety and catch type
+            errors in development.
+          </p>
+        </div>
+        <div>
+          <Icon name="triangle-exclamation" group="solid" />
+          <h3>Diagnostics</h3>
+          <p>
+            Provides warnings and errors for syntax mistakes, type errors, and
+            more.
+          </p>
+        </div>
+        <div>
+          <Icon name="comment-dots" group="solid" />
+          <h3>Autocompletion</h3>
+          <p>Offers completion options while you program to speed things up.</p>
+        </div>
+        <div>
+          <Icon name="message" group="solid" />
+          <h3>Hover for Details</h3>
+          <p>
+            Hover signatures in your code to receive detailed information about
+            them.
+          </p>
+        </div>
+        <div>
+          <Icon name="language" group="solid" />
+          <h3>Localization Support</h3>
+          <p>Currently available in English, Chinese, Taiwanese, Portugese</p>
+        </div>
+        <div>
+          <Icon name="file-code" group="solid" />
+          <h3>Supports Definition Files</h3>
+          <p>
+            Make your own or use one of the many community-provided defintion
+            files for popular libraries and APIs.
+          </p>
+        </div>
+        <div>
+          <Icon name="paintbrush" group="solid" />
+          <h3>Built-in Formatting</h3>
+          <p>
+            Provides a built-in formatter for ensuring a consistent code-style
+            across your workspace.
+          </p>
+        </div>
+        <div>
+          <Icon name="plug" group="solid" />
+          <h3>Custom Plugins</h3>
+          <p>Use plugins to add custom functionality to the language server.</p>
+        </div>
+        <div>
+          <Icon name="book-open-reader" group="solid" />
+          <h3>Documentation Generation</h3>
+          <p>
+            Generate documentation in Markdown and JSON formats from your
+            codebase.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="demo" class="simple">
+      <p>It's time that Lua gets proper support in your editor!</p>
+      <img
+        class="demo"
+        src="/images/vscode-demo.gif"
+        alt="Demo of the language server in use in Visual Studio Code"
+      />
+      <div class="demo">
+        <CodeBlock language="lua">
+          <pre>---@class Vehicle
+---@field speed number
+---@field weight number
+---@field passengers Player[]
+---@field health number
+local Vehicle = &#123;&#125;
+
+---@class Player
+---@field id integer
+---@field name string
+---@field health number
+local Player = &#123;&#125;</pre>
+        </CodeBlock>
+      </div>
+    </section>
+
+    <section id="install">
+      <h2>Install for...</h2>
+      <div class="tabs">
+        <button value="vscode-install" class="vscode active"
+          ><img src="/images/vscode.svg" alt="Visual Studio Code" /></button
+        >
+        <button value="neovim-install" class="neovim"
+          ><img src="/images/neovim.svg" alt="Neovim" /></button
+        >
+        <button value="other-install" class="other"
+          ><Icon name="question" group="solid" /></button
+        >
+      </div>
+
+      <div class="tab-content">
+        <div id="vscode-install" class="active">
+          <h3>Visual Studio Code</h3>
+          <p>
+            Install the <ExternalLink
+              url="https://marketplace.visualstudio.com/items?itemName=sumneko.lua"
+            >
+              sumneko.lua
+            </ExternalLink> extension to get up and running as fast as possible!
+          </p>
+          <div class="instructions">
+            <ol>
+              <li>Search for "Lua" by sumneko in the extension marketplace.</li>
+              <li>Download and install the extension.</li>
+              <li>That's it! It's that easy! Happy Coding!</li>
+            </ol>
+          </div>
+        </div>
+        <div id="neovim-install">
+          <h3>Neovim</h3>
+          <div class="instructions">
+            <ol>
+              <li>
+                Install lua-language-server
+                <ol type="A">
+                  <li>
+                    From package manager
+                    <ul>
+                      <li>
+                        Scoop: <code>scoop install lua-language-server</code>
+                      </li>
+                      <li>
+                        Homebrew: <code>brew install lua-language-server</code>
+                      </li>
+                      <li>
+                        Macports: <code
+                          >sudo port install lua-language-server</code
+                        >
+                      </li>
+                    </ul>
+                    <li>
+                      From <ExternalLink
+                        url="https://github.com/LuaLS/lua-language-server/releases/latest"
+                      >
+                        latest release
+                      </ExternalLink>
+                    </li>
+                    <li>
+                      <a href="/wiki/build" target="_blank"
+                        >Build from scratch</a
+                      >
+                    </li>
+                  </li>
+                </ol>
+              </li>
+              <li>
+                Ensure that the <code>lua-language-server</code> is executable from
+                the command line. It may need to be added to <code>$PATH</code>.
+              </li>
+              <li>
+                In your Neovim configuration file, add the following:
+                <!-- prettier-ignore -->
+                <CodeBlock language="lua"><pre>require'lspconfig'.lua_ls.setup&#123;&#125;</pre></CodeBlock>
+              </li>
+              <li>
+                See the <ExternalLink
+                  url="https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#lua_ls"
+                >
+                  Neovim documentation for more
+                </ExternalLink>
+              </li>
+            </ol>
+          </div>
+        </div>
+        <div id="other-install">
+          <h3>Other</h3>
+          <p>
+            The language server can also just be run from the command line,
+            allowing it to be used wherever the <ExternalLink
+              url="https://microsoft.github.io/language-server-protocol/"
+            >
+              Language Server Protocol
+            </ExternalLink> is supported!
+          </p>
+          <div class="instructions">
+            <ol>
+              <li>
+                Install lua-language-server
+                <ol type="A">
+                  <li>
+                    From package manager
+                    <ul>
+                      <li>
+                        Scoop: <code>scoop install lua-language-server</code>
+                      </li>
+                      <li>
+                        Homebrew: <code>brew install lua-language-server</code>
+                      </li>
+                      <li>
+                        Macports: <code
+                          >sudo port install lua-language-server</code
+                        >
+                      </li>
+                    </ul>
+                    <li>
+                      From <ExternalLink
+                        url="https://github.com/LuaLS/lua-language-server/releases/latest"
+                      >
+                        latest release
+                      </ExternalLink>
+                    </li>
+                    <li>
+                      <a href="/wiki/build" target="_blank"
+                        >Build from scratch</a
+                      >
+                    </li>
+                  </li>
+                </ol>
+              </li>
+              <li>
+                Run <code>./bin/lua-language-server</code> and check out the <a
+                  href="/wiki/arguments">supported arguments</a
+                >.
+              </li>
+            </ol>
+          </div>
+          <Remark type="note">
+            <p>
+              If you plan to use a symbolic link to point to the language
+              server, you will want to instead use a wrapper script like the one
+              below. This is required because the language server expects to
+              find files in the current working directory.
+            </p>
+            <CodeBlock language="bash">
+              <pre>#!/bin/bash
+exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot;</pre>
+            </CodeBlock>
+          </Remark>
+        </div>
+      </div>
+    </section>
+  </main>
+</ScrollSnapLayout>
+
+<script>
+  // Swap active tab on hover of install method
+  const installButtons =
+    document.querySelectorAll<HTMLButtonElement>(".tabs > button");
+  const tabs: {
+    [key: string]: { button: HTMLButtonElement; content: HTMLDivElement };
+  } = {};
+
+  const setTabActive = (tab: string) => {
+    Object.values(tabs).forEach((tab) => {
+      tab.button.classList.remove("active");
+      tab.content.classList.remove("active");
+    });
+    tabs[tab].button.classList.add("active");
+    tabs[tab].content.classList.add("active");
+  };
+
+  for (const button of installButtons) {
+    const tab = document.querySelector<HTMLDivElement>(
+      `#install .tab-content #${button.value}`
+    );
+
+    if (!tab) {
+      throw new Error(`Could not find tab: ${button.value}`);
+    }
+
+    tabs[button.value] = { button, content: tab };
+
+    button.addEventListener("mouseover", () => {
+      setTabActive(button.value);
+    });
+
+    button.addEventListener("click", () => {
+      window.location.hash = `#${button.value}`;
+      tabs[button.value].content?.scrollIntoView();
+    });
+  }
+
+  // If URL is targeting a specific install method, set it as active and scroll to it.
+  const target = window.location.hash;
+  if (target) {
+    const tabName = target.replace("#", "");
+    setTabActive(tabName);
+    tabs[tabName].content?.scrollIntoView();
+  }
+</script>
+
+<script>
+  // When an install step is clicked on, it is marked as completed
+  const listItems = document.querySelectorAll<HTMLDataListElement>(
+    "section#install .instructions ol li"
+  );
+
+  for (const item of listItems) {
+    const fontSize = parseFloat(
+      window.getComputedStyle(item, null).getPropertyValue("font-size")
+    );
+    const size = fontSize * 2;
+
+    item.addEventListener("click", (e) => {
+      if (e.offsetX < size) {
+        item.classList.toggle("complete");
+      }
+    });
+  }
+</script>
+
+<style lang="scss">
+  main {
+    max-height: 100vh;
+    height: 100%;
+    scroll-snap-type: y mandatory;
+    overflow-y: scroll;
+  }
+
+  section {
+    scroll-snap-align: start;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 4em 1em 1em 1em;
+
+    &:nth-of-type(2n) {
+      background-color: #0c2e4d;
+    }
+  }
+
+  section.simple {
+    p {
+      font-size: 3.5em;
+      font-family: "Prompt";
+      font-weight: 700;
+      line-height: 1.1em;
+      margin: 0.5em auto 0em auto;
+      width: fit-content;
+      text-align: center;
+    }
+  }
+
+  section#intro {
+    h1 {
+      margin: 0px;
+      padding-bottom: 1rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(24em, 1fr));
+      width: 100%;
+      margin: 0.5rem;
+      justify-items: stretch;
+      overflow-y: auto;
+      max-height: 100%;
+
+      & > div {
+        --glow-color: #00b3ff;
+        text-align: center;
+        padding: 1em 0.5em;
+        border-radius: 1em;
+        border: var(--glow-color) solid 0.2em;
+        box-shadow: var(--glow-color) 0px 0px 0.3em 0.1em,
+          var(--glow-color) 0px 0px 0.3em 0.1em inset;
+        box-sizing: border-box;
+        margin: 0.5em;
+
+        i {
+          display: block;
+          font-size: 2em;
+          color: #ffffff;
+        }
+
+        h3 {
+          font-size: 1.4em;
+          margin: 0.2em auto;
+        }
+        p {
+          margin: 0px;
+        }
+      }
+    }
+  }
+
+  section#demo {
+    & > img.demo {
+      box-shadow: #00b3ff 0px 0px 20px 5px;
+      display: block;
+      height: auto;
+      width: 90%;
+      margin: 5em auto;
+      border-radius: 0.5em;
+    }
+
+    & > div.demo {
+      display: none;
+      max-height: 100%;
+      margin: 5em auto;
+      width: 100%;
+    }
+  }
+
+  section#install {
+    background-color: #020910;
+
+    h2 {
+      margin: 0px;
+      margin-bottom: 0.5em;
+    }
+
+    .tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      justify-items: center;
+      position: relative;
+      width: 100%;
+      z-index: 1;
+
+      button {
+        background-color: white;
+        border: none;
+        border-radius: 99em;
+        padding: 0.3em;
+        aspect-ratio: 1;
+        font-size: 3em;
+        display: flex;
+        align-items: center;
+        gap: 0.3em;
+        position: relative;
+        box-shadow: var(--brand-primary) 0px 0px 0px 0px;
+        transition: box-shadow ease-in-out 0.5s;
+
+        &.vscode {
+          --brand-primary: #23a9f2;
+        }
+        &.neovim {
+          --brand-primary: #78e027;
+        }
+        &.other {
+          --brand-primary: #ff158e;
+        }
+
+        &:hover {
+          cursor: pointer;
+        }
+
+        &.active {
+          box-shadow: var(--brand-primary) 0px 0px 15px 3px;
+        }
+
+        img,
+        i {
+          height: 1em;
+          width: 1em;
+        }
+      }
+    }
+
+    .tab-content {
+      position: relative;
+      width: fit-content;
+      max-width: 100%;
+      margin: 0px auto auto auto;
+      overflow: auto auto;
+
+      & > div {
+        position: absolute;
+        left: -999vw;
+        top: -999vh;
+        opacity: 0;
+
+        h3 {
+          margin-bottom: auto;
+        }
+
+        & > p {
+          text-align: center;
+        }
+
+        &.active {
+          transition: opacity ease-in 0.5s;
+          opacity: 1;
+          position: static;
+          padding-bottom: 2em;
+        }
+
+        .instructions {
+          ol {
+            &[type="1"],
+            &:not([type]) {
+              counter-reset: item;
+              list-style: none;
+
+              & > li::before {
+                display: inline-block;
+                content: counter(item);
+                counter-increment: item;
+                font-size: 1.25em;
+                background-color: #ffffff;
+                color: #000000;
+                width: fit-content;
+                min-width: 1.5em;
+                text-align: center;
+                border-radius: 1em;
+                margin-right: 0.5em;
+                cursor: pointer;
+                transition: transform 0.2s ease-in-out;
+                transform: rotate(0deg);
+              }
+
+              & > li.complete::before {
+                content: "\f00c";
+                padding: 0.15em 0px;
+                font-family: "Font Awesome 6 Free";
+                transform: rotate(360deg);
+              }
+            }
+
+            &[type="A"] {
+              list-style-type: upper-alpha;
+            }
+
+            & > li {
+              margin: 1em auto;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @media screen and (orientation: portrait) {
+    section#demo {
+      & > img.demo {
+        display: none;
+      }
+
+      & > div.demo {
+        display: block;
+      }
+    }
+
+    section#intro .grid {
+      grid-template-columns: repeat(auto-fill, 1fr);
+    }
+  }
+
+  @media screen and (max-width: 1200px) {
+    section#intro .grid {
+      grid-template-columns: repeat(auto-fill, minmax(18em, 1fr));
+    }
+  }
 </style>
