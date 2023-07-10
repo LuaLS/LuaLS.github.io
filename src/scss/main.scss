@@ -1,6 +1,7 @@
 @use "variables";
 
 @use "fonts/Fira_Code";
+@use "fonts/Prompt";
 
 html,
 body {
@@ -28,6 +29,7 @@ h3,
 h4,
 h5,
 h6 {
+  font-family: "Prompt";
   text-align: center;
 }
 
@@ -59,12 +61,20 @@ pre {
   margin: 0px;
 }
 
-:not(pre) > code {
+:not(pre) > code,
+kbd {
   font-family: "Fira Code", "Source Code Pro", "Consolas", monospace;
   font-size: 0.8em;
-  background-color: #272733;
   display: inline-block;
   padding: 0.1em 0.3em;
   border-radius: 0.3em;
   vertical-align: middle;
+}
+
+:not(pre) > code {
+  background-color: #323237;
+}
+
+kbd {
+  background-color: #545454;
 }

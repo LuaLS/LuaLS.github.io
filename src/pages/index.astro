@@ -1,9 +1,9 @@
 ---
 import ScrollSnapLayout from "../layouts/ScrollSnapMain.astro";
-import ExternalLink from "../components/ExternalLink.astro";
-import Icon from "../components/Icon.astro";
-import CodeBlock from "../components/CodeBlock.astro";
-import Remark from "../components/Remark.astro";
+import ExternalLink from "../components/common/ExternalLink.astro";
+import Icon from "../components/common/Icon.astro";
+import CodeBlock from "../components/common/CodeBlock.astro";
+import Remark from "../components/common/Remark.astro";
 
 import "../scss/fonts/_Prompt.scss";
 ---
@@ -35,14 +35,14 @@ import "../scss/fonts/_Prompt.scss";
       <div class="grid">
         <div>
           <Icon name="at" group="solid" />
-          <h3>Powerful Annotations</h3>
+          <div>Powerful Annotations</div>
           <p>
             Over 20 annotations to mark parameters, returns, classes, and more!
           </p>
         </div>
         <div>
           <Icon name="bolt" group="solid" />
-          <h3>Dynamic Type System</h3>
+          <div>Dynamic Type System</div>
           <p>
             A type system fit for Lua that helps improve safety and catch type
             errors in development.
@@ -50,7 +50,7 @@ import "../scss/fonts/_Prompt.scss";
         </div>
         <div>
           <Icon name="triangle-exclamation" group="solid" />
-          <h3>Diagnostics</h3>
+          <div>Diagnostics</div>
           <p>
             Provides warnings and errors for syntax mistakes, type errors, and
             more.
@@ -58,12 +58,12 @@ import "../scss/fonts/_Prompt.scss";
         </div>
         <div>
           <Icon name="comment-dots" group="solid" />
-          <h3>Autocompletion</h3>
+          <div>Autocompletion</div>
           <p>Offers completion options while you program to speed things up.</p>
         </div>
         <div>
           <Icon name="message" group="solid" />
-          <h3>Hover for Details</h3>
+          <div>Hover for Details</div>
           <p>
             Hover signatures in your code to receive detailed information about
             them.
@@ -71,12 +71,12 @@ import "../scss/fonts/_Prompt.scss";
         </div>
         <div>
           <Icon name="language" group="solid" />
-          <h3>Localization Support</h3>
+          <div>Localization Support</div>
           <p>Currently available in English, Chinese, Taiwanese, Portugese</p>
         </div>
         <div>
           <Icon name="file-code" group="solid" />
-          <h3>Supports Definition Files</h3>
+          <div>Supports Definition Files</div>
           <p>
             Make your own or use one of the many community-provided defintion
             files for popular libraries and APIs.
@@ -84,7 +84,7 @@ import "../scss/fonts/_Prompt.scss";
         </div>
         <div>
           <Icon name="paintbrush" group="solid" />
-          <h3>Built-in Formatting</h3>
+          <div>Built-in Formatting</div>
           <p>
             Provides a built-in formatter for ensuring a consistent code-style
             across your workspace.
@@ -92,12 +92,12 @@ import "../scss/fonts/_Prompt.scss";
         </div>
         <div>
           <Icon name="plug" group="solid" />
-          <h3>Custom Plugins</h3>
+          <div>Custom Plugins</div>
           <p>Use plugins to add custom functionality to the language server.</p>
         </div>
         <div>
           <Icon name="book-open-reader" group="solid" />
-          <h3>Documentation Generation</h3>
+          <div>Documentation Generation</div>
           <p>
             Generate documentation in Markdown and JSON formats from your
             codebase.
@@ -108,11 +108,13 @@ import "../scss/fonts/_Prompt.scss";
 
     <section id="demo" class="simple">
       <p>It's time that Lua gets proper support in your editor!</p>
+      {/* Landscape only */}
       <img
         class="demo"
         src="/images/vscode-demo.gif"
         alt="Demo of the language server in use in Visual Studio Code"
       />
+      {/* Portrait only */}
       <div class="demo">
         <CodeBlock language="lua">
           <pre>---@class Vehicle
@@ -480,7 +482,8 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
           color: #ffffff;
         }
 
-        h3 {
+        & > div {
+          font-family: "Prompt";
           font-size: 1.4em;
           margin: 0.2em auto;
         }
