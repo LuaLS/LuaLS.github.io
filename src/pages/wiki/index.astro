@@ -18,6 +18,10 @@ const wikiArticles = await getCollection("wiki", ({ data }) => {
           Below are some good articles for those new to the Lua Language Server
         </p>
         <div class="grid">
+          <a href="/#install" target="_blank">
+            Install
+            <p>Installation instructions</p>
+          </a>
           {
             wikiArticles.map((article) => (
               <a href={`/wiki/${article.slug}`}>
