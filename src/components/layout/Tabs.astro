@@ -1,0 +1,207 @@
+---
+import Icon from "../common/Icon.astro";
+import jsdom from "jsdom";
+
+export interface Props {
+  buttons: { name: string; image?: string; icon?: string; accent?: string }[];
+  active: string;
+}
+
+const { buttons, active } = Astro.props;
+
+const slotNames = Object.keys(Astro.slots);
+
+const DOM = new jsdom.JSDOM();
+
+const rendered = await Promise.all(
+  slotNames.map((name) => Astro.slots.render(name))
+);
+
+const tabs = rendered.reduce((prev, cur) => {
+  prev.innerHTML += cur;
+  return prev;
+}, DOM.window.document.body);
+
+tabs.querySelector(`[data-tab="${active}"]`)?.classList.add("active");
+---
+
+<div class="tabs">
+  <div class="buttons">
+    {
+      buttons.map((button) => (
+        <button
+          value={button.name}
+          class={active === button.name ? "active" : ""}
+          style={`--accent-color: ${button.accent ?? "#ffffff"}`}
+        >
+          <span>
+            {button.image && <img src={button.image} />}
+            {button.icon && <Icon name={button.icon} group="solid" />}
+            {button.name}
+          </span>
+        </button>
+      ))
+    }
+  </div>
+  <div class="windows" set:html={tabs.innerHTML} />
+</div>
+
+<script>
+  const instances = document.querySelectorAll("div.tabs");
+
+  for (const instance of instances) {
+    const buttons = instance.querySelectorAll<HTMLButtonElement>(
+      "div.buttons > button"
+    );
+    const tabContainer = instance.querySelector<HTMLDivElement>("div.windows");
+
+    if (!tabContainer) {
+      console.error("Failed to get tabs for tabs component", instance);
+      break;
+    }
+
+    for (const button of buttons) {
+      const tab = tabContainer.querySelector(`[data-tab="${button.value}"]`);
+      if (!tab) {
+        console.error("Failed to get linked tab for a button", button);
+        break;
+      }
+
+      button.addEventListener("click", () => {
+        buttons.forEach((button) => button.classList.remove("active"));
+        Array.from(tabContainer.children).forEach((tab) =>
+          tab.classList.remove("active")
+        );
+        button.classList.add("active");
+        tab.classList.add("active");
+      });
+    }
+  }
+</script>
+
+<style lang="scss">
+  .tabs {
+    position: relative;
+    width: 100%;
+    margin: 0px auto auto auto;
+    border-radius: 0.5em;
+
+    & > div.buttons button,
+    div[data-client] {
+      transition: filter ease-in-out 0.5s;
+    }
+
+    & > div.buttons {
+      display: flex;
+      width: 100%;
+
+      button {
+        color: white;
+        background-color: #272727bb;
+        width: 100%;
+        border: none;
+        padding: 0.2em 1em;
+        border-left: #333333 solid 0.075rem;
+        border-right: #333333 solid 0.075rem;
+        position: relative;
+        z-index: 2;
+
+        &:first-of-type() {
+          border-top-left-radius: 0.5em;
+          border-left: none;
+        }
+
+        &:last-of-type() {
+          border-top-right-radius: 0.5em;
+          border-right: none;
+        }
+
+        &::after {
+          content: "";
+          display: block;
+          width: 100%;
+          height: 0px;
+          position: absolute;
+          bottom: 0px;
+          left: 0px;
+          z-index: 0;
+          transition: height ease-in-out 0.3s;
+          background-color: var(--accent-color);
+        }
+
+        & > span {
+          filter: saturate(0);
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5em;
+        }
+
+        &:hover {
+          cursor: pointer;
+
+          & > span {
+            filter: saturate(0.5);
+          }
+        }
+
+        &:global(.active) {
+          & > span {
+            filter: saturate(1);
+          }
+          &::after {
+            height: 0.1em;
+          }
+        }
+
+        img,
+        i {
+          width: 1em;
+          height: 1em;
+          text-align: center;
+        }
+        img {
+          font-size: 2em;
+        }
+        i {
+          font-size: 2.3em;
+        }
+      }
+    }
+
+    :global(div[data-tab]) {
+      background-color: #0000007d;
+      position: absolute;
+      left: -999vw;
+      top: -999vh;
+      opacity: 0;
+      padding: 0.5em;
+
+      :global(p) {
+        margin: 0px;
+      }
+
+      &:global(.active) {
+        position: static;
+        opacity: 1;
+      }
+
+      & > div.placeholder {
+        text-align: center;
+        font-size: 1.2em;
+
+        :global(i) {
+          font-size: 2em;
+        }
+
+        & > div {
+          font-size: 1.5em;
+          font-weight: 600;
+        }
+
+        & > p {
+          margin: 0.5em auto;
+        }
+      }
+    }
+  }
+</style>
