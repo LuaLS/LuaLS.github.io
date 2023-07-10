@@ -1,6 +1,8 @@
 ---
 import { getCollection } from "astro:content";
 
+import Layout from "../../layouts/Main.astro";
+
 export const getStaticPaths = async () => {
   const entries = await getCollection("wiki");
   return entries.map((entry) => {
@@ -12,7 +14,27 @@ const { entry } = Astro.props;
 const { Content } = await entry.render();
 ---
 
-<article>
-  <h1>{entry.data.title}</h1>
-  <Content />
-</article>
+<Layout title={entry.data.title}>
+  <main>
+    <article>
+      <div id="meta">
+        <h1>{entry.data.title}</h1>
+        <p>{entry.data.description}</p>
+      </div>
+      <Content />
+    </article>
+  </main>
+</Layout>
+
+<style lang="scss">
+  article {
+    margin: 0px 2em 5em 2em;
+  }
+  #meta h1 {
+    font-family: "Prompt";
+    margin-bottom: 0.5em;
+  }
+  #meta p {
+    text-align: center;
+  }
+</style>
