@@ -1,0 +1,234 @@
+---
+import { getCollection } from "astro:content";
+import Icon from "../../components/Icon.astro";
+import Layout from "../../layouts/Main.astro";
+
+const wikiArticles = await getCollection("wiki", ({ data }) => {
+  return data["getting-started"] === true;
+});
+---
+
+<Layout title="wiki">
+  <main>
+    <h1>Welcome to the wiki!</h1>
+    <div class="grid">
+      <section id="get-started">
+        <h2>Get Started</h2>
+        <p>
+          Below are some good articles for those new to the Lua Language Server
+        </p>
+        <div class="grid">
+          {
+            wikiArticles.map((article) => (
+              <a href={`/wiki/${article.slug}`}>
+                {article.data.title}
+                <p>{article.data.description}</p>
+              </a>
+            ))
+          }
+        </div>
+      </section>
+      <section id="contributors">
+        <h2>Top Contributors</h2>
+        <p>
+          Thank you to all contributors to the wiki! <Icon
+            name="heart"
+            group="solid"
+            color="red"
+          />
+        </p>
+        <div class="grid"></div>
+      </section>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  import axios from "axios";
+  import { Cache } from "../../services/Cache";
+  import tippy from "tippy.js";
+
+  type Contributor = {
+    login: string;
+    id: number;
+    avatar_url: string;
+    gravatar_id: string;
+    url: string;
+    html_url: string;
+    contributions: number;
+  };
+
+  const contributorContainer = document.querySelector(
+    "section#contributors > div.grid"
+  );
+
+  if (!contributorContainer) {
+    throw new Error("Failed to find contributor container!");
+  }
+
+  const endpoint =
+    "https://api.github.com/repos/LuaLS/lua-language-server/contributors?per_page=20";
+
+  const cache = new Cache<Contributor[]>(endpoint, 1200, {
+    includeSearch: false,
+  });
+
+  let contributors = cache.get();
+
+  if (!contributors) {
+    try {
+      const response = await axios.get(endpoint);
+      cache.store(response.data);
+      contributors = response.data;
+    } catch (e) {
+      console.error("Failed to get contributors!", e);
+    }
+  }
+
+  if (contributors) {
+    for (const contributor of contributors) {
+      const div = document.createElement("div");
+      div.classList.add("contributor");
+
+      let tier = "bronze";
+
+      if (contributor.contributions > 100) {
+        tier = "diamond";
+      } else if (contributor.contributions > 50) {
+        tier = "gold";
+      } else if (contributor.contributions > 25) {
+        tier = "silver";
+      }
+
+      if (tier) {
+        div.classList.add(tier);
+      }
+
+      const a = document.createElement("a");
+      a.href = contributor.html_url;
+      a.target = "_blank";
+      a.rel = "nofollow noopener";
+
+      const img = document.createElement("img");
+      img.src = contributor.avatar_url;
+
+      const name = document.createElement("div");
+      name.classList.add("username");
+      name.innerText = contributor.login;
+
+      a.append(img);
+      div.append(a);
+      div.append(name);
+
+      contributorContainer?.append(div);
+
+      tippy(name, {
+        content: contributor.login,
+        placement: "bottom",
+      });
+    }
+  }
+</script>
+
+<style lang="scss">
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1em;
+    margin: 1em;
+
+    & > section {
+      background-color: #163d62;
+      padding: 1em;
+      border-radius: 0.5em;
+
+      h2 {
+        margin: 0px;
+      }
+    }
+
+    p {
+      text-align: center;
+    }
+  }
+
+  #get-started {
+    .grid {
+      grid-template-columns: repeat(auto-fill, minmax(10em, 1fr));
+      text-align: center;
+      font-size: 1.25em;
+
+      a {
+        text-decoration: none;
+      }
+
+      p {
+        font-size: 0.7em;
+        margin: 0px auto;
+        color: white;
+        font-weight: normal;
+      }
+    }
+  }
+
+  #contributors {
+    div.grid {
+      grid-template-columns: repeat(auto-fill, minmax(6em, 1fr));
+      gap: 1em;
+      margin: 0px 1em;
+    }
+
+    :global(div.contributor) {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1;
+
+      :global(img) {
+        border-radius: 99em;
+        border-width: 0.2em;
+        border-style: solid;
+        box-sizing: border-box;
+        box-shadow: var(--tier-color) 0px 0px 10px 2px;
+        border-color: var(--tier-color);
+      }
+
+      &.diamond {
+        --tier-color: #00f7ff;
+      }
+      &.gold {
+        --tier-color: #ffe600;
+      }
+      &.silver {
+        --tier-color: #b6b6b6;
+      }
+      &.bronze {
+        --tier-color: #b46300;
+      }
+
+      :global(a),
+      :global(img) {
+        display: block;
+        width: 100%;
+        height: 100%;
+        border-radius: 99em;
+
+        &:focus {
+          outline: var(--tier-color) solid 0.3em;
+        }
+      }
+
+      :global(div.username) {
+        text-align: center;
+        width: 100%;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+    }
+  }
+
+  @media screen and (max-width: 1200px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

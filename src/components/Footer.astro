@@ -10,14 +10,47 @@ const { class: className } = Astro.props;
 ---
 
 <footer class={className}>
-  <span>LuaLS</span>
-  <div class="socials">
-    <ExternalLink
-      url="https://github.com/luals/lua-language-server"
-      noIcon={true}
-    >
-      <Icon name="github" group="brands" />
-    </ExternalLink>
+  <span class="wordmark">LuaLS</span>
+  <div>
+    <h2>Contribute</h2>
+    <ul>
+      <li>
+        <ExternalLink url="https://github.com/LuaLS/lua-language-server/issues">
+          Report issue
+        </ExternalLink>
+      </li>
+      <li>
+        <a href="/wiki/developing">Development guide</a>
+      </li>
+      <li>
+        <a href="/wiki/contributing#wiki">Wiki</a>
+      </li>
+      <li>
+        <a href="/wiki/translate">Translate</a>
+      </li>
+      <li>
+        <ExternalLink
+          url="https://github.com/LuaLS/lua-language-server/issues/484"
+        >
+          Sponsor <Icon name="heart" group="solid" color="red" />
+        </ExternalLink>
+      </li>
+    </ul>
+  </div>
+  <div>
+    <h2>Help</h2>
+    <ul>
+      <li><a href="/wiki/faq">FAQ</a></li>
+      <li>
+        <ExternalLink
+          url="https://github.com/LuaLS/lua-language-server/discussions"
+        >
+          Discuss
+        </ExternalLink>
+      </li>
+      <li></li>
+      <li></li>
+    </ul>
   </div>
 </footer>
 
@@ -25,17 +58,39 @@ const { class: className } = Astro.props;
   footer {
     background-color: #020910;
     padding: 1em 1em;
+    gap: 1em;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
+    text-align: center;
 
-    .socials {
-      font-size: 2em;
-      color: white;
+    .wordmark {
+      font-size: 1.5em;
+      font-weight: 500;
+    }
 
-      a {
-        color: inherit;
+    & > div {
+      margin-bottom: auto;
+
+      h2 {
+        color: #dddddd;
+        font-size: 1.2em;
+        margin: 0px auto 0.5em 0px;
       }
+
+      ul {
+        list-style: none;
+        color: #cccccc;
+        padding-left: 0px;
+        margin: 0.5em auto;
+      }
+    }
+
+    a,
+    a.external {
+      color: inherit;
+      text-decoration: none;
+      font-weight: normal;
     }
   }
 </style>

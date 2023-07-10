@@ -28,6 +28,10 @@ import "../scss/fonts/_Prompt.scss";
         </ExternalLink>, making development easier and faster!
       </p>
 
+      <div id="statistics">
+        <p><b class="installs">~1M</b> Unique Installs</p>
+      </div>
+
       <div class="grid">
         <div>
           <Icon name="at" group="solid" />
@@ -286,6 +290,47 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
 </ScrollSnapLayout>
 
 <script>
+  import axios from "axios";
+
+  const formatNumber = (num: number): string => {
+    const absNum = Math.abs(num);
+
+    if (absNum >= 1e6) {
+      return (num / 1e6).toFixed(1) + "M";
+    }
+
+    if (absNum >= 1e3) {
+      return (num / 1e3).toFixed(1) + "K";
+    }
+
+    return num.toString();
+  };
+
+  const rgx = /([\d,]+) installs/g;
+
+  const installElement = document.querySelector(".installs");
+
+  if (!installElement) {
+    throw new Error("Failed to get install count element!");
+  }
+
+  try {
+    const response = await axios.get(
+      "https://marketplace.visualstudio.com/items?itemName=sumneko.lua"
+    );
+    const result = rgx.exec(response.data);
+    if (!result) {
+      throw new Error("Failed to parse installs from marketplace!");
+    }
+    const installs = Number(result[1].replaceAll(",", ""));
+    installElement.textContent = formatNumber(installs);
+  } catch (e) {
+    console.error(e);
+    installElement.textContent = "~1M";
+  }
+</script>
+
+<script>
   // Swap active tab on hover of install method
   const installButtons =
     document.querySelectorAll<HTMLButtonElement>(".tabs > button");
@@ -327,8 +372,11 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
   const target = window.location.hash;
   if (target) {
     const tabName = target.replace("#", "");
-    setTabActive(tabName);
-    tabs[tabName].content?.scrollIntoView();
+    const tab = document.querySelector("`#install .tab-content #${tabName}");
+    if (tab) {
+      setTabActive(tabName);
+      tabs[tabName].content?.scrollIntoView();
+    }
   }
 </script>
 
@@ -368,7 +416,7 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
-    padding: 4em 1em 1em 1em;
+    padding: 1em;
 
     &:nth-of-type(2n) {
       background-color: #0c2e4d;
@@ -391,6 +439,19 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
     h1 {
       margin: 0px;
       padding-bottom: 1rem;
+    }
+
+    #statistics {
+      font-size: 1.3em;
+      p {
+        display: flex;
+        align-items: center;
+        gap: 0.25em;
+        margin: 0px;
+      }
+      .installs {
+        font-size: 2em;
+      }
     }
 
     .grid {
@@ -590,12 +651,6 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
 
     section#intro .grid {
       grid-template-columns: repeat(auto-fill, 1fr);
-    }
-  }
-
-  @media screen and (max-width: 1200px) {
-    section#intro .grid {
-      grid-template-columns: repeat(auto-fill, minmax(18em, 1fr));
     }
   }
 </style>
