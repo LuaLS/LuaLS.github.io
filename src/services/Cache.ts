@@ -17,7 +17,7 @@ export class Cache<T> {
   constructor(
     name: string,
     lifetime: number,
-    options: { includeSearch: boolean }
+    options: { includeSearch: boolean },
   ) {
     if (options.includeSearch || options.includeSearch === undefined) {
       const url = new URL(name);
