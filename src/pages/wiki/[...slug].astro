@@ -2,6 +2,8 @@
 import { getCollection } from "astro:content";
 
 import Layout from "../../layouts/Main.astro";
+import CodeBlock from "../../components/common/CodeBlock.astro";
+import WikiLink from "../../components/wiki/WikiLink.astro";
 
 export const getStaticPaths = async () => {
   const entries = await getCollection("wiki");
@@ -11,7 +13,8 @@ export const getStaticPaths = async () => {
 };
 
 const { entry } = Astro.props;
-const { Content } = await entry.render();
+
+const { Content, components } = await entry.render();
 ---
 
 <Layout title="Wiki">
@@ -21,7 +24,7 @@ const { Content } = await entry.render();
         <h1>{entry.data.title}</h1>
         <p>{entry.data.description}</p>
       </div>
-      <Content />
+      <Content components={{...components, pre: CodeBlock, a: WikiLink}}/>
     </article>
   </main>
 </Layout>
@@ -32,9 +35,10 @@ const { Content } = await entry.render();
   }
   #meta h1 {
     font-family: "Prompt";
-    margin-bottom: 0.5em;
+    margin: 0.25em auto 0.25em auto;
   }
   #meta p {
+    margin: 0px auto 3em auto;
     text-align: center;
   }
 </style>

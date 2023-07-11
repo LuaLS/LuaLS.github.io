@@ -1,0 +1,28 @@
+---
+import ExternalLink from "../common/ExternalLink.astro";
+
+const isLinkExternal = (url: string): boolean => {
+  if (url === "") return false;
+
+  if (!(url?.startsWith("/") || url?.startsWith("./"))) return true;
+
+  return false;
+};
+
+const { href } = Astro.props;
+
+const isExternal = href ? isLinkExternal(href) : false;
+
+export interface Props {
+  href?: string;
+}
+---
+
+{
+  // prettier-ignore
+  href && isExternal ? (
+    <ExternalLink url={href}><slot /></ExternalLink>
+  ) : (
+    <a href={href}><slot /></a>
+  )
+}
