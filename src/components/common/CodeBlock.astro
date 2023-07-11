@@ -4,11 +4,16 @@ import jsdom from "jsdom";
 import Icon from "../../../../wiki-articles/src/components/common/Icon.astro";
 import Tooltip from "../../../../wiki-articles/src/components/common/Tooltip.astro";
 
-export interface Props {
-  language?: string;
+const LANGUAGE_REGEX = /language-([^\s]+)/;
+
+const getLanguageFromCodeElement = (element: Element): string | undefined => {
+  const classes = element.classList.toString();
+  const result = LANGUAGE_REGEX.exec(classes);
+
+  if (!result) return undefined;
+  return result[1];
 }
 
-let language = Astro.props.language;
 
 // Rendering the slot gives us an HTML string, but it still contains the <pre>.
 let code = await Astro.slots.render("default");
@@ -16,11 +21,14 @@ let code = await Astro.slots.render("default");
 // Using jsdom, we can pass everything escaped properly in a <pre> element and
 // then extract just the code as text.
 const DOM = new jsdom.JSDOM(code);
-const html = DOM.window.document.body.children[0].textContent;
+const element = DOM.window.document.body.children[0];
+const html = element.textContent;
 
 if (!html) {
   throw new Error("Failed to parse code!");
 }
+
+let language = Astro.props.language ?? getLanguageFromCodeElement(element);
 
 if (language) {
   code = hljs.highlight(html, { language }).value;
@@ -28,6 +36,10 @@ if (language) {
   const result = hljs.highlightAuto(html);
   code = result.value;
   language = result.language;
+}
+
+export interface Props {
+  language?: string;
 }
 ---
 
