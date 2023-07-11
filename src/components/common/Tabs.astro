@@ -85,6 +85,7 @@ tabs.querySelector(`[data-tab="${active}"]`)?.classList.add("active");
     width: 100%;
     margin: 0px auto auto auto;
     border-radius: 0.5em;
+    overflow: hidden;
 
     & > div.buttons button,
     div[data-client] {
@@ -100,11 +101,12 @@ tabs.querySelector(`[data-tab="${active}"]`)?.classList.add("active");
         background-color: #272727bb;
         width: 100%;
         border: none;
-        padding: 0.2em 1em;
+        padding: 0.5em 1em;
         border-left: #333333 solid 0.075rem;
         border-right: #333333 solid 0.075rem;
         position: relative;
         z-index: 2;
+        font-size: 1em;
 
         &:first-of-type() {
           border-top-left-radius: 0.5em;
@@ -160,10 +162,10 @@ tabs.querySelector(`[data-tab="${active}"]`)?.classList.add("active");
           text-align: center;
         }
         img {
-          font-size: 2em;
+          font-size: 1.5em;
         }
         i {
-          font-size: 2.3em;
+          font-size: 1.8em;
         }
       }
     }
@@ -177,7 +179,7 @@ tabs.querySelector(`[data-tab="${active}"]`)?.classList.add("active");
       padding: 0.5em;
 
       :global(p) {
-        margin: 0px;
+        margin: 0.25em auto;
       }
 
       &:global(.active) {
