@@ -2,7 +2,7 @@
 import Icon from "./Icon.astro";
 
 export interface Props {
-  type: "note" | "warning" | "important";
+  type: "note" | "warning" | "important" | "WIP";
 }
 
 const { type } = Astro.props;
@@ -11,6 +11,7 @@ const types = {
   note: { displayName: "Note", icon: "note-sticky" },
   warning: { displayName: "Warning", icon: "warning" },
   important: { displayName: "Important", icon: "exclamation" },
+  WIP: { displayName: "WIP", icon: "pen-ruler" },
 };
 ---
 
@@ -43,6 +44,10 @@ const types = {
 
     &.important {
       --remark-color: #e60000;
+    }
+
+    &.WIP {
+      --remark-color: #ffa600;
     }
 
     & > div {

@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import Icon from "../../components/common/Icon.astro";
 import Layout from "../../layouts/Main.astro";
+import Remark from "../../components/common/Remark.astro";
 
 const wikiArticles = await getCollection("wiki", ({ data }) => {
   return data["getting-started"] === true;
@@ -10,6 +11,12 @@ const wikiArticles = await getCollection("wiki", ({ data }) => {
 
 <Layout title="Wiki">
   <main>
+    <Remark type="WIP">
+      <p>
+        The wiki is currently under construction and lots of info is still
+        missing.
+      </p>
+    </Remark>
     <h1>Welcome to the wiki!</h1>
     <div class="grid">
       <section id="get-started">
