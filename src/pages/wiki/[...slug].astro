@@ -24,14 +24,34 @@ const { Content, components } = await entry.render();
         <h1>{entry.data.title}</h1>
         <p>{entry.data.description}</p>
       </div>
-      <Content components={{...components, pre: CodeBlock, a: WikiLink}}/>
+      <Content components={{ ...components, pre: CodeBlock, a: WikiLink }} />
     </article>
   </main>
 </Layout>
 
 <style lang="scss">
+  :global(html) {
+    scroll-behavior: smooth;
+  }
+
   article {
     margin: 0px 2em 5em 2em;
+
+    :global(h1),
+    :global(h2) {
+      &::after {
+        content: " ";
+        display: block;
+        width: 100%;
+        border-bottom: 2px solid #ffffff;
+      }
+    }
+    :global(h2) {
+      &::after {
+        width: 80%;
+        border-bottom: 2px solid #ffffffba;
+      }
+    }
   }
   #meta h1 {
     font-family: "Prompt";
