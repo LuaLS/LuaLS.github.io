@@ -6,6 +6,7 @@ const wikiArticleCollection = defineCollection({
     title: z.string(),
     description: z.string(),
     ["getting-started"]: z.boolean().optional(),
+    incomplete: z.boolean().optional(),
   }),
 });
 

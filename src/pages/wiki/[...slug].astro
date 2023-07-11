@@ -4,6 +4,7 @@ import { getCollection } from "astro:content";
 import Layout from "../../layouts/Main.astro";
 import CodeBlock from "../../components/common/CodeBlock.astro";
 import WikiLink from "../../components/wiki/WikiLink.astro";
+import Remark from "../../components/common/Remark.astro";
 
 export const getStaticPaths = async () => {
   const entries = await getCollection("wiki");
@@ -19,6 +20,15 @@ const { Content, components } = await entry.render();
 
 <Layout title="Wiki">
   <main>
+    {
+      entry.data.incomplete && (
+        <Remark type="WIP">
+          <p>
+            This document is in an incomplete state and info may be missing.
+          </p>
+        </Remark>
+      )
+    }
     <article>
       <div id="meta">
         <h1>{entry.data.title}</h1>
@@ -43,6 +53,7 @@ const { Content, components } = await entry.render();
         content: " ";
         display: block;
         width: 100%;
+        margin: auto;
         border-bottom: 2px solid #ffffff;
       }
     }
