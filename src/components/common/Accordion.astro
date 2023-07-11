@@ -1,0 +1,54 @@
+---
+import Icon from "./Icon.astro";
+
+export interface Props {
+    open?: boolean;
+}
+
+const open = Astro.props.open ?? false;
+---
+
+<details open={open} class="accordion">
+    <summary
+        ><Icon name="chevron-right" group="solid" /><slot
+            name="summary"
+        /></summary
+    >
+    <div class="content">
+        <slot />
+    </div>
+</details>
+
+<style lang="scss">
+    details {
+        position: relative;
+        background-color: #1b1e1f;
+        border-radius: 0.5em;
+        margin: 0.5em auto;
+
+        summary {
+            list-style: none;
+            padding: 0.25em;
+            user-select: none;
+
+            i.fa-chevron-right {
+                margin: 0px 1em 0px 0.5em;
+                transform: rotate(0);
+                transition: transform ease-in-out 0.25s;
+            }
+        }
+
+        div.content {
+            background-color: #131516;
+            padding: 1em;
+        }
+
+        &[open] {
+            summary {
+                i.fa-chevron-right {
+                    transform: rotate(90deg);
+                }
+            }
+        }
+    }
+</style>
