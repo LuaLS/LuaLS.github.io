@@ -1,14 +1,14 @@
 ---
 import hljs from "highlight.js";
 import jsdom from "jsdom";
-import Icon from "./Icon.astro";
-import Tooltip from "./Tooltip.astro";
+import Icon from "../../../../wiki-articles/src/components/common/Icon.astro";
+import Tooltip from "../../../../wiki-articles/src/components/common/Tooltip.astro";
 
 export interface Props {
-  language: string;
+  language?: string;
 }
 
-const { language } = Astro.props;
+let language = Astro.props.language;
 
 // Rendering the slot gives us an HTML string, but it still contains the <pre>.
 let code = await Astro.slots.render("default");
@@ -22,7 +22,13 @@ if (!html) {
   throw new Error("Failed to parse code!");
 }
 
-code = hljs.highlight(html, { language }).value;
+if (language) {
+  code = hljs.highlight(html, { language }).value;
+} else {
+  const result = hljs.highlightAuto(html);
+  code = result.value;
+  language = result.language;
+}
 ---
 
 <div class="code-block">
