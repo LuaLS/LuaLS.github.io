@@ -35,6 +35,10 @@ const { class: className } = Astro.props;
 </header>
 
 <style lang="scss">
+  :global(html) {
+    scroll-padding-top: 3.5em;
+  }
+
   :global(main) {
     margin-top: 3.5em;
   }
@@ -47,6 +51,7 @@ const { class: className } = Astro.props;
     width: 100%;
     height: 2em;
     padding: 0.5rem 1rem;
+    z-index: 20;
 
     nav {
       width: 100%;
