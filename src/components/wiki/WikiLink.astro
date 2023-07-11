@@ -4,7 +4,9 @@ import ExternalLink from "../common/ExternalLink.astro";
 const isLinkExternal = (url: string): boolean => {
   if (url === "") return false;
 
-  if (!(url?.startsWith("/") || url?.startsWith("./"))) return true;
+  if (url.startsWith("#")) return false;
+
+  if (!(url.startsWith("/") || url.startsWith("./"))) return true;
 
   return false;
 };
