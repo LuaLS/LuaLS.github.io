@@ -3,9 +3,10 @@ import Icon from "./Icon.astro";
 
 export interface Props {
   type: "note" | "warning" | "important" | "WIP";
+  display?: "inline" | "block";
 }
 
-const { type } = Astro.props;
+const { type, display } = Astro.props;
 
 const types = {
   note: { displayName: "Note", icon: "note-sticky" },
@@ -13,9 +14,11 @@ const types = {
   important: { displayName: "Important", icon: "exclamation" },
   WIP: { displayName: "WIP", icon: "pen-ruler" },
 };
+
+const classList = [type, "remark", display ?? "block"];
 ---
 
-<div class={type + " remark"}>
+<div class:list={classList}>
   <div>
     <Icon name={types[type].icon} group="solid" />
     {types[type].displayName}
@@ -25,14 +28,19 @@ const types = {
 
 <style lang="scss">
   .remark {
-    padding: 0.6em;
+    padding: 0.5em 1em;
     border-radius: 0.4em;
     border-width: 0.3em;
     border-style: outset;
-    margin: 1em 3em;
+    margin: 1em auto;
+    width: fit-content;
     box-shadow: var(--remark-color) 1px 1px 15px 0px;
     border-color: var(--remark-color);
     background-color: color-mix(in srgb, var(--remark-color), #000000 50%);
+
+    &.block {
+      width: 90%;
+    }
 
     &.note {
       --remark-color: #0099ff;
