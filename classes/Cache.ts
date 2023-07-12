@@ -5,8 +5,6 @@ const PREFIX = "cache-";
 export class Cache<T> {
   private name: string;
 
-  private items: { [key: string]: T };
-
   /** Unix timestamp of when the cache should expire */
   private expiry: number;
 
@@ -17,15 +15,14 @@ export class Cache<T> {
   constructor(
     name: string,
     lifetime: number,
-    options: { includeSearch: boolean },
+    options?: { includeSearch?: boolean }
   ) {
-    if (options.includeSearch || options.includeSearch === undefined) {
+    if (options?.includeSearch || options?.includeSearch === undefined) {
       const url = new URL(name);
       this.name = url.protocol + url.host + url.pathname;
     } else {
       this.name = name;
     }
-    this.items = {};
     this.expiry = dayjs().add(lifetime, "seconds").unix();
   }
 

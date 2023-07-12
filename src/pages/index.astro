@@ -293,6 +293,10 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
 
 <script>
   import axios from "axios";
+  import { Cache } from "../../classes/Cache";
+
+  const ENDPOINT =
+    "https://marketplace.visualstudio.com/_apis/public/gallery/extensionquery";
 
   const formatNumber = (num: number): string => {
     const absNum = Math.abs(num);
@@ -308,27 +312,51 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
     return num.toString();
   };
 
-  const rgx = /([\d,]+) installs/g;
-
   const installElement = document.querySelector(".installs");
 
   if (!installElement) {
     throw new Error("Failed to get install count element!");
   }
 
-  try {
-    const response = await axios.get(
-      "https://marketplace.visualstudio.com/items?itemName=sumneko.lua"
-    );
-    const result = rgx.exec(response.data);
-    if (!result) {
-      throw new Error("Failed to parse installs from marketplace!");
+  const cache = new Cache<number>(ENDPOINT, 1800);
+  let installs = cache.get();
+
+  if (!installs) {
+    try {
+      const response = await axios.post(ENDPOINT, {
+        filters: [
+          {
+            criteria: [
+              {
+                filterType: 8,
+                value: "Microsoft.VisualStudio.Code",
+              },
+              {
+                filterType: 10,
+                value: "sumneko.lua",
+              },
+            ],
+            pageNumber: 1,
+            pageSize: 1,
+            sortBy: 0,
+            sortOrder: 0,
+          },
+        ],
+        assetTypes: [],
+        flags: 256,
+      });
+      const statistics = response.data.results[0].extensions[0].statistics;
+      installs = statistics.find(
+        (stat: any) => stat.statisticName === "install"
+      ).value;
+      cache.store(installs);
+      installElement.textContent = formatNumber(installs as number);
+    } catch (e) {
+      console.error("Failed to get install count", e);
+      installElement.textContent = "~1M";
     }
-    const installs = Number(result[1].replaceAll(",", ""));
+  } else {
     installElement.textContent = formatNumber(installs);
-  } catch (e) {
-    console.error(e);
-    installElement.textContent = "~1M";
   }
 </script>
 
