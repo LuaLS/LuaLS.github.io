@@ -6,6 +6,7 @@ import CodeBlock from "../components/common/CodeBlock.astro";
 import Remark from "../components/common/Remark.astro";
 
 import "../scss/fonts/_Prompt.scss";
+import Tooltip from "../components/common/Tooltip.astro";
 ---
 
 <ScrollSnapLayout title="Lua Language Server">
@@ -29,7 +30,18 @@ import "../scss/fonts/_Prompt.scss";
       </p>
 
       <div id="statistics">
-        <p><b class="installs">~1M</b> Unique Installs</p>
+        <Tooltip text="Unique installs in Visual Studio Code">
+          <span class="stat installs">
+            <b>~1M</b>
+            <Icon name="download" group="solid" />
+          </span>
+        </Tooltip>
+        <Tooltip text="Stars on GitHub">
+          <span class="stat stars">
+            <b>-</b>
+            <Icon name="star" group="solid" color="yellow" />
+          </span>
+        </Tooltip>
       </div>
 
       <div class="grid">
@@ -294,25 +306,14 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
 <script>
   import axios from "axios";
   import { Cache } from "../../classes/Cache";
+  import { formatNumber } from "../services/strings.service";
 
   const ENDPOINT =
     "https://marketplace.visualstudio.com/_apis/public/gallery/extensionquery";
 
-  const formatNumber = (num: number): string => {
-    const absNum = Math.abs(num);
-
-    if (absNum >= 1e6) {
-      return (num / 1e6).toFixed(1) + "M";
-    }
-
-    if (absNum >= 1e3) {
-      return (num / 1e3).toFixed(1) + "K";
-    }
-
-    return num.toString();
-  };
-
-  const installElement = document.querySelector(".installs");
+  const installElement = document.querySelector(
+    "#statistics .installs :first-child"
+  );
 
   if (!installElement) {
     throw new Error("Failed to get install count element!");
@@ -357,6 +358,34 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
     }
   } else {
     installElement.textContent = formatNumber(installs);
+  }
+</script>
+
+<script>
+  import axios from "axios";
+  import { Cache } from "../../classes/Cache";
+  import { formatNumber } from "../services/strings.service";
+
+  const ENDPOINT = "https://api.github.com/repos/LuaLS/lua-language-server";
+
+  const starsElement = document.querySelector<HTMLDivElement>(
+    "#statistics .stars :first-child"
+  );
+
+  if (!starsElement) {
+    throw new Error("Failed to get stars element");
+  }
+
+  const cache = new Cache<number>(ENDPOINT, 3600);
+  let stars = cache.get();
+
+  if (!stars) {
+    const response = await axios.get(ENDPOINT);
+    stars = response.data.stargazers_count as number;
+    cache.store(stars);
+    starsElement.textContent = formatNumber(stars);
+  } else {
+    starsElement.textContent = formatNumber(stars);
   }
 </script>
 
@@ -472,15 +501,18 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
     }
 
     #statistics {
-      font-size: 1.3em;
-      p {
+      font-size: 2em;
+      display: flex;
+      gap: 1em;
+
+      .stat {
         display: flex;
         align-items: center;
         gap: 0.25em;
-        margin: 0px;
-      }
-      .installs {
-        font-size: 2em;
+
+        & :not(:first-child) {
+          font-size: 0.8em;
+        }
       }
     }
 
