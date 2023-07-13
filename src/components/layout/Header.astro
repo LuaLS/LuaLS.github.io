@@ -49,6 +49,10 @@ const { class: className } = Astro.props;
     padding: 0.5rem 1rem;
     z-index: 20;
 
+    :global(+ *) {
+      margin-top: 3.5em;
+    }
+
     nav {
       width: 100%;
       display: grid;

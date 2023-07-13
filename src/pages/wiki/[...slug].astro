@@ -113,7 +113,6 @@ export interface Props {
 
   .columns {
     position: relative;
-    margin-top: 3.5em;
   }
 
   .sidebar {
@@ -244,23 +243,6 @@ export interface Props {
 
   article {
     padding: 1em;
-
-    :global(h1),
-    :global(h2) {
-      &::after {
-        content: " ";
-        display: block;
-        width: 100%;
-        margin: auto;
-        border-bottom: 2px solid #ffffff;
-      }
-    }
-    :global(h2) {
-      &::after {
-        width: 80%;
-        border-bottom: 2px solid #ffffffba;
-      }
-    }
   }
 
   @media screen and (min-width: 1600px) {
