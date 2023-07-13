@@ -39,7 +39,7 @@ import Tooltip from "../components/common/Tooltip.astro";
         <Tooltip text="Stars on GitHub">
           <span class="stat stars">
             <b>-</b>
-            <Icon name="star" group="solid" color="yellow" />
+            <Icon name="star" group="solid" color="#ffcb00" />
           </span>
         </Tooltip>
       </div>
@@ -309,7 +309,7 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
   import { formatNumber } from "../services/strings.service";
 
   const ENDPOINT =
-    "https://marketplace.visualstudio.com/_apis/public/gallery/extensionquery";
+    "https://corsproxy.io/?https://marketplace.visualstudio.com/_apis/public/gallery/extensionquery";
 
   const installElement = document.querySelector(
     "#statistics .installs :first-child"
