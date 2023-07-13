@@ -31,177 +31,175 @@ There are three kinds of configuration files that can be used:
 
 # Client Configuration
 
-Below are the client-specific methods for configuration:
+Each client has their own specific method for configuring the language server. We go through some popular clients below:
 
-<Tabs
-  active="VS Code"
-  buttons={[
-    { name: "VS Code", image: "/images/vscode.svg", accent: "#23a9f2" },
-    { name: "Neovim", image: "/images/neovim.svg", accent: "#78e027" },
-    { name: "Kakoune", image: "/images/kakoune.svg", accent: "#ffffff" },
-  ]}
->
-  <div data-tab="VS Code">
-    Make sure you take note of whether you are editing your user-wide or [workspace
-    settings](https://code.visualstudio.com/docs/getstarted/settings#_workspace-settings).
-    Some settings you may want to always be in effect, these should be user settings.
-    Other settings like [`workspace.library`](/wiki/settings#workspace-library) *should* be workspace only.
+## Visual Studio Code
 
-    1. Press <kbd>Ctrl + ,</kbd> to open the settings page
-    2. Enter <code>@ext:sumneko.lua</code> in the search bar
-    3. Configure away!
+Make sure you take note of whether you are editing your user-wide or [workspace
+settings](https://code.visualstudio.com/docs/getstarted/settings#_workspace-settings).
+Some settings you may want to always be in effect, these should be user settings.
+Other settings like [`workspace.library`](/wiki/settings#workspace-library) _should_ be workspace only.
 
-  </div>
-  <div data-tab="Neovim">
-  Below are some examples for getting set up in Neovim in different environments.
+1. Press <kbd>Ctrl + ,</kbd> to open the settings page
+2. Enter <code>@ext:sumneko.lua</code> in the search bar
+3. Configure away!
 
-  <Accordion>
-    <span slot="summary">Using built-in LSP client</span>
+## Neovim
 
-    Below is a minimal example showing how to set the runtime version of the language server.
-    ```Lua
-    require'lspconfig'.lua_ls.setup{
-      settings = {
-        Lua = {
-          runtime = {
-            version = "LuaJIT"
-          }
-        }
+Below are some examples for getting set up in Neovim in different environments.
+
+<Accordion>
+  <span slot="summary">Using built-in LSP client</span>
+
+Below is a minimal example showing how to set the runtime version of the language server.
+
+```Lua
+require'lspconfig'.lua_ls.setup{
+  settings = {
+    Lua = {
+      runtime = {
+        version = "LuaJIT"
       }
     }
-    ```
-    And here is an example that can be used when using Luarocks:
-    ```Lua
-    require'lspconfig'.lua_ls.setup{
-      settings = {
-        Lua = {
-          runtime = {
-            version = 'Lua 5.3',
-            path = {
-              '?.lua',
-              '?/init.lua',
-              vim.fn.expand'~/.luarocks/share/lua/5.3/?.lua',
-              vim.fn.expand'~/.luarocks/share/lua/5.3/?/init.lua',
-              '/usr/share/5.3/?.lua',
-              '/usr/share/lua/5.3/?/init.lua'
-            }
-          },
-          workspace = {
-            library = {
-              vim.fn.expand'~/.luarocks/share/lua/5.3',
-              '/usr/share/lua/5.3'
-            }
-          }
-        }
-      }
-    }
-    ```
+  }
+}
+```
 
-  </Accordion>
+And here is an example that can be used when using Luarocks:
 
-  <Accordion>
-    <span slot="summary">Using [coc.nvim](https://github.com/neoclide/coc.nvim)</span>
-
-    1. Execute `:CocConfig;`
-    2. A JSON file should open
-    3. Configure away!
-
-    ```JSON
-    {
-      // Unrelated settings...
-      "languageserver": {
-        "lua": {
-          "cwd": "full path to lua-language-server directory",
-          "command": "full path to lua-language-server executable",
-          "filetypes": ["lua"],
-          "rootPatterns": [".git/"]
+```Lua
+require'lspconfig'.lua_ls.setup{
+  settings = {
+    Lua = {
+      runtime = {
+        version = 'Lua 5.3',
+        path = {
+          '?.lua',
+          '?/init.lua',
+          vim.fn.expand'~/.luarocks/share/lua/5.3/?.lua',
+          vim.fn.expand'~/.luarocks/share/lua/5.3/?/init.lua',
+          '/usr/share/5.3/?.lua',
+          '/usr/share/lua/5.3/?/init.lua'
         }
       },
-      "settings": {
-        "Lua": {
-          "workspace": {
-            "library": [
-              "/path/to/hammerspoon-completion/build/stubs",
-              "/path/to/neovim/runtime/lua"
-            ],
-            "maxPreload": 2000,
-            "preloadFileSize": 1000
-          },
-          "runtime": {
-            "version": "Lua 5.4"
-          },
-          "diagnostics": {
-            "enable": true,
-            "globals": ["hs", "vim", "it", "describe", "before_each", "after_each"],
-            "disable": ["lowercase-global"]
-          },
-          "completion": {
-            "keywordSnippet": "Disable"
-          }
+      workspace = {
+        library = {
+          vim.fn.expand'~/.luarocks/share/lua/5.3',
+          '/usr/share/lua/5.3'
         }
       }
     }
-    ```
+  }
+}
+```
 
-  </Accordion>
+</Accordion>
 
-  </div>
-  <div data-tab="Kakoune">
-    <Accordion>
-      <span slot="summary">Using [kak-lsp](https://github.com/kak-lsp/kak-lsp)</span>
+<Accordion>
+  <span slot="summary">Using [coc.nvim](https://github.com/neoclide/coc.nvim)</span>
 
-      **Installation**
+1. Execute `:CocConfig;`
+2. A JSON file should open
+3. Configure away!
 
-      If using [plug.kak](https://github.com/andreyorst/plug.kak), place the following in your `kakrc`:
-      ```
-      plug "kak-lsp/kak-lsp" do %{ cargo install --locked --force --path . }
-      ```
-      If running standalone, place the `kak-lsp` binary on your `PATH` and then place the following in your `kakrc`:
-      ```
-      evaluate-commands %sh{
-        kak-lsp --kakoune -s $kak_session
+```JSON
+{
+  // Unrelated settings...
+  "languageserver": {
+    "lua": {
+      "cwd": "full path to lua-language-server directory",
+      "command": "full path to lua-language-server executable",
+      "filetypes": ["lua"],
+      "rootPatterns": [".git/"]
+    }
+  },
+  "settings": {
+    "Lua": {
+      "workspace": {
+        "library": [
+          "/path/to/hammerspoon-completion/build/stubs",
+          "/path/to/neovim/runtime/lua"
+        ],
+        "maxPreload": 2000,
+        "preloadFileSize": 1000
+      },
+      "runtime": {
+        "version": "Lua 5.4"
+      },
+      "diagnostics": {
+        "enable": true,
+        "globals": ["hs", "vim", "it", "describe", "before_each", "after_each"],
+        "disable": ["lowercase-global"]
+      },
+      "completion": {
+        "keywordSnippet": "Disable"
       }
-      ```
+    }
+  }
+}
+```
 
-      ---
+</Accordion>
 
-      **Initialization**
+## Kakoune
 
-      Place the following in your kakrc:
+<Accordion>
+  <span slot="summary">Using [kak-lsp](https://github.com/kak-lsp/kak-lsp)</span>
 
-      ```
-      # Enable kak-lsp for Lua files
-      hook global WinSetOption filetype=lua %{
-          lsp-enable-window
-      }
-      # Close kak-lsp when kakoune is terminated
-      hook global KakEnd .* lsp-exit
-      ```
+**Installation**
 
-      And the below in your kak-lsp.toml to inform it of the existence of the language server:
-      ```toml
-      [language.lua]
-      filetypes = ["lua"]
-      roots = [".git/"]
-      command = "lua-language-server"
-      ```
+If using [plug.kak](https://github.com/andreyorst/plug.kak), place the following in your `kakrc`:
 
-      ---
+```
+plug "kak-lsp/kak-lsp" do %{ cargo install --locked --force --path . }
+```
 
-      **Configuration**
+If running standalone, place the `kak-lsp` binary on your `PATH` and then place the following in your `kakrc`:
 
-      To define server settings, place them under [language.lua.settings] in your kak-lsp.toml:
+```
+evaluate-commands %sh{
+  kak-lsp --kakoune -s $kak_session
+}
+```
 
-      ```toml
-      [language.lua.settings]
-      Lua.diagnostics.severity = { undefined-global = "Error" }
-      Lua.runtime.version = "Lua 5.2"
-      Lua.telemetry.enable = false
-      ```
-    </Accordion>
+---
 
-  </div>
-</Tabs>
+**Initialization**
+
+Place the following in your kakrc:
+
+```
+# Enable kak-lsp for Lua files
+hook global WinSetOption filetype=lua %{
+    lsp-enable-window
+}
+# Close kak-lsp when kakoune is terminated
+hook global KakEnd .* lsp-exit
+```
+
+And the below in your kak-lsp.toml to inform it of the existence of the language server:
+
+```toml
+[language.lua]
+filetypes = ["lua"]
+roots = [".git/"]
+command = "lua-language-server"
+```
+
+---
+
+**Configuration**
+
+To define server settings, place them under [language.lua.settings] in your kak-lsp.toml:
+
+```toml
+[language.lua.settings]
+Lua.diagnostics.severity = { undefined-global = "Error" }
+Lua.runtime.version = "Lua 5.2"
+Lua.telemetry.enable = false
+```
+
+</Accordion>
 
 # luarc.json File
 
