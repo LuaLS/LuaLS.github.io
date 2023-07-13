@@ -5,47 +5,245 @@ import Layout from "../../layouts/Main.astro";
 import CodeBlock from "../../components/common/CodeBlock.astro";
 import WikiLink from "../../components/wiki/WikiLink.astro";
 import Remark from "../../components/common/Remark.astro";
+import type { CollectionEntry } from "astro:content";
+import Icon from "../../components/common/Icon.astro";
+
+const articles = await getCollection("wiki");
 
 export const getStaticPaths = async () => {
-  const entries = await getCollection("wiki");
-  return entries.map((entry) => {
+  const articles = await getCollection("wiki");
+  return articles.map((entry) => {
     return { params: { slug: entry.slug }, props: { entry } };
   });
 };
 
 const { entry } = Astro.props;
 
-const { Content, components } = await entry.render();
+const { Content, headings } = await entry.render();
+
+const slug = entry.data.title.toLowerCase().replaceAll(" ", "-");
+
+export interface Props {
+  entry: CollectionEntry<"wiki">;
+}
 ---
 
 <Layout title="Wiki">
-  <main>
-    {
-      entry.data.incomplete && (
-        <Remark type="WIP">
-          <p>
-            This document is in an incomplete state and info may be missing.
-          </p>
-        </Remark>
-      )
-    }
-    <article>
-      <div id="meta">
-        <h1>{entry.data.title}</h1>
-        <p>{entry.data.description}</p>
+  <div class="columns">
+    <div id="article-browser" class="sidebar">
+      <button class="open"><Icon name="newspaper" group="solid" /></button>
+      <button class="close"><Icon name="x" group="solid" /></button>
+      <div class="content">
+        <div class="title">Articles</div>
+        <nav>
+          {
+            articles.map((article) => (
+              <a href={`/wiki/${article.slug}`}>{article.data.title}</a>
+            ))
+          }
+        </nav>
       </div>
-      <Content components={{ ...components, pre: CodeBlock, a: WikiLink }} />
-    </article>
-  </main>
+    </div>
+    <main>
+      <article>
+        {
+          entry.data.incomplete && (
+            <Remark type="WIP">
+              <p>
+                This document is in an incomplete state and info may be missing.
+              </p>
+            </Remark>
+          )
+        }
+        <div id="meta">
+          <h1 id={slug}>{entry.data.title}</h1>
+          <p>{entry.data.description}</p>
+        </div>
+        <Content components={{ pre: CodeBlock, a: WikiLink }} />
+      </article>
+    </main>
+    <div id="outline" class="sidebar">
+      <button class="open"><Icon name="list" group="solid" /></button>
+      <button class="close"><Icon name="x" group="solid" /></button>
+      <div class="content">
+        <div class="title">Outline</div>
+        <nav>
+          <ol>
+            <li><a href={`#${slug}`}>{entry.data.title}</a></li>
+            {
+              headings.map((heading) => (
+                <li class={`depth-${heading.depth}`}>
+                  <a href={`#${heading.slug}`}>{heading.text}</a>
+                </li>
+              ))
+            }
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
 </Layout>
 
+<script>
+  const sidebars = document.querySelectorAll(".sidebar");
+
+  for (const sidebar of sidebars) {
+    const openButton = sidebar.querySelector("button.open");
+    const closeButton = sidebar.querySelector("button.close");
+
+    openButton?.addEventListener("click", () => {
+      sidebar.setAttribute("open", "");
+    });
+
+    closeButton?.addEventListener("click", () => {
+      sidebar.removeAttribute("open");
+    });
+  }
+</script>
+
 <style lang="scss">
-  :global(html) {
+  html {
     scroll-behavior: smooth;
+    overscroll-behavior-block: none;
+  }
+
+  main {
+    height: 100%;
+  }
+
+  .columns {
+    position: relative;
+    margin-top: 3.5em;
+  }
+
+  .sidebar {
+    --sidebar-width: 20em;
+    background-color: #081f34;
+    height: 100%;
+    position: fixed;
+    top: 3.5em;
+    width: var(--sidebar-width);
+    z-index: 10;
+
+    button.open,
+    button.close {
+      border: none;
+      color: white;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    button.open {
+      position: fixed;
+      background-color: #0e3e6b;
+      padding: 0.25em 0.5em;
+      font-size: 1.5em;
+      z-index: 5;
+    }
+
+    button.close {
+      background: none;
+      color: red;
+      font-size: 1em;
+      padding: 0.3em;
+      position: absolute;
+      top: 0.5em;
+      right: 0.5em;
+    }
+
+    .content {
+      overflow-x: hidden;
+      padding: 1em;
+
+      nav {
+        margin: 1em auto;
+
+        a {
+          text-decoration: none;
+        }
+      }
+      div.title {
+        font-size: 2em;
+        font-weight: 700;
+        text-align: center;
+      }
+    }
+
+    &#article-browser {
+      text-align: center;
+      left: calc(-1 * var(--sidebar-width));
+      transition: left ease-in-out 0.5s;
+
+      button.open {
+        left: 0px;
+        top: 4em;
+        border-radius: 0px 0.5em 0.5em 0px;
+        transition: left ease-in-out 0.5s;
+      }
+
+      &[open] {
+        left: 0px;
+
+        button.open {
+          left: -2em;
+        }
+      }
+    }
+
+    &#outline {
+      right: calc(-1 * var(--sidebar-width));
+      transition: right ease-in-out 0.5s;
+
+      button.open {
+        right: 0px;
+        top: 4em;
+        border-radius: 0.5em 0px 0px 0.5em;
+        transition: right ease-in-out 0.5s;
+      }
+
+      &[open] {
+        right: 0px;
+
+        button.open {
+          right: -2em;
+        }
+      }
+
+      .content {
+        ol {
+          list-style: none;
+          padding-left: 0px;
+
+          li {
+            --indent-scale: 1;
+            text-overflow: ellipsis;
+            overflow: hidden;
+          }
+
+          li.depth-2 {
+            padding-left: calc(1em * var(--indent-scale));
+          }
+          li.depth-3 {
+            padding-left: calc(2em * var(--indent-scale));
+          }
+          li.depth-4 {
+            padding-left: calc(3em * var(--indent-scale));
+          }
+          li.depth-5 {
+            padding-left: calc(4em * var(--indent-scale));
+          }
+          li.depth-6 {
+            padding-left: calc(5em * var(--indent-scale));
+          }
+        }
+      }
+    }
   }
 
   article {
-    margin: 0px 2em 5em 2em;
+    padding: 1em;
 
     :global(h1),
     :global(h2) {
@@ -64,6 +262,34 @@ const { Content, components } = await entry.render();
       }
     }
   }
+
+  @media screen and (min-width: 1600px) {
+    .columns {
+      main {
+        width: 60%;
+        margin: 0px 20%;
+      }
+    }
+
+    .sidebar {
+      &#article-browser {
+        left: 0px;
+      }
+      &#outline {
+        right: 0px;
+      }
+      button.open {
+        display: none;
+      }
+    }
+  }
+
+  @media screen and (max-width: 800px) {
+    .sidebar {
+      --sidebar-width: 70%;
+    }
+  }
+
   #meta h1 {
     font-family: "Prompt";
     margin: 0.25em auto 0.25em auto;
