@@ -12,8 +12,7 @@ const getLanguageFromCodeElement = (element: Element): string | undefined => {
 
   if (!result) return undefined;
   return result[1];
-}
-
+};
 
 // Rendering the slot gives us an HTML string, but it still contains the <pre>.
 let code = await Astro.slots.render("default");
@@ -130,15 +129,13 @@ export interface Props {
     }
 
     pre {
-      border-radius: 0.3em;
-      overflow-y: auto;
       max-height: inherit;
     }
-    pre > code.hljs {
+    pre > code {
       font-family: "Fira Code", "Source Code Pro", "Consolas", monospace;
       padding: 1.3em 0.5em 0.5em 0.5em;
-      border-radius: 0.3em;
       tab-size: 4;
+      overflow: auto;
     }
   }
 </style>
