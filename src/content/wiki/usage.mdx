@@ -1,0 +1,138 @@
+---
+title: Usage
+description: Learn how to use the language server and what arguments can be provided to the executable.
+getting-started: true
+---
+
+import Tabs from "../../components/common/Tabs.astro";
+
+# Run
+
+The language server can be run using the below command:
+
+<Tabs
+  active="Windows"
+  buttons={[
+    { name: "Windows", image: "/images/windows.svg", accent: "#23a9f2" },
+    { name: "MacOS", image: "/images/mac.svg", accent: "#ffffff" },
+    { name: "Linux", image: "/images/linux.svg", accent: "#ffff00" },
+  ]}
+>
+  {/* prettier-ignore */}
+  <div data-tab="Windows">
+  ```cmd
+  .\bin\lua-language-server.exe
+  ```
+  </div>
+  {/* prettier-ignore */}
+  <div data-tab="MacOS">
+  ```bash
+  ./bin/lua-language-server
+  ```
+  </div>
+  {/* prettier-ignore */}
+  <div data-tab="Linux">
+  ```bash
+  ./bin/lua-language-server
+  ```
+  </div>
+</Tabs>
+
+# Arguments
+
+## entry
+
+_optional_
+
+**Type:** `string`
+
+The main Lua script file from the root of this repository. If omitted, the application will attempt to load bin/../main.lua.
+
+# Flags
+
+There are many optional flags that can alter how the server operates.
+
+## --doc
+
+**Type:** `string`
+
+Where to create documentation JSON and MarkDown files.
+
+Example: `--doc=C:/Users/Me/Documents/LuaDocuments`
+
+## --logpath
+
+**Type:** `string`
+
+Where the log should be written to. Defaults to ./log
+
+Example: `--logpath=D:/luaServer/logs`
+
+## --loglevel
+
+**Type:** `string`
+
+The minimum level of logging that should appear in the logfile. Can be used to
+log more detailed info for debugging and error reporting.
+
+Options:
+
+- trace
+
+Example: `--loglevel=trace`
+
+## --metapath
+
+**Type:** `string`
+
+Where the standard Lua library definition files should be generated to. Defaults to ./meta
+
+Example: `--metapath=D:/sumnekoLua/metaDefintions`
+
+## --locale
+
+**Type:** `string`
+
+The language to use. Defaults to en-us. Options can be found in locale/
+
+Example: `--locale=zh-cn`
+
+## --configpath
+
+**Type:** `string`
+
+The location of the configuration file that will be loaded. Can be relative to
+the workspace. When provided, config files from elsewhere (such as from VS Code)
+will no longer be loaded.
+
+Example: `--configpath=sumnekoLuaConfig.lua`
+
+## --version
+
+**Type:** `string`
+
+Get the version of the Lua language server. This will print it to the command
+line and immediately exit.
+
+## --check
+
+**Type:** `boolean`
+
+Perform a "diagnosis report" where the results of the diagnosis are written to a
+file.
+
+## --checklevel
+
+**Type:** `string`
+
+**Default:** `Warning`
+
+To be used with [`--check`](#--check). The minimum level of diagnostic that should be logged.
+Items with lower priority than the one listed here will not be written to the
+file. Options include, in order of priority:
+
+- Error
+- Warning
+- Information
+
+Example: `--checklevel=Information`
