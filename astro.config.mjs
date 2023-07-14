@@ -8,5 +8,6 @@ export default defineConfig({
   markdown: {
     /** We use our own syntax highlight from highlight.js */
     syntaxHighlight: false,
+    smartypants: false,
   },
 });
