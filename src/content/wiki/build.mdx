@@ -1,0 +1,56 @@
+---
+title: Build
+description: Instructions for building the Lua Language Server from source.
+getting-started: true
+---
+
+import Tabs from "../../components/common/Tabs.astro";
+import Remark from "../../components/common/Remark.astro";
+
+1. Install [Ninja](https://github.com/ninja-build/ninja/wiki/Pre-built-Ninja-packages)
+2. Ensure you have C++17
+3. Clone the language server
+   ```bash
+   git clone https://github.com/LuaLS/lua-language-server
+   cd lua-language-server
+   ```
+4. Run the make script for your OS:
+
+<Tabs
+  active="Windows"
+  buttons={[
+    { name: "Windows", image: "/images/windows.svg", accent: "#23a9f2" },
+    { name: "MacOS", image: "/images/mac.svg", accent: "#ffffff" },
+    { name: "Linux", image: "/images/linux.svg", accent: "#ffff00" },
+  ]}
+>
+  {/* prettier-ignore */}
+  <div data-tab="Windows">
+  ```cmd
+  .\make.bat
+  ```
+  </div>
+  {/* prettier-ignore */}
+  <div data-tab="MacOS">
+  ```bash
+  ./make.sh
+  ```
+  </div>
+  {/* prettier-ignore */}
+  <div data-tab="Linux">
+  ```bash
+  ./make.sh
+  ```
+  </div>
+</Tabs>
+
+<Remark type="note">
+  If you are receiving a compile error similar to `cannot find -lstdc++` when
+  running a make script, you may need to install `libstdc++`. On Fedora Linux or
+  similar, you can do this by running the following:
+
+```bash
+dnf install libstdc++-static
+```
+
+</Remark>
