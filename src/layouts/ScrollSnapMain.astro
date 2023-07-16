@@ -32,13 +32,7 @@ const title = ["Lua Language Server", Astro.props.title].join(" | ");
     <title>{title}</title>
   </head>
   <body>
-    <Header class="fixed" />
+    <Header />
     <slot />
   </body>
 </html>
-
-<style lang="scss">
-  header.fixed {
-    position: fixed;
-  }
-</style>
