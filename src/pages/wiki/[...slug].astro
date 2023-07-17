@@ -244,6 +244,12 @@ export interface Props {
 
   article {
     padding: 1em;
+
+    :global(img) {
+      max-width: 100%;
+      height: auto;
+      display: inline-block;
+    }
   }
 
   @media screen and (min-width: 1600px) {
