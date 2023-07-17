@@ -1,8 +1,8 @@
 import dayjs from "dayjs";
 
-const PREFIX = "cache-";
+const PREFIX = "Tcache-";
 
-export class Cache<T> {
+export class TimeCache<T> {
   private name: string;
 
   /** Unix timestamp of when the cache should expire */
@@ -28,18 +28,20 @@ export class Cache<T> {
 
   /** Will return the cached value, or null if expired, or undefined if the cache item doesn't exist. */
   get(): T | null | undefined {
-    // If expired, return null
-    if (dayjs().unix() > this.expiry) {
-      return null;
-    }
+    const cache = localStorage.getItem(PREFIX + this.name);
 
-    const data = localStorage.getItem(PREFIX + this.name);
-
-    if (data === null) {
+    if (cache === null) {
       return undefined;
     }
 
-    return JSON.parse(data);
+    const parsed = JSON.parse(cache);
+
+    // If expired, return null
+    if (dayjs().unix() > parsed.expiry) {
+      return null;
+    }
+
+    return parsed.data;
   }
 
   delete(): void {
@@ -47,6 +49,6 @@ export class Cache<T> {
   }
 
   store(value: any) {
-    localStorage.setItem(PREFIX + this.name, JSON.stringify(value));
+    localStorage.setItem(PREFIX + this.name, JSON.stringify({data: value, expiry: this.expiry}));
   }
 }

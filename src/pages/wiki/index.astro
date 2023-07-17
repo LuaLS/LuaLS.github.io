@@ -56,7 +56,7 @@ const wikiArticles = await getCollection("wiki", ({ data }) => {
 
 <script>
   import axios from "axios";
-  import { Cache } from "../../../classes/Cache";
+  import { SmartCache } from "../../../classes/SmartCache";
   import tippy from "tippy.js";
 
   type Contributor = {
@@ -78,22 +78,16 @@ const wikiArticles = await getCollection("wiki", ({ data }) => {
   }
 
   const endpoint =
-    "https://api.github.com/repos/LuaLS/lua-language-server/contributors?per_page=20";
+    "https://api.github.com/repos/LuaLS/lua-language-server/contributors?per_page=30";
 
-  const cache = new Cache<Contributor[]>(endpoint, 1200, {
+  const cache = new SmartCache(endpoint, {
     includeSearch: false,
   });
 
-  let contributors = cache.get();
+  let contributors = await cache.get();
 
   if (!contributors) {
-    try {
-      const response = await axios.get(endpoint);
-      cache.store(response.data);
-      contributors = response.data;
-    } catch (e) {
-      console.error("Failed to get contributors!", e);
-    }
+    throw new Error("Could not get contributors");
   }
 
   if (contributors) {
