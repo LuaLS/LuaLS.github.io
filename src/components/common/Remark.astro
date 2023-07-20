@@ -2,7 +2,7 @@
 import Icon from "./Icon.astro";
 
 export interface Props {
-  type: "note" | "warning" | "important" | "WIP";
+  type: "note" | "warning" | "important" | "WIP" | "deprecated";
   display?: "inline" | "block";
 }
 
@@ -13,6 +13,8 @@ const types = {
   warning: { displayName: "Warning", icon: "warning" },
   important: { displayName: "Important", icon: "exclamation" },
   WIP: { displayName: "WIP", icon: "pen-ruler" },
+  deprecated: { displayName: "Deprecated", icon: "trash-can" },
+  issue: {displayName: "Issue", icon: "circle-dot"}
 };
 
 const classList = [type, "remark", display ?? "block"];
@@ -50,12 +52,17 @@ const classList = [type, "remark", display ?? "block"];
       --remark-color: #ffa600;
     }
 
-    &.important {
+    &.important,
+    &.deprecated {
       --remark-color: #e60000;
     }
 
     &.WIP {
       --remark-color: #ffa600;
+    }
+
+    &.issue {
+      --remark-color: #2ea043;
     }
 
     & > div {
@@ -66,11 +73,12 @@ const classList = [type, "remark", display ?? "block"];
       font-weight: bold;
     }
 
-    i {
+    i.fa-solid {
       font-size: 1.3em;
+      color: color-mix(in srgb, var(--remark-color), white 60%);
     }
 
-    & > p {
+    & > :global(p) {
       margin: 0.5em auto 0.2em auto;
     }
   }
