@@ -249,6 +249,27 @@ export interface Props {
       height: auto;
       display: inline-block;
     }
+
+    :global(table) {
+      width: 100%;
+      text-align: center;
+      border-collapse: collapse;
+
+      :global(th) {
+        background-color: #3e3e3e;
+      }
+      :global(tr) {
+        background-color: #1a1a1a;
+      }
+      :global(tr:nth-of-type(2n)) {
+        background-color: #111111;
+      }
+    }
+
+
+    :global(div.syntax) {
+      font-size: 1.3em;
+    }
   }
 
   @media screen and (min-width: 1600px) {
