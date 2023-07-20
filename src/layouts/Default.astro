@@ -1,0 +1,36 @@
+---
+// Icon fonts
+import "@fortawesome/fontawesome-free/scss/fontawesome.scss";
+import "@fortawesome/fontawesome-free/scss/brands.scss";
+import "@fortawesome/fontawesome-free/scss/solid.scss";
+
+// Highlight.js
+import "highlight.js/scss/github-dark.scss";
+
+// SASS
+import "../scss/main.scss";
+
+export interface Props {
+  title: string;
+}
+
+const title = ["Lua Language Server", Astro.props.title].join(" | ");
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="description"
+      content="Lua Language Server uses the Language Server Protocol to offer a better Lua development experience for your favourite editors."
+    />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
