@@ -55,7 +55,7 @@ export interface Props {
             </Remark>
           )
         }
-        <div id="meta">
+        <div class="metadata">
           <h1 id={slug}>{entry.data.title}</h1>
           <p>{entry.data.description}</p>
         </div>
@@ -279,11 +279,11 @@ export interface Props {
     }
   }
 
-  #meta h1 {
+  article > div.metadata h1 {
     font-family: "Prompt";
     margin: 0.25em auto 0.25em auto;
   }
-  #meta p {
+  article > div.metadata p {
     margin: 0px auto 3em auto;
     text-align: center;
   }
