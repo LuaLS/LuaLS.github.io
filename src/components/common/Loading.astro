@@ -1,0 +1,67 @@
+---
+import Icon from "./Icon.astro";
+---
+
+<div class="loading-container loading">
+    <Icon name="circle-notch" group="solid" class="spinner"/>
+    <div class="content">
+        <slot/>
+    </div>
+</div>
+
+<script>
+    const loadingElements = document.querySelectorAll("div.loading-container");
+
+    for (const element of loadingElements) {
+        const spinner = element.querySelector("i.spinner");
+        const contentContainer = element.querySelector("div.content");
+
+        if (!spinner) {
+            console.error("Failed to find spinner");
+            continue;
+        }
+
+        if (!contentContainer) {
+            console.error("Failed to find content container");
+            continue;
+        }
+
+        element.addEventListener("content_loaded", (e) => {
+            e.stopPropagation();
+            element.classList.remove("loading");
+        })
+    }
+</script>
+
+<style lang="scss">
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    .loading-container {
+        i.spinner {
+            display: none;
+            font-size: 2em;
+            animation: spin 1s linear infinite both;
+        }
+
+        &.loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            i.spinner {
+                display: block;
+            }
+
+            .content {
+                display: none;
+            }
+        }
+    }
+</style>

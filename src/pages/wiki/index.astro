@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import Icon from "../../components/common/Icon.astro";
 import Layout from "../../layouts/Main.astro";
 import Remark from "../../components/common/Remark.astro";
+import Loading from "../../components/common/Loading.astro";
 
 const wikiArticles = await getCollection("wiki", ({ data }) => {
   return data["getting-started"] === true;
@@ -48,14 +49,15 @@ const wikiArticles = await getCollection("wiki", ({ data }) => {
             color="red"
           />
         </p>
-        <div class="grid"></div>
+        <Loading>
+          <div class="grid"></div>
+        </Loading>
       </section>
     </div>
   </main>
 </Layout>
 
 <script>
-  import axios from "axios";
   import { SmartCache } from "../../../classes/SmartCache";
   import tippy from "tippy.js";
 
@@ -70,7 +72,7 @@ const wikiArticles = await getCollection("wiki", ({ data }) => {
   };
 
   const contributorContainer = document.querySelector(
-    "section#contributors > div.grid"
+    "section#contributors div.grid"
   );
 
   if (!contributorContainer) {
@@ -84,7 +86,7 @@ const wikiArticles = await getCollection("wiki", ({ data }) => {
     includeSearch: false,
   });
 
-  let contributors = await cache.get();
+  let contributors = await cache.get() as Contributor[];
 
   if (!contributors) {
     throw new Error("Could not get contributors");
@@ -133,6 +135,8 @@ const wikiArticles = await getCollection("wiki", ({ data }) => {
         placement: "bottom",
       });
     }
+
+    contributorContainer.dispatchEvent(new CustomEvent("content_loaded", {bubbles: true}));
   }
 </script>
 
