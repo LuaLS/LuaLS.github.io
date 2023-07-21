@@ -1,6 +1,6 @@
 @use "variables";
 
-@use "fonts/Fira_Code";
+@use "fonts/Source_Code_Pro";
 @use "fonts/Prompt";
 
 html,
@@ -64,7 +64,7 @@ pre {
 
 :not(pre) > code,
 kbd {
-  font-family: "Fira Code", "Source Code Pro", "Consolas", monospace;
+  font-family: "Source Code Pro", "Consolas", monospace;
   font-size: 0.8em;
   display: inline-block;
   padding: 0.1em 0.3em;
