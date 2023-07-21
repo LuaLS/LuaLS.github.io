@@ -1,0 +1,1354 @@
+---
+title: Annotations
+description: Add additional context to your code and type checking.
+getting-started: true
+---
+
+import Remark from "../../components/common/Remark.astro";
+import Accordion from "../../components/common/Accordion.astro";
+import Tabs from "../../components/common/Tabs.astro";
+import CodeBlock from "../../components/common/CodeBlock.astro";
+
+The language server does its best to infer types through contextual analysis, however, sometimes manual documentation is necessary to improve completion and signature information. It does this through LuaCATS (**L**ua **C**omment **A**nd **T**ype **S**ystem) annotations, which are based off of [EmmyLua annotations](https://emmylua.github.io/annotation.html).
+
+Annotations are prefixed with `---`, like a Lua comment with one extra dash.
+
+<Remark type="warning" compact={true}>
+  LuaCATS annotations are [no longer
+  cross-compatible](https://github.com/LuaLS/lua-language-server/issues/980)
+  with [EmmyLua annotations](https://emmylua.github.io/annotation.html) as of
+  `v3`
+</Remark>
+
+# Annotation Formatting
+
+Annotations support most of the [markdown syntax](https://www.markdownguide.org/cheat-sheet/). More specifically, you can use:
+
+- headings
+- bold text
+- italic text
+- struckthrough text
+- ordered list
+- unordered list
+- blockquote
+- code
+- code block
+- horizontal rule
+- link
+- image
+
+There are many ways to add newlines to your annotations. The most bulletproof way is to simply add an extra line of just `---`, although this functions like a paragraph break, not a newline.
+
+The below methods can be added to the end of a line:
+
+- HTML `<br>` tag (recommended)
+- `\n` newline escape character
+- Two trailing spaces (may be removed by formatting tools)
+- Markdown backslash `\` ([not recommended](https://www.markdownguide.org/basic-syntax#line-break-best-practices))
+
+# Tips
+
+- If you type `---` one line above a function, you will receive a suggested snippet that includes [`@param`](#param) and [`@return`](#return) annotations for each parameter and return value found in the function.
+  ![Snippet being used in VS Code](/images/wiki/annotation-snippet.png)
+
+# Documenting Types
+
+Properly documenting types with the language server is very important and where a lot of the features and advantages are. Below is a list of all recognized Lua types (regardless of [version in use](/wiki/settings#runtimeversion)):
+
+- `nil`
+- `any`
+- `boolean`
+- `string`
+- `number`
+- `integer`
+- `function`
+- `table`
+- `thread`
+- `userdata`
+- `lightuserdata`
+
+You can also simulate [classes](#class) and [fields](#field) and even [create your own types](#alias).
+
+Adding a question mark (`?`) after a type like `boolean?` or `number?` is the same as saying `boolean|nil` or `number|nil`. This can be used to specify that something is either a specified type **or** `nil`. This can be very useful for function returns where a value **or** `nil` can be returned.
+
+Below is a list of how you can document more advanced types:
+
+<table>
+    <tr>
+        <th>Type</th>
+        <th>Document As:</th>
+    </tr>
+    <tr>
+        <td>Union Type</td>
+        <td>`TYPE_1 | TYPE_2`</td>
+    </tr>
+    <tr>
+        <td>Array</td>
+        <td>`VALUE_TYPE[]`</td>
+    </tr>
+    <tr>
+        <td>Dictionary</td>
+        <td>`{ [string]: VALUE_TYPE }`</td>
+    </tr>
+    <tr>
+        <td>Key-Value Table</td>
+        <td>`table<KEY_TYPE, VALUE_TYPE>`</td>
+    </tr>
+    <tr>
+        <td>Table literal</td>
+        <td>`{ key1: VALUE_TYPE, key2: VALUE_TYPE }`</td>
+    </tr>
+    <tr>
+        <td>Function</td>
+        <td>`fun(PARAM: TYPE): RETURN_TYPE`</td>
+    </tr>
+</table>
+
+Unions may need to be placed in parentheses in certain situations, such as when defining an array that contains multiple value types:
+
+```Lua
+---@type (string | integer)[]
+local myArray = {}
+```
+
+# Understanding This Page
+
+To get an understanding of how to use the annotations described on this page, you'll need to know how to read the `Syntax` sections of each annotation.
+
+|           Symbol           |               Meaning                |
+| :------------------------: | :----------------------------------: |
+|       `<value_name>`       |  A required value that you provide   |
+|       `[value_name]`       |    Everything inside is optional     |
+|     `[value_name...]`      |       This value is repeatable       |
+| `value_name \| value_name` | The left **or** right side are valid |
+
+Any other symbols are syntactically required and should be copied verbatim.
+
+If this is confusing, take a look at a couple examples under an annotation and it should make more sense.
+
+# Annotations List
+
+Below is a list of all annotations recognized by the language server:
+
+## @alias
+
+An alias can be used to create your own type. You can also use it to create an enum that does not exist at runtime. For an enum that _does_ exist at runtime, see [`@enum`](#enum).
+
+**Syntax**
+
+<Tabs
+  active="Simple"
+  buttons={[
+    { name: "Simple", icon: "circle", accent: "#00ff00" },
+    { name: "Enum", icon: "shapes", accent: "#ff8800" },
+  ]}
+>
+  <div data-tab="Simple">
+    <div class="syntax">
+      `---@alias <name> <type>`
+    </div>
+  </div>
+  <div data-tab="Enum">
+      <div class="syntax">
+        ```Lua
+        ---@alias <name>
+        ---| '<value>' [# description]
+        ```
+      </div>
+  </div>
+</Tabs>
+
+<Remark type="note">
+  The above pipe character (`|`) on the left is necessary for each line and does
+  not signify an "or".
+</Remark>
+
+**Examples**
+
+<Accordion>
+<span slot="summary">Simple alias</span>
+
+```Lua
+---@alias userID integer The ID of a user
+```
+
+</Accordion>
+<Accordion>
+<span slot="summary">Custom Type</span>
+
+```Lua
+---@alias modes "r" | "w"
+```
+
+</Accordion>
+<Accordion>
+<span slot="summary">Custom Type with Descriptions</span>
+
+```Lua
+---@alias DeviceSide
+---| '"left"' # The left side of the device
+---| '"right"' # The right side of the device
+---| '"top"' # The top side of the device
+---| '"bottom"' # The bottom side of the device
+---| '"front"' # The front side of the device
+---| '"back"' # The back side of the device
+
+---@param side DeviceSide
+local function checkSide(side) end
+```
+
+</Accordion>
+<Accordion>
+<span slot="summary">Literal Custom Type</span>
+
+```Lua
+local A = "Hello"
+local B = "World"
+
+---@alias myLiteralAlias `A` | `B`
+
+---@param x myLiteralAlias
+function foo(x) end
+```
+
+</Accordion>
+<Accordion>
+<span slot="summary">Literal Custom Type with Descriptions</span>
+
+```Lua
+local A = "Hello"
+local B = "World"
+
+---@alias myLiteralAlias `A` | `B`
+
+---@param x myLiteralAlias
+function foo(x) end
+```
+
+</Accordion>
+
+## @as
+
+Force a type onto an expression.
+
+<Remark type="warning">
+  This annotation cannot be added using `---@as <type>` it must be done like `--[[@as <type>]]`.
+</Remark>
+
+<Remark type="note">
+  When marking an expression as an array, such as `string[]`, you must use
+  `--[=[@as string[]]=]` due to the extra square brackets causing parsing
+  issues.
+</Remark>
+
+**Syntax**
+
+<div class="syntax">`--[[@as <type>]]`</div>
+
+<Remark type="note">
+  The square brackets in the above syntax definition do not refer to it being
+  optional. Those square brackets must be used verbatim.
+</Remark>
+
+**Examples**
+
+<Accordion>
+<span slot="summary">Override Type</span>
+
+```Lua
+---@param key string Must be a string
+local function doSomething(key) end
+
+local x = nil
+
+doSomething(x --[[@as string]])
+```
+
+</Accordion>
+
+## @async
+
+Mark a function as being asynchronous. When [`hint.await`](/wiki/settings#hintawait) is `true`, functions marked with `@async` will have an `await` hint displayed next to them when they are called. Used by diagnostics from the [`await` group](/wiki/diagnostics#await).
+
+**Syntax**
+
+<div class="syntax">`---@async`</div>
+
+**Examples**
+
+<Accordion>
+<span slot="summary">Mark Function Async</span>
+
+```Lua
+---@async
+---Perform an asynchronous HTTP GET request
+function http.get(url) end
+```
+
+</Accordion>
+
+## @cast
+
+Cast a variable to a different type or types.
+
+**Syntax**
+
+<div class="syntax">`---@cast <value_name> [+|-]<type|?>[, [+|-]<type|?>...]`</div>
+
+**Examples**
+
+<Accordion>
+<span slot="summary">Simple Cast</span>
+
+```Lua
+---@type integer
+local x
+
+---@cast x string
+print(x) --> x: string
+```
+
+</Accordion>
+<Accordion>
+<span slot="summary">Add Type</span>
+
+```Lua
+---@type integer
+local x
+
+---@cast x +boolean
+print(x) --> x: integer | boolean
+```
+
+</Accordion>
+<Accordion>
+<span slot="summary">Remove Type</span>
+
+```Lua
+---@type integer|string
+local x
+
+---@cast x -integer
+print(x) --> x: string
+```
+
+</Accordion>
+<Accordion>
+<span slot="summary">Cast Multiple Types</span>
+
+```Lua
+---@type string
+local x --> x: string
+
+---@cast x +boolean, +number
+print(x) --> x:string | boolean | number
+```
+
+</Accordion>
+<Accordion>
+<span slot="summary">Cast Possibly `nil`</span>
+
+```Lua
+---@type string
+local x
+
+---@cast x +?
+print(x) --> x:string?
+```
+
+</Accordion>
+
+## @class
+
+Define a class. Can be used with [`@field`](#field) to define a table structure. Once a class is defined, it can be used as a type for [parameters](#param), [returns](#return), and more. A class can also inherit from a parent class.
+
+**Syntax**
+
+<div class="syntax">
+`---@class <name>[: <parent>]`
+</div>
+
+**Examples**
+
+<Accordion>
+<span slot="summary">Define a Class</span>
+
+```Lua
+---@class Car
+local Car = {}
+```
+
+</Accordion>
+<Accordion>
+<span slot="summary">Class Inheritance</span>
+
+```Lua
+---@class Vehicle
+local Vehicle = {}
+
+---@class Plane: Vehicle
+local Plane = {}
+```
+
+</Accordion>
+
+## @deprecated
+
+Mark a function as deprecated. This will trigger the [`deprecated` diagnostic](/wiki/diagnostics#deprecated), displaying it as ~~struck through~~.
+
+**Syntax**
+
+<div class="syntax">`---@deprecated`</div>
+
+**Examples**
+
+<Accordion>
+<span slot="summary">Mark a Function as Deprecated</span>
+
+```Lua
+---@deprecated
+function outdated() end
+```
+
+</Accordion>
+
+## @diagnostic
+
+Toggle [diagnostics](/wiki/diagnostics) for the next line, current line, or whole file.
+
+**Syntax**
+
+{/* prettier-ignore */}
+<div class="syntax"><code>---@diagnostic &lt;state&gt;:&lt;[diagnostic](/wiki/diagnostics)&gt;</code></div>
+
+`state` options:
+
+- `disable-next-line` (Disable diagnostic on the following line)
+- `disable-line` (Disable diagnostic on this line)
+- `disable` (Disable diagnostic in this file)
+- `enable` (Enable diagnostic in this file)
+
+**Examples**
+
+<Accordion>
+<span slot="summary">Disable Diagnostic on Next Line</span>
+
+```Lua
+---@diagnostic disable-next-line: unused-local
+```
+
+</Accordion>
+<Accordion>
+<span slot="summary">Enable Spell Checking in this File</span>
+
+```Lua
+---@diagnostic enable:spell-check
+```
+
+</Accordion>
+
+## @enum
+
+Mark a Lua table as an enum, giving it similar functionality to [`@alias`](#alias), only the table is still usable at runtime.
+
+[Original Feature Request](https://github.com/LuaLS/lua-language-server/issues/1255)
+
+**Syntax**
+
+<div class="syntax">
+`---@enum <name>`
+</div>
+
+**Examples**
+
+<Accordion>
+<span slot="summary">Define Table as Enum</span>
+
+```Lua
+---@enum colors
+local COLORS = {
+	black = 0,
+	red = 2,
+	green = 4,
+	yellow = 8,
+	blue = 16,
+	white = 32
+}
+
+---@param color colors
+local function setColor(color) end
+
+setColor(COLORS.green)
+```
+
+</Accordion>
+
+## @field
+
+Define a field within a table. Should be immediately following a [`@class`](#class). As of `v3.6`, you can mark a field as `private`, `protected`, `public`, or `package`.
+
+**Syntax**
+
+<div class="syntax">
+`---@field [scope] <name> <type> [description]`
+</div>
+
+It is also possible to allow _any_ key of a certain type to be added using the below:
+
+<div class="syntax">
+`---@field [scope] [<type>] <type> [description]`
+</div>
+
+<Remark type="note">
+  The square brackets around the first type above must be copied verbatim. Also,
+  any named fields must be defined first. See the `Typed Field` example below.
+</Remark>
+
+**Examples**
+
+<Accordion>
+<span slot="summary">Simple Documentation of a Class</span>
+
+```Lua
+---@class Person
+---@field height number The height of this person in cm
+---@field weight number The weight of this person in kg
+---@field firstName string The first name of this person
+---@field lastName string The last name of this person
+---@field age integer The age of this person
+
+---@param person Person
+local function hire(person) end
+```
+
+</Accordion>
+<Accordion>
+<span slot="summary">Mark Field as Private</span>
+
+```Lua
+---@class Animal
+---@field private legs integer
+---@field eyes integer
+
+---@class Dog:Animal
+local myDog = {}
+
+---Child class Dog CANNOT use private field legs
+function myDog:legCount()
+	return self.legs
+end
+```
+
+</Accordion>
+<Accordion>
+<span slot="summary">Mark Field as Protected</span>
+
+```Lua
+---@class Animal
+---@field protected legs integer
+---@field eyes integer
+
+---@class Dog:Animal
+local myDog = {}
+
+---Child class Dog can use protected field legs
+function myDog:legCount()
+	return self.legs
+end
+```
+
+</Accordion>
+<Accordion>
+<span slot="summary">Typed Field</span>
+
+```Lua
+---@class Numbers
+---@field named string
+---@field [string] integer
+local Numbers = {}
+```
+
+</Accordion>
+
+## @generic
+
+Generics allow code to be reused and serve as a sort of "placeholder" for a type. Surrounding the generic in backticks (<code>`</code>) will capture the value and use it for the type. [Generics are still WIP](https://github.com/LuaLS/lua-language-server/issues/1861).
+
+**Syntax**
+
+<div class="syntax">
+`---@generic <name> [:parent_type] [, <name> [:parent_type]]`
+</div>
+
+**Examples**
+
+<Accordion>
+<span slot="summary">Generic Function</span>
+
+```Lua
+---@generic T : integer
+---@param p1 T
+---@return T, T[]
+function Generic(p1) end
+
+-- v1: string
+-- v2: string[]
+local v1, v2 = Generic("String")
+
+-- v3: integer
+-- v4: integer[]
+local v3, v4 = Generic(10)
+```
+
+</Accordion>
+<Accordion>
+<span slot="summary">Capture with Backticks</span>
+
+```Lua
+---@class Vehicle
+local Vehicle = {}
+function Vehicle:drive() end
+
+---@generic T
+---@param class `T` # the type is captured using `T`
+---@return T       # generic type is returned
+local function new(class) end
+
+-- obj: Vehicle
+local obj = new("Vehicle")
+```
+
+</Accordion>
+<Accordion>
+<span slot="summary">How the Table Class is Implemented</span>
+
+```Lua
+---@class table<K, V>: { [K]: V }
+```
+
+</Accordion>
+<Accordion>
+<span slot="summary">Array Class Using Generics</span>
+
+```Lua
+---@class Array<T>: { [integer]: T }
+
+---@type Array<string>
+local arr = {}
+
+-- Warns that I am assigning a boolean to a string
+arr[1] = false
+
+arr[3] = "Correct"
+```
+
+See [Issue #734](https://github.com/LuaLS/lua-language-server/issues/734#issuecomment-1436317116)
+
+</Accordion>
+<Accordion>
+<span slot="summary">Dictionary Class Using Generics</span>
+
+```Lua
+---@class Dictionary<T>: { [string]: T }
+
+---@type Dictionary<boolean>
+local dict = {}
+
+-- no warning despite assigning a string
+dict["foo"] = "bar?"
+
+dict["correct"] = true
+```
+
+</Accordion>
+
+## @meta
+
+Marks a file as "meta", meaning it is used for definitions and not for its functional Lua code. It is used internally by the language server for defining the [built-in Lua libraries](https://github.com/LuaLS/lua-language-server/tree/master/meta/template). If you are writing your own [definition files](/wiki/definition-files), you will probably want to include this annotation in them. If you specify a name, it will only be able to be required by the given name. Giving the name `_` will make it unable to be required. Files with the `@meta` tag in them behave a little different:
+
+- Completion will not display context in a meta file
+- Hovering a `require` of a meta file will show `[meta]` instead of its absolute path
+- `Find Reference` ignores meta files
+
+**Syntax**
+
+<div class="syntax">`---@meta [name]`</div>
+
+**Examples**
+
+<Accordion>
+<span slot="summary">Mark Meta File</span>
+
+```Lua
+---@meta [name]
+```
+
+</Accordion>
+
+## @module
+
+Simulates `require`-ing a file.
+
+**Syntax**
+
+<div class="syntax">
+`---@module '<module_name>'`
+</div>
+
+**Examples**
+
+<Accordion>
+<span slot="summary">"Require" a File</span>
+
+```Lua
+---@module 'http'
+
+--The above provides the same as
+require 'http'
+--within the language server
+```
+
+</Accordion>
+<Accordion>
+<span slot="summary">"Require" a File and Assign to a Variable</span>
+
+```Lua
+---@module 'http'
+local http
+
+--The above provides the same as
+local http = require 'http'
+--within the language server
+```
+
+</Accordion>
+
+## @nodiscard
+
+Mark a function as having return values that **cannot** be ignored/discarded. This can help users understand how to use the function as if they do not capture the returns, a warning will be raised.
+
+**Syntax**
+
+<div class="syntax">`---@nodiscard`</div>
+
+**Examples**
+
+<Accordion>
+<span slot="summary">Prevent Ignoring a Function's Returns</span>
+
+```Lua
+---@return string username
+---@nodiscard
+function getUsername() end
+```
+
+</Accordion>
+
+## @operator
+
+Provides type declarations for an [operator metamethod](http://lua-users.org/wiki/MetatableEvents).
+
+[Original Feature Request](https://github.com/LuaLS/lua-language-server/issues/599)
+
+**Syntax**
+
+<div class="syntax">
+`---@operator <operation>[(param_type)]:<return_type>`
+</div>
+
+<Remark type="note">
+  This syntax differs slightly from the `fun()` syntax used for defining
+  functions. Notice that the parentheses are **optional** here, so `@operator
+  call:integer` is valid.
+</Remark>
+
+**Examples**
+
+<Accordion>
+<span slot="summary">Declare `__add` Metamethod</span>
+
+```Lua
+---@class Vector
+---@operator add(Vector): Vector
+
+---@type Vector
+local v1
+---@type Vector
+local v2
+
+--> v3: Vector
+local v3 = v1 + v2
+```
+
+</Accordion>
+<Accordion>
+<span slot="summary">Declare Unary Minus Metamethod</span>
+
+```Lua
+---@class Passcode
+---@operation unm:integer
+
+---@type Passcode
+local pA
+
+local pB = -pA
+--> integer
+```
+
+</Accordion>
+<Accordion>
+<span slot="summary">Declare `__call` Metamethod</span>
+
+<Remark type="note">
+  It is recommended to instead use [`@overload`](#overload) to specify the call
+  signature for a class.
+</Remark>
+
+```Lua
+---@class URL
+---@operator call:string
+local URL = {}
+```
+
+</Accordion>
+
+## @overload
+
+Define an additional signature for a function.
+
+**Syntax**
+
+<div class="syntax">
+  {/* prettier-ignore */}
+  `---@overload fun([param: type[, param: type...]]): [return_value[,return_value]]`
+</div>
+
+<Remark type="issue">
+  There are currently [issues with narrowing types when there are
+  overloads](https://github.com/LuaLS/lua-language-server/issues/1456).
+</Remark>
+
+<Remark type="note">
+  If you are writing [definition files](/wiki/definition-files), it is
+  recommended to instead write multiple function definitons, one for each needed
+  signature with its [`@param`](#param) and [`@return`](#return) annotations.
+  This allows the functions to be as detailed as possible. Because the functions
+  do not exist at runtime, this is acceptable.
+</Remark>
+
+**Examples**
+
+<Accordion>
+<span slot="summary">Define Function Overload</span>
+
+```Lua
+---@param objectID integer The id of the object to remove
+---@param whenOutOfView boolean Only remove the object when it is not visible
+---@return boolean success If the object was successfully removed
+---@overload fun(objectID: integer): boolean
+local function removeObject(objectID, whenOutOfView) end
+```
+
+</Accordion>
+
+<Accordion>
+<span slot="summary">Define Class Call Signature</span>
+
+```Lua
+---@overload fun(a: string): boolean
+local foo = setmetatable({}, {
+	__call = function(a)
+		print(a)
+        return true
+	end,
+})
+
+local bool = foo("myString")
+```
+
+</Accordion>
+
+## @package
+
+Mark a function as private to the file it is defined in. A packaged function cannot be accessed from another file.
+
+**Syntax**
+
+<div class="syntax">`---@package`</div>
+
+**Examples**
+
+<Accordion>
+<span slot="summary">Mark a Function as Private to a Package</span>
+
+```Lua
+---@class Animal
+---@field private eyes integer
+local Animal = {}
+
+---@package
+---This cannot be accessed in another file
+function Animal:eyesCount()
+    return self.eyes
+end
+```
+
+</Accordion>
+
+## @param
+
+Define a parameter/argument for a function. This tells the language server what types are expected and can help enforce types and provide completion. Putting a question mark (`?`) after the parameter name will mark it as optional, meaning `nil` is an accepted type. The `type` provided can be an [`@alias`](#alias), [`@enum`](#enum), or [`@class`](#class), of course, as well.
+
+**Syntax**
+
+<div class="syntax">
+`---@param <name[?]> <type[|type...]> [description]`
+</div>
+
+**Examples**
+
+<Accordion>
+<span slot="summary">Simple Function Parameter</span>
+
+```Lua
+---@param username string The name to set for this user
+function setUsername(username) end
+```
+
+</Accordion>
+
+<Accordion>
+<span slot="summary">Parameter Union Type</span>
+
+```Lua
+---@param setting string The name of the setting
+---@param value string|number|boolean The value of the setting
+local function settings.set(setting, value) end
+```
+
+</Accordion>
+
+<Accordion>
+<span slot="summary">Optional Parameter</span>
+
+```Lua
+---@param role string The name of the role
+---@param isActive? boolean If the role is currently active
+---@return Role
+function Role.new(role, isActive) end
+```
+
+</Accordion>
+
+<Accordion>
+<span slot="summary">Variable Number of Parameters</span>
+
+```Lua
+---@param index integer
+---@param ... string Tags to add to this entry
+local function addTags(index, ...) end
+```
+
+</Accordion>
+
+<Accordion>
+<span slot="summary">Generic Function Parameter</span>
+
+```Lua
+---@class Box
+
+---@generic T
+---@param objectID integer The ID of the object to set the type of
+---@param type `T` The type of object to set
+---@return `T` object The object as a Lua object
+local function setObjectType(objectID, type) end
+
+--> boxObject: Box
+local boxObject = setObjectType(1, "Box")
+```
+
+See [`@generic`](#generic) for more info.
+
+</Accordion>
+
+<Accordion>
+<span slot="summary">Custom Type Parameter</span>
+
+```Lua
+---@param mode string
+---|"'immediate'"  # comment 1
+---|"'async'" # comment 2
+function bar(mode) end
+```
+
+</Accordion>
+
+<Accordion>
+<span slot="summary">Literal Custom Type Parameter</span>
+
+```Lua
+local A = 0
+local B = 1
+
+---@param active integer
+---| `A` # Has a value of 0
+---| `B` # Has a value of 1
+function set(active) end
+```
+
+Looking to do this with a table? You probably want to use [`@enum`](#enum)
+
+</Accordion>
+
+## @private
+
+Mark a function as private to a [`@class`](#class). Private functions can be accessed only from within their class and are **not** accessable from child classes.
+
+**Syntax**
+
+<div class="syntax">`---@private`</div>
+
+**Examples**
+
+<Accordion>
+<span slot="summary">Mark a function as private</span>
+
+```Lua
+---@class Animal
+---@field private eyes integer
+local Animal = {}
+
+---@private
+function Animal:eyesCount()
+    return self.eyes
+end
+
+---@class Dog:Animal
+local myDog = {}
+
+---NOT PERMITTED!
+myDog:eyesCount();
+```
+
+</Accordion>
+
+## @protected
+
+Mark a function as protected within a [`@class`](#class). Protected functions can be accessed only from within their class or from child classes.
+
+**Syntax**
+
+<div class="syntax">`---@protected`</div>
+
+**Examples**
+
+<Accordion>
+<span slot="summary">Mark a function as protected</span>
+
+```Lua
+---@class Animal
+---@field private eyes integer
+local Animal = {}
+
+---@protected
+function Animal:eyesCount()
+    return self.eyes
+end
+
+---@class Dog:Animal
+local myDog = {}
+
+---Permitted because function is protected, not private.
+myDog:eyesCount();
+```
+
+</Accordion>
+
+## @return
+
+Define a `return` value for a function. This tells the language server what types are expected and can help enforce types and provide completion.
+
+**Syntax**
+
+<div class="syntax">
+`---@return <type> [<name> [comment] | [name] #<comment>]`
+</div>
+
+**Examples**
+
+<Accordion>
+<span slot="summary">Simple Function Return</span>
+
+```Lua
+---@return boolean
+local function isEnabled() end
+```
+
+</Accordion>
+
+<Accordion>
+<span slot="summary">Named Function Return</span>
+
+```Lua
+---@return boolean enabled
+local function isEnabled() end
+```
+
+</Accordion>
+
+<Accordion>
+<span slot="summary">Named, Described Function Return</span>
+
+```Lua
+---@return boolean enabled If the item is enabled
+local function isEnabled() end
+```
+
+</Accordion>
+
+<Accordion>
+<span slot="summary">Described Function Return</span>
+
+```Lua
+---@return boolean # If the item is enabled
+local function isEnabled() end
+```
+
+</Accordion>
+
+<Accordion>
+<span slot="summary">Optional Function Return</span>
+
+```Lua
+---@return boolean|nil error
+local function makeRequest() end
+```
+
+</Accordion>
+
+<Accordion>
+<span slot="summary">Variable Function Returns</span>
+
+```Lua
+---@return integer count Number of nicknames found
+---@return string ...
+local function getNicknames() end
+```
+
+</Accordion>
+
+## @see
+
+Allows you to reference a specific symbol (e.g. `function`, `class`) from the workspace.
+
+**Syntax**
+
+<div class="syntax">`---@see <symbol>`</div>
+
+**Examples**
+
+<Accordion>
+<span slot="summary">Basic Usage</span>
+
+```Lua
+---Hovering the below function will show a link that jumps to http.get()
+
+---@see http.get
+function request(url) end
+```
+
+</Accordion>
+
+## @source
+
+Provide a reference to some source code which lives in another file. When
+searching for the defintion of an item, its `@source` will be used instead.
+
+**Syntax**
+
+<div class="syntax">`@source <path>`</div>
+
+**Examples**
+
+<Accordion>
+<span slot="summary">Link to file using absolute path</span>
+
+```Lua
+---@source C:/Users/me/Documents/program/myFile.c
+local a
+```
+
+</Accordion>
+
+<Accordion>
+<span slot="summary">Link to file using URI</span>
+
+```Lua
+---@source file:///C:/Users/me/Documents/program/myFile.c:10
+local b
+```
+
+</Accordion>
+
+<Accordion>
+<span slot="summary">Link to file using relative path</span>
+
+```Lua
+---@source local/file.c
+local c
+```
+
+</Accordion>
+
+<Accordion>
+<span slot="summary">Link to line and character in file</span>
+
+```Lua
+---@source local/file.c:10:8
+local d
+```
+
+</Accordion>
+
+## @type
+
+Mark a variable as being of a certain type. Union types are separated with a pipe character `|`. The `type` provided can be an [`@alias`](#alias), [`@enum`](#enum), or [`@class`](#class) as well. Please note that you cannot add a field to a class using `@type`, [you must instead use `@class`](https://github.com/LuaLS/lua-language-server/issues/1971#issuecomment-1458119701).
+
+**Syntax**
+
+<div class="syntax">`---@type <type>`</div>
+
+**Examples**
+
+<Accordion>
+<span slot="summary">Basic Type Definition</span>
+
+```Lua
+---@type boolean
+local x
+```
+
+</Accordion>
+
+<Accordion>
+<span slot="summary">Union Type Definition</span>
+
+```Lua
+---@type boolean|number
+local x
+```
+
+</Accordion>
+
+<Accordion>
+<span slot="summary">Array Type Definition</span>
+
+```Lua
+---@type string[]
+local names
+```
+
+</Accordion>
+
+<Accordion>
+<span slot="summary">Dictionary Type Definition</span>
+
+```Lua
+---@type { [string]: boolean }
+local statuses
+```
+
+</Accordion>
+
+<Accordion>
+<span slot="summary">Table Type Definition</span>
+
+```Lua
+---@type table<userID, Player>
+local players
+```
+
+</Accordion>
+
+<Accordion>
+<span slot="summary">Union Type Definition</span>
+
+```Lua
+---@type boolean|number|"yes"|"no"
+local x
+```
+
+</Accordion>
+
+<Accordion>
+<span slot="summary">Function Type Definition</span>
+
+```Lua
+---@type fun(name: string, value: any): boolean
+local x
+```
+
+</Accordion>
+
+## @vararg
+
+Mark a `function` as having variable arguments. For variable returns, see [`@return`](#return).
+
+<Remark type="deprecated">
+  This annotation has been deprecated and is purely for legacy support for
+  EmmyLua annotations. Use [`@param`](#param) instead.
+</Remark>
+
+**Syntax**
+
+<div class="syntax">`---@vararg <type>`</div>
+
+**Examples**
+
+<Accordion>
+<span slot="summary">Basic Variable Function Arguments</span>
+
+```Lua
+---@vararg string
+function concat(...) end
+```
+
+</Accordion>
+
+## @version
+
+Mark the required Lua version for a `function` or [`@class`](#class).
+
+**Syntax**
+
+<div class="syntax">`---@version [<|>]<version> [, [<|>]version...]`</div>
+
+Possible `version` values:
+
+- `5.1`
+- `5.2`
+- `5.3`
+- `5.4`
+- `JIT`
+
+**Examples**
+
+<Accordion>
+<span slot="summary">Declare Function Version</span>
+
+```Lua
+---@version >5.2, JIT
+function hello() end
+```
+
+</Accordion>
+
+<Accordion>
+<span slot="summary">Declare Class Version</span>
+
+```Lua
+---@version 5.4
+---@class Entry
+```
+
+</Accordion>
