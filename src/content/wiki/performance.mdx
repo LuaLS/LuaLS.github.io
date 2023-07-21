@@ -1,0 +1,67 @@
+---
+title: Performance
+description: Analysis of a performance benchmark
+---
+
+import Remark from "../../components/common/Remark.astro";
+
+# Background
+
+This benchmark tests the Lua Language Server with the Visual Studio Code extension client against a real project that contains 1500 Lua files with a total size of 20MB.
+
+The CPU used is an i7-9700K. The project files are located on a HDD and the server is on an SSD.
+
+# Results
+
+After many tests, the loading of the 20MB workspace takes about 10 seconds, meaning the loading speed is ~2MB/s.
+
+<table>
+  <tr>
+    <th>Operation</th>
+    <th>Time Elapsed</th>
+  </tr>
+  <tr>
+    <td>
+      Initialize the server, shake hands with the client, read the configuration
+    </td>
+    <td>0.5s</td>
+  </tr>
+  <tr>
+    <td>Scan files in workspace and find all Lua file paths</td>
+    <td>0.25s</td>
+  </tr>
+  <tr>
+    <td>Start loading workspace and load Lua into memory</td>
+    <td>1.5s</td>
+  </tr>
+  <tr>
+    <td>Convert Lua into abstract syntax trees</td>
+    <td>6.5s</td>
+  </tr>
+  <tr>
+    <td>Collect information such as global variables</td>
+    <td>1s</td>
+  </tr>
+  <tr>
+    <td>Other</td>
+    <td>1s</td>
+  </tr>
+</table>
+
+<Remark type="note">
+  Because the test was repeated multiple times, the OS cached some of the
+  operations, so the above performance will be better than the actual
+  performance.
+</Remark>
+
+<Remark type="note">
+  In actuality, step 2 and 3 are merged, which can save about 0.5 sec.
+</Remark>
+
+## Conclusion
+
+According to the test, the most time-consuming part is compiling Lua files into abtract syntax trees. This time is matching expectations, so there may be no room for improvement.
+
+Step 2 is affected by the total number of files in your workspace (including non Lua files).
+
+The best way to improve startup times is to [exclude unnecessary files and directories](/wiki/settings#workspaceignoredir) and to not load unnecessary [libraries](/wiki/libraries).
