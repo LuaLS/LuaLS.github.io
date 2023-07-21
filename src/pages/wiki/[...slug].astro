@@ -7,6 +7,7 @@ import WikiLink from "../../components/wiki/WikiLink.astro";
 import Remark from "../../components/common/Remark.astro";
 import type { CollectionEntry } from "astro:content";
 import Icon from "../../components/common/Icon.astro";
+import Footer from "../../components/layout/Footer.astro";
 
 const articles = await getCollection("wiki");
 
@@ -44,24 +45,27 @@ export interface Props {
         </nav>
       </div>
     </div>
-    <main>
-      <article>
-        {
-          entry.data.incomplete && (
-            <Remark type="WIP">
-              <p>
-                This document is in an incomplete state and info may be missing.
-              </p>
-            </Remark>
-          )
-        }
-        <div class="metadata">
-          <h1 id={slug}>{entry.data.title}</h1>
-          <p>{entry.data.description}</p>
-        </div>
-        <Content components={{ pre: CodeBlock, a: WikiLink }} />
-      </article>
-    </main>
+    <div class="center">
+      <main>
+        <article>
+          {
+            entry.data.incomplete && (
+              <Remark type="WIP">
+                <p>
+                  This document is in an incomplete state and info may be missing.
+                </p>
+              </Remark>
+            )
+          }
+          <div class="metadata">
+            <h1 id={slug}>{entry.data.title}</h1>
+            <p>{entry.data.description}</p>
+          </div>
+          <Content components={{ pre: CodeBlock, a: WikiLink }} />
+        </article>
+      </main>
+      <Footer/>
+    </div>
     <div id="outline" class="sidebar">
       <button class="open"><Icon name="list" group="solid" /></button>
       <button class="close"><Icon name="x" group="solid" /></button>
@@ -107,12 +111,18 @@ export interface Props {
     overscroll-behavior-block: none;
   }
 
-  main {
-    height: 100%;
-  }
-
   .columns {
     position: relative;
+
+    div.center {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      footer {
+        display: none;
+      }
+    }
   }
 
   .sidebar {
@@ -122,7 +132,7 @@ export interface Props {
     position: fixed;
     top: 3.5em;
     width: var(--sidebar-width);
-    z-index: 10;
+    z-index: 25;
 
     button.open,
     button.close {
@@ -154,6 +164,9 @@ export interface Props {
 
     .content {
       overflow-x: hidden;
+      overflow-y: auto;
+      max-height: calc(100% - 3.5em);
+      box-sizing: border-box;
       padding: 1em;
 
       nav {
@@ -273,20 +286,36 @@ export interface Props {
   }
 
   @media screen and (min-width: 1600px) {
+    html {
+      max-height: 100%;
+      overflow-y: hidden;
+    }
     .columns {
-      main {
-        width: 60%;
-        margin: 0px 20%;
+      height: calc(100% - 3.5em);
+      display: grid;
+      grid-template-columns: 20% 60% 20%;
+      grid-template-rows: 100%;
+
+      div.center {
+        overflow-y: auto;
+        scroll-behavior: smooth;
+        max-height: 100%;
+
+        footer {
+          display: flex;
+        }
       }
     }
 
+    :global(body > footer) {
+      display: none;
+    }
+
     .sidebar {
-      &#article-browser {
-        left: 0px;
-      }
-      &#outline {
-        right: 0px;
-      }
+      position: static;
+      z-index: 0;
+      width: 100%;
+
       button.open,
       button.close {
         display: none;
