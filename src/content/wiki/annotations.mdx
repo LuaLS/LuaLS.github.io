@@ -115,12 +115,28 @@ local myArray = {}
 
 To get an understanding of how to use the annotations described on this page, you'll need to know how to read the `Syntax` sections of each annotation.
 
-|           Symbol           |               Meaning                |
-| :------------------------: | :----------------------------------: |
-|       `<value_name>`       |  A required value that you provide   |
-|       `[value_name]`       |    Everything inside is optional     |
-|     `[value_name...]`      |       This value is repeatable       |
-| `value_name \| value_name` | The left **or** right side are valid |
+<table>
+  <tr>
+    <th>Symbol</th>
+    <th>Meaning</th>
+  </tr>
+  <tr>
+    <td>`<value_name>`</td>
+    <td>A required value that you provide</td>
+  </tr>
+  <tr>
+    <td>`[value_name]`</td>
+    <td>Everything inside is optional</td>
+  </tr>
+  <tr>
+    <td>`[value_name...]`</td>
+    <td>This value is repeatable</td>
+  </tr>
+  <tr>
+    <td>`value_name | value_name`</td>
+    <td>The left **or** right side are valid</td>
+  </tr>
+</table>
 
 Any other symbols are syntactically required and should be copied verbatim.
 
