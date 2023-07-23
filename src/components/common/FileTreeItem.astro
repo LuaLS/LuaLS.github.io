@@ -1,0 +1,54 @@
+---
+import Icon from "./Icon.astro";
+import Tooltip from "./Tooltip.astro";
+
+const TYPE_ICONS = {file: "file", code: "file-code", image: "file-image", directory: "folder"}
+
+const {name, type, open, gitignored} = Astro.props;
+
+const icon = TYPE_ICONS[type];
+
+if (icon === undefined) {
+    throw new Error(`Invalid file tree item type: ${type}`);
+}
+
+export interface Props {
+    name: string;
+    type: "file" | "code" | "image" | "directory";
+    gitignored?: boolean
+    open?: boolean;
+}
+---
+
+<details class="file-tree-item" open={open}>
+    <summary>
+        <Icon name={icon} group="solid"/>
+        {name}
+        {gitignored && <Tooltip text="Git ignored" placement="right"><Icon name="ban" group="solid"/></Tooltip>}
+    </summary>
+    <slot/>
+</details>
+
+<style lang="scss">
+details.file-tree-item {
+    summary {
+        list-style: none;
+        margin-left: 1em;
+
+        i.fa-solid {
+            margin-right: 0.5em;
+        }
+        i.fa-ban {
+            margin: 0px 0px 0px 1em;
+        }
+    }
+    :global(p) {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    & > :global(*) {
+        margin-left: 2em;
+    }
+}
+</style>
