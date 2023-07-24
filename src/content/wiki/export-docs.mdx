@@ -1,0 +1,266 @@
+---
+title: Export Documentation
+description: The language server can export documentation for your project in Markdown and JSON formats.
+---
+
+import Accordion from "../../components/common/Accordion.astro";
+import Tabs from "../../components/common/Tabs.astro";
+
+# Example
+
+<Accordion>
+    <span slot="summary">Markdown</span>
+    ````md
+    # Array
+
+    ## concat
+
+    ```Lua
+    (method) Array:concat(array: Array)
+    -> Object: Array
+    ```
+
+    Append an array to the end of this one, combining them
+
+    @_param_ `array` — The array to append to the end of this one
+
+    ## every
+
+    ```Lua
+    (method) Array:every(test: fun(index: integer, value: any, array: Array):boolean)
+    -> passed: boolean
+    ```
+
+    Returns `true` if every element in this array passes the testing function
+
+    @_return_ `passed` — If all elements passed the testing function
+
+    ## fill
+
+    ```Lua
+    (method) Array:fill(value: any, start: integer, stop?: integer)
+    -> Object: Array
+    ```
+
+    Fills the array with a `value` from `start` to `stop`
+
+    @_param_ `value` — The value to fill the array with
+
+    @_param_ `start` — The index to start filling at
+
+    @_param_ `stop` — The index to stop filling at
+
+    ...
+    ````
+
+</Accordion>
+
+<Accordion>
+    <span slot="summary">JSON</span>
+
+    ```JSON
+    [
+        {
+            "defines": [
+                {
+                    "file": "file:///c%3A/Users/Me/Documents/Array.lua",
+                    "finish": 10015,
+                    "start": 10010,
+                    "type": "doc.class"
+                }
+            ],
+            "fields": [
+                {
+                    "extends": {
+                        "finish": 140021,
+                        "start": 140016,
+                        "type": "getlocal",
+                        "view": "Array"
+                    },
+                    "file": "file:///c%3A/Users/Me/Documents/Array.lua",
+                    "finish": 140013,
+                    "name": "__index",
+                    "start": 140000,
+                    "type": "setfield"
+                },
+                {
+                    "extends": {
+                        "finish": 20030,
+                        "start": 20025,
+                        "type": "doc.type",
+                        "types": [
+                            {
+                                "finish": 20030,
+                                "start": 20025,
+                                "type": "doc.type.array",
+                                "view": "any[]"
+                            }
+                        ],
+                        "view": "any[]"
+                    },
+                    "file": "file:///c%3A/Users/Me/Documents/Array.lua",
+                    "finish": 20030,
+                    "name": "_items",
+                    "start": 20010,
+                    "type": "doc.field"
+                },
+                {
+                    "desc": "Append an array to the end of this one, combining them\n\n@*param* `array` — The array to append to the end of this one",
+                    "extends": {
+                        "args": [
+                            {
+                                "finish": 520008,
+                                "name": "self",
+                                "start": 520008,
+                                "type": "self",
+                                "view": "Array"
+                            },
+                            {
+                                "desc": "The array to append to the end of this one",
+                                "finish": 520027,
+                                "name": "array",
+                                "start": 520022,
+                                "type": "local",
+                                "view": "Array"
+                            }
+                        ],
+                        "desc": "Append an array to the end of this one, combining them\n\n@*param* `array` — The array to append to the end of this one",
+                        "finish": 610003,
+                        "returns": [
+                            {
+                                "name": "Object",
+                                "type": "function.return",
+                                "view": "Array"
+                            }
+                        ],
+                        "start": 520000,
+                        "type": "function",
+                        "view": "(method) Array:concat(array: Array)\n  -> Object: Array"
+                    },
+                    "file": "file:///c%3A/Users/Me/Documents/Array.lua",
+                    "finish": 520021,
+                    "name": "concat",
+                    "start": 520009,
+                    "type": "setmethod"
+                },
+                {
+                    "desc": "Returns `true` if every element in this array passes the testing function\n\n@*return* `passed` — If all elements passed the testing function",
+                    "extends": {
+                        "args": [
+                            {
+                                "finish": 790008,
+                                "name": "self",
+                                "start": 790008,
+                                "type": "self",
+                                "view": "Array"
+                            },
+                            {
+                                "finish": 790025,
+                                "name": "test",
+                                "start": 790021,
+                                "type": "local",
+                                "view": "fun(index: integer, value: any, array: Array):boolean"
+                            }
+                        ],
+                        "desc": "Returns `true` if every element in this array passes the testing function\n\n@*return* `passed` — If all elements passed the testing function",
+                        "finish": 880003,
+                        "returns": [
+                            {
+                                "desc": "If all elements passed the testing function",
+                                "name": "passed",
+                                "type": "function.return",
+                                "view": "boolean"
+                            }
+                        ],
+                        "start": 790000,
+                        "type": "function",
+                        "view": "(method) Array:every(test: fun(index: integer, value: any, array: Array):boolean)\n  -> passed: boolean"
+                    },
+                    "file": "file:///c%3A/Users/Me/Documents/Array.lua",
+                    "finish": 790020,
+                    "name": "every",
+                    "start": 790009,
+                    "type": "setmethod"
+                },
+                {
+                    "desc": "Fills the array with a `value` from `start` to `stop`\n\n@*param* `value` — The value to fill the array with\n\n@*param* `start` — The index to start filling at\n\n@*param* `stop` — The index to stop filling at",
+                    "extends": {
+                        "args": [
+                            {
+                                "finish": 950008,
+                                "name": "self",
+                                "start": 950008,
+                                "type": "self",
+                                "view": "Array"
+                            },
+                            {
+                                "desc": "The value to fill the array with",
+                                "finish": 950025,
+                                "name": "value",
+                                "start": 950020,
+                                "type": "local",
+                                "view": "any"
+                            },
+                            {
+                                "desc": "The index to start filling at",
+                                "finish": 950032,
+                                "name": "start",
+                                "start": 950027,
+                                "type": "local",
+                                "view": "integer"
+                            },
+                            {
+                                "desc": "The index to stop filling at",
+                                "finish": 950038,
+                                "name": "stop",
+                                "start": 950034,
+                                "type": "local",
+                                "view": "integer?"
+                            }
+                        ],
+                        "desc": "Fills the array with a `value` from `start` to `stop`\n\n@*param* `value` — The value to fill the array with\n\n@*param* `start` — The index to start filling at\n\n@*param* `stop` — The index to stop filling at",
+                        "finish": 1090003,
+                        "returns": [
+                            {
+                                "name": "Object",
+                                "type": "function.return",
+                                "view": "Array"
+                            }
+                        ],
+                        "start": 950000,
+                        "type": "function",
+                        "view": "(method) Array:fill(value: any, start: integer, stop?: integer)\n  -> Object: Array"
+                    },
+                    "file": "file:///c%3A/Users/Me/Documents/Array.lua",
+                    "finish": 950019,
+                    "name": "fill",
+                    "start": 950009,
+                    "type": "setmethod"
+                }
+            ],
+            "name": "Array",
+            "type": "type"
+        }
+    ]
+    ```
+
+</Accordion>
+
+# Instructions
+
+<Tabs
+  active="VS Code"
+  buttons={[
+    { name: "VS Code", image: "/images/vscode.svg", accent: "#23a9f2" },
+    { name: "Other", icon: "question", accent: "#ff158e" },
+  ]}
+>
+  <div data-tab="VS Code">Use the `Lua: Export Document` command</div>
+  <div data-tab="Other">
+    1. Use the [`--doc`](/wiki/usage#--doc) flag to provide a path to save the
+    documentation to.
+
+    2. [Run](/wiki/usage#run) the language server
+
+   </div>
+</Tabs>
