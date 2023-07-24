@@ -18,6 +18,8 @@
     "dayjs": "^1.11.9",
     "highlight.js": "^11.8.0",
     "jsdom": "^22.1.0",
+    "mermaid": "^10.2.4",
+    "rehype-mermaidjs": "^1.0.1",
     "sass": "^1.63.6",
     "tippy.js": "^6.3.7"
   },

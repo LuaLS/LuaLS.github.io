@@ -97,7 +97,37 @@ The server has supported [multi-root workspaces](https://code.visualstudio.com/d
   workspaces.
 </Remark>
 
-![Multi-root workspace diagram](https://github.com/LuaLS/vscode-lua/raw/master/images/wiki-workspace.png)
+```mermaid
+flowchart TD
+    fallback --- lua54
+
+    w1 --- lua53
+    w1 --- ccT
+    w1 --- busted
+
+    w2 --- lua51
+    w2 --- busted
+    w2 --- openresty
+
+    subgraph scopes [Scopes]
+        fallback(Fallback)
+        w1(Workspace 1)
+        w2(Workspace 2)
+    end
+
+
+    subgraph versions [Lua Versions]
+        lua51{{Lua 5.1}}
+        lua53{{Lua 5.3}}
+        lua54{{Lua 5.4}}
+    end
+
+    subgraph libraries [Libraries]
+        busted([Busted])
+        ccT([CC:Tweaked])
+        openresty([OpenResty])
+    end
+```
 
 The server creates a `<fallback>` scope by default. If you start the server while in "single file mode", this `<fallback>` scope is what is being used.
 
