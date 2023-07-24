@@ -1,0 +1,680 @@
+---
+title: Diagnostics
+description: There are various diagnostics used for reporting possible issues.
+---
+
+import Diagnostic from "../../components/wiki/Diagnostic.astro";
+
+Diagnostics can report possible issues at different severities such as `Information`, `Warning`, `Error`, etc.
+
+Also see [syntax errors](/wiki/syntax-errors).
+
+# List of all diagnostics
+
+Below is a list of all diagnostics. They are organized into groups that are used by [`diagnostics.groupFileStatus`](/wiki/settings#diagnosticsgroupfilestatus) and [`diagnostics.groupSeverity`](/wiki/settings#diagnosticsgroupseverity). The default severity is shown, but these can be edited using [`diagnostics.groupSeverity`](/wiki/settings#diagnosticsgroupseverity) and [`diagnostics.severity`](/wiki/settings#diagnosticsseverity). Some also list their default value for [`diagnostics.neededFileStatus`](/wiki/settings#diagnosticsneededfilestatus)
+
+## ambiguity
+
+The ambiguity diagnostic group contains diagnostics that have to do with ambiguous cases.
+
+<Diagnostic level="Warning">
+<span slot="name">
+### ambiguity-1
+</span>
+Triggered when there is an ambiguous statement that may need some brackets in order to correct the order of operations.
+
+![ambiguity-1](https://user-images.githubusercontent.com/61925890/181308848-15193c22-82bf-4dae-93f3-30deefd678b6.png)
+
+</Diagnostic>
+
+<Diagnostic level="Warning">
+<span slot="name">
+### count-down-loop
+</span>
+Triggers when a `for` loop will never reach its max/limit because it is incrementing when it should be decrementing.
+
+```lua
+for i=10, 1 do end
+```
+
+</Diagnostic>
+
+<Diagnostic level="Warning">
+<span slot="name">
+### different-requires
+</span>
+Triggered when a file is required under two different names. This can happen when requiring a file in two different directories:
+
+```txt
+📦 myProject/
+    ├── 📂 helpers/
+    │   ├── 📜 strings.lua
+    │   └── 📜 pretty.lua
+    └── 📜 main.lua
+```
+
+```lua
+-- main.lua
+local strings = require("helpers.strings")
+local pretty = require("helpers.pretty")
+```
+
+```lua
+-- helpers/pretty.lua
+local strings = require("strings")
+```
+
+</Diagnostic>
+
+<Diagnostic level="Warning">
+<span slot="name">
+### newfield-call
+</span>
+Triggered when calling a function across two lines from within a table. This may be unwanted and you may want to separate the fields with a comma (`,`) or semicolon (`;`) - unless you want to call the first field as a function.
+
+```lua
+local myTable = {
+  myFunc
+  ("param")
+}
+```
+
+</Diagnostic>
+
+<Diagnostic level="Warning">
+<span slot="name">
+### newline-call
+</span>
+Triggered when calling a function from the next line. This may be unintended and you may want to add a semicolon `;` to end the line.
+
+```lua
+print(1)
+('x'):sub(1, 2)
+```
+
+</Diagnostic>
+
+## await
+
+The await group contains diagnostics for asynchronous code.
+
+<Diagnostic level="Warning">
+<span slot="name">
+### await-in-sync
+</span>
+**Default File Status:** `"None"`
+
+Triggered when calling an asynchronous function from within a synchronous function.
+
+</Diagnostic>
+
+<Diagnostic level="Warning">
+<span slot="name">
+### not-yieldable
+</span>
+**Default File Status:** `"None"`
+
+Triggered when attempting to call `coroutine.yield()` when it is not permitted.
+
+</Diagnostic>
+
+## codestyle
+
+The codestyle group contains diagnostics for maintaining a good code style.
+
+<Diagnostic level="Warning">
+<span slot="name">
+### codestyle-check
+</span>
+**Default File Status:** `"None"`
+
+Triggered when the opinionated style checking detects an incorrectly styled line.
+
+</Diagnostic>
+
+<Diagnostic level="Information">
+<span slot="name">
+### spell-check
+</span>
+**Default File Status:** `"None"`
+
+Triggered when a typo is detected in a string. The dictionary can be customized using the [`Lua.spell.dict` setting](https://github.com/LuaLS/lua-language-server/wiki/Settings#spelldict).
+
+</Diagnostic>
+
+## duplicate
+
+The duplicate group contains diagnostics for duplicate indexes and names.
+
+<Diagnostic level="Warning">
+<span slot="name">
+### duplicate-index
+</span>
+
+Triggered when there are duplicate indices.
+
+```lua
+local t = {
+    -- triggered by indexes
+    [1] = "a",
+    [1] = "b",
+
+    -- triggered by keys as well
+    two = "c",
+    two = "d"
+}
+```
+
+</Diagnostic>
+
+<Diagnostic level="Warning">
+<span slot="name">
+### duplicate-set-field
+</span>
+
+Triggered when setting the same field in a class more than once. Check the names of your fields.
+
+```lua
+---@class myClass
+local myTable = {}
+
+function myTable:x() end
+
+function myTable:x() end
+```
+
+</Diagnostic>
+
+## global
+
+The global group contains diagnostics that deal with the global scope.
+
+<Diagnostic level="Warning">
+<span slot="name">
+### global-in-nil-env
+</span>
+
+Triggered when a global variable is defined and the environment (`_ENV`) is `nil`.
+
+```lua
+_ENV = nil
+
+myGlobalVar = true
+```
+
+</Diagnostic>
+
+<Diagnostic level="Information">
+<span slot="name">
+### lowercase-global
+
+Triggered when a global variable starts with a lowercase character. This is mainly for maintaining good practice.
+
+</span>
+
+</Diagnostic>
+
+<Diagnostic level="Information">
+<span slot="name">
+### undefined-env-child
+</span>
+Triggered when the environment (`_ENV`) is mutated and a previously global variable is no longer usable.
+
+```lua
+local A
+---@type iolib
+_ENV = {}
+print(A)
+```
+
+</Diagnostic>
+
+<Diagnostic level="Warning">
+<span slot="name">
+### undefined-global
+</span>
+Triggered when referencing an undefined global (assumed to be global). The typical "does not exist" warning. Double check that you have spelled things correctly and that the variable exists.
+
+</Diagnostic>
+
+## luadoc
+
+The luadoc group contains diagnostics for the [annotations](/wiki/annotations) used to document your code.
+
+<Diagnostic level="Warning">
+<span slot="name">
+### cast-type-mismatch
+</span>
+
+Triggered when casting a variable to a type that does not match its initial type.
+
+```lua
+---@type boolean
+local e = nil
+
+---@cast e integer
+```
+
+</Diagnostic>
+
+<Diagnostic level="Warning">
+<span slot="name">
+### circle-doc-class
+</span>
+
+Triggered when two classes inherit each other forming a never ending loop of inheritance.
+
+```lua
+---@class Car:Vehicle
+
+---@class Vehicle:Car
+```
+
+</Diagnostic>
+
+<Diagnostic level="Warning">
+<span slot="name">
+### doc-field-no-class
+</span>
+
+Triggered when a [`@field`](/wiki/annotations#field) is specified for a non-existent [`@class`](/wiki/annotations#class).
+
+</Diagnostic>
+
+<Diagnostic level="Warning">
+<span slot="name">
+### duplicate-doc-alias
+</span>
+
+Triggered when there are two [`@alias`](/wiki/annotations#alias) annotations with matching names.
+
+</Diagnostic>
+
+<Diagnostic level="Warning">
+<span slot="name">
+### duplicate-doc-field
+</span>
+
+Triggered when there are two [`@field`](/wiki/annotations#field) annotations with matching key values.
+
+</Diagnostic>
+
+<Diagnostic level="Warning">
+<span slot="name">
+### duplicate-doc-param
+</span>
+
+Triggered when there are two [`@param`](/wiki/annotations#param) annotations with matching names.
+
+</Diagnostic>
+
+<Diagnostic level="Warning">
+<span slot="name">
+### undefined-doc-class
+</span>
+
+Triggered when referencing an undefined class in a [`@class`](/wiki/annotations#class) annotation.
+
+</Diagnostic>
+
+<Diagnostic level="Warning">
+<span slot="name">
+### undefined-doc-name
+</span>
+
+Triggered when referencing an undefined type or [`@alias`](/wiki/annotations#alias) in a [`@type`](/wiki/annotations#type) annotation.
+
+</Diagnostic>
+
+<Diagnostic level="Warning">
+<span slot="name">
+### undefined-doc-param
+</span>
+
+Triggered when referencing an undefined parameter from a function declartion.
+
+```lua
+---@param doesNotExist number
+function subtract(a, b) end
+```
+
+</Diagnostic>
+
+<Diagnostic level="Warning">
+<span slot="name">
+### unknown-cast-variable
+</span>
+Triggered when attempting to cast an undefined variable. Double check that you have spelled things correctly and that the variable exists. Appears when using [`@cast`](/wiki/annotations#cast).
+
+</Diagnostic>
+
+<Diagnostic level="Warning">
+<span slot="name">
+### unknown-diag-code
+</span>
+
+Triggered when entering an invalid diagnostic code. A diagnostic code is like one of the many diagnosis codes found on this page.
+
+```lua
+---@diagnostic disable: doesNotExist
+```
+
+</Diagnostic>
+
+<Diagnostic level="Warning">
+<span slot="name">
+### unknown-operator
+</span>
+
+Triggered when an unknown operator is found like `**`.
+
+</Diagnostic>
+
+## redefined
+
+The redefined group contains diagnostics that warn when variables are being redefined.
+
+<Diagnostic level="Hint">
+<span slot="name">
+### redefined-local
+</span>
+Triggered when a local variable is being redefined. This will result in the redefinition being underlined. While still legal, it could cause confusion when trying to use the previously defined version of the local variable that may have since been mutated. It is good practice not to re-use local variable names for this reason.
+
+</Diagnostic>
+
+## strict
+
+The strict group contains diagnostics considered "strict". These can help you write better code but may require more work to follow.
+
+<Diagnostic level="Warning">
+<span slot="name">
+### clone-non-object
+</span>
+Triggered when attempting to [close a variable](https://www.lua.org/manual/5.4/manual.html#3.3.8) with a non-object. The value of the variable must be an object with the `__close` metamethod (a Lua 5.4 feature).
+
+```lua
+local x <close> = 1
+```
+
+</Diagnostic>
+
+<Diagnostic level="Warning">
+<span slot="name">
+### deprecated
+</span>
+Triggered when a variable has been marked as deprecated yet is still being used. The variable in question will also be ~~struck through~~.
+
+</Diagnostic>
+
+<Diagnostic level="Warning">
+<span slot="name">
+### discard-returns
+</span>
+Triggered when the returns of a function are being ignored when it is not permitted. Functions can specify that their returns cannot be ignored with [`@nodiscard`](/wiki/annotations#nodiscard).
+
+</Diagnostic>
+
+## strong
+
+The strong group contains diagnostics considered "strong". These can help you write better code but may require more work to follow.
+
+<Diagnostic level="Warning">
+<span slot="name">
+### no-unknown
+</span>
+**Default File Status:** `"None"`
+
+Triggered when a variable has an unknown type that cannot be inferred. Useful for more strict typing.
+
+</Diagnostic>
+
+## type-check
+
+The type-check group contains diagnostics that have to do with type checking.
+
+<Diagnostic level="Warning">
+<span slot="name">
+### assign-type-mismatch
+</span>
+Triggered when assigning a value, in which its type does not match the type of the variable it is being assigned to.
+
+The below will trigger this diagnostic because we are assigning a `boolean` to a `number`:
+
+```lua
+---@type number
+local isNum = false
+```
+
+</Diagnostic>
+
+<Diagnostic level="Warning">
+<span slot="name">
+### cast-local-type
+</span>
+Triggered when a local variable is being cast to a different value than it was defined as.
+
+```lua
+---@type boolean
+local myBool
+
+myBool = {}
+```
+
+</Diagnostic>
+
+<Diagnostic level="Warning">
+<span slot="name">
+### cast-type-mismatch
+</span>
+Triggered when casting a variable to a type that does not match its initial type.
+
+```lua
+---@type boolean
+local e = nil
+
+---@cast e integer
+```
+
+</Diagnostic>
+
+<Diagnostic level="Warning">
+<span slot="name">
+### need-check-nil
+</span>
+Triggered when indexing a possibly `nil` object. Serves as a reminder to confirm the object is not nil before indexing - which would throw an error on execution.
+
+```lua
+---@class Bicycle
+---@field move function
+
+---@type Bicycle|nil
+local bicycle
+
+-- need to make sure bicycle isn't nil first
+bicycle.move()
+```
+
+</Diagnostic>
+
+<Diagnostic level="Warning">
+<span slot="name">
+### param-type-mismatch
+</span>
+Triggered when the type of the provided parameter does not match the type requested by the function definition. Uses information defined with [`@param`](/wiki/annotations#param).
+
+</Diagnostic>
+
+<Diagnostic level="Warning">
+<span slot="name">
+### return-type-mismatch
+</span>
+Triggered when the provided `return` value is not of the same type that the function expected.
+
+```lua
+---@return number sum
+function add(a, b)
+    return false
+end
+```
+
+</Diagnostic>
+
+<Diagnostic level="Warning">
+<span slot="name">
+### undefined-field
+</span>
+Triggered when referencing an undefined field.
+
+```lua
+---@class myClass
+local myClass = {}
+
+-- undefined field "hello"
+myClass.hello()
+```
+
+</Diagnostic>
+
+## unbalanced
+
+The unbalanced group contains diagnostics that deal with too few or too many of an item being given - like too few required parameters.
+
+<Diagnostic level="Warning">
+<span slot="name">
+### missing-parameter
+</span>
+Triggered when a required parameter is not supplied when calling a function. Uses information defined with [`@param`](/wiki/annotation#param).
+
+</Diagnostic>
+
+<Diagnostic level="Warning">
+<span slot="name">
+### missing-return
+</span>
+Triggered when a required `return` is not supplied from within a function. Uses information defined with [`@return`](/wiki/annotations#return).
+
+</Diagnostic>
+
+<Diagnostic level="Warning">
+<span slot="name">
+### missing-return-value
+</span>
+Triggered when a `return` is specified but the return value is not. Uses information defined with [`@return`](/wiki/annotations#return).
+
+</Diagnostic>
+
+<Diagnostic level="Warning">
+<span slot="name">
+### redundant-parameter
+</span>
+Triggered when providing an extra parameter that a function does not ask for. Uses information defined with [`@param`](/wiki/annotations#param).
+
+</Diagnostic>
+
+<Diagnostic level="Warning">
+<span slot="name">
+### redundant-return-value
+</span>
+Triggered when a `return` is returning an extra value that the function has not requested. Uses information defined with [`@return`](/wiki/annotations#return).
+
+</Diagnostic>
+
+<Diagnostic level="Warning">
+<span slot="name">
+### redundant-value
+</span>
+Triggered when providing an extra value to an assignment operation that will go unused.
+
+```lua
+local a, b = 1, 2, 3
+```
+
+</Diagnostic>
+
+<Diagnostic level="Warning">
+<span slot="name">
+### unbalanced-assignments
+</span>
+Triggered when there are more variables being assigned than values to assign them.
+
+```lua
+local a, b, c = 1, 2
+```
+
+</Diagnostic>
+
+## unused
+
+The unused group contains diagnostics that report unused or unnecessary items.
+
+<Diagnostic level="Hint">
+<span slot="name">
+### code-after-break
+</span>
+Triggered when unreachable code is added after a `break` in a loop. This will result in the affected code becoming slightly transparent.
+
+</Diagnostic>
+
+<Diagnostic level="Hint">
+<span slot="name">
+### empty-block
+</span>
+Triggered when a code block is left empty. This will result in the code block becoming slightly transparent.
+
+</Diagnostic>
+
+<Diagnostic level="Hint">
+<span slot="name">
+### redundant-return
+</span>
+Triggered when placing a `return` that is not needed as the function would exit on its own.
+
+</Diagnostic>
+
+<Diagnostic level="Hint">
+<span slot="name">
+### trailing-space
+</span>
+Triggered when a trailing space is detected. This will result in the trailing space being underlined.
+
+</Diagnostic>
+
+<Diagnostic level="Hint">
+<span slot="name">
+### unreachable-code
+</span>
+Triggered when a section of code can never be reached. This will result in the affected code becoming slightly transparent.
+
+</Diagnostic>
+
+<Diagnostic level="Hint">
+<span slot="name">
+### unused-function
+</span>
+Triggered when a function is defined but never called. This results in the function becoming slightly transparent.
+
+</Diagnostic>
+
+<Diagnostic level="Hint">
+<span slot="name">
+### unused-label
+</span>
+Triggered when a label is defined but never used. This results in the label becoming slightly transparent.
+
+</Diagnostic>
+
+<Diagnostic level="Hint">
+<span slot="name">
+### unused-local
+</span>
+Triggered when a `local` variable is defined but never referenced. This results in the variable becoming slightly transparent.
+
+</Diagnostic>
+
+<Diagnostic level="Hint">
+<span slot="name">
+### unused-varag
+</span>
+Triggered when the variable arguments symbol (`...`) in a function is unused. This results in the symbol becoming slightly transparent.
+
+</Diagnostic>

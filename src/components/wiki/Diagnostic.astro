@@ -1,0 +1,64 @@
+---
+import Icon from '../common/Icon.astro';
+import Tooltip from '../common/Tooltip.astro';
+const LEVEL_ICONS = {
+    Information: "info",
+    Warning: "triangle-exclamation",
+    Error: "exclamation",
+    Hint: "lightbulb"
+}
+
+const {level} = Astro.props;
+
+const icon = LEVEL_ICONS[level];
+
+export interface Props {
+    level: "Information" | "Warning" | "Error" | "Hint";
+}
+---
+
+<div class:list={["diagnostic", level]}>
+    <div>
+        <slot name="name"/>
+        <Tooltip text={`Default severity: ${level}`}><Icon name={icon} group="solid"/></Tooltip>
+    </div>
+    <slot/>
+</div>
+
+<style lang="scss">
+    div.diagnostic {
+        border-radius: 0.5em;
+        padding: 0.5em;
+
+        & > div:first-of-type() {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            :global(:first-child) {
+                display: block;
+                width: 100%;
+                margin-top: 0px;
+                margin-bottom: 0px;
+                margin-left: 0.5em;
+            }
+
+            i.fa-solid {
+                color: var(--level-color);
+                font-size: 2em;
+            }
+        }
+
+        &.Warning {
+            --level-color: #ff9100;
+        }
+
+        &.Hint {
+            --level-color: #aaaaaa;
+        }
+
+        &.Error {
+            --level-color: #ff0000;
+        }
+    }
+</style>
