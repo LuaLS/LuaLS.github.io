@@ -1,0 +1,119 @@
+---
+import Layout from "../layouts/Main.astro";
+import Remark from "../components/common/Remark.astro";
+import ExternalLink from "../components/common/ExternalLink.astro";
+---
+
+<Layout title="Privacy">
+  <main>
+    <h1>Privacy Policy</h1>
+
+    <p>
+      This website is statically generated using <ExternalLink
+        url="https://astro.build"
+      >
+        Astro
+      </ExternalLink>, meaning when you request a page, you are simply getting
+      raw HTML, CSS, and JavaScript from the hosting server. The website is
+      served using <ExternalLink url="https://pages.github.com/">
+        GitHub Pages
+      </ExternalLink>, which follows <ExternalLink
+        url="https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement"
+      >
+        GitHub's privacy policy
+      </ExternalLink>. Aside from GitHub's service, there is no telemetry or
+      tracking implemented into this website. You can view the source code for
+      this website <ExternalLink url="https://github.com/LuaLS/LuaLS">
+        on GitHub
+      </ExternalLink>.
+    </p>
+
+    <p>
+      The static pages that you receive may utilize JavaScript to request
+      additional resources. For example, the homepage makes requests to GitHub's
+      API to receive the number of stars on the repository. <b
+        >These requests are subject to the privacy policies of those services</b
+      >.
+    </p>
+
+    <hr />
+
+    <h1>Language Server Privacy Policy</h1>
+
+    <Remark type="deprecated" display="inline">
+      Telemetry has been removed since <code>v3.6.5</code>, thank you for your
+      positive feedback in the community!
+    </Remark>
+
+    <p>
+      The language server has opt-in telemetry that helps improve the
+      lua-language-server by sending usage statistics and exceptions to the
+      development team. Only when a user explicitly opts-in will any data ever
+      be sent. If you choose to enable telemetry, I would be very grateful.
+    </p>
+
+    <p>
+      By default, it is disabled but can be enabled by setting <a
+        href="/wiki/settings#telemetryenable"><code>telemetry.enable</code></a
+      >
+      to <code>true</code>. To disable telemetry notifications, set <a
+        href="/wiki/settings#telemetryenable"><code>telemetry.enable</code></a
+      > to <code>false</code>.
+    </p>
+
+    <h2>Collected Data</h2>
+    <p>
+      Anonymous, non-identifying usage and stack traces from errors is sent to
+      the development team, including:<br />
+      <ul>
+        <li>A random token, used to count the unique number of users.</li>
+        <li>Extension version, e.g. <code>2.2.0</code>.</li>
+        <li>OS, e.g. <code>Windows 64</code>.</li>
+        <li>Client name, e.g. <code>Visual Studio Code 1.54.3</code>.</li>
+        <li>C++ runtime name, e.g. <code>msvc MSVC STL 202011L</code>.</li>
+        <li>C++ compiler name, e.g. <code>msvc MSVC 1928</code>.</li>
+        <li>
+          Stack traces of <code>Lua-language-server</code>, relative paths are
+          used, so it does not contain any user information.
+        </li>
+      </ul>
+      <br />
+      Telemetry code can be found at <ExternalLink
+        url="https://github.com/LuaLS/lua-language-server/blob/master/script/service/telemetry.lua"
+      >
+        /script/service/telemetry.lua.
+      </ExternalLink>
+    </p>
+    <h2>Usage of Collected Data</h2>
+    <p>
+      The collected data is reviewed by the development team and used to improve
+      the lua-language-server. The collected data is <ExternalLink
+        url="http://154.23.191.39"
+      >
+        publicly available
+      </ExternalLink>.
+      <br />
+      The collection server's code can be viewed at <ExternalLink
+        url="https://github.com/sumneko/lua-telemetry-server/tree/master/method"
+      >
+        sumneko/lua-telemetry-server
+      </ExternalLink>.
+    </p>
+    <p>
+      In addition to improving the quality of the extension through error
+      reports, the reporting of the number of users will help motivate me to
+      continue developing.
+    </p>
+  </main>
+</Layout>
+
+<style lang="scss">
+  main {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  p {
+    text-align: center;
+  }
+</style>
