@@ -38,9 +38,11 @@ export interface Props {
         <div class="title">Articles</div>
         <nav>
           {
-            articles.map((article) => (
-              <a href={`/wiki/${article.slug}`}>{article.data.title}</a>
-            ))
+            articles
+              .sort((a, b) => a.data.title.localeCompare(b.data.title))
+              .map((article) => (
+                <a href={`/wiki/${article.slug}`}>{article.data.title}</a>
+              ))
           }
         </nav>
       </div>
