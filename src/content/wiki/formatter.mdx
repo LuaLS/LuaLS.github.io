@@ -1,0 +1,77 @@
+---
+title: Code Formatting
+description: Format your code using EmmyLuaCodeStyle
+---
+
+import Remark from "../../components/common/Remark.astro";
+import Tabs from "../../components/common/Tabs.astro";
+
+The language server has a built-in code formatter, courtesy of [`CppCXY/EmmyLuaCodeStyle`](https://github.com/CppCXY/EmmyLuaCodeStyle), that allows you to easily format your code. It also offers [code style checking](#code-style-checking)
+
+<Remark type="note">
+  Please create issues related to the formatter in [its
+  repository](https://github.com/CppCXY/EmmyLuaCodeStyle/issues).
+</Remark>
+
+# Configuration
+
+The configuration file must be called `.editorconfig` and uses YAML syntax. This file must be in the project root, however, you can also have multiple in different directories if you want the various directories to format differently.
+
+A template `.editorconfig` can be found at [`CppCXY/EmmyLuaCodeStyle/lua.template.editorconfig`](https://github.com/CppCXY/EmmyLuaCodeStyle/blob/master/lua.template.editorconfig).
+
+For more info, refer to [`CppCXY/EmmyLuaCodeStyle`](https://github.com/CppCXY/EmmyLuaCodeStyle).
+
+# Default Configuration
+
+To set a default global configuration across projects, navigate to your [configuration file](/wiki/configuration#configuration-file) and perform the below:
+
+<Tabs
+  active="JSON"
+  buttons={[
+    { name: "JSON", image: "/images/json.svg", accent: "#959595" },
+    { name: "Lua", image: "/images/lua.svg", accent: "#000080" },
+  ]}
+>
+  <div data-tab="JSON">
+This format is used by Visual Studio Code's `settings.json` and `.luarc.json` files.
+
+```JSON
+"Lua.format.defaultConfig":{
+    "indent_style":"space",
+    "indent_size":"2"
+}
+```
+
+  </div>
+  <div data-tab="Lua">
+    This format is used by custom configuration files, often used with Neovim.
+
+    ```Lua
+    Lua = {
+    format = {
+        enable = true,
+        -- Put format options here
+        -- NOTE: the value should be String!
+        defaultConfig = {
+        indent_style = "space",
+        indent_size = "2",
+        }
+    },
+    }
+    ```
+
+  </div>
+</Tabs>
+<Remark type="warning">
+  Although indentation is used in the examples above, it may not actually be
+  effective, as the editor's native indentation settings will be used instead,
+  when available.
+</Remark>
+
+# Code Style Checking
+
+To enable code style checking, you need to add the following entry to [`diagnostics.neededFileStatus`](/wiki/settings#diagnosticsneededfilestatus):
+
+```JSON
+["codestyle-check"] = "Any"
+```
