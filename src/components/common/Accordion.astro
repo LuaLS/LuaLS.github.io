@@ -10,13 +10,9 @@ const open = Astro.props.open ?? false;
 
 <details open={open} class="accordion">
     <summary
-        ><Icon name="chevron-right" group="solid" /><slot
-            name="summary"
-        /></summary
+        ><Icon name="chevron-right" group="solid" /><slot name="summary" /></summary
     >
-    <div class="content">
-        <slot />
-    </div>
+    <div class="content"><slot /></div>
 </details>
 
 <style lang="scss">
@@ -36,6 +32,18 @@ const open = Astro.props.open ?? false;
                 transform: rotate(0);
                 transition: transform ease-in-out 0.25s;
             }
+        }
+
+        & > summary :global(h1),
+        & > summary :global(h2),
+        & > summary :global(h3),
+        & > summary :global(h4),
+        & > summary :global(h5),
+        & > summary :global(h6) {
+            display: inline;
+            font-size: 1.25rem;
+            font-weight: 400;
+            font-family: "Poppins";
         }
 
         & > div.content {
