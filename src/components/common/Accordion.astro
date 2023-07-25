@@ -2,61 +2,86 @@
 import Icon from "./Icon.astro";
 
 export interface Props {
-    open?: boolean;
+  open?: boolean;
 }
 
 const open = Astro.props.open ?? false;
 ---
 
 <details open={open} class="accordion">
-    <summary
-        ><Icon name="chevron-right" group="solid" /><slot name="summary" /></summary
-    >
-    <div class="content"><slot /></div>
+  <summary
+    ><Icon name="chevron-right" group="solid" /><slot name="summary" /></summary
+  >
+  <div class="content"><slot /></div>
 </details>
 
-<style lang="scss">
-    details {
-        position: relative;
-        background-color: #1b1e1f;
-        border-radius: 0.5em;
-        margin: 0.5em auto;
+<script>
+  const checkExpansion = () => {
+    const hash = window.location.hash;
+    console.log(hash);
+    if (!hash) return;
 
-        & > summary {
-            list-style: none;
-            padding: 0.25em;
-            user-select: none;
+    const element = document.querySelector(hash);
+    if (!element) return;
 
-            i.fa-chevron-right {
-                margin: 0px 1em 0px 0.5em;
-                transform: rotate(0);
-                transition: transform ease-in-out 0.25s;
-            }
+    const instances = document.querySelectorAll("details.accordion");
+
+    for (const instance of instances) {
+      if (instance.contains(element)) {
+        if (instance.getAttribute("open") === null) {
+          instance.toggleAttribute("open");
+          setTimeout(() => instance.scrollIntoView({ behavior: "smooth" }), 5);
         }
-
-        & > summary :global(h1),
-        & > summary :global(h2),
-        & > summary :global(h3),
-        & > summary :global(h4),
-        & > summary :global(h5),
-        & > summary :global(h6) {
-            display: inline;
-            font-size: 1.25rem;
-            font-weight: 400;
-            font-family: "Poppins";
-        }
-
-        & > div.content {
-            background-color: #131516;
-            padding: 1em;
-        }
-
-        &[open] {
-            & > summary {
-                i.fa-chevron-right {
-                    transform: rotate(90deg);
-                }
-            }
-        }
+      }
     }
+  };
+
+  window.addEventListener("hashchange", checkExpansion);
+  checkExpansion();
+</script>
+
+<style lang="scss">
+  details {
+    position: relative;
+    background-color: #1b1e1f;
+    border-radius: 0.5em;
+    margin: 0.5em auto;
+
+    & > summary {
+      list-style: none;
+      padding: 0.25em;
+      user-select: none;
+
+      i.fa-chevron-right {
+        margin: 0px 1em 0px 0.5em;
+        transform: rotate(0);
+        transition: transform ease-in-out 0.25s;
+      }
+    }
+
+    & > summary :global(h1),
+    & > summary :global(h2),
+    & > summary :global(h3),
+    & > summary :global(h4),
+    & > summary :global(h5),
+    & > summary :global(h6) {
+      display: inline;
+      font-size: 1.25rem;
+      font-weight: 400;
+      font-family: "Poppins";
+    }
+
+    & > div.content {
+      background-color: #131516;
+      padding: 1em;
+    }
+
+    &[open] {
+      & > summary {
+        i.fa-chevron-right {
+          transform: rotate(90deg);
+        }
+      }
+    }
+  }
 </style>
