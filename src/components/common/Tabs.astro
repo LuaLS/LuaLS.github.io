@@ -68,9 +68,11 @@ tabs.querySelector(`[data-tab="${active}"]`)?.classList.add("active");
 
   for (const instance of instances) {
     const buttons = instance.querySelectorAll<HTMLButtonElement>(
-      "div.buttons > button"
+      ":scope > div.buttons > button"
     );
-    const tabContainer = instance.querySelector<HTMLDivElement>("div.windows");
+    const tabContainer = instance.querySelector<HTMLDivElement>(
+      ":scope > div.windows"
+    );
 
     if (!tabContainer) {
       console.error("Failed to get tabs for tabs component", instance);
