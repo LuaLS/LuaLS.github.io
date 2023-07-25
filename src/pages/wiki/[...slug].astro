@@ -54,7 +54,8 @@ export interface Props {
             entry.data.incomplete && (
               <Remark type="WIP">
                 <p>
-                  This document is in an incomplete state and info may be missing.
+                  This document is in an incomplete state and info may be
+                  missing.
                 </p>
               </Remark>
             )
@@ -66,7 +67,7 @@ export interface Props {
           <Content components={{ pre: CodeBlock, a: WikiLink }} />
         </article>
       </main>
-      <Footer/>
+      <Footer />
     </div>
     <div id="outline" class="sidebar">
       <button class="open"><Icon name="list" group="solid" /></button>
@@ -211,7 +212,6 @@ export interface Props {
           font-size: 1.15em;
         }
       }
-
     }
 
     &#outline {
