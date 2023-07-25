@@ -4,13 +4,15 @@ description: Answers for frequently asked questions
 ---
 
 import Accordion from "../../components/common/Accordion.astro";
+import AccordionGroup from "../../components/common/AccordionGroup.astro";
 import Tabs from "../../components/common/Tabs.astro";
 import Remark from "../../components/common/Remark.astro";
 
-<Accordion>
-<span slot="summary">
-## Where can I find the log file?
-</span>
+<AccordionGroup>
+  <Accordion>
+  <span slot="summary">
+  ## Where can I find the log file?
+  </span>
 
 For debugging and a more detailed log file, you can add [`--loglevel=trace`](/wiki/usage#--loglevel) to [`misc.parameters`](/wiki/settings#miscparameters) or directly to the command line, if using it. If you are filing a bug report, please do so as it provides more info for the development team.
 
@@ -43,19 +45,21 @@ For debugging and a more detailed log file, you can add [`--loglevel=trace`](/wi
     Replace the `X.X.X` in the file path with the version of the extension you are
     using.
   </div>
+  {/* prettier-ignore */}
   <div data-tab="Other">
-    - `/path/to/lua-language-server/log/` - `sumneko_lua/log/`
-  </div>
+      - `/path/to/lua-language-server/log/`
+      - `sumneko_lua/log/`
+    </div>
 </Tabs>
 
 You can also specify a custom location for the logs through the [command line](/wiki/usage#--logpath). This can be specified using the [`misc.parameters`](/wiki/settings#miscparameters) setting when using Visual Studio Code.
 
-</Accordion>
+  </Accordion>
 
-<Accordion>
-  <span slot="summary">
-  ## Why are there two workspaces/progress bars?
-  </span>
+  <Accordion>
+    <span slot="summary">
+    ## Why are there two workspaces/progress bars?
+    </span>
 
 ```mermaid
 flowchart TD
@@ -100,12 +104,12 @@ When libraries are included globally, it can cause a few issues:
 
 Make sure you are including libraries using a workspace-specific configuration file to prevent including a library in all of your projects.
 
-</Accordion>
+  </Accordion>
 
-<Accordion>
-    <span slot="summary">
-  ## Why is the server scanning the wrong folder?
-  </span>
+  <Accordion>
+      <span slot="summary">
+    ## Why is the server scanning the wrong folder?
+    </span>
 
 When a workspace is opened, the client will send the URI of the directory to be scanned. When you open a single file, the client is supposed to send `null` for the URI as there is no workspace, just a single file. However, some clients will mistakenly send the URI of the extension, or worse, the home directory. The server will do as it is told and scan what is sent, which can obviously cause issues should the home directory be sent.
 
@@ -138,12 +142,12 @@ In Visual Studio Code, this should never happen as the [`sumneko.lua`](https://m
 
 When not using Visual Studio Code, check the `rootUri` field in your configuration - some clients allow users to customize this value. If the value is correct or cannot be modified, please report the issue to the developer of the client you are using.
 
-</Accordion>
+  </Accordion>
 
-<Accordion>
-    <span slot="summary">
-    ## How can I improve startup speeds?
-    </span>
+  <Accordion>
+      <span slot="summary">
+      ## How can I improve startup speeds?
+      </span>
 
 **TL;DR:** Only include necessary libraries and ignore as many files/directories as you can.
 
@@ -153,7 +157,8 @@ You can use a [configuration file](/wiki/configuration#configuration-file) to sp
 
 To get a better understaning of startup times, you may want to view the [performance benchmarking test](/wiki/performance).
 
-</Accordion>
+  </Accordion>
+</AccordionGroup>
 
 <br />
 <br />

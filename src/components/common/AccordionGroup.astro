@@ -1,0 +1,29 @@
+{/* Only allows one child accordion to be open at a time */}
+
+<div class="accordion-group">
+  <slot />
+</div>
+
+<script>
+  const instances = document.querySelectorAll("div.accordion-group");
+
+  for (const instance of instances) {
+    const children = instance.querySelectorAll(":scope > details.accordion");
+
+    children.forEach((child) => {
+      child.addEventListener("toggle", () => {
+        // When accordion is opened, close all others
+        if (child.getAttribute("open") !== null) {
+          const others = Array.from(children).filter(
+            (c) => !c.isSameNode(child)
+          );
+          others.forEach((e) => {
+            if (e.getAttribute("open") !== null) {
+              e.toggleAttribute("open");
+            }
+          });
+        }
+      });
+    });
+  }
+</script>

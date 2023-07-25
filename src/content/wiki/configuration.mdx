@@ -6,6 +6,7 @@ getting-started: true
 
 import Remark from "../../components/common/Remark.astro";
 import Accordion from "../../components/common/Accordion.astro";
+import AccordionGroup from "../../components/common/AccordionGroup.astro";
 
 The language server is highly configurable. You can view all of the settings in [this wiki](/wiki/settings) or in the [JSON schema](https://github.com/LuaLS/vscode-lua/tree/master/setting), which is available in multiple languages.
 
@@ -45,8 +46,11 @@ Other settings like [`workspace.library`](/wiki/settings#workspace-library) _sho
 
 Below are some examples for getting set up in Neovim in different environments.
 
-<Accordion>
-  <span slot="summary">Using built-in LSP client</span>
+<AccordionGroup>
+  <Accordion>
+    <span slot="summary">
+    ### Using built-in LSP client
+    </span>
 
 Below is a minimal example showing how to set the runtime version of the language server.
 
@@ -90,10 +94,12 @@ require'lspconfig'.lua_ls.setup{
 }
 ```
 
-</Accordion>
+  </Accordion>
 
-<Accordion>
-  <span slot="summary">Using [coc.nvim](https://github.com/neoclide/coc.nvim)</span>
+  <Accordion>
+    <span slot="summary">
+    ### Using [coc.nvim](https://github.com/neoclide/coc.nvim)
+    </span>
 
 1. Execute `:CocConfig;`
 2. A JSON file should open
@@ -136,12 +142,15 @@ require'lspconfig'.lua_ls.setup{
 }
 ```
 
-</Accordion>
+  </Accordion>
+</AccordionGroup>
 
 ## Kakoune
 
 <Accordion>
-  <span slot="summary">Using [kak-lsp](https://github.com/kak-lsp/kak-lsp)</span>
+  <span slot="summary">
+  ### Using [kak-lsp](https://github.com/kak-lsp/kak-lsp)
+  </span>
 
 **Installation**
 
