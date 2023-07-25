@@ -3,11 +3,23 @@ import { getCollection } from "astro:content";
 import Icon from "../../components/common/Icon.astro";
 import Layout from "../../layouts/Main.astro";
 import Remark from "../../components/common/Remark.astro";
-import Loading from "../../components/common/Loading.astro";
+
+const CONTRIBUTOR_COUNT = 30;
 
 const wikiArticles = await getCollection("wiki", ({ data }) => {
   return data["getting-started"] === true;
 });
+
+const getContributorPlaceholders = () => {
+  const elements = [];
+  for (let i = 0; i < CONTRIBUTOR_COUNT; i++) {
+    elements.push(
+      `<div class="contributor placeholder"><img src="/images/user.svg"><div class="username">Contributor</div></div>`
+    );
+  }
+
+  return elements;
+};
 ---
 
 <Layout title="Wiki">
@@ -49,9 +61,7 @@ const wikiArticles = await getCollection("wiki", ({ data }) => {
             color="red"
           />
         </p>
-        <Loading>
-          <div class="grid"></div>
-        </Loading>
+        <div class="grid" set:html={getContributorPlaceholders()} />
       </section>
     </div>
   </main>
@@ -79,14 +89,15 @@ const wikiArticles = await getCollection("wiki", ({ data }) => {
     throw new Error("Failed to find contributor container!");
   }
 
-  const endpoint =
-    "https://api.github.com/repos/LuaLS/lua-language-server/contributors?per_page=30";
+  const placeholders = contributorContainer.querySelectorAll("div.placeholder");
+
+  const endpoint = `https://api.github.com/repos/LuaLS/lua-language-server/contributors?per_page=30`;
 
   const cache = new SmartCache(endpoint, {
     includeSearch: false,
   });
 
-  let contributors = await cache.get() as Contributor[];
+  let contributors = (await cache.get()) as Contributor[];
 
   if (!contributors) {
     throw new Error("Could not get contributors");
@@ -136,7 +147,11 @@ const wikiArticles = await getCollection("wiki", ({ data }) => {
       });
     }
 
-    contributorContainer.dispatchEvent(new CustomEvent("content_loaded", {bubbles: true}));
+    placeholders.forEach((placeholder) => placeholder.remove());
+
+    contributorContainer.dispatchEvent(
+      new CustomEvent("content_loaded", { bubbles: true })
+    );
   }
 </script>
 
@@ -182,6 +197,14 @@ const wikiArticles = await getCollection("wiki", ({ data }) => {
       grid-template-columns: repeat(auto-fill, minmax(6em, 1fr));
       gap: 1em;
       margin: 0px 1em;
+    }
+
+    :global(div.contributor.placeholder) {
+      --tier-color: #fff;
+
+      :global(img) {
+        border: none;
+      }
     }
 
     :global(div.contributor) {
