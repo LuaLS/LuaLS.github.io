@@ -1,0 +1,200 @@
+---
+title: Syntax Errors
+description: List of syntax errors that can be reported.
+---
+import Remark from "../../components/common/Remark.astro";
+
+A syntax error will appear when the Lua syntax has been violated, which will result in a error at runtime.
+
+These work _similar_ to [diagnostics](/wiki/diagnostics).
+
+## List of all syntax errors
+
+Below is a list of all of the possible syntax errors that can be reported by the language server:
+
+### action-after-return
+
+Triggered when there is unreachable code after a `return`.
+
+### args-after-dots
+
+Triggered when there is a parameter defined after a variable arguments symbol (`...`).
+
+### block-after-else
+
+Triggered when there is an `else` or `elseif` after a terminating `else` in an `if` statement.
+
+```lua
+if myVar then
+    print("Truthy")
+else
+    print("Falsy")
+elseif nil then --Error!
+
+end
+```
+
+### break-outside
+
+Triggered when a `break` is placed outside of a `break`-able loop.
+
+### err-assign-as-eq
+
+Triggered when using the equality symbol (`==`) to assign a variable. You should instead use the assignment symbol `=`.
+
+### err-c-long-comment
+
+Triggered when using `/** */` for multi-line comments instead of `--[[ ]]`, as required by Lua's syntax. You should instead use `--[[ ]]` for your multi-line comments.
+
+### err-comment-prefix
+
+Triggered when using `//` for comments instead of `--`, as required by Lua's syntax. You should instead use `--` for your comments and `---` for your annotations.
+
+### err-do-as-then
+
+Triggered when using `then` instead of `do` for a `while` loop.
+
+### err-eq-as-assign
+
+Triggered when using the assignment symbol (`=`) to test equality. You should instead use the equality symbol `==`.
+
+### err-esc
+
+Triggered when an unknown escape sequence is found, such as `"\c"`.
+
+### err-nonstandard-symbol
+
+Triggered when using a non-Lua symbol like `&&` instead of `and` or `||` instead of `or`.
+
+### err-then-as-do
+
+Triggered when using `do` instead of `then` in an `if` statement.
+
+### exp-in-action
+
+Triggered when there is an unexpected expression like in `local 3 + 2 = 10` - there is an unexpected expression during an assignment action.
+
+### index-in-func-name
+
+Triggered when there is an indexing operation taking place in a function's name e.g. `function myTable[1]() end`.
+
+### jump-local-scope
+
+Triggered when a local variable is "jumped" over using `goto` and labels. "jumping" the variable means it is never defined and will cause errors when it is referenced. This diagnostic serves to protect against such errors.
+
+```lua
+goto jump
+
+local a = 10
+
+::jump::
+-- a is jumped over by this label,
+-- meaning it is never defined
+
+print(a)
+```
+
+### keyword
+
+Triggered when using a reserved keyword as a name e.g. `local true = "hello"`.
+
+### local-limit
+
+Triggered when the limit for `local` variables has been reached in this scope. Lua has a [limit of 200 local variables](https://stackoverflow.com/a/66539256) in each scope.
+
+### malformed-number
+
+Triggered when a malformed number is found like `0y16` instead of `0x16` or `0.0.4`.
+
+### miss-end
+
+Triggered when an `end` is missing from an `if`, `for`, `while`, or `function`. This is usually due to nesting and a matching `end` is missing from an outer `if`, `for`, etc.
+
+### miss-esc-x
+
+Triggered when the hexadecimal digits are missing from an `\x` hexadecimal escape.
+
+### miss-exp
+
+Triggered when an expression is missing from your code. For example, forgetting the expression to an if statement, i.e. `if then end`.
+
+### miss-exponent
+
+Triggered when the exponent has been left out when representing a number in exponent form.
+
+```lua
+local incorrect = 1e
+local correct = 1e10
+```
+
+### miss-field
+
+Triggered when a field reference is underway but no field name has been given e.g. `print(myTable.)`.
+
+### miss-loop-max
+
+Triggered when the maximum (limit) to a `for` loop is not provided.
+
+### miss-loop-min
+
+Triggered when the minimum (start) to a `for` loop is not provided.
+
+### miss-method
+
+Triggered when a method (`:`) is being called but the method name is not provided e.g. `Class:`.
+
+### miss-name
+
+Triggered when the name is missing to a function/method.
+
+### miss-sep-in-table
+
+Triggered when a separator (`,` or `;`) is missing from a table.
+
+### miss-space-between
+
+<Remark type="WIP" display="compact">Description needed</Remark>
+
+### miss-symbol
+
+<Remark type="WIP" display="compact">Description needed</Remark>
+
+### set-const
+
+<Remark type="WIP" display="compact">Description needed</Remark>
+
+### unexpect-dots
+
+Triggered when using the variable arguments symbol (`...`) outside of a function that has variable arguments.
+
+### unexpect-efunc-name
+
+Triggered when a function is being assigned to a variable and is also given a name.
+
+```lua
+local x = function x() end
+```
+
+### unexpect-lfunc-name
+
+Triggered when a function is marked as local. The method either belongs to a table or is a local function, not both.
+
+```lua
+local function x:t() end
+```
+
+### unexpect-symbol
+
+<Remark type="WIP" display="compact">Description needed</Remark>
+
+### unicode-name
+
+Triggered when a variable name contains unicode characters. Unicode characters can be allowed by disabling this diagnostic or by enabling [`runtime.unicodeName`](/wiki/settings#runtimeunicodename).
+
+### unknown-attribute
+
+<Remark type="WIP" display="compact">Description needed</Remark>
+
+### unknown-symbol
+
+Triggered when an unknown symbols is found like in `local a = &`. A simple syntax error, most likely a typo.
