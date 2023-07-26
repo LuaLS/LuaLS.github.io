@@ -8,13 +8,12 @@ import Icon from "../../components/common/Icon.astro";
 
 Addons can be used to add additional content for the Lua Language Server by doing the following:
 
-- Providing definitions for a framework/library/API.
+- Providing [definitions](/wiki/definition-files) for a framework/library/API.
 - Including a [plugin](/wiki/plugins).
 - Modifying a user's [settings](/wiki/settings).
 
 <Remark type="note">
-  {" "}
-  Addons are a refresh of what were previously called "third-party libraries".{" "}
+  Addons are a refresh of what were previously called "third-party libraries".
 </Remark>
 
 # Built-In Addons
@@ -29,15 +28,14 @@ There are a number of addons that come with the language server that can be foun
 # Installing Addons
 
 <Remark type="note">
-  {" "}
   If you use Visual Studio Code, addons can easily be installed using the [addon
-  manager](#addon-manager). The below are instructions for **manually** installing
-  an addon.{" "}
+  manager](#addon-manager). The below are instructions for **manually**
+  installing an addon.
 </Remark>
 
 Addons can be installed from anywhere, however, many popular addons can be found in the [LLS-Addons][LLS-Addons] repository, an official collection of community addons. The intention with the repository is that each addon is its own sub-repository (submodule) so that they can be forked and downloaded easily.
 
-Take a look through the `addons/` directory and open up your desired addon. Clicking `module` will bring you to the repository where that addon lives. You can then download the zip for that addon and unzip it to some directory, any directory, on your computer (e.g. `C:\Users\me\Documents\LuaAddons`). You can place any future addons in this directory as well, just make sure they are contained within their own directory. Then add the path to this parent directory to [`workspace.userThirdParty`](/wiki/settings#workspace-userThirdParty).
+Take a look through the [`addons/`](https://github.com/LuaLS/LLS-Addons/tree/main/addons) directory and open up your desired addon. Clicking `module` will bring you to the repository where that addon lives. You can then download the zip for that addon and unzip it to some directory, any directory, on your computer (e.g. `C:\Users\me\Documents\LuaAddons`). You can place any future addons in this directory as well, just make sure they are contained within their own directory. Then add the path to this parent directory to [`workspace.userThirdParty`](/wiki/settings#workspace-userThirdParty).
 
 ```plaintext
 📂 LuaAddons/
@@ -63,9 +61,8 @@ So in this case, your setting could look like this in your [configuration file](
 Addons often define some configuration values in their `config.json` file that are meant to be automatically applied, however, they can still be applied manually.
 
 <Remark type="note">
-  {" "}
-  Again, this can be easily done using the [addon manager](#addon-manager) in Visual
-  Studio Code instead.{" "}
+  Again, this can be easily done using the [addon manager](#addon-manager) in
+  Visual Studio Code instead.
 </Remark>
 
 ## Automatically Enabling

@@ -1,0 +1,31 @@
+---
+title: Definition Files
+description: Add files that define libaries, APIs, etc.
+getting-started: true
+---
+
+So you are using a framework like Busted or OpenResty, but whenever you are using a function from them, you are receiving warnings. This is because the language server has not been told about their existence or how they should be used. Luckily, we can use definition files to supplement this data and receive completion, proper [diagnostics](/wiki/diagnostics), and more.
+
+[Addons](/wiki/addons) use definition files to define the various functions and variables of a project. For example, there is already an [OpenResty addon](https://github.com/LuaCATS/openresty) that can be found in the [LuaCATS organization](https://github.com/LuaCATS).
+
+# Creating Definition Files
+A definition file is simply a Lua file with [annotations](/wiki/annotations) in it and a [`@meta`](/wiki/annotations#meta) annotation at the top.
+
+Here is a simple example that adds a global class `Character`:
+
+```Lua
+---@meta
+
+---@class Character
+Character = {}
+
+---@param name string
+function Character.hello(name)
+    print("Hello " .. name .. "!")
+end
+```
+
+# Using Definition Files
+There are already many definitions available in the form of [addons](/wiki/addons) that can be installed using the [addon manager in VS Code](/wiki/addons#addon-manager) or found in the [LLS-Addons repo](https://github.com/LuaLS/LLS-Addons) or [LuaCATS organization](https://github.com/LuaCATS).
+
+To use a definition file, provide the path to the file (or parent directory) to [`workspace.library`](/wiki/settings#workspacelibrary).
