@@ -3,7 +3,7 @@ import Icon from "./Icon.astro";
 
 export interface Props {
   type: "note" | "warning" | "important" | "WIP" | "deprecated" | "issue";
-  display?: "inline" | "block";
+  display?: "inline" | "block" | "compact";
 }
 
 const { type, display } = Astro.props;
@@ -14,7 +14,7 @@ const types = {
   important: { displayName: "Important", icon: "exclamation" },
   WIP: { displayName: "WIP", icon: "pen-ruler" },
   deprecated: { displayName: "Deprecated", icon: "trash-can" },
-  issue: {displayName: "Issue", icon: "circle-dot"}
+  issue: { displayName: "Issue", icon: "circle-dot" },
 };
 
 const classList = [type, "remark", display ?? "block"];
@@ -42,6 +42,16 @@ const classList = [type, "remark", display ?? "block"];
 
     &.block {
       width: 90%;
+    }
+
+    &.compact {
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+
+      & > :global(*) {
+        margin: 0px;
+      }
     }
 
     &.note {
