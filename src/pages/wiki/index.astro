@@ -25,12 +25,6 @@ const getContributorPlaceholders = () => {
 <Layout title="Wiki">
   <main>
     <h1>Welcome to the wiki!</h1>
-    <Remark type="WIP">
-      <p>
-        The wiki is currently under construction and lots of info is still
-        missing.
-      </p>
-    </Remark>
     <div class="grid">
       <section id="get-started">
         <h2>Get Started</h2>
@@ -181,7 +175,7 @@ const getContributorPlaceholders = () => {
     .grid {
       grid-template-columns: repeat(auto-fill, minmax(10em, 1fr));
       text-align: center;
-      font-size: 1.25em;
+      font-size: 1.3em;
 
       p {
         font-size: 0.7em;
@@ -258,6 +252,12 @@ const getContributorPlaceholders = () => {
   @media screen and (max-width: 1200px) {
     .grid {
       grid-template-columns: 1fr;
+    }
+  }
+
+  @media screen and (max-width: 700px) {
+    #contributors div.grid {
+      grid-template-columns: repeat(auto-fill, minmax(5em, 1fr));
     }
   }
 </style>
