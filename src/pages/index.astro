@@ -422,6 +422,7 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
     });
 
     button.addEventListener("click", () => {
+      setTabActive(button.value);
       window.location.hash = `#${button.value}`;
       tabs[button.value].content?.scrollIntoView();
     });
@@ -431,7 +432,7 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
   const target = window.location.hash;
   if (target) {
     const tabName = target.replace("#", "");
-    const tab = document.querySelector("`#install .tab-content #${tabName}");
+    const tab = document.querySelector(`#install .tab-content #${tabName}`);
     if (tab) {
       setTabActive(tabName);
       tabs[tabName].content?.scrollIntoView();
