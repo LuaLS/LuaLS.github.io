@@ -1,0 +1,11 @@
+---
+const {id} = Astro.props;
+
+export interface Props {
+    id: string;
+}
+
+import Heading from "../Heading.astro";
+---
+
+<Heading id={id} level={4}><slot/></Heading>

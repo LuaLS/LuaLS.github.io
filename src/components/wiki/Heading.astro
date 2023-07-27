@@ -1,0 +1,61 @@
+---
+const { id, level } = Astro.props;
+
+const Element = `h${level}`;
+
+export interface Props {
+  id: string;
+  level: 1 | 2 | 3 | 4 | 5 | 6;
+}
+
+import Icon from "../common/Icon.astro";
+---
+
+<div class="heading" id={id}>
+  <a href={`#${id}`}><Icon name="link" group="solid" /></a>
+  <Element><slot /></Element>
+</div>
+
+<style lang="scss">
+  :global(details.accordion > summary div.heading) {
+    margin: 0px;
+  }
+
+  div.heading {
+    width: fit-content;
+    margin: 2em auto;
+    display: flex;
+    align-items: center;
+    padding-right: 3.5em;
+
+    & > a {
+      color: white;
+      opacity: 0;
+      font-size: 1.25em;
+      padding: 0.25em 0.75em;
+      transition: opacity 0.3s ease-in-out;
+    }
+
+    :global(h1),
+    :global(h2),
+    :global(h3),
+    :global(h4),
+    :global(h5),
+    :global(h6) {
+      width: fit-content;
+      margin: 0px;
+    }
+
+    &:hover {
+      a {
+        opacity: 1;
+      }
+    }
+
+    &:target {
+      a {
+        opacity: 1;
+      }
+    }
+  }
+</style>
