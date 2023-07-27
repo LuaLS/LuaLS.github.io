@@ -23,6 +23,12 @@ body {
   justify-content: space-between;
 }
 
+*:focus {
+  outline: var(--link-color) 2px solid;
+  border-radius: 0.5em;
+  display: inline-block;
+}
+
 h1,
 h2,
 h3,
