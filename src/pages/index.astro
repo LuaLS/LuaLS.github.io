@@ -148,13 +148,13 @@ local Player = &#123;&#125;</pre>
     <section id="install">
       <h2>Install for...</h2>
       <div class="tabs">
-        <button value="vscode-install" class="vscode active"
+        <button value="vscode-install" class="vscode active" tabindex="0"
           ><img src="/images/vscode.svg" alt="Visual Studio Code" /></button
         >
-        <button value="neovim-install" class="neovim"
+        <button value="neovim-install" class="neovim" tabindex="0"
           ><img src="/images/neovim.svg" alt="Neovim" /></button
         >
-        <button value="other-install" class="other"
+        <button value="other-install" class="other" tabindex="0"
           ><Icon name="question" group="solid" /></button
         >
       </div>
@@ -424,7 +424,12 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
     button.addEventListener("click", () => {
       setTabActive(button.value);
       window.location.hash = `#${button.value}`;
-      tabs[button.value].content?.scrollIntoView();
+      tab.scrollIntoView();
+    });
+
+    tab.addEventListener("focusin", () => {
+      setTabActive(button.value);
+      tab.scrollIntoView();
     });
   }
 
@@ -437,26 +442,6 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
       setTabActive(tabName);
       tabs[tabName].content?.scrollIntoView();
     }
-  }
-</script>
-
-<script>
-  // When an install step is clicked on, it is marked as completed
-  const listItems = document.querySelectorAll<HTMLDataListElement>(
-    "section#install .instructions ol li"
-  );
-
-  for (const item of listItems) {
-    const fontSize = parseFloat(
-      window.getComputedStyle(item, null).getPropertyValue("font-size")
-    );
-    const size = fontSize * 2;
-
-    item.addEventListener("click", (e) => {
-      if (e.offsetX < size) {
-        item.classList.toggle("complete");
-      }
-    });
   }
 </script>
 
@@ -676,16 +661,6 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
                 text-align: center;
                 border-radius: 1em;
                 margin-right: 0.5em;
-                cursor: pointer;
-                transition: transform 0.2s ease-in-out;
-                transform: rotate(0deg);
-              }
-
-              & > li.complete::before {
-                content: "\f00c";
-                padding: 0.15em 0px;
-                font-family: "Font Awesome 6 Free";
-                transform: rotate(360deg);
               }
             }
 
