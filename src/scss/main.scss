@@ -23,7 +23,7 @@ body {
   justify-content: space-between;
 }
 
-*:focus {
+*:focus-visible {
   outline: var(--link-color) 2px solid;
   border-radius: 0.5em;
 }
