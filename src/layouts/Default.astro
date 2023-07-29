@@ -1,4 +1,6 @@
 ---
+import { ViewTransitions } from "astro:transitions";
+
 // Icon fonts
 import "@fortawesome/fontawesome-free/scss/fontawesome.scss";
 import "@fortawesome/fontawesome-free/scss/brands.scss";
@@ -12,6 +14,7 @@ import "../scss/main.scss";
 
 export interface Props {
   title: string;
+  transition?: boolean;
 }
 
 const title = ["Lua Language Server", Astro.props.title].join(" | ");
@@ -28,6 +31,7 @@ const title = ["Lua Language Server", Astro.props.title].join(" | ");
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
+    <ViewTransitions />
     <title>{title}</title>
   </head>
   <body>

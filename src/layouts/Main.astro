@@ -7,10 +7,11 @@ import Footer from "../components/layout/Footer.astro";
 
 export interface Props {
   title: string;
+  transition?: boolean;
 }
 ---
 
-<Layout title={Astro.props.title}>
+<Layout title={Astro.props.title} transition={Astro.props.transition}>
   <Header />
   <slot />
   <Footer />
