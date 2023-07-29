@@ -33,7 +33,7 @@ Triggered when there is an ambiguous statement that may need some brackets in or
 </span>
 Triggers when a `for` loop will never reach its max/limit because it is incrementing when it should be decrementing.
 
-```lua
+```Lua
 for i=10, 1 do end
 ```
 
@@ -45,7 +45,7 @@ for i=10, 1 do end
 </span>
 Triggered when a file is required under two different names. This can happen when requiring a file in two different directories:
 
-```txt
+```plaintext
 📦 myProject/
     ├── 📂 helpers/
     │   ├── 📜 strings.lua
@@ -53,13 +53,13 @@ Triggered when a file is required under two different names. This can happen whe
     └── 📜 main.lua
 ```
 
-```lua
+```Lua
 -- main.lua
 local strings = require("helpers.strings")
 local pretty = require("helpers.pretty")
 ```
 
-```lua
+```Lua
 -- helpers/pretty.lua
 local strings = require("strings")
 ```
@@ -72,7 +72,7 @@ local strings = require("strings")
 </span>
 Triggered when calling a function across two lines from within a table. This may be unwanted and you may want to separate the fields with a comma (`,`) or semicolon (`;`) - unless you want to call the first field as a function.
 
-```lua
+```Lua
 local myTable = {
   myFunc
   ("param")
@@ -87,7 +87,7 @@ local myTable = {
 </span>
 Triggered when calling a function from the next line. This may be unintended and you may want to add a semicolon `;` to end the line.
 
-```lua
+```Lua
 print(1)
 ('x'):sub(1, 2)
 ```
@@ -153,7 +153,7 @@ The duplicate group contains diagnostics for duplicate indexes and names.
 
 Triggered when there are duplicate indices.
 
-```lua
+```Lua
 local t = {
     -- triggered by indexes
     [1] = "a",
@@ -174,7 +174,7 @@ local t = {
 
 Triggered when setting the same field in a class more than once. Check the names of your fields.
 
-```lua
+```Lua
 ---@class myClass
 local myTable = {}
 
@@ -196,7 +196,7 @@ The global group contains diagnostics that deal with the global scope.
 
 Triggered when a global variable is defined and the environment (`_ENV`) is `nil`.
 
-```lua
+```Lua
 _ENV = nil
 
 myGlobalVar = true
@@ -220,7 +220,7 @@ Triggered when a global variable starts with a lowercase character. This is main
 </span>
 Triggered when the environment (`_ENV`) is mutated and a previously global variable is no longer usable.
 
-```lua
+```Lua
 local A
 ---@type iolib
 _ENV = {}
@@ -248,7 +248,7 @@ The luadoc group contains diagnostics for the [annotations](/wiki/annotations) u
 
 Triggered when casting a variable to a type that does not match its initial type.
 
-```lua
+```Lua
 ---@type boolean
 local e = nil
 
@@ -264,7 +264,7 @@ local e = nil
 
 Triggered when two classes inherit each other forming a never ending loop of inheritance.
 
-```lua
+```Lua
 ---@class Car:Vehicle
 
 ---@class Vehicle:Car
@@ -333,7 +333,7 @@ Triggered when referencing an undefined type or [`@alias`](/wiki/annotations#ali
 
 Triggered when referencing an undefined parameter from a function declartion.
 
-```lua
+```Lua
 ---@param doesNotExist number
 function subtract(a, b) end
 ```
@@ -355,7 +355,7 @@ Triggered when attempting to cast an undefined variable. Double check that you h
 
 Triggered when entering an invalid diagnostic code. A diagnostic code is like one of the many diagnosis codes found on this page.
 
-```lua
+```Lua
 ---@diagnostic disable: doesNotExist
 ```
 
@@ -392,7 +392,7 @@ The strict group contains diagnostics considered "strict". These can help you wr
 </span>
 Triggered when attempting to [close a variable](https://www.lua.org/manual/5.4/manual.html#3.3.8) with a non-object. The value of the variable must be an object with the `__close` metamethod (a Lua 5.4 feature).
 
-```lua
+```Lua
 local x <close> = 1
 ```
 
@@ -440,7 +440,7 @@ Triggered when assigning a value, in which its type does not match the type of t
 
 The below will trigger this diagnostic because we are assigning a `boolean` to a `number`:
 
-```lua
+```Lua
 ---@type number
 local isNum = false
 ```
@@ -453,7 +453,7 @@ local isNum = false
 </span>
 Triggered when a local variable is being cast to a different value than it was defined as.
 
-```lua
+```Lua
 ---@type boolean
 local myBool
 
@@ -468,7 +468,7 @@ myBool = {}
 </span>
 Triggered when casting a variable to a type that does not match its initial type.
 
-```lua
+```Lua
 ---@type boolean
 local e = nil
 
@@ -483,7 +483,7 @@ local e = nil
 </span>
 Triggered when indexing a possibly `nil` object. Serves as a reminder to confirm the object is not nil before indexing - which would throw an error on execution.
 
-```lua
+```Lua
 ---@class Bicycle
 ---@field move function
 
@@ -510,7 +510,7 @@ Triggered when the type of the provided parameter does not match the type reques
 </span>
 Triggered when the provided `return` value is not of the same type that the function expected.
 
-```lua
+```Lua
 ---@return number sum
 function add(a, b)
     return false
@@ -525,7 +525,7 @@ end
 </span>
 Triggered when referencing an undefined field.
 
-```lua
+```Lua
 ---@class myClass
 local myClass = {}
 
@@ -585,7 +585,7 @@ Triggered when a `return` is returning an extra value that the function has not 
 </span>
 Triggered when providing an extra value to an assignment operation that will go unused.
 
-```lua
+```Lua
 local a, b = 1, 2, 3
 ```
 
@@ -597,7 +597,7 @@ local a, b = 1, 2, 3
 </span>
 Triggered when there are more variables being assigned than values to assign them.
 
-```lua
+```Lua
 local a, b, c = 1, 2
 ```
 

@@ -24,7 +24,7 @@ Triggered when there is a parameter defined after a variable arguments symbol (`
 
 Triggered when there is an `else` or `elseif` after a terminating `else` in an `if` statement.
 
-```lua
+```Lua
 if myVar then
     print("Truthy")
 else
@@ -82,7 +82,7 @@ Triggered when there is an indexing operation taking place in a function's name 
 
 Triggered when a local variable is "jumped" over using `goto` and labels. "jumping" the variable means it is never defined and will cause errors when it is referenced. This diagnostic serves to protect against such errors.
 
-```lua
+```Lua
 goto jump
 
 local a = 10
@@ -122,7 +122,7 @@ Triggered when an expression is missing from your code. For example, forgetting 
 
 Triggered when the exponent has been left out when representing a number in exponent form.
 
-```lua
+```Lua
 local incorrect = 1e
 local correct = 1e10
 ```
@@ -171,7 +171,7 @@ Triggered when using the variable arguments symbol (`...`) outside of a function
 
 Triggered when a function is being assigned to a variable and is also given a name.
 
-```lua
+```Lua
 local x = function x() end
 ```
 
@@ -179,7 +179,7 @@ local x = function x() end
 
 Triggered when a function is marked as local. The method either belongs to a table or is a local function, not both.
 
-```lua
+```Lua
 local function x:t() end
 ```
 

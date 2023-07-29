@@ -201,7 +201,7 @@ An array of variable names that will be declared as global.
 
 <span slot="summary">Default Value</span>
 
-```json
+```JSON
 {
   /*
    * ambiguity-1
@@ -317,7 +317,7 @@ Set the file status required for each diagnostic group. This setting is an `Obje
 
 <span slot="summary">Default Value</span>
 
-```json
+```JSON
 {
   /*
    * ambiguity-1
@@ -456,7 +456,7 @@ Set how files loaded with [`workspace.library`](#workspacelibrary) are diagnosed
 
 <span slot="summary">Default Value</span>
 
-```json
+```JSON
 {
   "ambiguity-1": "Any",
   "assign-type-mismatch": "Opened",
@@ -536,7 +536,7 @@ Set how files loaded with [`workspace.library`](#workspacelibrary) are diagnosed
 
 <span slot="summary">Default Value</span>
 
-```json
+```JSON
 {
   "ambiguity-1": "Warning",
   "assign-type-mismatch": "Warning",
@@ -830,7 +830,7 @@ Settings for configuring the runtime environment.
 
 <span slot="summary">Default Value</span>
 
-```json
+```JSON
 {
   "basic": "default",
   "bit": "default",
@@ -1046,7 +1046,7 @@ Whether casting a `number` to an `integer` is allowed.
 
 Whether it is permitted to assign a union type that contains `nil` to a variable that does not permit it. When `false`, the following will throw an error because `number|nil` cannot be assigned to `number`.
 
-```lua
+```Lua
 ---@alias unionType number|nil
 
 ---@type number
@@ -1062,7 +1062,7 @@ local num
 
 Whether it is permitted to assign a union type which only has one matching type to a variable. When `false`, the following will throw an error because `string|boolean` cannot be assigned to `string`.
 
-```lua
+```Lua
 ---@alias unionType string|boolean
 
 ---@type string
