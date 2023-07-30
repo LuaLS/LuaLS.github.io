@@ -5,6 +5,7 @@ const wikiArticleCollection = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string(),
+    tags: z.string().optional(),
     ["getting-started"]: z.boolean().optional(),
     incomplete: z.boolean().optional(),
     lastModified: z.string().optional(),

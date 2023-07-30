@@ -16,6 +16,7 @@
     "autoprefixer": "^10.4.14",
     "axios": "^1.4.0",
     "dayjs": "^1.11.9",
+    "fuse.js": "^6.6.2",
     "highlight.js": "^11.8.0",
     "jsdom": "^22.1.0",
     "mermaid": "^10.2.4",
