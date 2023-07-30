@@ -13,9 +13,13 @@ if (icon === undefined) {
 }
 
 export interface Props {
+    /** Name of the file */
     name: string;
+    /** Type of the entry. This dictates the icon that will be used */
     type: "file" | "code" | "image" | "directory";
+    /** Whether it is ignored and should have a little "blocked" icon next to it. Defaults to false. */
     gitignored?: boolean
+    /** Whether this element should be open/expanded by default. Defaults to false. */
     open?: boolean;
 }
 ---

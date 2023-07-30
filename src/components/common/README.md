@@ -78,3 +78,28 @@ Extends the default `<a>` HTML element to add custom styles. Should be used on a
 ```HTML
 <ExternalLink url="https://github.com" refer={true}>Link to GitHub</ExternalLink>
 ```
+
+## [FileTreeItem](./FileTreeItem.astro)
+Extends the default `<details>` HTML element to display a file tree. Nest them to create a tree of [`Accordion`](#accordion)-like elements.
+
+### Arguments
+| Name         | Type       | Description                                                                                  |
+| ------------ | ---------- | -------------------------------------------------------------------------------------------- |
+| `name`       | `string`   | Name of the file                                                                             |
+| `type`       | `enum`     | Type of the entry. This dictates the icon that will be used                                  |
+| `gitignored` | `boolean?` | Whether it is ignored and should have a little "blocked" icon next to it. Defaults to false. |
+| `open`       | `boolean?` | Whether this element should be open/expanded by default. Defaults to false.                  |
+
+### Slots
+`default` - The content that should appear in the expanded tree. Can be more [`FileTreeItem`](#filetreeitem) elements, text, or other HTML.
+
+### Example
+```HTML
+<FileTreeItem name="root/" type="directory" open={true}>
+    <FileTreeItem name="path/" type="directory">
+        <FileTreeItem name="file.lua" type="code">
+            <p>This file is very cool</p>
+        </FileTreeItem>
+    </FileTreeItem>
+</FileTreeItem>
+```
