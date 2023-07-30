@@ -15,10 +15,15 @@ let child = await Astro.slots.render("default");
 child = child.trim();
 
 export interface Props {
+  /** The url to link to */
   url: string;
+  /** Whether the linked page should be opened in another tab. Defaults to `true`. */
   newTab?: boolean;
+  /** Whether to [refer](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referer) when navigating away. Defaults to `false`. */
   refer?: boolean;
+  /** Whether or not to display the "external" icon next to the link. Defaults to `false`. */
   noIcon?: boolean;
+  /** Allows you to pass in a class to be applied to the link. */
   class?: string;
 }
 
@@ -38,8 +43,9 @@ if (!refer) {
     href={url}
     target={newTab ? "_blank" : null}
     rel={relationships.join(" ")}
-    class={classes.join(" ")} set:html={child}></a
-  >
+    class={classes.join(" ")}
+    set:html={child}
+  />
 </Tooltip>
 
 <style lang="scss">

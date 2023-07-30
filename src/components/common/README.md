@@ -58,3 +58,23 @@ print(test)
 </pre>
 </CodeBlock>
 ```
+
+## [ExternalLink](./ExternalLink.astro)
+Extends the default `<a>` HTML element to add custom styles. Should be used on all links that do not point to the local domain.
+
+### Arguments
+| Name     | Type       | Description                                                                                                                      |
+| -------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| `url`    | `string`   | The url to link to                                                                                                               |
+| `newTab` | `boolean?` | Whether the linked page should be opened in another tab. Defaults to `true`.                                                     |
+| `refer`  | `boolean?` | Whether to [refer](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referer) when navigating away. Defaults to `false`. |
+| `noIcon` | `boolean?` | Whether or not to display the "external" icon next to the link. Defaults to `false`.                                             |
+| `class`  | `string?`  | Allows you to pass in a class to be applied to the link.                                                                         |
+
+### Slots
+`default` - The content that should appear linked.
+
+### Example
+```HTML
+<ExternalLink url="https://github.com" refer={true}>Link to GitHub</ExternalLink>
+```
