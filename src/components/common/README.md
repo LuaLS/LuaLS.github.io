@@ -8,6 +8,9 @@ Extends the default [`<details>`](https://developer.mozilla.org/en-US/docs/Web/H
 | ------ | ---------- | ---------------------------------------------------------------------------------- |
 | `open` | `boolean?` | Whether or not the accordion should default to open. Defaults to `false` (closed). |
 
+### Slots
+`summary` - Text that should be displayed in the `<summary>` of the accordion.
+
 ### Example
 ```HTML
 <Accordion>
