@@ -28,19 +28,14 @@ export interface Props {
 <style lang="scss">
     div.diagnostic {
         border-radius: 0.5em;
-        padding: 0.5em;
 
         & > div:first-of-type() {
             display: flex;
             justify-content: center;
             align-items: center;
+            justify-content: space-between;
 
             :global(:first-child) {
-                display: block;
-                width: 100%;
-                margin-top: 0px;
-                margin-bottom: 0px;
-                margin-left: 0.5em;
             }
 
             i.fa-solid {
