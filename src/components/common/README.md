@@ -37,3 +37,24 @@ Used for containing multiple [`Accordion`](#accordion) components. Only allows o
     </Accordion>
 </AccordionGroup>
 ```
+
+## [CodeBlock](./CodeBlock.astro)
+Adds syntax highlighting to code using [highlight.js](https://highlightjs.org/).
+
+### Arguments
+| Name       | Type      | Description                                                                                                                                                                                                                                                              |
+| ---------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `language` | `string?` | The [language](https://highlightjs.org/static/demo/#all) to highlight. Technically not case-sensitive, but the displayed language will be what is entered here, so please respect capitalization of language names. If omitted, will attempt to auto-detect the language |
+
+### Slots
+`default` - The code to syntax highlight. Should be passed in using a `<pre>` element to preserve indenting and new lines.
+
+### Example
+```HTML
+<CodeBlock language="Lua">
+<pre>
+local test = "Hello"
+print(test)
+</pre>
+</CodeBlock>
+```
