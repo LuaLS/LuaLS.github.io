@@ -123,8 +123,6 @@ export interface Props {
         outlineLink?.classList.remove("in-view");
       }
     }
-
-    outline?.querySelector("a.in-view")?.scrollIntoView({ behavior: "smooth", block: "center" });
   });
 
   headings.forEach((heading) => intersectionObserver.observe(heading));
