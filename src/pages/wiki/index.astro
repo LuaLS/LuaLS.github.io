@@ -7,9 +7,10 @@ import fetch from "~/util/fetch";
 
 const CONTRIBUTOR_COUNT = 30;
 
-const wikiArticles = await getCollection("wiki", ({ data }) => {
-  return data["getting-started"] === true;
-});
+const allWikiArticles = await getCollection("wiki");
+const gettingStartedArticles = allWikiArticles.filter(
+  (article) => article.data["getting-started"] === true
+);
 
 type Contributor = {
   login: string;
@@ -53,16 +54,20 @@ const contributors = (await response.json()) as Contributor[];
           Below are some good articles for those new to the Lua Language Server
         </p>
         <div class="grid">
-          <a href="/#install" target="_blank">
-            Install
-            <p>Installation instructions</p>
-          </a>
+          <div class="article">
+            <a href="/#install" target="_blank">
+              Install
+              <p>Installation instructions</p>
+            </a>
+          </div>
           {
-            wikiArticles.map((article) => (
-              <a href={`/wiki/${article.slug}`}>
-                {article.data.title}
-                <p>{article.data.description}</p>
-              </a>
+            gettingStartedArticles.map((article) => (
+              <div class="article">
+                <a href={`/wiki/${article.slug}`}>
+                  {article.data.title}
+                  <p>{article.data.description}</p>
+                </a>
+              </div>
             ))
           }
         </div>
@@ -96,6 +101,21 @@ const contributors = (await response.json()) as Contributor[];
           }
         </div>
       </section>
+      <section id="all-articles">
+        <h2>All Wiki Articles</h2>
+        <div class="grid">
+          {
+            allWikiArticles.map((article) => (
+              <div class="article">
+                <a href={`/wiki/${article.slug}`}>
+                  {article.data.title}
+                  <p>{article.data.description}</p>
+                </a>
+              </div>
+            ))
+          }
+        </div>
+      </section>
     </div>
   </main>
 </Layout>
@@ -122,24 +142,28 @@ const contributors = (await response.json()) as Contributor[];
     }
   }
 
+  div.article {
+    a {
+      font-size: 1.3em;
+    }
+    p {
+      font-size: 0.7em;
+      margin: 0px auto;
+      color: white;
+      font-weight: normal;
+    }
+  }
+
   #get-started {
     .grid {
       grid-template-columns: repeat(auto-fill, minmax(10em, 1fr));
       text-align: center;
-      font-size: 1.3em;
-
-      p {
-        font-size: 0.7em;
-        margin: 0px auto;
-        color: white;
-        font-weight: normal;
-      }
     }
   }
 
   #contributors {
     div.grid {
-      grid-template-columns: repeat(auto-fill, minmax(6em, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(5em, 1fr));
       gap: 1em;
       margin: 0px 1em;
     }
@@ -200,9 +224,22 @@ const contributors = (await response.json()) as Contributor[];
     }
   }
 
+  section#all-articles {
+    grid-column: 1 / span 2;
+
+    .grid {
+      grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
+      text-align: center;
+    }
+  }
+
   @media screen and (max-width: 1200px) {
     .grid {
       grid-template-columns: 1fr;
+    }
+
+    section#all-articles {
+      grid-column: 1;
     }
   }
 
