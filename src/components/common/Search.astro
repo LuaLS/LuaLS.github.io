@@ -1,5 +1,4 @@
 ---
-import Icon from "./Icon.astro";
 type searchItem = {
   text: string;
   href: string;
@@ -178,10 +177,21 @@ for (const page of pages) {
   });
   // Update suggestions on text entry
   searchInput.addEventListener("keyup", (e) => {
-    if (e.key === "ArrowDown") {
-      assertElement<HTMLDivElement>(".match", optionsContainer).focus();
-    } else {
-      updateSuggestions();
+    switch (e.key) {
+      case "ArrowDown":
+        assertElement<HTMLDivElement>(".match", optionsContainer).focus();
+        break;
+      case "Enter":
+        const firstOption =
+          optionsContainer.firstChild as HTMLAnchorElement | null;
+        if (firstOption !== null) {
+          location.assign(firstOption.href);
+          searchDialog.close();
+          break;
+        }
+      default:
+        updateSuggestions();
+        break;
     }
   });
 </script>
@@ -217,6 +227,10 @@ for (const page of pages) {
     border: none;
     background: #0f2e4b;
     color: white;
+
+    &:focus+div#site-search-suggestions > a:first-child() {
+      color: white;
+    }
   }
 
   div#site-search-suggestions {
