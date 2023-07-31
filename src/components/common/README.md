@@ -104,3 +104,19 @@ Extends the default `<details>` HTML element to display a file tree. Nest them t
     </FileTreeItem>
 </FileTreeItem>
 ```
+
+## [Icon](./Icon.astro)
+Free icons from [fontawesome](https://fontawesome.com/icons).
+
+### Arguments
+| Name    | Type                  | Description                                       |
+| ------- | --------------------- | ------------------------------------------------- |
+| `group` | `"brands" \| "solid"` | The group that the icon belongs to i.e. "brands". |
+| `name`  | `string`              | The name of the icon.                             |
+| `class` | `string?`             | The name of a class to apply to the icon.         |
+| `color` | `string?`             | The colour of the icon.                           |
+
+### Example
+```HTML
+<Icon group="solid" name="peace" color="#9400ff"/>
+```

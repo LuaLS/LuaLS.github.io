@@ -6,9 +6,13 @@ const displayName = name.replaceAll("-", " ");
 const styles = color ? `color: ${color}` : null;
 
 export interface Props {
+  /** The group that the icon belongs to. */
   group: "brands" | "solid";
+  /** The name of the icon. */
   name: string;
+  /** The name of a class to apply to the icon. */
   class?: string;
+  /** The colour of the icon. */
   color?: string;
 }
 ---
