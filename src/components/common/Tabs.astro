@@ -16,11 +16,22 @@ Example usage:
 </Tabs>
 */
 
+import type { XOR } from "../../helpers/types";
 import Icon from "./Icon.astro";
 import jsdom from "jsdom";
 
+type BaseButtonDefinition = {
+  name: string;
+  accent?: string;
+};
+
+type ButtonDefinition = XOR<
+  BaseButtonDefinition & { icon: string },
+  BaseButtonDefinition & { image: string }
+>;
+
 export interface Props {
-  buttons: { name: string; image?: string; icon?: string; accent?: string }[];
+  buttons: ButtonDefinition[];
   active: string;
 }
 
