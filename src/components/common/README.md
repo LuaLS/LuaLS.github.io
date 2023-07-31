@@ -1,30 +1,36 @@
 # Component List
 
 ## [Accordion](./Accordion.astro)
+
 Extends the default [`<details>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details) HTML element.
 
 ### Arguments
+
 | Name   | Type       | Description                                                                        |
 | ------ | ---------- | ---------------------------------------------------------------------------------- |
 | `open` | `boolean?` | Whether or not the accordion should default to open. Defaults to `false` (closed). |
 
 ### Slots
+
 `summary` - Content that should be displayed in the `<summary>` of the accordion.
 
 ### Example
+
 ```HTML
 <Accordion>
-<span slot="summary">Example</span>
-<!-- Feel free to put whatever you want in here.
-It will only be shown when the accordion is open. -->
-<p>Peekaboo!</p>
+    <span slot="summary">Example</span>
+    <!-- Feel free to put whatever you want in here.
+    It will only be shown when the accordion is open. -->
+    <p>Peekaboo!</p>
 </Accordion>
 ```
 
 ## [AccordionGroup](./AccordionGroup.astro)
+
 Used for containing multiple [`Accordion`](#accordion) components. Only allows one [`Accordion`](#accordion) to be open at a time, closing others.
 
 ### Example
+
 ```HTML
 <AccordionGroup>
     <Accordion>
@@ -39,17 +45,21 @@ Used for containing multiple [`Accordion`](#accordion) components. Only allows o
 ```
 
 ## [CodeBlock](./CodeBlock.astro)
+
 Adds syntax highlighting to code using [highlight.js](https://highlightjs.org/).
 
 ### Arguments
+
 | Name       | Type      | Description                                                                                                                                                                                                                                                              |
 | ---------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `language` | `string?` | The [language](https://highlightjs.org/static/demo/#all) to highlight. Technically not case-sensitive, but the displayed language will be what is entered here, so please respect capitalization of language names. If omitted, will attempt to auto-detect the language |
 
 ### Slots
+
 `default` - The code to syntax highlight. Should be passed in using a `<pre>` element to preserve indenting and new lines.
 
 ### Example
+
 ```HTML
 <CodeBlock language="Lua">
 <pre>
@@ -60,9 +70,11 @@ print(test)
 ```
 
 ## [ExternalLink](./ExternalLink.astro)
+
 Extends the default `<a>` HTML element to add custom styles. Should be used on all links that do not point to the local domain.
 
 ### Arguments
+
 | Name     | Type       | Description                                                                                                                      |
 | -------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------- |
 | `url`    | `string`   | The url to link to                                                                                                               |
@@ -72,14 +84,17 @@ Extends the default `<a>` HTML element to add custom styles. Should be used on a
 | `class`  | `string?`  | Allows you to pass in a class to be applied to the link.                                                                         |
 
 ### Slots
+
 `default` - The content that should appear linked.
 
 ### Example
+
 ```HTML
 <ExternalLink url="https://github.com" refer={true}>Link to GitHub</ExternalLink>
 ```
 
 ## [FileTreeItem](./FileTreeItem.astro)
+
 Extends the default `<details>` HTML element to display a file tree. Nest them to create a tree of [`Accordion`](#accordion)-like elements.
 
 ### Arguments
@@ -92,9 +107,11 @@ Extends the default `<details>` HTML element to display a file tree. Nest them t
 | `open`       | `boolean?`                                   | Whether this element should be open/expanded by default. Defaults to false.                  |
 
 ### Slots
+
 `default` - The content that should appear in the expanded tree. Can be more [`FileTreeItem`](#filetreeitem) elements, text, or other HTML.
 
 ### Example
+
 ```HTML
 <FileTreeItem name="root/" type="directory" open={true}>
     <FileTreeItem name="path/" type="directory">
@@ -106,9 +123,11 @@ Extends the default `<details>` HTML element to display a file tree. Nest them t
 ```
 
 ## [Icon](./Icon.astro)
+
 Free icons from [fontawesome](https://fontawesome.com/icons).
 
 ### Arguments
+
 | Name    | Type                  | Description                                       |
 | ------- | --------------------- | ------------------------------------------------- |
 | `group` | `"brands" \| "solid"` | The group that the icon belongs to i.e. "brands". |
@@ -117,17 +136,21 @@ Free icons from [fontawesome](https://fontawesome.com/icons).
 | `color` | `string?`             | The colour of the icon.                           |
 
 ### Example
+
 ```HTML
 <Icon group="solid" name="peace" color="#9400ff"/>
 ```
 
 ## [Loading](./Loading.astro)
+
 Displays a loading spinner while child content loads. When a child fires the `content_loaded` event, the spinner is removed and the content is revealed.
 
 ### Slots
+
 `default` - The content that will load in the background and be revealed after firing `content_loaded`.
 
 ### Example
+
 ```HTML
 <Loading>
     <!-- The list of users needs to be fetched first -->
@@ -137,18 +160,22 @@ Displays a loading spinner while child content loads. When a child fires the `co
 ```
 
 ## [Remark](./Remark.astro)
+
 A remark/note/admonition that stands out to readers.
 
 ### Arguments
+
 | Name      | Type                                                                     | Description                                                                                                                                                                                                               |
 | --------- | ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `type`    | `"note" \| "warning" \| "important" \| "WIP" \| "deprecated" \| "issue"` | The type of remark to make. Each has their own icon and colour.                                                                                                                                                           |
 | `display` | `"fit" \| "block" \| "compact"`                                          | How the remark should be displayed. `"fit"` will only take up the required width, `"block"` (default) will take up the entire width of the parent, `"compact"` will display the remark type and content on the same line. |
 
 ### Slots
+
 `default` - The content of the remark
 
 ### Example
+
 ```HTML
 <Remark type="note" display="compact">
     <p>Wait, people actually read this?</p>
@@ -156,18 +183,22 @@ A remark/note/admonition that stands out to readers.
 ```
 
 ## [Tabs](./Tabs.astro)
+
 A group of tabs where the content of only one tab is visible at a time.
 
 ### Arguments
+
 | Name      | Type                                                                 | Description                                                                                                                                                                                                                                                                                                                                  |
 | --------- | -------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `buttons` | `{ name: string, image?: string, icon?: string, accent?: string }[]` | An array of buttons that will select the various tabs. There should be a button per tab. There should only be an `image` **OR** `icon` specified for each button. `image` should be a path/URL to the image. `icon` should be the name of a solid icon from fontawesome. `accent` is an accent colour displayed under the tab when selected. |
 | `active`  | `boolean`                                                            | Whether this button/tab combo is active. Only one should be marked active.                                                                                                                                                                                                                                                                   |
 
 ### Slots
+
 `default` - Within this one slot there should be a div for each button you have defined. The div should have an attribute `data-tab` where the value should be the the name of a button. These are your tabs of content.
 
 ### Example
+
 ```JSX
 <Tabs
   active="VS Code"
@@ -182,9 +213,11 @@ A group of tabs where the content of only one tab is visible at a time.
 ```
 
 ## [Tooltip](./Tooltip.astro)
+
 A [tippy.js](https://atomiks.github.io/tippyjs/) tooltip that can be placed around other elements.
 
 ### Arguments
+
 | Name        | Type                                                                                                                                                                                                         | Description                                                                     |
 | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------- |
 | `text`      | `string`                                                                                                                                                                                                     | The text to display in the tooltip.                                             |
@@ -193,9 +226,11 @@ A [tippy.js](https://atomiks.github.io/tippyjs/) tooltip that can be placed arou
 | `arrow`     | [`(string \| boolean)?`](https://atomiks.github.io/tippyjs/v6/all-props/#arrow)                                                                                                                              | Whether or not the tooltip should have an arrow pointing to the target element. |
 
 ### Slots
+
 `default` - The content to place the tooltip on
 
 ### Example
+
 ```HTML
 <Tooltip text="Hello!" placement="bottom">
     <button>Hover me!</button>
