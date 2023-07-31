@@ -105,6 +105,31 @@ export interface Props {
   }
 </script>
 
+<script>
+  const headings = document.querySelectorAll("article .heading");
+  const outline = document.querySelector("#outline .content");
+
+  const intersectionObserver = new IntersectionObserver((entries) => {
+    let topLink;
+
+    for (const entry of entries) {
+      const outlineLink = outline?.querySelector(
+        `a[href="#${entry.target.id}"]`
+      );
+
+      if (entry.intersectionRatio > 0) {
+        outlineLink?.classList.add("in-view");
+      } else {
+        outlineLink?.classList.remove("in-view");
+      }
+    }
+
+    outline?.querySelector("a.in-view")?.scrollIntoView({ behavior: "smooth", block: "center" });
+  });
+
+  headings.forEach((heading) => intersectionObserver.observe(heading));
+</script>
+
 <style lang="scss">
   html {
     scroll-behavior: smooth;
@@ -255,6 +280,10 @@ export interface Props {
           }
           li.depth-6 {
             padding-left: calc(5em * var(--indent-scale));
+          }
+
+          a.in-view {
+            color: white;
           }
         }
       }
