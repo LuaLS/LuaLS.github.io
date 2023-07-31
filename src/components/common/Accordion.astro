@@ -19,7 +19,6 @@ const open = Astro.props.open ?? false;
 <script>
   const checkExpansion = () => {
     const hash = window.location.hash;
-    console.log(hash);
     if (!hash) return;
 
     const element = document.querySelector(hash);

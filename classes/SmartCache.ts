@@ -34,7 +34,6 @@ export class SmartCache {
 
     // If it has never been cached, send the request right away
     if (cache === null) {
-      console.log("NEVER CACHED");
       const response = await axios.get(this.url);
 
       // Cache response in local storage
