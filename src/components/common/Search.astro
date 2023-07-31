@@ -1,0 +1,295 @@
+---
+type searchItem = {
+  text: string;
+  href: string;
+};
+
+const getContentStaticURL = (path: string, target?: string): string | null => {
+  const rgx = /\/src\/.+?\/(.+)\..*?/g;
+
+  const result = rgx.exec(path);
+  if (result === null) return null;
+
+  if (target) {
+    return `/${result[1]}#${target}`;
+  } else {
+    return `/${result[1]}`;
+  }
+};
+
+const searchTags: searchItem[] = [];
+
+const pages = await Astro.glob("../../content/**/*.mdx");
+
+for (const page of pages) {
+  const frontmatter = page.frontmatter;
+  const headings = page.getHeadings();
+
+  const href = getContentStaticURL(page.file);
+  if (!href) {
+    throw new Error(`Failed to get static url of ${page.url}`);
+  }
+
+  //   Add article title to search options
+  searchTags.push({ text: page.frontmatter.title, href });
+
+  // Add custom article tags to search options
+  for (const tag of frontmatter.tags ?? []) {
+    searchTags.push({ text: tag, href });
+  }
+
+  // Add article headings to search options
+  for (const heading of headings) {
+    const href = getContentStaticURL(page.file, heading.slug);
+    if (!href) {
+      throw new Error(`Failed to get static url of ${page.url}`);
+    }
+    searchTags.push({ text: heading.text, href });
+  }
+}
+---
+
+<dialog id="site-search">
+  <input type="search" placeholder="Search..." />
+
+  <div id="site-search-suggestions" tabindex="-1">
+    {
+      searchTags.map((entry) => (
+        <a href={entry.href}>
+          <span class="term">{entry.text}</span>
+          <span class="page">{entry.href.substring(1)}</span>
+        </a>
+      ))
+    }
+  </div>
+</dialog>
+
+<script>
+  import Fuse from "fuse.js";
+
+  const assertElement = <T extends Element>(
+    selector: string,
+    parent: Document | Element = document
+  ): T => {
+    const element = parent.querySelector<T>(selector);
+
+    if (element === null) {
+      throw new Error(`Could not find element: ${selector}`);
+    }
+
+    return element;
+  };
+
+  const searchIcon = assertElement<HTMLSpanElement>(
+    "header button.site-search-icon"
+  );
+  const searchDialog = assertElement<HTMLDialogElement>("dialog#site-search");
+  const searchInput = assertElement<HTMLInputElement>("input[type='search']");
+  const optionsContainer = assertElement<HTMLDivElement>(
+    "div#site-search-suggestions"
+  );
+
+  // Get array of option elements
+  const options = Array.from(optionsContainer.children) as HTMLDivElement[];
+
+  // Override scroll behavior so that the suggestions can be navigated with the arrow keys
+  for (const option of options) {
+    option.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowDown") {
+        if (option.nextSibling) {
+          (option.nextSibling as HTMLDivElement).focus();
+        }
+        e.preventDefault();
+      } else if (e.key === "ArrowUp") {
+        if (option.previousSibling) {
+          (option.previousSibling as HTMLDivElement).focus();
+        } else {
+          searchInput.focus();
+        }
+        e.preventDefault();
+      }
+    });
+    option.addEventListener("click", () => {
+      searchDialog.close();
+    });
+  }
+
+  const searchItems = options.map((el) => {
+    const text = el.querySelector(".term");
+    const page = el.querySelector(".page");
+
+    if (!text) console.warn("Could not find .term for:", el);
+    if (!page) console.warn("Could not find .page for:", el);
+
+    return {
+      text: text?.textContent?.toLowerCase() ?? "",
+      page: page?.textContent?.toLowerCase() ?? "",
+    };
+  });
+  const haystack = new Fuse(searchItems, {
+    keys: [{ name: "text", weight: 3 }, "page"],
+    includeScore: true,
+  });
+
+  const updateSuggestions = () => {
+    const input = searchInput.value.trim().toLowerCase();
+
+    const results = haystack.search(input, { limit: 30 });
+    results.sort((a, b) => (b?.score ?? 1) - (a?.score ?? 1));
+
+    // Hide all options
+    options.forEach((el) => el.classList.remove("match"));
+
+    for (const result of results) {
+      const element = options[result.refIndex];
+
+      element.title = result.score;
+
+      if (result.score && result.score <= 0.1) {
+        element.classList.add("match");
+        optionsContainer.insertBefore(element, optionsContainer.firstChild);
+      }
+    }
+  };
+
+  const open = () => {
+    searchDialog.showModal();
+    searchInput.focus();
+  };
+
+  // Show when search icon is clicked
+  searchIcon.addEventListener("click", open);
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "/") return;
+    open();
+    e.preventDefault();
+  });
+  // Close when background is clicked
+  searchDialog.addEventListener("click", (e) => {
+    console.log(e);
+    if (e.target !== searchDialog) return;
+    searchDialog.close();
+  });
+  // Close when esc pressed
+  document.addEventListener("keydown", (e) => {
+    if (!searchDialog.classList.contains("show") || e.key !== "Escape") return;
+    searchDialog.close();
+  });
+  // Update suggestions on text entry
+  searchInput.addEventListener("keyup", (e) => {
+    switch (e.key) {
+      case "ArrowDown":
+        assertElement<HTMLDivElement>(".match", optionsContainer).focus();
+        break;
+      case "Enter":
+        const firstOption =
+          optionsContainer.firstChild as HTMLAnchorElement | null;
+        if (firstOption !== null) {
+          location.assign(firstOption.href);
+          searchDialog.close();
+          break;
+        }
+      default:
+        updateSuggestions();
+        break;
+    }
+  });
+</script>
+
+<style lang="scss">
+  dialog#site-search {
+    display: none;
+    width: 60%;
+    height: 60%;
+    background: none;
+    border: none;
+    grid-template-columns: 1fr;
+    grid-template-rows: 2.5em 4fr;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+
+    &::backdrop {
+      background-color: #000000aa;
+    }
+
+    &[open] {
+      display: grid;
+    }
+  }
+
+  input[type="search"] {
+    width: 100%;
+    font-size: 1.5em;
+    margin: auto;
+    border-radius: 0.5rem;
+    padding: 0.25rem 0.5rem;
+    border: none;
+    background: #0f2e4b;
+    color: white;
+
+    &:focus+div#site-search-suggestions > a:first-child() {
+      color: white;
+    }
+  }
+
+  div#site-search-suggestions {
+    align-self: flex-start;
+    overflow-y: auto;
+    max-height: 100%;
+    background-color: #081f34;
+    border-radius: 0.5em;
+
+    & > a {
+      display: none;
+      font-size: 1em;
+      padding: 0.25em 0.5em;
+      box-sizing: border-box;
+
+      &:focus {
+        outline: none;
+        color: white;
+        border-radius: unset;
+      }
+
+      &.match {
+        display: flex;
+        justify-content: space-between;
+      }
+      span {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        width: 100%;
+        white-space: nowrap;
+
+        &.term {
+          flex: 1 1;
+        }
+
+        &.page {
+          flex: 1 2;
+          text-align: right;
+          opacity: 0.5;
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 1000px) {
+    dialog#site-search {
+      width: 100%;
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    div#site-search-suggestions {
+      & > a {
+        span {
+          &.page {
+            font-size: 0.8em;
+          }
+        }
+      }
+    }
+  }
+</style>

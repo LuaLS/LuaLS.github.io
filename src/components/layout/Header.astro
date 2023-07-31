@@ -2,6 +2,7 @@
 import ExternalLink from "../common/ExternalLink.astro";
 import Icon from "../common/Icon.astro";
 import Tooltip from "../common/Tooltip.astro";
+
 export interface Props {
   class?: string;
 }
@@ -23,6 +24,9 @@ const { class: className } = Astro.props;
         </Tooltip>
       </a>
     </div>
+    <button class="site-search-icon">
+      <Icon name="search" group="solid" />
+    </button>
     <span class="github">
       <ExternalLink
         url="https://github.com/luals/lua-language-server"
@@ -57,7 +61,7 @@ const { class: className } = Astro.props;
     nav {
       width: 100%;
       display: grid;
-      grid-template-columns: repeat(3, 2em);
+      grid-template-columns: repeat(4, 2em);
       justify-content: space-between;
       align-items: center;
       justify-items: center;
@@ -72,6 +76,13 @@ const { class: className } = Astro.props;
       a,
       a.external {
         color: white;
+      }
+
+      button {
+        border: none;
+        background: none;
+        color: white;
+        font-size: 1em;
       }
 
       .github {
