@@ -3,10 +3,10 @@ title: Developing
 description: Learn about development of the language server.
 ---
 
-import Tabs from "../../components/common/Tabs.astro";
-import Remark from "../../components/common/Remark.astro";
-import Accordion from "../../components/common/Accordion.astro";
-import FileTreeItem from "../../components/common/FileTreeItem.astro";
+import Tabs from "~/components/common/Tabs.astro";
+import Remark from "~/components/common/Remark.astro";
+import Accordion from "~/components/common/Accordion.astro";
+import FileTreeItem from "~/components/common/FileTreeItem.astro";
 
 Thank you for taking an interest in helping improve the language server!
 
@@ -199,7 +199,7 @@ Every scope has an independent environment for separating global variables, clas
     <FileTreeItem name="service/" type="directory"><p>Server runtime and event loop</p></FileTreeItem>
     <FileTreeItem name="test/" type="directory"><p>Unit tests</p></FileTreeItem>
     <FileTreeItem name="tools/" type="directory"><p>Various tools for development</p></FileTreeItem>
-    <FileTreeItem name="vm/" type="directory">
+    <FileTreeItem name="~/" type="directory">
       <p>Semantic analysis of the AST and binding status according to the workspace.</p>
       <p>
       Turns:
