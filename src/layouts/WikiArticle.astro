@@ -32,8 +32,8 @@ export interface Props {
     <div id="article-browser" class="sidebar">
       <button class="open"><Icon name="newspaper" group="solid" /></button>
       <button class="close"><Icon name="x" group="solid" /></button>
+      <div class="title">Articles</div>
       <div class="content">
-        <div class="title">Articles</div>
         <nav>
           {
             articles
@@ -77,8 +77,8 @@ export interface Props {
     <div id="outline" class="sidebar">
       <button class="open"><Icon name="list" group="solid" /></button>
       <button class="close"><Icon name="x" group="solid" /></button>
+      <div class="title">Outline</div>
       <div class="content">
-        <div class="title">Outline</div>
         <nav>
           <ol>
             <li><a href={`#${slug}`}>{article.data.title}</a></li>
@@ -209,6 +209,13 @@ export interface Props {
       right: 0.5em;
     }
 
+    div.title {
+      font-size: 2em;
+      font-weight: 700;
+      text-align: center;
+      margin: 0.25em auto 0em auto;
+    }
+
     .content {
       overflow-x: hidden;
       overflow-y: auto;
@@ -222,11 +229,6 @@ export interface Props {
         a {
           display: block;
         }
-      }
-      div.title {
-        font-size: 2em;
-        font-weight: 700;
-        text-align: center;
       }
     }
 
