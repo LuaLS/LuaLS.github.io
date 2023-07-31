@@ -89,3 +89,9 @@ kbd {
 hr {
   border: 0.05em solid white;
 }
+
+button {
+  &:hover {
+    cursor: pointer;
+  }
+}
