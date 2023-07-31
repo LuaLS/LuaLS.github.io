@@ -24,9 +24,11 @@ const { class: className } = Astro.props;
         </Tooltip>
       </a>
     </div>
-    <button class="site-search-icon">
-      <Icon name="search" group="solid" />
-    </button>
+    <Tooltip text="Search">
+      <button class="site-search-icon">
+        <Icon name="search" group="solid" />
+      </button>
+    </Tooltip>
     <span class="github">
       <ExternalLink
         url="https://github.com/luals/lua-language-server"
