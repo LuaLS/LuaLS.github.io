@@ -120,3 +120,18 @@ Free icons from [fontawesome](https://fontawesome.com/icons).
 ```HTML
 <Icon group="solid" name="peace" color="#9400ff"/>
 ```
+
+## [Loading](./Loading.astro)
+Displays a loading spinner while child content loads. When a child fires the `content_loaded` event, the spinner is removed and the content is revealed.
+
+### Slots
+`default` - The content that will load in the background and be revealed after firing `content_loaded`.
+
+### Example
+```HTML
+<Loading>
+    <!-- The list of users needs to be fetched first -->
+    <!-- Once fetched, the below div will need to fire a `content_loaded` event -->
+    <div id="user-list"></div>
+</Loading>
+```
