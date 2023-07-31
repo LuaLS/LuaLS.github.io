@@ -180,3 +180,24 @@ A group of tabs where the content of only one tab is visible at a time.
   <div data-tab="Neovim"></div>
 </Tabs>
 ```
+
+## [Tooltip](./Tooltip.astro)
+A [tippy.js](https://atomiks.github.io/tippyjs/) tooltip that can be placed around other elements.
+
+### Arguments
+| Name        | Type                                                                                                                                                                                                         | Description                                                                     |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------- |
+| `text`      | `string`                                                                                                                                                                                                     | The text to display in the tooltip.                                             |
+| `placement` | `"auto" \| "auto-start" \| "auto-end" \| "top" \| "bottom" \| "right" \| "left" \| "top-start" \| "top-end" \| "bottom-start" \| "bottom-end" \| "right-start" \| "right-end" \| "left-start" \| "left-end"` | Where to place the tooltip relative to the element.                             |
+| `delay`     | [`string?`](https://atomiks.github.io/tippyjs/v6/all-props/#delay)                                                                                                                                           | Delay in milliseconds between showing and hiding.                               |
+| `arrow`     | [`(string \| boolean)?`](https://atomiks.github.io/tippyjs/v6/all-props/#arrow)                                                                                                                              | Whether or not the tooltip should have an arrow pointing to the target element. |
+
+### Slots
+`default` - The content to place the tooltip on
+
+### Example
+```HTML
+<Tooltip text="Hello!" placement="bottom">
+    <button>Hover me!</button>
+</Tooltip>
+```
