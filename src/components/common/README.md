@@ -135,3 +135,22 @@ Displays a loading spinner while child content loads. When a child fires the `co
     <div id="user-list"></div>
 </Loading>
 ```
+
+## [Remark](./Remark.astro)
+A remark/note/admonition that stands out to readers.
+
+### Arguments
+| Name      | Type                                                                     | Description                                                                                                                                                                                                               |
+| --------- | ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `type`    | `"note" \| "warning" \| "important" \| "WIP" \| "deprecated" \| "issue"` | The type of remark to make. Each has their own icon and colour.                                                                                                                                                           |
+| `display` | `"fit" \| "block" \| "compact"`                                          | How the remark should be displayed. `"fit"` will only take up the required width, `"block"` (default) will take up the entire width of the parent, `"compact"` will display the remark type and content on the same line. |
+
+### Slots
+`default` - The content of the remark
+
+### Example
+```HTML
+<Remark type="note" display="compact">
+    <p>Wait, people actually read this?</p>
+</Remark>
+```
