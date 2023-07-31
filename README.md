@@ -3,10 +3,10 @@ This website explains the [lua-language-server](https://github.com/LuaLS/lua-lan
 
 ## Project File Structure
  - `/public/` All of the assets available from the root of the website such as images, fonts, etc.
- - `/src/components/` reusable `.astro` components
-   - `/src/components/common/` common components used all over the website
+ - [`/src/components/`](./src/components/) reusable `.astro` components
+   - [`/src/components/common/`](./src/components/common) common components used all over the website
    - `/src/components/layout/` components used in layouts such as headers and footers
-   - `/src/components/wiki/` components used in the wiki
+   - [`/src/components/wiki/`](./src/components/wiki/) components used in the wiki
  - `/src/content/` Content-full markdown files used in the wiki
  - `/src/layouts/` Various reusable layouts
  - `/src/pages/` The pages of the website
