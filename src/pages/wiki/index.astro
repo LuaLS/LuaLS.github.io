@@ -2,7 +2,8 @@
 import { getCollection } from "astro:content";
 import Icon from "../../components/common/Icon.astro";
 import Layout from "../../layouts/Main.astro";
-import Remark from "../../components/common/Remark.astro";
+import Tooltip from "../../components/common/Tooltip.astro";
+import fetch from "../../helpers/fetch";
 
 const CONTRIBUTOR_COUNT = 30;
 
@@ -10,16 +11,36 @@ const wikiArticles = await getCollection("wiki", ({ data }) => {
   return data["getting-started"] === true;
 });
 
-const getContributorPlaceholders = () => {
-  const elements = [];
-  for (let i = 0; i < CONTRIBUTOR_COUNT; i++) {
-    elements.push(
-      `<div class="contributor placeholder"><img src="/images/user.svg"><div class="username">Contributor</div></div>`
-    );
+type Contributor = {
+  login: string;
+  id: number;
+  avatar_url: string;
+  gravatar_id: string;
+  url: string;
+  html_url: string;
+  contributions: number;
+  staff?: boolean;
+};
+
+const getContributorLevel = (contributions: number) => {
+  if (contributions > 100) {
+    return "diamond";
+  } else if (contributions > 50) {
+    return "gold";
+  } else if (contributions > 25) {
+    return "silver";
   }
 
-  return elements;
+  return "bronze";
 };
+
+let response;
+
+response = await fetch(
+  `https://api.github.com/repos/LuaLS/lua-language-server/contributors?per_page=${CONTRIBUTOR_COUNT}`
+);
+
+const contributors = (await response.json()) as Contributor[];
 ---
 
 <Layout title="Wiki">
@@ -55,99 +76,29 @@ const getContributorPlaceholders = () => {
             color="red"
           />
         </p>
-        <div class="grid" set:html={getContributorPlaceholders()} />
+        <div class="grid">
+          {
+            contributors.map((user) => (
+              <div
+                class:list={[
+                  "contributor",
+                  getContributorLevel(user.contributions),
+                ]}
+              >
+                <a href={user.html_url} rel="noopener nofollow">
+                  <img src={user.avatar_url} />
+                </a>
+                <Tooltip text={user.login} placement="bottom" class="username">
+                  <Fragment>{user.login}</Fragment>
+                </Tooltip>
+              </div>
+            ))
+          }
+        </div>
       </section>
     </div>
   </main>
 </Layout>
-
-<script>
-  import { SmartCache } from "../../../classes/SmartCache";
-  import tippy from "tippy.js";
-
-  type Contributor = {
-    login: string;
-    id: number;
-    avatar_url: string;
-    gravatar_id: string;
-    url: string;
-    html_url: string;
-    contributions: number;
-  };
-
-  const contributorContainer = document.querySelector(
-    "section#contributors div.grid"
-  );
-
-  if (!contributorContainer) {
-    throw new Error("Failed to find contributor container!");
-  }
-
-  const placeholders = contributorContainer.querySelectorAll("div.placeholder");
-
-  const endpoint = `https://api.github.com/repos/LuaLS/lua-language-server/contributors?per_page=30`;
-
-  const cache = new SmartCache(endpoint, {
-    includeSearch: false,
-  });
-
-  let contributors = (await cache.get()) as Contributor[];
-
-  if (!contributors) {
-    throw new Error("Could not get contributors");
-  }
-
-  if (contributors) {
-    for (const contributor of contributors) {
-      const div = document.createElement("div");
-      div.classList.add("contributor");
-
-      let tier = "bronze";
-
-      if (contributor.contributions > 100) {
-        tier = "diamond";
-      } else if (contributor.contributions > 50) {
-        tier = "gold";
-      } else if (contributor.contributions > 25) {
-        tier = "silver";
-      }
-
-      if (tier) {
-        div.classList.add(tier);
-      }
-
-      const a = document.createElement("a");
-      a.href = contributor.html_url;
-      a.target = "_blank";
-      a.rel = "nofollow noopener";
-
-      const img = document.createElement("img");
-      img.src = contributor.avatar_url;
-      img.alt = contributor.login;
-
-      const name = document.createElement("div");
-      name.classList.add("username");
-      name.innerText = contributor.login;
-
-      a.append(img);
-      div.append(a);
-      div.append(name);
-
-      contributorContainer?.append(div);
-
-      tippy(name, {
-        content: contributor.login,
-        placement: "bottom",
-      });
-    }
-
-    placeholders.forEach((placeholder) => placeholder.remove());
-
-    contributorContainer.dispatchEvent(
-      new CustomEvent("content_loaded", { bubbles: true })
-    );
-  }
-</script>
 
 <style lang="scss">
   .grid {
@@ -201,18 +152,28 @@ const getContributorPlaceholders = () => {
       }
     }
 
-    :global(div.contributor) {
+    div.contributor {
       width: 100%;
       height: auto;
-      aspect-ratio: 1;
+      position: relative;
 
-      :global(img) {
+      a,
+      img {
+        display: block;
+        aspect-ratio: 1;
+        width: 100%;
         border-radius: 99em;
         border-width: 0.2em;
+        &:focus {
+          outline: var(--tier-color) solid 0.3em;
+        }
+      }
+      img {
         border-style: solid;
         box-sizing: border-box;
         box-shadow: var(--tier-color) 0px 0px 10px 2px;
         border-color: var(--tier-color);
+        position: relative;
       }
 
       &.diamond {
@@ -228,19 +189,9 @@ const getContributorPlaceholders = () => {
         --tier-color: #b46300;
       }
 
-      :global(a),
-      :global(img) {
+      span.username {
+        color: white;
         display: block;
-        width: 100%;
-        height: 100%;
-        border-radius: 99em;
-
-        &:focus {
-          outline: var(--tier-color) solid 0.3em;
-        }
-      }
-
-      :global(div.username) {
         text-align: center;
         width: 100%;
         text-overflow: ellipsis;
