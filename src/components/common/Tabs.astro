@@ -37,20 +37,13 @@ export interface Props {
 
 const { buttons, active } = Astro.props;
 
-const slotNames = Object.keys(Astro.slots);
-
 const DOM = new jsdom.JSDOM();
+const body = DOM.window.document.body;
 
-const rendered = await Promise.all(
-  slotNames.map((name) => Astro.slots.render(name))
-);
+const rendered = await Astro.slots.render("default");
+body.innerHTML += rendered;
 
-const tabs = rendered.reduce((prev, cur) => {
-  prev.innerHTML += cur;
-  return prev;
-}, DOM.window.document.body);
-
-tabs.querySelector(`[data-tab="${active}"]`)?.classList.add("active");
+body.querySelector(`[data-tab="${active}"]`)?.classList.add("active");
 ---
 
 <div class="tabs">
@@ -71,7 +64,7 @@ tabs.querySelector(`[data-tab="${active}"]`)?.classList.add("active");
       ))
     }
   </div>
-  <div class="windows" set:html={tabs.innerHTML} />
+  <div class="windows" set:html={body.innerHTML} />
 </div>
 
 <script>
