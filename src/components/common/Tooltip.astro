@@ -3,7 +3,7 @@ import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale.css";
 import type { Placement } from "tippy.js";
 
-const { text, placement, delay, arrow } = Astro.props;
+const { text, placement, delay, arrow, class: className } = Astro.props;
 
 export interface Props {
   /** The text to display in the tooltip */
@@ -14,11 +14,13 @@ export interface Props {
   delay?: string;
   /** Whether or not the tooltip should have an arrow pointing to the target element */
   arrow?: string;
+  /** A class name to apply */
+  class?: string;
 }
 ---
 
 <span
-  class="tooltip"
+  class:list={["tooltip", className]}
   data-tooltip-text={text}
   data-tooltip-placement={placement}
   data-tooltip-delay={delay}
@@ -26,13 +28,6 @@ export interface Props {
 >
   <slot />
 </span>
-
-<style lang="scss">
-  span.tooltip {
-    display: inline-flex;
-    width: fit-content;
-  }
-</style>
 
 <script>
   import tippy from "tippy.js";

@@ -224,6 +224,7 @@ A [tippy.js](https://atomiks.github.io/tippyjs/) tooltip that can be placed arou
 | `placement` | `"auto" \| "auto-start" \| "auto-end" \| "top" \| "bottom" \| "right" \| "left" \| "top-start" \| "top-end" \| "bottom-start" \| "bottom-end" \| "right-start" \| "right-end" \| "left-start" \| "left-end"` | Where to place the tooltip relative to the element.                             |
 | `delay`     | [`string?`](https://atomiks.github.io/tippyjs/v6/all-props/#delay)                                                                                                                                           | Delay in milliseconds between showing and hiding.                               |
 | `arrow`     | [`(string \| boolean)?`](https://atomiks.github.io/tippyjs/v6/all-props/#arrow)                                                                                                                              | Whether or not the tooltip should have an arrow pointing to the target element. |
+| `class`     | `string?`                                                                                                                                                                                                    | Name of a class to apply.                                                       |
 
 ### Slots
 
