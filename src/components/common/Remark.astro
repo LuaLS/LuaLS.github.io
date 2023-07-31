@@ -1,14 +1,7 @@
 ---
 import Icon from "./Icon.astro";
 
-export interface Props {
-  type: "note" | "warning" | "important" | "WIP" | "deprecated" | "issue";
-  display?: "inline" | "block" | "compact";
-}
-
-const { type, display } = Astro.props;
-
-const types = {
+const TYPES = {
   note: { displayName: "Note", icon: "note-sticky" },
   warning: { displayName: "Warning", icon: "warning" },
   important: { displayName: "Important", icon: "exclamation" },
@@ -17,13 +10,34 @@ const types = {
   issue: { displayName: "Issue", icon: "circle-dot" },
 };
 
+type RemarkType =
+  | "note"
+  | "warning"
+  | "important"
+  | "WIP"
+  | "deprecated"
+  | "issue";
+
+export interface Props {
+  type: RemarkType;
+  display?: "fit" | "block" | "compact";
+}
+
+const { type, display } = Astro.props;
+
+const remark = TYPES[type];
+
+if (!remark) {
+  throw new Error("Invalid remark type: " + type);
+}
+
 const classList = [type, "remark", display ?? "block"];
 ---
 
 <div class:list={classList}>
   <div>
-    <Icon name={types[type].icon} group="solid" />
-    {types[type].displayName}
+    <Icon name={remark.icon} group="solid" />
+    {remark.displayName}
   </div>
   <slot />
 </div>
