@@ -30,8 +30,10 @@ export interface Props {
 }
 
 const modifiedTime = remarkPluginFrontmatter.lastModified
-  ? dayjs(remarkPluginFrontmatter.lastModified).format("HH:mm:ss DD MMMM YYYY")
-  : "???";
+  ? dayjs(remarkPluginFrontmatter.lastModified)
+      .utc()
+      .format("HH:mm:ss DD MMMM YYYY UTC")
+  : "Not committed yet";
 ---
 
 <Layout article={article} headings={headings}>
@@ -49,6 +51,6 @@ const modifiedTime = remarkPluginFrontmatter.lastModified
     }}
   />
   <div class="modified-timestamp">
-    <p>Last Modified: {modifiedTime} UTC</p>
+    <p>Last Modified: {modifiedTime}</p>
   </div>
 </Layout>
