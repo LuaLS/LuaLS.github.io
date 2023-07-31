@@ -154,3 +154,29 @@ A remark/note/admonition that stands out to readers.
     <p>Wait, people actually read this?</p>
 </Remark>
 ```
+
+## [Tabs](./Tabs.astro)
+A group of tabs where the content of only one tab is visible at a time.
+
+### Arguments
+| Name      | Type                                                                 | Description                                                                                                                                                                                                                                                                                                                                  |
+| --------- | -------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `buttons` | `{ name: string, image?: string, icon?: string, accent?: string }[]` | An array of buttons that will select the various tabs. There should be a button per tab. There should only be an `image` **OR** `icon` specified for each button. `image` should be a path/URL to the image. `icon` should be the name of a solid icon from fontawesome. `accent` is an accent colour displayed under the tab when selected. |
+| `active`  | `boolean`                                                            | Whether this button/tab combo is active. Only one should be marked active.                                                                                                                                                                                                                                                                   |
+
+### Slots
+`default` - Within this one slot there should be a div for each button you have defined. The div should have an attribute `data-tab` where the value should be the the name of a button. These are your tabs of content.
+
+### Example
+```JSX
+<Tabs
+  active="VS Code"
+  buttons={[
+    { name: "VS Code", image: "/images/vscode.svg", accent: "#23a9f2" },
+    { name: "Neovim", image: "/images/neovim.svg", accent: "#78e027" },
+  ]}
+>
+  <div data-tab="VS Code"></div>
+  <div data-tab="Neovim"></div>
+</Tabs>
+```

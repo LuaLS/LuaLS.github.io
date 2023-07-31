@@ -1,21 +1,4 @@
 ---
-/*
-Example usage:
-
-<Tabs
-  active="VS Code"
-  buttons={[
-    { name: "VS Code", image: "/images/vscode.svg", accent: "#23a9f2" },
-    { name: "Neovim", image: "/images/neovim.svg", accent: "#78e027" },
-    { name: "Kakoune", image: "/images/kakoune.svg", accent: "#ffffff" },
-  ]}
->
-  <div data-tab="VS Code"></div>
-  <div data-tab="Neovim"></div>
-  <div data-tab="Kakoune"></div>
-</Tabs>
-*/
-
 import type { XOR } from "../../helpers/types";
 import Icon from "./Icon.astro";
 import jsdom from "jsdom";
@@ -31,7 +14,9 @@ type ButtonDefinition = XOR<
 >;
 
 export interface Props {
+  /** Array of buttons to show in the tab selector. */
   buttons: ButtonDefinition[];
+  /** The name of the active tab. */
   active: string;
 }
 
