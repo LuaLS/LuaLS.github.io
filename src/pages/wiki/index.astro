@@ -82,7 +82,7 @@ const contributors = (await response.json()) as Contributor[];
             color="red"
           />
         </p>
-        <div class="grid">
+        <div class="flex">
           {
             contributors.map((user) => (
               <div
@@ -163,8 +163,11 @@ const contributors = (await response.json()) as Contributor[];
   }
 
   #contributors {
-    div.grid {
-      grid-template-columns: repeat(auto-fill, minmax(5em, 1fr));
+    div.flex {
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      flex-wrap: wrap;
       gap: 1em;
       margin: 0px 1em;
     }
@@ -181,6 +184,7 @@ const contributors = (await response.json()) as Contributor[];
       width: 100%;
       height: auto;
       position: relative;
+      width: 5em;
 
       a,
       img {
