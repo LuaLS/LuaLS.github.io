@@ -1,4 +1,5 @@
-import defaultFetch, { fetchBuilder, FileSystemCache } from "node-fetch-cache";
+import {fetchBuilder, FileSystemCache } from "node-fetch-cache";
+import type { default as nodeFetch } from "node-fetch";
 import os from "os";
 
 /* Cache location:
@@ -12,11 +13,11 @@ const cacheFetch = fetchBuilder.withCache(
 );
 
 /** If in development mode, caches requests to prevent vite from DDOSing api endpoints */
-export default async (...args: Parameters<typeof defaultFetch>) => {
+export default async (request: RequestInfo, init: RequestInit) => {
   if (import.meta.env.PROD) {
-    return await fetch(...(args as [RequestInfo, RequestInit]));
+    return await fetch(request, init);
   } else {
-    return await cacheFetch(...args).then(async (response) => {
+    return await cacheFetch(request as Parameters<typeof nodeFetch>[0], init as Parameters<typeof nodeFetch>[1]).then(async (response) => {
       if (!response.ok) {
         await response.ejectFromCache();
         throw new Error(`${response.status}: ${response.statusText}`);
