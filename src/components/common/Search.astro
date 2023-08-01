@@ -1,8 +1,6 @@
 ---
-type searchItem = {
-  text: string;
-  href: string;
-};
+import type { searchItem } from "~/services/search";
+import { searchTerms } from "~/services/search";
 
 const getContentStaticURL = (path: string, target?: string): string | null => {
   const rgx = /\/src\/.+?\/(.+)\..*?/g;
@@ -17,7 +15,7 @@ const getContentStaticURL = (path: string, target?: string): string | null => {
   }
 };
 
-const searchTags: searchItem[] = [];
+const searchTags: searchItem[] = searchTerms;
 
 const pages = await Astro.glob("../../content/**/*.mdx");
 
@@ -55,9 +53,12 @@ for (const page of pages) {
   <div id="site-search-suggestions" tabindex="-1">
     {
       searchTags.map((entry) => (
-        <a href={entry.href}>
+        <a
+          href={entry.href}
+          target={entry.href.startsWith("/") ? undefined : "_blank"}
+        >
           <span class="term">{entry.text}</span>
-          <span class="page">{entry.href.substring(1)}</span>
+          <span class="page">{entry.href}</span>
         </a>
       ))
     }
@@ -184,8 +185,8 @@ for (const page of pages) {
         const firstOption =
           optionsContainer.firstChild as HTMLAnchorElement | null;
         if (firstOption !== null) {
-          location.assign(firstOption.href);
           searchDialog.close();
+          window.open(firstOption.href, firstOption.target);
           break;
         }
       default:
@@ -227,7 +228,7 @@ for (const page of pages) {
     background: #0f2e4b;
     color: white;
 
-    &:focus+div#site-search-suggestions > a:first-child() {
+    &:focus + div#site-search-suggestions > a:first-child() {
       color: white;
     }
   }
