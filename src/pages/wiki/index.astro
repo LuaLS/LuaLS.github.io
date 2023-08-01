@@ -38,7 +38,8 @@ const getContributorLevel = (contributions: number) => {
 let response;
 
 response = await fetch(
-  `https://api.github.com/repos/LuaLS/lua-language-server/contributors?per_page=${CONTRIBUTOR_COUNT}`
+  `https://api.github.com/repos/LuaLS/website/contributors?per_page=${CONTRIBUTOR_COUNT}`,
+  { headers: { Authorization: `Bearer ${import.meta.env.GITHUB_TOKEN}` } }
 );
 
 const contributors = (await response.json()) as Contributor[];
