@@ -143,8 +143,6 @@ for (const page of pages) {
     for (const result of results) {
       const element = options[result.refIndex];
 
-      element.title = result.score;
-
       if (result.score && result.score <= 0.1) {
         element.classList.add("match");
         optionsContainer.insertBefore(element, optionsContainer.firstChild);
@@ -153,6 +151,7 @@ for (const page of pages) {
   };
 
   const open = () => {
+    searchDialog.close();
     searchDialog.showModal();
     searchInput.focus();
   };
