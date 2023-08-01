@@ -44,6 +44,23 @@ import Icon from "../common/Icon.astro";
     :global(h6) {
       width: fit-content;
       margin: 0px;
+      position: relative;
+
+      &::after {
+        content: "";
+        display: block;
+        width: 0.1em;
+        height: 100%;
+        background-color: var(--link-color);
+        position: absolute;
+        bottom: 0px;
+        border-radius: 99em;
+        left: -0.15em;
+        z-index: -1;
+        padding: 0px;
+        clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%);
+        transition: clip-path cubic-bezier(0.65, 0.05, 0.36, 1) 0.75s;
+      }
     }
 
     &:hover {
@@ -53,6 +70,16 @@ import Icon from "../common/Icon.astro";
     }
 
     &:target {
+      :global(h1),
+      :global(h2),
+      :global(h3),
+      :global(h4),
+      :global(h5),
+      :global(h6) {
+        &::after {
+          clip-path: polygon(0 0, 100% 0%, 100% 100%, 0% 100%);
+        }
+      }
       a {
         opacity: 1;
       }
