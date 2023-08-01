@@ -4,6 +4,7 @@ import Icon from "~/components/common/Icon.astro";
 import Layout from "~/layouts/Main.astro";
 import Tooltip from "~/components/common/Tooltip.astro";
 import fetch from "~/util/fetch";
+import ExternalLink from "~/components/common/ExternalLink.astro";
 
 const CONTRIBUTOR_COUNT = 30;
 
@@ -81,6 +82,12 @@ const contributors = (await response.json()) as Contributor[];
             group="solid"
             color="red"
           />
+          <br />
+          <ExternalLink
+            url="https://github.com/LuaLS/website/blob/main/docs/CONTRIBUTING.md"
+          >
+            Contribute today!
+          </ExternalLink>
         </p>
         <div class="flex">
           {
