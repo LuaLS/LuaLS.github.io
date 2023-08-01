@@ -39,7 +39,7 @@ const getContributorLevel = (contributions: number) => {
 let response;
 
 response = await fetch(
-  `https://api.github.com/repos/LuaLS/website/contributors?per_page=${CONTRIBUTOR_COUNT}`,
+  `https://api.github.com/repos/LuaLS/LuaLS.github.io/contributors?per_page=${CONTRIBUTOR_COUNT}`,
   { headers: { Authorization: `Bearer ${import.meta.env.GITHUB_TOKEN}` } }
 );
 
@@ -84,7 +84,7 @@ const contributors = (await response.json()) as Contributor[];
           />
           <br />
           <ExternalLink
-            url="https://github.com/LuaLS/website/blob/main/docs/CONTRIBUTING.md"
+            url="https://github.com/LuaLS/LuaLS.github.io/blob/main/docs/CONTRIBUTING.md"
           >
             Contribute today!
           </ExternalLink>

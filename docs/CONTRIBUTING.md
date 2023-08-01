@@ -6,7 +6,7 @@ See ["Contributing to the Wiki"](./CONTRIBUTING-WIKI.md).
 
 # Contribution Types
 
-We appreciate all contributions, whether you want to add a feature, add documentation to the wiki, fix a typo, or just get involved in the conversation in [issues](https://github/LuaLS/website/issues) and [discussions](https://github.com/LuaLS/website/discussions).
+We appreciate all contributions, whether you want to add a feature, add documentation to the wiki, fix a typo, or just get involved in the conversation in [issues](https://github/LuaLS/LuaLS.github.io/issues) and [discussions](https://github.com/LuaLS/LuaLS.github.io/discussions).
 
 Here are some great ways to get involved:
 
@@ -19,7 +19,7 @@ Here are some great ways to get involved:
   - Share your ideas.
 
 - Assist with existing issues
-  - Find [issues needing help](https://github.com/LuaLS/website/labels/help%20wanted) and [issues for new contributors](https://github.com/LuaLS/website/contribute).
+  - Find [issues needing help](https://github.com/LuaLS/LuaLS.github.io/labels/help%20wanted) and [issues for new contributors](https://github.com/LuaLS/LuaLS.github.io/contribute).
 
 - Create a pull request
   - Quickly fix typos and bad links.
