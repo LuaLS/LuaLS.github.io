@@ -54,8 +54,9 @@ const annotationCount = annotationsPage
           <Icon name="at" group="solid" />
           <div>Powerful Annotations</div>
           <p>
-            {annotationCount} annotations to mark parameters, returns, classes, and
-            more!
+            <a href="/wiki/annotations" target="_blank"
+              >{annotationCount} annotations</a
+            > to mark parameters, returns, classes, and more!
           </p>
         </div>
         <div>
@@ -70,8 +71,11 @@ const annotationCount = annotationsPage
           <Icon name="triangle-exclamation" group="solid" />
           <div>Diagnostics</div>
           <p>
-            Provides warnings and errors for syntax mistakes, type errors, and
-            more.
+            Provides <a href="/wiki/diagnostics" target="_blank"
+              >warnings and errors</a
+            > for <a href="/wiki/syntax-errors" target="_blank"
+              >syntax mistakes</a
+            >, type errors, and more.
           </p>
         </div>
         <div>
@@ -90,35 +94,46 @@ const annotationCount = annotationsPage
         <div>
           <Icon name="language" group="solid" />
           <div>Localization Support</div>
-          <p>Currently available in English, Chinese, Taiwanese, Portugese</p>
+          <p>
+            Currently available in English, Chinese, Taiwanese, Portugese. <a
+              href="/wiki/translating"
+              target="_blank">Help translate!</a
+            >
+          </p>
         </div>
         <div>
           <Icon name="file-code" group="solid" />
           <div>Supports Definition Files</div>
           <p>
-            Make your own or use one of the many community-provided defintion
-            files for popular libraries and APIs.
+            <a href="/wiki/definition-files" target="_blank">Make your own</a> or
+            use one of the many community-provided defintion files for popular libraries
+            and APIs.
           </p>
         </div>
         <div>
           <Icon name="paintbrush" group="solid" />
           <div>Built-in Formatting</div>
           <p>
-            Provides a built-in formatter for ensuring a consistent code-style
-            across your workspace.
+            Provides a <a href="/wiki/formatter" target="_blank"
+              >built-in formatter</a
+            > for ensuring a consistent code-style across your workspace.
           </p>
         </div>
         <div>
           <Icon name="plug" group="solid" />
           <div>Custom Plugins</div>
-          <p>Use plugins to add custom functionality to the language server.</p>
+          <p>
+            Use <a href="/wiki/plugins" target="_blank">plugins</a> to add custom
+            functionality to the language server.
+          </p>
         </div>
         <div>
           <Icon name="book-open-reader" group="solid" />
           <div>Documentation Generation</div>
           <p>
-            Generate documentation in Markdown and JSON formats from your
-            codebase.
+            <a href="/wiki/export-docs" target="_blank"
+              >Generate documentation</a
+            > in Markdown and JSON formats from your codebase.
           </p>
         </div>
       </div>
@@ -397,8 +412,9 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
 
 <script>
   // Swap active tab on hover of install method
-  const installButtons =
-    document.querySelectorAll<HTMLButtonElement>(".install-tabs > button");
+  const installButtons = document.querySelectorAll<HTMLButtonElement>(
+    ".install-tabs > button"
+  );
   const tabs: {
     [key: string]: { button: HTMLButtonElement; content: HTMLDivElement };
   } = {};
