@@ -7,6 +7,11 @@ import Remark from "../components/common/Remark.astro";
 
 import "../scss/fonts/_Prompt.scss";
 import Tooltip from "../components/common/Tooltip.astro";
+
+const annotationsPage = await import("~/content/wiki/annotations.mdx");
+const annotationCount = annotationsPage
+  .getHeadings()
+  .reduce((count, heading) => (count += heading.text.includes("@") ? 1 : 0), 0);
 ---
 
 <ScrollSnapLayout title="Lua Language Server">
@@ -49,7 +54,8 @@ import Tooltip from "../components/common/Tooltip.astro";
           <Icon name="at" group="solid" />
           <div>Powerful Annotations</div>
           <p>
-            Over 20 annotations to mark parameters, returns, classes, and more!
+            {annotationCount} annotations to mark parameters, returns, classes, and
+            more!
           </p>
         </div>
         <div>
