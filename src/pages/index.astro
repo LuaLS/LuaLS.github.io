@@ -147,7 +147,7 @@ local Player = &#123;&#125;</pre>
 
     <section id="install">
       <h2>Install for...</h2>
-      <div class="tabs">
+      <div class="install-tabs">
         <button value="vscode-install" class="vscode active" tabindex="0"
           ><img src="/images/vscode.svg" alt="Visual Studio Code" /></button
         >
@@ -392,7 +392,7 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
 <script>
   // Swap active tab on hover of install method
   const installButtons =
-    document.querySelectorAll<HTMLButtonElement>(".tabs > button");
+    document.querySelectorAll<HTMLButtonElement>(".install-tabs > button");
   const tabs: {
     [key: string]: { button: HTMLButtonElement; content: HTMLDivElement };
   } = {};
@@ -566,7 +566,7 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
       margin-bottom: 0.5em;
     }
 
-    .tabs {
+    .install-tabs {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       justify-items: center;
