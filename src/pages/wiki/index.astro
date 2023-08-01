@@ -44,6 +44,10 @@ response = await fetch(
 );
 
 const contributors = (await response.json()) as Contributor[];
+
+if (!contributors) {
+  throw new Error("Failed to get contributors");
+}
 ---
 
 <Layout title="Wiki">
