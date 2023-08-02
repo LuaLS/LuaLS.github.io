@@ -118,6 +118,9 @@ export class SearchDialog {
   }
 
   open() {
+    if (this.element.isConnected === false) {
+      document.body.appendChild(this.element);
+    }
     this.close();
     this.element.showModal();
     this.inputElement.setSelectionRange(0, this.inputElement.value.length);
