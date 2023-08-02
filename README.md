@@ -16,10 +16,10 @@ This website explains the [lua-language-server](https://github.com/LuaLS/lua-lan
 
 ## Developing
 
-See the [contributing guide](./docs/CONTRIBUTING.md)
+See the [contributing guide](./docs/CONTRIBUTING.md).
 
 To get started, run `npm i` to install the dependencies.
 
 You can then use `npm run dev` to start a local development server on `localhost:3000`.
 
-`npm run build` will build the site for production so it can be preview. `npm run preview` will preview your build of the website.
+`npm run build` will build the site for production so it can be previewed. `npm run preview` will preview your build of the website.
