@@ -13,7 +13,7 @@ const cacheFetch = fetchBuilder.withCache(
 );
 
 /** If in development mode, caches requests to prevent vite from DDOSing api endpoints */
-export default async (request: RequestInfo, init: RequestInit) => {
+export default async (request: RequestInfo, init?: RequestInit) => {
   if (import.meta.env.PROD) {
     return await fetch(request, init);
   } else {
