@@ -328,17 +328,12 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
   import axios from "axios";
   import { TimeCache } from "~/classes/TimeCache";
   import { formatNumber } from "~/util/strings";
+  import { assertElement } from "~/util/DOM";
 
   const ENDPOINT =
     "https://corsproxy.io/?https://marketplace.visualstudio.com/_apis/public/gallery/extensionquery";
 
-  const installElement = document.querySelector(
-    "#statistics .installs :first-child"
-  );
-
-  if (!installElement) {
-    throw new Error("Failed to get install count element!");
-  }
+  const installElement = assertElement("#statistics .installs > b");
 
   const cache = new TimeCache<number>(ENDPOINT, 1800);
   let installs = cache.get();
@@ -386,16 +381,11 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
   import axios from "axios";
   import { TimeCache } from "~/classes/TimeCache";
   import { formatNumber } from "~/util/strings";
+  import { assertElement } from "~/util/DOM";
 
   const ENDPOINT = "https://api.github.com/repos/LuaLS/lua-language-server";
 
-  const starsElement = document.querySelector<HTMLDivElement>(
-    "#statistics .stars :first-child"
-  );
-
-  if (!starsElement) {
-    throw new Error("Failed to get stars element");
-  }
+  const starsElement = assertElement<HTMLDivElement>("#statistics .stars > b");
 
   const cache = new TimeCache<number>(ENDPOINT, 3600);
   let stars = cache.get();
@@ -404,10 +394,8 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
     const response = await axios.get(ENDPOINT);
     stars = response.data.stargazers_count as number;
     cache.store(stars);
-    starsElement.textContent = formatNumber(stars);
-  } else {
-    starsElement.textContent = formatNumber(stars);
   }
+  starsElement.textContent = formatNumber(stars);
 </script>
 
 <script>
