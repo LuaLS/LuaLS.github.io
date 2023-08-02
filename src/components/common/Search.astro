@@ -9,9 +9,9 @@ const getContentStaticURL = (path: string, target?: string): string | null => {
   if (result === null) return null;
 
   if (target) {
-    return `/${result[1]}#${target}`;
+    return `/${result[1]}/#${target}`;
   } else {
-    return `/${result[1]}`;
+    return `/${result[1]}/`;
   }
 };
 

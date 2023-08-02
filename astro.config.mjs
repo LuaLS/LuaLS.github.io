@@ -20,7 +20,5 @@ export default defineConfig({
   experimental: {
     viewTransitions: true,
   },
-  build: {
-    format: "file",
-  },
+  trailingSlash: "always"
 });

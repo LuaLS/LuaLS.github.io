@@ -69,7 +69,7 @@ if (!contributors) {
           {
             gettingStartedArticles.map((article) => (
               <div class="article">
-                <a href={`/wiki/${article.slug}`}>
+                <a href={`/wiki/${article.slug}/`}>
                   {article.data.title}
                   <p>{article.data.description}</p>
                 </a>
@@ -119,7 +119,7 @@ if (!contributors) {
           {
             allWikiArticles.map((article) => (
               <div class="article">
-                <a href={`/wiki/${article.slug}`}>
+                <a href={`/wiki/${article.slug}/`}>
                   {article.data.title}
                   <p>{article.data.description}</p>
                 </a>

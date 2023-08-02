@@ -39,7 +39,7 @@ export interface Props {
             articles
               .sort((a, b) => a.data.title.localeCompare(b.data.title))
               .map((article) => (
-                <a href={`/wiki/${article.slug}`}>{article.data.title}</a>
+                <a href={`/wiki/${article.slug}/`}>{article.data.title}</a>
               ))
           }
         </nav>

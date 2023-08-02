@@ -11,12 +11,17 @@ const isLinkExternal = (url: string): boolean => {
   return false;
 };
 
-const { href } = Astro.props;
+let { href } = Astro.props;
 
 const isExternal = href ? isLinkExternal(href) : false;
 
+const url = new URL(href, Astro.url);
+if (isExternal && !url.pathname.endsWith("/")) {
+  url.pathname += "/";
+}
+
 export interface Props {
-  href?: string;
+  href: string;
 }
 ---
 
@@ -25,6 +30,6 @@ export interface Props {
   href && isExternal ? (
     <ExternalLink url={href}><slot /></ExternalLink>
   ) : (
-    <a href={href}><slot /></a>
+    <a href={url.pathname + url.hash + url.search}><slot /></a>
   )
 }
