@@ -17,8 +17,5 @@ export default defineConfig({
     ],
     remarkPlugins: [modifiedTime],
   },
-  experimental: {
-    viewTransitions: true,
-  },
   trailingSlash: "always"
 });
