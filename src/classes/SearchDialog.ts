@@ -133,11 +133,13 @@ export class SearchDialog {
   updateSuggestions() {
     const input = this.inputElement.value.trim().toLowerCase();
 
+    if (input.length === 0) this.suggestions.forEach((s) => s.hide());
+
     const results = this.haystack.search(input, { limit: 30 });
     results.sort((a, b) => (a?.score ?? 1) - (b?.score ?? 1));
 
     // Hide all options
-    this.suggestions.forEach((s) => s.hide);
+    this.suggestions.forEach((s) => s.hide());
 
     results.forEach((result, i) => {
       if (result.score && result.score < 0.1) {
