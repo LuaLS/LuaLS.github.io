@@ -46,17 +46,18 @@ export interface Props {
       </div>
     </div>
     <div class="center">
-      {
-        article.data.incomplete && (
-          <Remark type="WIP">
-            <p>
-              This document is in an incomplete state and info may be missing.
-            </p>
-          </Remark>
-        )
-      }
       <main>
         <article>
+          {
+            article.data.incomplete && (
+              <Remark type="WIP" display="compact">
+                <p>
+                  This document is in an incomplete state and info may be
+                  missing.
+                </p>
+              </Remark>
+            )
+          }
           <div class="article-metadata">
             <h1 id={slug}>{article.data.title}</h1>
             <p>{article.data.description}</p>
