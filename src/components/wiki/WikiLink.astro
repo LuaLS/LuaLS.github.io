@@ -16,7 +16,7 @@ let { href } = Astro.props;
 const isExternal = href ? isLinkExternal(href) : false;
 
 const url = new URL(href, Astro.url);
-if (isExternal && !url.pathname.endsWith("/")) {
+if (!isExternal && !url.pathname.endsWith("/")) {
   url.pathname += "/";
 }
 
