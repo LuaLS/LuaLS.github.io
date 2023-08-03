@@ -114,7 +114,9 @@ export interface Props {
 </script>
 
 <script>
-  const headings = document.querySelectorAll("article .heading,.article-metadata h1");
+  const headings = document.querySelectorAll(
+    "article .heading,.article-metadata h1"
+  );
   const outline = document.querySelector("#outline .content");
 
   const intersectionObserver = new IntersectionObserver((entries) => {
@@ -327,6 +329,17 @@ export interface Props {
 
   article {
     padding: 1em 4em;
+
+    div.article-metadata {
+      text-align: center;
+      h1 {
+        margin-bottom: 0px;
+      }
+      p {
+        margin: 0px 0px 3em 0px;
+        color: #ffffffaa;
+      }
+    }
 
     :global(img) {
       max-width: 100%;
