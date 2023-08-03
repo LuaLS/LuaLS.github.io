@@ -24,7 +24,10 @@ const { class: className } = Astro.props;
         </Tooltip>
       </a>
     </div>
-    <Tooltip text="Search">
+    <Tooltip
+      content="<div align='center'>Search <br/><kbd>/</kbd></div>"
+      allowHTML
+    >
       <button class="site-search-icon">
         <Icon name="search" group="solid" />
       </button>
