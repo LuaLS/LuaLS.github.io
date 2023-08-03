@@ -5,13 +5,13 @@ description: Analysis of a performance benchmark
 
 import Remark from "~/components/common/Remark.astro";
 
-# Background
+## Background
 
 This benchmark tests the Lua Language Server with the Visual Studio Code extension client against a real project that contains 1500 Lua files with a total size of 20MB.
 
 The CPU used is an i7-9700K. The project files are located on a HDD and the server is on an SSD.
 
-# Results
+## Results
 
 After many tests, the loading of the 20MB workspace takes about 10 seconds, meaning the loading speed is ~2MB/s.
 
@@ -58,7 +58,7 @@ After many tests, the loading of the 20MB workspace takes about 10 seconds, mean
   In actuality, step 2 and 3 are merged, which can save about 0.5 sec.
 </Remark>
 
-## Conclusion
+### Conclusion
 
 According to the test, the most time-consuming part is compiling Lua files into abtract syntax trees. This time is matching expectations, so there may be no room for improvement.
 

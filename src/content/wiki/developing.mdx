@@ -10,11 +10,11 @@ import FileTreeItem from "~/components/common/FileTreeItem.astro";
 
 Thank you for taking an interest in helping improve the language server!
 
-# Debugging
+## Debugging
 
 Debugging can be performed in a few ways. You can [do a quick `print()`](#quick-print), [write to the log file](#append-to-log-file), or [attach a debugger](#attach-debugger) to get all the info you need.
 
-## Quick Print
+### Quick Print
 
 You can quickly `print()` to the `OUTPUT` panel (<kbd>Ctrl + Shift + U</kbd>) in Visual Studio Code.
 
@@ -31,7 +31,7 @@ function OnSetText(uri, text)
 end
 ```
 
-## Append to Log File
+### Append to Log File
 
 You can add an entry to the [log file](/wiki/FAQ#where-can-i-find-the-log-file). Below is an example of how a [plugin](/wiki/plugins) can be debugged.
 
@@ -44,7 +44,7 @@ function OnSetText(uri, text)
 end
 ```
 
-## Attach Debugger
+### Attach Debugger
 
 This is the most advanced method, but provides all kinds of useful info and is the most "proper" way to debug the language server.
 
@@ -88,7 +88,7 @@ The below steps guide you through setting up the above:
   "127.0.0.1:XXXXX"` in `launch.json`.
 </Remark>
 
-# Multiple Workspace Support
+## Multiple Workspace Support
 
 The server has supported [multi-root workspaces](https://code.visualstudio.com/docs/editor/multi-root-workspaces) since `v2.6.0`.
 
@@ -139,7 +139,7 @@ When a Lua file is opened/created, the server will check all workspace scopes. I
 
 Every scope has an independent environment for separating global variables, classes, settings, requires, etc.
 
-# File Structure
+## File Structure
 
 <div class="file-tree">
 
@@ -271,11 +271,11 @@ Every scope has an independent environment for separating global variables, clas
 </FileTreeItem>
 </div>
 
-# Theming
+## Theming
 
 Here you can find the names of the various tokens in Visual Studio Code to highlight and colour the various semantic items of Lua.
 
-## Syntax Tokens
+### Syntax Tokens
 
 These tokens are being previewed in `Dark+` of Visual Studio Code as it has great support for the various tokens used by the extension.
 
@@ -496,7 +496,7 @@ These tokens are being previewed in `Dark+` of Visual Studio Code as it has grea
   </tr>
 </table>
 
-## Semantic Tokens
+### Semantic Tokens
 
 <table>
   <tr>

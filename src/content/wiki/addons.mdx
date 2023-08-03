@@ -16,7 +16,7 @@ Addons can be used to add additional content for the Lua Language Server by doin
   Addons are a refresh of what were previously called "third-party libraries".
 </Remark>
 
-# Built-In Addons
+## Built-In Addons
 
 There are a number of addons that come with the language server that can be found in [`meta/3rd`](https://github.com/LuaLS/lua-language-server/tree/master/meta/3rd).
 
@@ -25,7 +25,7 @@ There are a number of addons that come with the language server that can be foun
   version](https://github.com/LuaLS/lua-language-server/discussions/1950).
 </Remark>
 
-# Installing Addons
+## Installing Addons
 
 <Remark type="note">
   If you use Visual Studio Code, addons can easily be installed using the [addon
@@ -56,7 +56,7 @@ So in this case, your setting could look like this in your [configuration file](
 }
 ```
 
-# Enabling Addons
+## Enabling Addons
 
 Addons often define some configuration values in their `config.json` file that are meant to be automatically applied, however, they can still be applied manually.
 
@@ -65,17 +65,17 @@ Addons often define some configuration values in their `config.json` file that a
   Visual Studio Code instead.
 </Remark>
 
-## Automatically Enabling
+### Automatically Enabling
 
 If the addon in question has been configured to allow automatic enabling and it has been placed in a directory specified in [`workspace.userThirdParty`](/wiki/settings#workspaceuserthirdparty), you will be prompted to enable it once certain critera is met. The critera is defined by the addon in its [`config.json`](#configjson) file - this could be, for example, using require on the library or naming a file a certain way.
 
-## Manually Enabling
+### Manually Enabling
 
 If the addon contains a `library/` directory, you will want to paste the full path to that directory in your [`workspace.library`](/wiki/settings#workspace-userThirdParty) setting. This will enable the provided definition files.
 
 If the [`config.json`](#configjson) contains settings, you will have to manually copy them to your configuration file.
 
-# Addon Manager
+## Addon Manager
 
 The addon manager, which is currently only available in Visual Studio Code, allows you to browse and install addons from [LLS-Addons][LLS-Addons]. It manages downloading an addon and applying modifications to your [configuration file](/wiki/configuration#configuration-file).
 
@@ -87,11 +87,11 @@ The addon manager is a [webview](https://code.visualstudio.com/api/extension-gui
 
 If you have feedback on the addon manager, please leave it in the [vscode-lua repository](https://github.com/LuaLS/vscode-lua) <Icon name="heart" group="solid" color="red"/>.
 
-# Creating an Addon
+## Creating an Addon
 
 To create an addon, you will want to first create a directory where all your files will live. If you intend to make your addon publicly available, you will also want a remote repository where people can access it. Both GitHub and GitLab have been confirmed to work, although any service that provides Git cloning over HTTP should work.
 
-## Addon Anatomy
+### Addon Anatomy
 
 An addon that contains definitions should place them in a `library/` directory. You can use the [LuaLS/addon-template](https://github.com/LuaLS/addon-template) to get up and running a little bit quicker.
 
@@ -104,15 +104,15 @@ An addon that contains definitions should place them in a `library/` directory. 
     └── 📜 config.json
 ```
 
-## Definition Files
+### Definition Files
 
 The [definition files](/wiki/definition-files) should live in the `library/` directory and should start with a [`@meta`](/wiki/annotations#meta) annotation. They can use [LuaCATS annotations](/wiki/annotations) just like any Lua code.
 
-## Plugins
+### Plugins
 
 A [plugin](/wiki/plugins) can be included simply by placing it in the addon folder and naming it `plugin.lua`.
 
-## config.json
+### config.json
 
 The `config.json` file is very important for addons and must be included. A schema for it can be found at [`LLS-Addons/schemas/addon.schema.json`](https://github.com/LuaLS/LLS-Addons/blob/main/schemas/addon_config.schema.json). You can also browse some of the addons in that repository to see how the `config.json` file can be used. The `settings` array can contain any [settings for the language server](/wiki/settings), as well as any VS Code settings, if applicable.
 

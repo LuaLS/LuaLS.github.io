@@ -16,7 +16,7 @@ The language server loads its settings from one of the following sources, in ord
 2. A [`.luarc.json`]() file in the workspace.
 3. The configuration file sent from the LSP client (like [`settings.json`](https://code.visualstudio.com/docs/getstarted/settings#_settingsjson) from VS Code).
 
-# Configuration File
+## Configuration File
 
 There are three kinds of configuration files that can be used:
 
@@ -27,11 +27,11 @@ There are three kinds of configuration files that can be used:
 - A custom configuration file
   - A file of your choice written in either Lua or JSON.
 
-# Client Configuration
+## Client Configuration
 
 Each client has their own specific method for configuring the language server. We go through some popular clients below:
 
-## Visual Studio Code
+### Visual Studio Code
 
 Make sure you take note of whether you are editing your user-wide or [workspace
 settings](https://code.visualstudio.com/docs/getstarted/settings#_workspace-settings).
@@ -42,7 +42,7 @@ Other settings like [`workspace.library`](/wiki/settings#workspace-library) _sho
 2. Enter <code>@ext:sumneko.lua</code> in the search bar
 3. Configure away!
 
-## Neovim
+### Neovim
 
 Below are some examples for getting set up in Neovim in different environments.
 
@@ -145,7 +145,7 @@ require'lspconfig'.lua_ls.setup{
   </Accordion>
 </AccordionGroup>
 
-## Kakoune
+### Kakoune
 
 <Accordion>
   <span slot="summary">
@@ -175,11 +175,11 @@ evaluate-commands %sh{
 Place the following in your kakrc:
 
 ```
-# Enable kak-lsp for Lua files
+## Enable kak-lsp for Lua files
 hook global WinSetOption filetype=lua %{
     lsp-enable-window
 }
-# Close kak-lsp when kakoune is terminated
+## Close kak-lsp when kakoune is terminated
 hook global KakEnd .* lsp-exit
 ```
 
@@ -207,7 +207,7 @@ Lua.telemetry.enable = false
 
 </Accordion>
 
-# luarc.json File
+## luarc.json File
 
 A `.luarc.json` file can be added to your workspace to apply a certain
 configuration to the server.
@@ -233,7 +233,7 @@ Here is a basic example of a `.luarc.json` file:
   `Lua.`
 </Remark>
 
-# Custom Configuration File
+## Custom Configuration File
 
 If you want to use your own custom configuration file, with whatever name you
 please, that is also an option, although it must be written in either Lua or

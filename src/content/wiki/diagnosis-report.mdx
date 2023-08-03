@@ -5,7 +5,7 @@ description: Generate a report containing diagnostics usually received by an LSP
 
 import Remark from "~/components/common/Remark.astro";
 
-# Create a Report
+## Create a Report
 
 You can use the [command line](/wiki/usage) to perform a diagnosis of your workspace and export the results to a file. This report will use the [`.luarc.json`](/wiki/configuration#luarcjson-file) in the target workspace (unless otherwise specified with [`--configpath`](/wiki/usage#--configpath))
 
@@ -16,7 +16,7 @@ The command should look like this:
 {/* TODO: Update link to log file info */}
 The server will exit once the report is complete. The report will be written to `check.json` in your [logpath](https://github.com/LuaLS/lua-language-server/wiki/FAQ#where-can-i-find-the-log-file) (unless otherwise specified with [`--logpath`](/wiki/usage#--logpath)).
 
-# How it Works
+## How it Works
 
 The check command will start a virtual client that opens all files in the target workspace, retrieves all diagnostic info, and writes it to a file.
 

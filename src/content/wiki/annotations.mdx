@@ -20,7 +20,7 @@ Annotations are prefixed with `---`, like a Lua comment with one extra dash.
   `v3`
 </Remark>
 
-# Annotation Formatting
+## Annotation Formatting
 
 Annotations support most of the [markdown syntax](https://www.markdownguide.org/cheat-sheet/). More specifically, you can use:
 
@@ -46,14 +46,14 @@ The below methods can be added to the end of a line:
 - Two trailing spaces (may be removed by formatting tools)
 - Markdown backslash `\` ([not recommended](https://www.markdownguide.org/basic-syntax#line-break-best-practices))
 
-# Tips
+## Tips
 
 - If you type `---` one line above a function, you will receive a suggested snippet that includes [`@param`](#param) and [`@return`](#return) annotations for each parameter and return value found in the function.
   ![Snippet being used in VS Code](/images/wiki/annotation-snippet.png)
 
-# Documenting Types
+## Documenting Types
 
-Properly documenting types with the language server is very important and where a lot of the features and advantages are. Below is a list of all recognized Lua types (regardless of [version in use](/wiki/settings#runtimeversion)):
+Properly documenting types with the language server is very important and where a lot of the features and advantages are. Below is a list of all recognized Lua types (regardless of [version in use](/wiki/settings/#runtimeversion)):
 
 - `nil`
 - `any`
@@ -111,7 +111,7 @@ Unions may need to be placed in parentheses in certain situations, such as when 
 local myArray = {}
 ```
 
-# Understanding This Page
+## Understanding This Page
 
 To get an understanding of how to use the annotations described on this page, you'll need to know how to read the `Syntax` sections of each annotation.
 
@@ -142,11 +142,11 @@ Any other symbols are syntactically required and should be copied verbatim.
 
 If this is confusing, take a look at a couple examples under an annotation and it should make more sense.
 
-# Annotations List
+## Annotations List
 
 Below is a list of all annotations recognized by the language server:
 
-## @alias
+### @alias
 
 An alias can be used to create your own type. You can also use it to create an enum that does not exist at runtime. For an enum that _does_ exist at runtime, see [`@enum`](#enum).
 
@@ -242,7 +242,7 @@ function foo(x) end
 
 </Accordion>
 
-## @as
+### @as
 
 Force a type onto an expression.
 
@@ -281,9 +281,9 @@ doSomething(x --[[@as string]])
 
 </Accordion>
 
-## @async
+### @async
 
-Mark a function as being asynchronous. When [`hint.await`](/wiki/settings#hintawait) is `true`, functions marked with `@async` will have an `await` hint displayed next to them when they are called. Used by diagnostics from the [`await` group](/wiki/diagnostics#await).
+Mark a function as being asynchronous. When [`hint.await`](/wiki/settings/#hintawait) is `true`, functions marked with `@async` will have an `await` hint displayed next to them when they are called. Used by diagnostics from the [`await` group](/wiki/diagnostics/#await).
 
 **Syntax**
 
@@ -302,7 +302,7 @@ function http.get(url) end
 
 </Accordion>
 
-## @cast
+### @cast
 
 Cast a variable to a different type or types.
 
@@ -373,7 +373,7 @@ print(x) --> x:string?
 
 </Accordion>
 
-## @class
+### @class
 
 Define a class. Can be used with [`@field`](#field) to define a table structure. Once a class is defined, it can be used as a type for [parameters](#param), [returns](#return), and more. A class can also inherit from a parent class.
 
@@ -407,9 +407,9 @@ local Plane = {}
 
 </Accordion>
 
-## @deprecated
+### @deprecated
 
-Mark a function as deprecated. This will trigger the [`deprecated` diagnostic](/wiki/diagnostics#deprecated), displaying it as ~~struck through~~.
+Mark a function as deprecated. This will trigger the [`deprecated` diagnostic](/wiki/diagnostics/#deprecated), displaying it as ~~struck through~~.
 
 **Syntax**
 
@@ -427,14 +427,14 @@ function outdated() end
 
 </Accordion>
 
-## @diagnostic
+### @diagnostic
 
-Toggle [diagnostics](/wiki/diagnostics) for the next line, current line, or whole file.
+Toggle [diagnostics](/wiki/diagnostics/) for the next line, current line, or whole file.
 
 **Syntax**
 
 {/* prettier-ignore */}
-<div class="syntax"><code>---@diagnostic &lt;state&gt;:&lt;[diagnostic](/wiki/diagnostics)&gt;</code></div>
+<div class="syntax"><code>---@diagnostic &lt;state&gt;:&lt;[diagnostic](/wiki/diagnostics/)&gt;</code></div>
 
 `state` options:
 
@@ -462,7 +462,7 @@ Toggle [diagnostics](/wiki/diagnostics) for the next line, current line, or whol
 
 </Accordion>
 
-## @enum
+### @enum
 
 Mark a Lua table as an enum, giving it similar functionality to [`@alias`](#alias), only the table is still usable at runtime.
 
@@ -498,7 +498,7 @@ setColor(COLORS.green)
 
 </Accordion>
 
-## @field
+### @field
 
 Define a field within a table. Should be immediately following a [`@class`](#class). As of `v3.6`, you can mark a field as `private`, `protected`, `public`, or `package`.
 
@@ -585,7 +585,7 @@ local Numbers = {}
 
 </Accordion>
 
-## @generic
+### @generic
 
 Generics allow code to be reused and serve as a sort of "placeholder" for a type. Surrounding the generic in backticks (<code>`</code>) will capture the value and use it for the type. [Generics are still WIP](https://github.com/LuaLS/lua-language-server/issues/1861).
 
@@ -677,7 +677,7 @@ dict["correct"] = true
 
 </Accordion>
 
-## @meta
+### @meta
 
 Marks a file as "meta", meaning it is used for definitions and not for its functional Lua code. It is used internally by the language server for defining the [built-in Lua libraries](https://github.com/LuaLS/lua-language-server/tree/master/meta/template). If you are writing your own [definition files](/wiki/definition-files), you will probably want to include this annotation in them. If you specify a name, it will only be able to be required by the given name. Giving the name `_` will make it unable to be required. Files with the `@meta` tag in them behave a little different:
 
@@ -700,7 +700,7 @@ Marks a file as "meta", meaning it is used for definitions and not for its funct
 
 </Accordion>
 
-## @module
+### @module
 
 Simulates `require`-ing a file.
 
@@ -738,7 +738,7 @@ local http = require 'http'
 
 </Accordion>
 
-## @nodiscard
+### @nodiscard
 
 Mark a function as having return values that **cannot** be ignored/discarded. This can help users understand how to use the function as if they do not capture the returns, a warning will be raised.
 
@@ -759,7 +759,7 @@ function getUsername() end
 
 </Accordion>
 
-## @operator
+### @operator
 
 Provides type declarations for an [operator metamethod](http://lua-users.org/wiki/MetatableEvents).
 
@@ -827,7 +827,7 @@ local URL = {}
 
 </Accordion>
 
-## @overload
+### @overload
 
 Define an additional signature for a function.
 
@@ -883,7 +883,7 @@ local bool = foo("myString")
 
 </Accordion>
 
-## @package
+### @package
 
 Mark a function as private to the file it is defined in. A packaged function cannot be accessed from another file.
 
@@ -910,7 +910,7 @@ end
 
 </Accordion>
 
-## @param
+### @param
 
 Define a parameter/argument for a function. This tells the language server what types are expected and can help enforce types and provide completion. Putting a question mark (`?`) after the parameter name will mark it as optional, meaning `nil` is an accepted type. The `type` provided can be an [`@alias`](#alias), [`@enum`](#enum), or [`@class`](#class), of course, as well.
 
@@ -1015,7 +1015,7 @@ Looking to do this with a table? You probably want to use [`@enum`](#enum)
 
 </Accordion>
 
-## @private
+### @private
 
 Mark a function as private to a [`@class`](#class). Private functions can be accessed only from within their class and are **not** accessable from child classes.
 
@@ -1047,7 +1047,7 @@ myDog:eyesCount();
 
 </Accordion>
 
-## @protected
+### @protected
 
 Mark a function as protected within a [`@class`](#class). Protected functions can be accessed only from within their class or from child classes.
 
@@ -1079,7 +1079,7 @@ myDog:eyesCount();
 
 </Accordion>
 
-## @return
+### @return
 
 Define a `return` value for a function. This tells the language server what types are expected and can help enforce types and provide completion.
 
@@ -1152,7 +1152,7 @@ local function getNicknames() end
 
 </Accordion>
 
-## @see
+### @see
 
 Allows you to reference a specific symbol (e.g. `function`, `class`) from the workspace.
 
@@ -1174,7 +1174,7 @@ function request(url) end
 
 </Accordion>
 
-## @source
+### @source
 
 Provide a reference to some source code which lives in another file. When
 searching for the defintion of an item, its `@source` will be used instead.
@@ -1225,7 +1225,7 @@ local d
 
 </Accordion>
 
-## @type
+### @type
 
 Mark a variable as being of a certain type. Union types are separated with a pipe character `|`. The `type` provided can be an [`@alias`](#alias), [`@enum`](#enum), or [`@class`](#class) as well. Please note that you cannot add a field to a class using `@type`, [you must instead use `@class`](https://github.com/LuaLS/lua-language-server/issues/1971#issuecomment-1458119701).
 
@@ -1305,7 +1305,7 @@ local x
 
 </Accordion>
 
-## @vararg
+### @vararg
 
 Mark a `function` as having variable arguments. For variable returns, see [`@return`](#return).
 
@@ -1330,7 +1330,7 @@ function concat(...) end
 
 </Accordion>
 
-## @version
+### @version
 
 Mark the required Lua version for a `function` or [`@class`](#class).
 

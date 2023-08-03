@@ -13,11 +13,11 @@ import Icon from "~/components/common/Icon.astro";
 
 ![Plugin turning custom syntax into standard Lua](https://github.com/LuaLS/vscode-lua/raw/master/images/plugin-diff.gif?raw=true)
 
-# Template
+## Template
 
 You can use the provided [template](https://github.com/LuaLS/sample-plugin) to get started.
 
-# Setup
+## Setup
 
 1. Add [`--develop=true`](/wiki/usage#--develop) to [`misc.parameters`](/wiki/settings#miscparameters).
    - This allows the plugin to write to [`LOGPATH/diffed.lua`](/wiki/faq#where-can-i-find-the-log-file).
@@ -26,9 +26,9 @@ You can use the provided [template](https://github.com/LuaLS/sample-plugin) to g
 
 For info on how to debug the plugin, see [Developing](/wiki/developing#debugging).
 
-# Functions
+## Functions
 
-## OnSetText
+### OnSetText
 
 This function provides the uri and text of the file that has been edited and expects a list of differences to be returned. The result will be written to `diffed.lua` in your [log location](/wiki/faq#where-can-i-find-the-log-file).
 
@@ -44,7 +44,7 @@ This function provides the uri and text of the file that has been edited and exp
 function OnSetText(uri, text) end
 ```
 
-# Example
+## Example
 
 The GIF [above](#plugins) uses the below code:
 

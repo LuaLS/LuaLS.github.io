@@ -7,7 +7,7 @@ getting-started: true
 import Tabs from "~/components/common/Tabs.astro";
 import Remark from "~/components/common/Remark.astro";
 
-# Run
+## Run
 
 The language server can be run using the below command:
 
@@ -45,9 +45,9 @@ The language server can be run using the below command:
   [`misc.parameters`](/wiki/settings#miscparameters) setting.
 </Remark>
 
-# Arguments
+## Arguments
 
-## entry
+### entry
 
 _optional_
 
@@ -55,11 +55,11 @@ _optional_
 
 The main Lua script file from the root of this repository. If omitted, the application will attempt to load bin/../main.lua.
 
-# Flags
+## Flags
 
 There are many optional flags that can alter how the server operates.
 
-## --doc
+### --doc
 
 **Type:** `string`
 
@@ -67,7 +67,7 @@ Where to create documentation JSON and MarkDown files.
 
 Example: `--doc=C:/Users/Me/Documents/LuaDocuments`
 
-## --logpath
+### --logpath
 
 **Type:** `string`
 
@@ -75,7 +75,7 @@ Where the log should be written to. Defaults to ./log
 
 Example: `--logpath=D:/luaServer/logs`
 
-## --loglevel
+### --loglevel
 
 **Type:** `string`
 
@@ -88,7 +88,7 @@ Options:
 
 Example: `--loglevel=trace`
 
-## --metapath
+### --metapath
 
 **Type:** `string`
 
@@ -96,7 +96,7 @@ Where the standard Lua library definition files should be generated to. Defaults
 
 Example: `--metapath=D:/sumnekoLua/metaDefintions`
 
-## --locale
+### --locale
 
 **Type:** `string`
 
@@ -104,7 +104,7 @@ The language to use. Defaults to en-us. Options can be found in [`locale/`](http
 
 Example: `--locale=zh-cn`
 
-## --configpath
+### --configpath
 
 **Type:** `string`
 
@@ -114,21 +114,21 @@ will no longer be loaded.
 
 Example: `--configpath=sumnekoLuaConfig.lua`
 
-## --version
+### --version
 
 **Type:** `string`
 
 Get the version of the Lua language server. This will print it to the command
 line and immediately exit.
 
-## --check
+### --check
 
 **Type:** `boolean`
 
 Perform a "diagnosis report" where the results of the diagnosis are written to a
 file.
 
-## --checklevel
+### --checklevel
 
 **Type:** `string`
 
@@ -144,7 +144,7 @@ file. Options include, in order of priority:
 
 Example: `--checklevel=Information`
 
-## --develop
+### --develop
 
 **Type:** `boolean`
 
