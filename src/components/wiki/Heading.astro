@@ -23,7 +23,7 @@ import Icon from "../common/Icon.astro";
 
   div.heading {
     width: fit-content;
-    margin: 2em auto -1em -3em;
+    margin: 2em auto 0px -3em;
     display: flex;
     align-items: center;
     padding-right: 1em;
@@ -83,6 +83,10 @@ import Icon from "../common/Icon.astro";
       a {
         opacity: 1;
       }
+    }
+
+    &:global(+ p) {
+      margin-top: 0.25em;
     }
   }
 
