@@ -28,7 +28,7 @@ export interface Props {
     <summary>
         <Icon name={icon} group="solid"/>
         {name}
-        {gitignored && <Tooltip text="Git ignored" placement="right"><Icon name="ban" group="solid"/></Tooltip>}
+        {gitignored && <Tooltip content="Git ignored" placement="right"><Icon name="ban" group="solid"/></Tooltip>}
     </summary>
     <slot/>
 </details>

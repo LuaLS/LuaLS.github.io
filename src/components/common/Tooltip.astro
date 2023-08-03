@@ -3,17 +3,29 @@ import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale.css";
 import type { Placement } from "tippy.js";
 
-const { text, placement, delay, arrow, class: className } = Astro.props;
+const {
+  content,
+  placement,
+  delay,
+  arrow,
+  interactive,
+  allowHTML,
+  class: className,
+} = Astro.props;
 
 export interface Props {
   /** The text to display in the tooltip */
-  text: string;
+  content: string;
   /** Where to place the tooltip relative to the element */
   placement?: Placement;
   /** Delay in milliseconds between showing and hiding */
-  delay?: string;
+  delay?: [number | null, number | null] | number;
   /** Whether or not the tooltip should have an arrow pointing to the target element */
   arrow?: string;
+  /** Whether or not the tooltip can be interacted with */
+  interactive?: boolean;
+  /** Allow `text` to be HTML. Only set to true with trusted content to prevent XSS. */
+  allowHTML?: boolean;
   /** A class name to apply */
   class?: string;
 }
@@ -21,28 +33,39 @@ export interface Props {
 
 <span
   class:list={["tooltip", className]}
-  data-tooltip-text={text}
+  data-tooltip-content={content}
   data-tooltip-placement={placement}
-  data-tooltip-delay={delay}
+  data-tooltip-delay={JSON.stringify(delay)}
   data-tooltip-arrow={arrow}
+  data-tooltip-interactive={interactive}
+  data-tooltip-html={allowHTML}
 >
   <slot />
 </span>
 
 <script>
   import tippy from "tippy.js";
-  import type { Placement } from "tippy.js";
+  import type { Props } from "tippy.js";
 
   const elements = document.querySelectorAll(".tooltip");
 
   for (const el of elements) {
-    tippy(el, {
-      animation: "scale",
-      content: el.getAttribute("data-tooltip-text") ?? "Oops",
-      placement: (el.getAttribute("data-tooltip-placement") ??
-        "top") as Placement,
-      delay: JSON.parse(el.getAttribute("data-tooltip-delay") as string),
-      arrow: (el.getAttribute("data-tooltip-arrow") ?? "true") === "true",
-    });
+    const properties: Partial<Props> = { animation: "scale" };
+
+    const getAttribute = (attribute: string, fallback: any) => {
+      return el.getAttribute(`data-tooltip-${attribute}`) ?? fallback;
+    };
+
+    const content = el.getAttribute("data-tooltip-content");
+    if (!content) throw new Error("Failed to get tooltip content");
+
+    properties.content = content;
+    properties.placement = getAttribute("placement", "top");
+    properties.delay = JSON.parse(getAttribute("delay", "[]"));
+    properties.arrow = getAttribute("arrow", "true") === "true";
+    properties.interactive = getAttribute("interactive", "false") === "true";
+    properties.allowHTML = el.hasAttribute("data-tooltip-html");
+
+    tippy(el, properties);
   }
 </script>

@@ -20,7 +20,7 @@ export interface Props {
 <div class:list={["diagnostic", level]}>
     <div>
         <slot name="name"/>
-        <Tooltip text={`Default severity: ${level}`}><Icon name={icon} group="solid"/></Tooltip>
+        <Tooltip content={`Default severity: ${level}`}><Icon name={icon} group="solid"/></Tooltip>
     </div>
     <slot/>
 </div>
