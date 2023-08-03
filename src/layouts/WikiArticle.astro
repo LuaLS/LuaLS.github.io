@@ -114,7 +114,7 @@ export interface Props {
 </script>
 
 <script>
-  const headings = document.querySelectorAll("article .heading");
+  const headings = document.querySelectorAll("article .heading,.article-metadata h1");
   const outline = document.querySelector("#outline .content");
 
   const intersectionObserver = new IntersectionObserver((entries) => {
@@ -127,9 +127,20 @@ export interface Props {
 
       if (entry.intersectionRatio > 0) {
         outlineLink?.classList.add("in-view");
+        topLink = outlineLink as HTMLDivElement;
       } else {
         outlineLink?.classList.remove("in-view");
       }
+    }
+
+    const outlineHasScroll =
+      (outline?.scrollHeight ?? 0) > (outline?.clientHeight ?? 0);
+
+    if (outlineHasScroll && topLink) {
+      outline?.scrollTo({
+        top: topLink.offsetTop - outline.clientHeight / 2,
+        behavior: "smooth",
+      });
     }
   });
 
