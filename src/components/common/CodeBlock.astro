@@ -14,6 +14,14 @@ const getLanguageFromCodeElement = (element: Element): string | undefined => {
   return result[1];
 };
 
+const getHighlightedLinesFromCodeElement = (
+  element: Element
+): number[] | undefined => {
+  const attribute = element.getAttribute("metastring");
+  if (!attribute) return;
+  return JSON.parse(attribute);
+};
+
 // Rendering the slot gives us an HTML string, but it still contains the <pre>.
 let code = await Astro.slots.render("default");
 
@@ -37,8 +45,19 @@ if (language) {
   language = result.language;
 }
 
+const highlightLines =
+  Astro.props.highlightLines ?? getHighlightedLinesFromCodeElement(element);
+const lines = code.split("\n");
+
+if (highlightLines) {
+  highlightLines.forEach((line) => {
+    lines[line - 1] = `<span class="highlight">${lines[line - 1]}</span>`;
+  });
+}
+
 export interface Props {
   language?: string;
+  highlightLines?: number[];
 }
 ---
 
@@ -50,7 +69,7 @@ export interface Props {
       <Icon name="check" group="solid" />
     </Tooltip>
   </button>
-  <pre><code class="hljs" class={`language-${language}`} set:html={code} /></pre>
+  <pre><code class="hljs" class={`language-${language}`} set:html={lines.join("\n")} /></pre>
 </div>
 
 <script>
@@ -138,6 +157,15 @@ export interface Props {
       padding: 1.3em 0.5em 0.5em 0.5em;
       tab-size: 4;
       overflow: auto;
+
+      :global(span.highlight) {
+        display: inline-block;
+        width: 100%;
+        background-color: #3392ff45;
+        border-radius: 0.1em;
+        padding: 0px 0.1em;
+        margin: 0px -0.1em;
+      }
     }
   }
 </style>

@@ -3,6 +3,7 @@ import { defineConfig } from "astro/config";
 import mdx from "@astrojs/mdx";
 import rehypeMermaid from "rehype-mermaidjs";
 import { modifiedTime } from "./src/plugins/modifiedTime.mjs";
+import rehypeMdxCodeProps from "rehype-mdx-code-props";
 
 // https://astro.build/config
 export default defineConfig({
@@ -14,8 +15,9 @@ export default defineConfig({
     smartypants: false,
     rehypePlugins: [
       () => rehypeMermaid({ mermaidConfig: { darkMode: true, theme: "dark" } }),
+      rehypeMdxCodeProps,
     ],
     remarkPlugins: [modifiedTime],
   },
-  trailingSlash: "always"
+  trailingSlash: "always",
 });
