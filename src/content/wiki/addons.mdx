@@ -12,6 +12,8 @@ Addons can be used to add additional content for the Lua Language Server by doin
 - Including a [plugin](/wiki/plugins).
 - Modifying a user's [settings](/wiki/settings).
 
+They can then be published to the [addon manager](#addon-manager) using the [LLS-Addons repository](https://github.com/LuaLS/LLS-Addons).
+
 <Remark type="note">
   Addons are a refresh of what were previously called "third-party libraries".
 </Remark>
@@ -33,9 +35,9 @@ There are a number of addons that come with the language server that can be foun
   installing an addon.
 </Remark>
 
-Addons can be installed from anywhere, however, many popular addons can be found in the [LLS-Addons][LLS-Addons] repository, an official collection of community addons. The intention with the repository is that each addon is its own sub-repository (submodule) so that they can be forked and downloaded easily.
+Addons can be installed from anywhere, however, many popular addons can be found in the [LLS-Addons][LLS-Addons] repository, an official collection of community addons used by the [addon manager](#addon-manager). The intention with the repository is that each addon is its own sub-repository (submodule) so that they can be forked and downloaded easily.
 
-Take a look through the [`addons/`](https://github.com/LuaLS/LLS-Addons/tree/main/addons) directory and open up your desired addon. Clicking `module` will bring you to the repository where that addon lives. You can then download the zip for that addon and unzip it to some directory, any directory, on your computer (e.g. `C:\Users\me\Documents\LuaAddons`). You can place any future addons in this directory as well, just make sure they are contained within their own directory. Then add the path to this parent directory to [`workspace.userThirdParty`](/wiki/settings#workspace-userThirdParty).
+While addons can be installed from anywhere, we are going to go through installing from [LLS-Addons][LLS-Addons]. Take a look through the [`addons/`](https://github.com/LuaLS/LLS-Addons/tree/main/addons) directory and open up your desired addon. Clicking `module` will bring you to the repository where that addon lives. You can then download the zip for that addon and unzip it to some directory, any directory, on your computer (e.g. `C:\Users\me\Documents\LuaAddons`). You can place any future addons in this directory as well, just make sure they are contained within their own directory (see below). Then add the path to this parent directory to [`workspace.userThirdParty`](/wiki/settings/#workspaceuserthirdparty).
 
 ```plaintext
 📂 LuaAddons/
@@ -52,7 +54,7 @@ So in this case, your setting could look like this in your [configuration file](
 
 ```JSON
 {
-    "Lua.workspace.userThirdParty": ["C:\Users\me\Documents\LuaAddons"]
+  "Lua.workspace.userThirdParty": ["C:\Users\me\Documents\LuaAddons"]
 }
 ```
 
@@ -71,13 +73,13 @@ If the addon in question has been configured to allow automatic enabling and it 
 
 ### Manually Enabling
 
-If the addon contains a `library/` directory, you will want to paste the full path to that directory in your [`workspace.library`](/wiki/settings#workspace-userThirdParty) setting. This will enable the provided definition files.
+If the addon contains a `library/` directory, you will want to paste the full path to that directory in your [`workspace.library`](/wiki/settings#workspace-userThirdParty) setting. This will enable the provided [definition files](/wiki/definition-files/).
 
 If the [`config.json`](#configjson) contains settings, you will have to manually copy them to your configuration file.
 
 ## Addon Manager
 
-The addon manager, which is currently only available in Visual Studio Code, allows you to browse and install addons from [LLS-Addons][LLS-Addons]. It manages downloading an addon and applying modifications to your [configuration file](/wiki/configuration#configuration-file).
+The addon manager, which is currently only available in Visual Studio Code, allows you to browse and install addons from [LLS-Addons][LLS-Addons]. It manages downloading addons and applying modifications to your [configuration file](/wiki/configuration#configuration-file).
 
 The addon manager can be opened from the command palette <kbd>Ctrl + P</kbd> by running the "Open Addon Manager" command (`lua.addon_manager.open`).
 
@@ -89,7 +91,7 @@ If you have feedback on the addon manager, please leave it in the [vscode-lua re
 
 ## Creating an Addon
 
-To create an addon, you will want to first create a directory where all your files will live. If you intend to make your addon publicly available, you will also want a remote repository where people can access it. Both GitHub and GitLab have been confirmed to work, although any service that provides Git cloning over HTTP should work.
+To create an addon, you will want to first create a directory where all your files will live. If you intend to [publish your addon](https://github.com/LuaLS/LLS-Addons/blob/main/CONTRIBUTING.md#adding-an-addon) to [LLS-Addons][LLS-Addons], you will also want a remote repository where people can access it. Both GitHub and GitLab have been confirmed to work, although any service that provides Git cloning over HTTP should work.
 
 ### Addon Anatomy
 
