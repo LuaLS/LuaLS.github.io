@@ -1,59 +1,67 @@
 ---
-import Icon from '../common/Icon.astro';
-import Tooltip from '../common/Tooltip.astro';
-const LEVEL_ICONS = {
-    Information: "info",
-    Warning: "triangle-exclamation",
-    Error: "exclamation",
-    Hint: "lightbulb"
-}
+import Icon from "../common/Icon.astro";
+import Tooltip from "../common/Tooltip.astro";
 
-const {level} = Astro.props;
+const LEVEL_ICONS = {
+  Information: "info",
+  Warning: "triangle-exclamation",
+  Error: "exclamation",
+  Hint: "lightbulb",
+};
+
+const { level } = Astro.props;
 
 const icon = LEVEL_ICONS[level];
 
 export interface Props {
-    level: "Information" | "Warning" | "Error" | "Hint";
+  level: "Information" | "Warning" | "Error" | "Hint";
 }
 ---
 
 <div class:list={["diagnostic", level]}>
-    <div>
-        <slot name="name"/>
-        <Tooltip content={`Default severity: ${level}`}><Icon name={icon} group="solid"/></Tooltip>
-    </div>
-    <slot/>
+  <div>
+    <slot name="name" />
+    <Tooltip content={`Default severity: ${level}`}>
+      <Icon name={icon} group="solid" />
+    </Tooltip>
+  </div>
+  <slot />
 </div>
 
 <style lang="scss">
-    div.diagnostic {
-        border-radius: 0.5em;
+  div.diagnostic {
+    border-radius: 0.5em;
+    margin-top: 2em;
 
-        & > div:first-of-type() {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            justify-content: space-between;
+    & > div:first-of-type() {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      justify-content: space-between;
 
-            :global(:first-child) {
-            }
+      :global(:first-child) {
+      }
 
-            i.fa-solid {
-                color: var(--level-color);
-                font-size: 2em;
-            }
-        }
-
-        &.Warning {
-            --level-color: #ff9100;
-        }
-
-        &.Hint {
-            --level-color: #aaaaaa;
-        }
-
-        &.Error {
-            --level-color: #ff0000;
-        }
+      i.fa-solid {
+        color: var(--level-color);
+        font-size: 2em;
+      }
     }
+
+    &.Warning {
+      --level-color: #ff9100;
+    }
+
+    &.Hint {
+      --level-color: #aaaaaa;
+    }
+
+    &.Error {
+      --level-color: #ff0000;
+    }
+
+    :global(.heading) {
+      margin-top: 0px;
+    }
+  }
 </style>

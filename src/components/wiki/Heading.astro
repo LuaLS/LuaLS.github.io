@@ -22,11 +22,10 @@ import Icon from "../common/Icon.astro";
   }
 
   div.heading {
-    width: fit-content;
-    margin: 2em auto 0px -3em;
+    width: calc(100% + 3em);
+    margin: 2em 0px 0px -3em;
     display: flex;
     align-items: center;
-    padding-right: 1em;
 
     & > a {
       color: white;
@@ -42,8 +41,9 @@ import Icon from "../common/Icon.astro";
     :global(h4),
     :global(h5),
     :global(h6) {
-      width: fit-content;
+      width: 100%;
       margin: 0px;
+      text-align: left;
       position: relative;
 
       &::after {
