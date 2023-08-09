@@ -44,13 +44,17 @@ export interface Props {
 </span>
 
 <script>
-  import tippy from "tippy.js";
+  import tippy, { inlinePositioning } from "tippy.js";
   import type { Props } from "tippy.js";
 
   const elements = document.querySelectorAll(".tooltip");
 
   for (const el of elements) {
-    const properties: Partial<Props> = { animation: "scale" };
+    const properties: Partial<Props> = {
+      animation: "scale",
+      plugins: [inlinePositioning],
+      inlinePositioning: true,
+    };
 
     const getAttribute = (attribute: string, fallback: any) => {
       return el.getAttribute(`data-tooltip-${attribute}`) ?? fallback;
