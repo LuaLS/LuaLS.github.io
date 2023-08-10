@@ -1,0 +1,60 @@
+---
+title: Type Checking
+description: Learn more about the language server's type checking system.
+---
+
+The language server offers type checking that helps you keep track of the types in your code and warn you when a potential type error is arising.
+
+## Background
+
+Lua is a dynamically typed language, which means the following is completely valid:
+
+```Lua
+local userInput = nil
+
+userInput = "Hello World!"
+
+userInput = 38
+
+userInput = false
+```
+
+The `userInput` variable just changed its type **3 times**, which is perfectly acceptable in Lua. In statically typed languages, this is not okay - once a variable is assigned a type, it is always that type.
+
+There are pros and cons to each system, which we won't really get into here. However, one thing that is very useful with a statically typed language is you always know what the type of a certain variable is, which makes it easy to tell when the wrong type is being used somewhere. This can also help with debugging as type errors can be reported before the code is executed, a luxury that is missing with Lua, an interpreted dynamically-typed language, until now.
+
+The Lua language server has had a type checking feature since `v3.4.0` that brings Lua _closer_ to being a statically typed language by statically analyzing your code.
+
+## How it Works
+
+The language server is able to keep track of types, like in the below example:
+
+```Lua
+local myString = "Hello World"
+
+myString = false
+```
+
+This will trigger a warning [diagnostic](/wiki/diagnostics), in this case the [`cast-local-type`](/wiki/diagnostics#cast-local-type) warning. This is of course all [customizable](/wiki/settings) and you can have it be [reported as an error instead of a warning](/wiki/settings/#diagnosticsneededfilestatus), or not at all!
+
+To get even better diagnostics, you can use [annotations](/wiki/annotations) to provide more context for the language server to work with.
+
+```Lua
+local settings = {}
+
+---@param settingName string The name of the setting to set the value of
+---@param value any The value of this setting
+---@return boolean success If the setting's value was changed successfully
+function settings.set(settingName, value) end
+
+
+settings.set(0, false)
+```
+
+That last line will generate a warning because the first parameter, `0`, is not a string, which is what the annotations say the function requires.
+
+While this works great and is way better than the normal "wild west" of Lua, it is not a full type system like the one TypeScript implements on top of JavaScript. The intention with the type checking in the language server is to not implement such a type checking system. Implementing a similar system would have a large impact on performance and would require a **lot** of work to design and implement (there is a reason TypeScript is developed by [hundreds of people](https://github.com/microsoft/TypeScript/graphs/contributors)).
+
+## Examples
+
+See the many examples of how the type system works with annotations on the [annotations page](/wiki/annotations).
