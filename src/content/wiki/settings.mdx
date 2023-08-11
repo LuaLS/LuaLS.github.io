@@ -1096,7 +1096,7 @@ The workspace group contains settings for configuring how the workspace diagnosi
 **Type:** `boolean`<br/>
 **Default:** `true`
 
-Whether [addons](/wiki/addons) can be automatically detected and applied. Addons can set up the environment to be as close as possible to your target runtime environment.
+Whether [addons](/wiki/addons) can be automatically detected and the user can be prompted to enable them. When prompted, you can "Apply and modify settings", "Apply but do not modify settings" (apply in RAM), or "Don't show again" (sets this setting to `false`). Addons can set up the environment to be as close as possible to your target runtime environment. To enable an addon manually, see the [addons article](/wiki/addons/#manually-enabling).
 
 ### workspace.ignoreDir
 
@@ -1117,7 +1117,7 @@ Whether [git submodules](https://github.blog/2016-02-01-working-with-submodules/
 **Type:** `Array<string>`<br/>
 **Default:** `[]`
 
-Used to add [definition files](/wiki/definition-files) to the workspace scope. An array of absolute/workspace-relative paths that will be added to the workspace diagnosis - meaning you will get completion and context from these files. Can be a file or directory. Files included here will have some features disabled such as renaming fields to prevent accidentally renaming your library files.
+Used to add library implementation code and [definition files](/wiki/definition-files) to the workspace scope. An array of absolute/workspace-relative paths that will be added to the workspace diagnosis - meaning you will get completion and context from these files. Can be a file or directory. Files included here will have some features disabled such as renaming fields to prevent accidentally renaming your library files.
 
 ### workspace.maxPreload
 
