@@ -45,6 +45,7 @@ import Icon from "../common/Icon.astro";
       margin: 0px;
       text-align: left;
       position: relative;
+      word-break: break-word;
 
       &::after {
         content: "";
@@ -93,8 +94,11 @@ import Icon from "../common/Icon.astro";
   @media screen and (max-width: 800px) {
     div.heading {
       width: 100%;
-      margin: 2em auto 0px 0em;
-      flex-direction: row-reverse;
+      margin: 2em auto 0px -1.5em;
+
+      & > a {
+        font-size: 0.9em;
+      }
     }
   }
 </style>
