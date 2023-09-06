@@ -3,6 +3,7 @@ export type searchItem = {
   href: string;
 };
 
+/** Additional search terms that are added to the search */
 export const searchTerms: searchItem[] = [
   { text: "Privacy", href: "/privacy" },
   { text: "Home", href: "/" },
