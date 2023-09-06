@@ -11,7 +11,10 @@ import Icon from "~/components/common/Icon.astro";
   <Icon name="heart" group="solid" color="red" />.
 </Remark>
 
-![Plugin turning custom syntax into standard Lua](https://github.com/LuaLS/vscode-lua/raw/master/images/plugin-diff.gif?raw=true)
+<video autoplay controls loop muted>
+  <source src="/videos/wiki/plugin-diff.webm" type="video/webm" />
+  <source src="/videos/wiki/plugin-diff.mp4" type="video/mp4" />
+</video>
 
 ## Template
 
@@ -46,7 +49,7 @@ function OnSetText(uri, text) end
 
 ## Example
 
-The GIF [above](#plugins) uses the below code:
+The example [above](#plugins) uses the below code:
 
 ```Lua
 function OnSetText(uri, text)
