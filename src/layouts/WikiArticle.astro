@@ -7,6 +7,7 @@ import Icon from "~/components/common/Icon.astro";
 import Remark from "~/components/common/Remark.astro";
 import Footer from "~/components/layout/Footer.astro";
 import type { MarkdownHeading } from "astro";
+import path from "path";
 
 const articles = await getCollection("wiki");
 
@@ -19,7 +20,8 @@ export const getStaticPaths = async () => {
 
 const { article, headings } = Astro.props;
 
-const slug = article.data.title.toLowerCase().replaceAll(" ", "-");
+const titleSlug = article.data.title.toLowerCase().replaceAll(" ", "-");
+const hereSlug = path.basename(Astro.url.pathname);
 
 export interface Props {
   article: CollectionEntry<"wiki">;
@@ -38,9 +40,15 @@ export interface Props {
           {
             articles
               .sort((a, b) => a.data.title.localeCompare(b.data.title))
-              .map((article) => (
-                <a href={`/wiki/${article.slug}/`}>{article.data.title}</a>
-              ))
+              .map((article) =>
+                article.slug == hereSlug ? (
+                  <a href={`/wiki/${article.slug}/`} class="here">
+                    {article.data.title}
+                  </a>
+                ) : (
+                  <a href={`/wiki/${article.slug}/`}>{article.data.title}</a>
+                )
+              )
           }
         </nav>
       </div>
@@ -59,7 +67,7 @@ export interface Props {
             )
           }
           <div class="article-metadata">
-            <h1 id={slug}>{article.data.title}</h1>
+            <h1 id={titleSlug}>{article.data.title}</h1>
             <p>{article.data.description}</p>
           </div>
           <slot />
@@ -82,7 +90,7 @@ export interface Props {
       <div class="content">
         <nav>
           <ol>
-            <li><a href={`#${slug}`}>{article.data.title}</a></li>
+            <li><a href={`#${titleSlug}`}>{article.data.title}</a></li>
             {
               headings.map((heading) => (
                 <li class={`depth-${heading.depth}`}>
@@ -270,6 +278,10 @@ export interface Props {
         a {
           display: block;
           font-size: 1.15em;
+
+          &.here {
+            color: white;
+          }
         }
       }
     }
