@@ -326,15 +326,37 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
 <script>
   import axios from "axios";
   import { TimeCache } from "~/classes/TimeCache";
-  import { formatNumber } from "~/util/strings";
   import { assertElement } from "~/util/DOM";
+  import confetti from "canvas-confetti";
+
+  const spawnConfetti = (element: HTMLElement) => {
+    const rect = element.getBoundingClientRect();
+    const x = (rect.left + rect.width / 2) / window.innerWidth;
+    const y = (rect.top + rect.height / 2) / window.innerHeight;
+
+    confetti({
+      startVelocity: 6,
+      origin: { x, y },
+      decay: 0.98,
+      gravity: 0.7,
+      disableForReducedMotion: true,
+      zIndex: 15,
+    });
+  };
 
   const ENDPOINT =
     "https://corsproxy.io/?https://marketplace.visualstudio.com/_apis/public/gallery/extensionquery";
 
-  const installElement = assertElement("#statistics .installs > b");
+  const installElement = assertElement<HTMLSpanElement>(
+    "#statistics .installs > b"
+  );
 
   const cache = new TimeCache<number>(ENDPOINT, 1800);
+  const numberFormatter = Intl.NumberFormat(undefined, {
+    notation: "compact",
+    roundingMode: "trunc",
+    maximumFractionDigits: 1,
+  });
   let installs = cache.get();
 
   if (!installs) {
@@ -366,20 +388,23 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
         (stat: any) => stat.statisticName === "install"
       ).value;
       cache.store(installs);
-      installElement.textContent = formatNumber(installs as number);
+      installElement.textContent = numberFormatter.format(installs as number);
     } catch (e) {
       console.error("Failed to get install count", e);
       installElement.textContent = "~1M";
     }
   } else {
-    installElement.textContent = formatNumber(installs);
+    installElement.textContent = numberFormatter.format(installs);
+
+    if (installs >= 1e6) {
+      spawnConfetti(installElement);
+    }
   }
 </script>
 
 <script>
   import axios from "axios";
   import { TimeCache } from "~/classes/TimeCache";
-  import { formatNumber } from "~/util/strings";
   import { assertElement } from "~/util/DOM";
 
   const ENDPOINT = "https://api.github.com/repos/LuaLS/lua-language-server";
@@ -394,7 +419,13 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
     stars = response.data.stargazers_count as number;
     cache.store(stars);
   }
-  starsElement.textContent = formatNumber(stars);
+
+  const numberFormatter = Intl.NumberFormat(undefined, {
+    notation: "compact",
+    roundingMode: "trunc",
+    maximumFractionDigits: 1,
+  });
+  starsElement.textContent = numberFormatter.format(stars);
 </script>
 
 <script>

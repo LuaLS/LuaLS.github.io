@@ -15,6 +15,7 @@
     "astro": "^2.7.3",
     "autoprefixer": "^10.4.14",
     "axios": "^1.4.0",
+    "canvas-confetti": "^1.6.0",
     "dayjs": "^1.11.9",
     "fuse.js": "^6.6.2",
     "highlight.js": "^11.8.0",
@@ -27,6 +28,7 @@
     "tippy.js": "^6.3.7"
   },
   "devDependencies": {
+    "@types/canvas-confetti": "^1.6.0",
     "@types/jsdom": "^21.1.1",
     "@types/node-fetch-cache": "^3.0.0",
     "node-fetch-cache": "^3.1.3"
