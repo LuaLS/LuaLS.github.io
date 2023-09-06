@@ -80,7 +80,7 @@ Extends the default `<a>` HTML element to add custom styles. Should be used on a
 | `url`    | `string`   | The url to link to                                                                                                               |
 | `newTab` | `boolean?` | Whether the linked page should be opened in another tab. Defaults to `true`.                                                     |
 | `refer`  | `boolean?` | Whether to [refer](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referer) when navigating away. Defaults to `false`. |
-| `noIcon` | `boolean?` | Whether or not to display the "external" icon next to the link. Defaults to `false`.                                             |
+| `icon` | `boolean?` | Whether or not to display the "external" icon next to the link. Defaults to `true`.                                             |
 | `class`  | `string?`  | Allows you to pass in a class to be applied to the link.                                                                         |
 
 ### Slots

@@ -6,7 +6,7 @@ const {
   newTab = true,
   class: className,
   refer = false,
-  noIcon = false,
+  icon = true,
 } = Astro.props;
 
 const hostname = new URL(url).hostname;
@@ -22,13 +22,13 @@ export interface Props {
   /** Whether to [refer](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referer) when navigating away. Defaults to `false`. */
   refer?: boolean;
   /** Whether or not to display the "external" icon next to the link. Defaults to `false`. */
-  noIcon?: boolean;
+  icon?: boolean;
   /** Allows you to pass in a class to be applied to the link. */
   class?: string;
 }
 
 const classes = [className, "external"];
-if (noIcon) {
+if (icon === false) {
   classes.push("no-icon");
 }
 
