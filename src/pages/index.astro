@@ -142,11 +142,10 @@ const annotationCount = annotationsPage
     <section id="demo" class="simple">
       <p>It's time that Lua gets proper support in your editor!</p>
       {/* Landscape only */}
-      <img
-        class="demo"
-        src="/images/vscode-demo.gif"
-        alt="Demo of the language server in use in Visual Studio Code"
-      />
+      <video autoplay loop muted class="demo">
+        <source src="/videos/vscode-demo.webm" type="video/webm" />
+        <source src="/videos/vscode-demo.mp4" type="video/mp4" />
+      </video>
       {/* Portrait only */}
       <div class="demo">
         <CodeBlock language="lua">
@@ -550,7 +549,7 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
   }
 
   section#demo {
-    & > img.demo {
+    & > video.demo {
       box-shadow: #00b3ff 0px 0px 20px 5px;
       display: block;
       max-width: 80%;
