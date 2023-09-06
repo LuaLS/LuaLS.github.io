@@ -36,9 +36,7 @@ const getContributorLevel = (contributions: number) => {
   return "bronze";
 };
 
-let response;
-
-response = await fetch(
+const response = await fetch(
   `https://api.github.com/repos/LuaLS/LuaLS.github.io/contributors?per_page=${CONTRIBUTOR_COUNT}`,
   { headers: { Authorization: `Bearer ${import.meta.env.GITHUB_TOKEN}` } }
 );
@@ -102,10 +100,14 @@ if (!contributors) {
                   getContributorLevel(user.contributions),
                 ]}
               >
-                <a href={user.html_url} rel="noopener nofollow">
+                <a href={user.html_url} rel="noopener nofollow" target="_blank">
                   <img src={user.avatar_url} />
                 </a>
-                <Tooltip content={user.login} placement="bottom" class="username">
+                <Tooltip
+                  content={user.login}
+                  placement="bottom"
+                  class="username"
+                >
                   <Fragment>{user.login}</Fragment>
                 </Tooltip>
               </div>
