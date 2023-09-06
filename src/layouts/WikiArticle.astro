@@ -69,12 +69,22 @@ export interface Props {
           </div>
           <slot />
         </article>
-        <div class="edit-page">
+        <div class="article-footer-links">
           <a
+            class="edit-page"
             target="_blank"
             href={`https://github.com/LuaLS/LuaLS.github.io/tree/main/src/content/wiki/${article.slug}.mdx`}
           >
             <Icon name="pencil" group="solid" /> Edit this page
+          </a>
+          <a
+            class="open-issue"
+            target="_blank"
+            href={`https://github.com/LuaLS/LuaLS.github.io/issues/new?title=${encodeURIComponent(
+              `Issue with wiki page "${article.slug}"`
+            )}`}
+          >
+            <Icon name="circle-dot" group="solid" /> Open Issue
           </a>
         </div>
       </main>
@@ -175,19 +185,29 @@ export interface Props {
     }
   }
 
-  .edit-page {
+  .article-footer-links {
     margin: 1em auto;
-    width: fit-content;
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+
     a {
       display: inline-block;
       box-sizing: border-box;
       padding: 0.15em 0.5em;
-      background-color: #1e5c97;
-      border-radius: 0.5em;
+      border-radius: 0.33em;
       color: white;
-    }
-    i {
-      margin-right: 0.25em;
+
+      i {
+        margin-right: 0.25em;
+      }
+
+      &.edit-page {
+        background-color: #1e5c97;
+      }
+      &.open-issue {
+        background-color: #008a2c;
+      }
     }
   }
 
