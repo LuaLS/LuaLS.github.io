@@ -13,6 +13,7 @@ import H5 from "~/components/wiki/headings/H5.astro";
 import H6 from "~/components/wiki/headings/H6.astro";
 import Image from "~/components/wiki/Image.astro";
 import dayjs from "~/services/time";
+import Tooltip from "~/components/common/Tooltip.astro";
 
 export const getStaticPaths = async () => {
   const articles = await getCollection("wiki");
@@ -32,7 +33,7 @@ export interface Props {
 const modifiedTime = remarkPluginFrontmatter.lastModified
   ? dayjs(remarkPluginFrontmatter.lastModified)
       .utc()
-      .format("HH:mm:ss DD MMMM YYYY UTC")
+      .format("HH:mm:ss D MMMM, YYYY UTC")
   : "Not committed yet";
 ---
 
@@ -51,6 +52,33 @@ const modifiedTime = remarkPluginFrontmatter.lastModified
     }}
   />
   <div class="modified-timestamp">
-    <p>Last Modified: {modifiedTime}</p>
+    <p>
+      Last Modified:
+      <Tooltip content={modifiedTime}>
+        <time datetime={remarkPluginFrontmatter.lastModified} data-localize
+          >{modifiedTime}</time
+        >
+      </Tooltip>
+    </p>
   </div>
 </Layout>
+
+<script>
+  const times = document.querySelectorAll("time[data-localize]");
+
+  const formatter = new Intl.DateTimeFormat(undefined, {
+    hour: "numeric",
+    minute: "2-digit",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    second: "2-digit",
+    timeZoneName: "short",
+  });
+
+  times.forEach((el) => {
+    const timestamp = el.getAttribute("datetime");
+    if (!timestamp) return;
+    el.textContent = formatter.format(new Date(timestamp));
+  });
+</script>
