@@ -475,6 +475,27 @@ local e = nil
 
 <Diagnostic level="Warning">
 <Fragment slot="name">
+### inject-field
+</Fragment>
+Triggered when injecting an undefined field into a class instance. This can be solved by adding the [`@field`](/wiki/annotations#field) to the class or by using [`@class`](/wiki/annotations#class) directly on the instance.
+
+```Lua
+---@class Car
+---@field topSpeed number
+---@field seats integer
+
+---@type Car
+local myCar = { topSpeed = 180, seats = 5 }
+
+-- wheels was not defined in the Car class
+-- because myCar was marked an instance of Car outside the definition of the Car class, its fields are strictly enforced
+myCar.wheels = 6
+```
+
+</Diagnostic>
+
+<Diagnostic level="Warning">
+<Fragment slot="name">
 ### need-check-nil
 </Fragment>
 Triggered when indexing a possibly `nil` object. Serves as a reminder to confirm the object is not nil before indexing - which would throw an error on execution.
