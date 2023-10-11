@@ -1,8 +1,10 @@
 name: Deploy to GitHub Pages
 
 on:
-  push:
-    branches: [main]
+  workflow_run:
+    workflows: ["Playwright Tests"]
+    types:
+      - completed
   workflow_dispatch:
 
 permissions:
@@ -12,6 +14,7 @@ permissions:
 
 jobs:
   build:
+    if: ${{ github.event.workflow_run.conclusion == "success" }}
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{github.token}}
@@ -25,6 +28,7 @@ jobs:
         uses: withastro/action@v0
 
   deploy:
+    if: ${{ github.event.workflow_run.conclusion == "success" }}
     needs: build
     runs-on: ubuntu-latest
     environment:
