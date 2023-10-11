@@ -92,6 +92,9 @@ export class SearchDialog {
     this.suggestionsElement.addEventListener("click", () => this.close());
 
     // Input element event listeners
+    this.inputElement.addEventListener("input", () => {
+      this.updateSuggestions();
+    });
     this.inputElement.addEventListener("keyup", (e) => {
       switch (e.key) {
         case "Enter":
@@ -107,7 +110,6 @@ export class SearchDialog {
           ).focus();
           break;
         default:
-          this.updateSuggestions();
           break;
       }
     });
