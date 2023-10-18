@@ -486,14 +486,14 @@ Toggle [diagnostics](/wiki/diagnostics/) for the next line, current line, or who
 
 ### @enum
 
-Mark a Lua table as an enum, giving it similar functionality to [`@alias`](#alias), only the table is still usable at runtime.
+Mark a Lua table as an enum, giving it similar functionality to [`@alias`](#alias), only the table is still usable at runtime. Adding the `(key)` attribute will use the enum's keys instead of its values.
 
 [Original Feature Request](https://github.com/LuaLS/lua-language-server/issues/1255)
 
 **Syntax**
 
 <div class="syntax">
-`---@enum <name>`
+`---@enum [(key)] <name>`
 </div>
 
 **Examples**
@@ -516,6 +516,28 @@ local COLORS = {
 local function setColor(color) end
 
 setColor(COLORS.green)
+```
+
+</Accordion>
+<Accordion>
+<span slot="summary">Define Table Keys as Enum</span>
+
+```Lua
+---@enum (key) Direction
+local direction = {
+    LEFT = 1,
+    RIGHT = 2,
+}
+
+---@param dir Direction
+local function move(dir)
+    assert(dir == "LEFT" or dir == "RIGHT")
+
+    assert(direction[dir] == 1 or direction[dir] == 2)
+    assert(direction[dir] == direction.LEFT or direction[dir] == direction.RIGHT)
+end
+
+move("LEFT")
 ```
 
 </Accordion>
