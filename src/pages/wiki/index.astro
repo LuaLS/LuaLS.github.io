@@ -36,9 +36,15 @@ const getContributorLevel = (contributions: number) => {
   return "bronze";
 };
 
+const headers: HeadersInit = {};
+if (import.meta.env.GITHUB_TOKEN) {
+  headers.Authorization = import.meta.env.GITHUB_TOKEN;
+}
 const response = await fetch(
   `https://api.github.com/repos/LuaLS/LuaLS.github.io/contributors?per_page=${CONTRIBUTOR_COUNT}`,
-  { headers: { Authorization: `Bearer ${import.meta.env.GITHUB_TOKEN}` } }
+  {
+    headers,
+  }
 );
 
 const contributors = (await response.json()) as Contributor[];
