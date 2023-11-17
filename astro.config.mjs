@@ -1,7 +1,7 @@
 import { defineConfig } from "astro/config";
 
 import mdx from "@astrojs/mdx";
-import rehypeMermaid from "rehype-mermaidjs";
+import rehypeMermaid from "rehype-mermaid";
 import { modifiedTime } from "./src/plugins/modifiedTime.mjs";
 import rehypeMdxCodeProps from "rehype-mdx-code-props";
 
