@@ -1105,8 +1105,14 @@ The workspace group contains settings for configuring how the workspace diagnosi
 
 ### workspace.checkThirdParty
 
-**Type:** `boolean`<br/>
-**Default:** `true`
+**Type:** `string`<br/>
+**Default:** `Ask`<br/>
+**Options:**
+
+- `Ask` (ask every time)
+- `Apply` (always apply automatically)
+- `ApplyInMemory` (always apply [definition files](/wiki/definition-files), but don't apply setting)
+- `Disable` (Don't ask, don't apply)
 
 Whether [addons](/wiki/addons) can be automatically detected and the user can be prompted to enable them. When prompted, you can "Apply and modify settings", "Apply but do not modify settings" (apply in RAM), or "Don't show again" (sets this setting to `false`). Addons can set up the environment to be as close as possible to your target runtime environment. To enable an addon manually, see the [addons article](/wiki/addons/#manually-enabling).
 
