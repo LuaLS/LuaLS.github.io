@@ -395,10 +395,9 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
     }
   } else {
     installElement.textContent = numberFormatter.format(installs);
-
-    if (installs >= 1e6) {
-      spawnConfetti(installElement);
-    }
+  }
+  if (installs ?? 0 >= 1e6) {
+    spawnConfetti(installElement);
   }
 </script>
 
