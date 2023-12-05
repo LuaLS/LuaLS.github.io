@@ -60,9 +60,9 @@ You will need two Visual Studio Code instances open:
          { name: "Linux", image: "/images/linux.svg", accent: "#ffff00" },
        ]}
      >
-       <div data-tab="Windows">`%USERPROFILE%\.vscode\extensions`</div>
-       <div data-tab="MacOS">`~/.vscode/extensions`</div>
-       <div data-tab="Linux">`~/.vscode/extensions`</div>
+       <div data-tab="Windows">`%USERPROFILE%\.vscode\extensions\sumneko.lua-VERSION\server`</div>
+       <div data-tab="MacOS">`~/.vscode/extensions/sumneko.lua-VERSION/server`</div>
+       <div data-tab="Linux">`~/.vscode/extensions/sumneko.lua-VERSION/server`</div>
      </Tabs>
 2. The **Debug Target**
    - This instance is where you will test the language server. It should have a folder opened where you can write Lua to test the various features of the language server and use it as normal.
@@ -70,7 +70,7 @@ You will need two Visual Studio Code instances open:
 The below steps guide you through setting up the above:
 
 1. Install [`actboy168.lua-debug`](https://marketplace.visualstudio.com/items?itemName=actboy168.lua-debug) from the extension marketplace for Lua debugging
-2. Copy [`.vscode/launch.json`](https://github.com/LuaLS/lua-language-server/blob/master/.vscode/launch.json) into **Debug Host**
+2. Copy [`.vscode/launch.json`](https://github.com/LuaLS/lua-language-server/blob/master/.vscode/launch.json) into **Debug Host** at `.vscode/launch.json`
 3. Copy the below settings into your [`settings.json`](https://code.visualstudio.com/docs/getstarted/settings#_settingsjson) for the **Debug Target**
    ```JSON
    "Lua.misc.parameters": [
@@ -78,9 +78,9 @@ The below steps guide you through setting up the above:
     "--dbgport=11428"
    ],
    ```
-4. Restart the **Debug Target** (<kbd>F1</kbd> -> `Reload Window`)
-5. Open the `Run and Debug` sidepanel (<kbd>Ctrl + Shift + D</kbd>) and select `🍄 attach` from the dropdown
-6. Press <kbd>F5</kbd> to begin debugging
+4. In the **Debug Host**, open the `Run and Debug` sidepanel (<kbd>Ctrl + Shift + D</kbd>) and select `🍄 attach` from the dropdown
+5. Press <kbd>F5</kbd> to begin debugging
+6. Restart the **Debug Target** (<kbd>F1</kbd> -> `Reload Window`)
 
 <Remark type="note">
   If you got the server through Git you will need to change the debug port in
