@@ -164,7 +164,7 @@ body.querySelector(`[data-tab="${active}"]`)?.classList.add("active");
         }
 
         img,
-        i {
+        :global(i) {
           width: 1em;
           height: 1em;
           text-align: center;
@@ -172,7 +172,7 @@ body.querySelector(`[data-tab="${active}"]`)?.classList.add("active");
         img {
           font-size: 1.5em;
         }
-        i {
+        :global(i) {
           font-size: 1.8em;
         }
       }

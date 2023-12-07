@@ -54,7 +54,7 @@ const open = Astro.props.open ?? false;
       padding: 0.25em;
       user-select: none;
 
-      i.fa-chevron-right {
+      :global(i.fa-chevron-right) {
         margin: 0px 1em 0px 0.5em;
         transform: rotate(0);
         transition: transform ease-in-out 0.25s;
@@ -81,7 +81,7 @@ const open = Astro.props.open ?? false;
 
     &[open] {
       & > summary {
-        i.fa-chevron-right {
+        :global(i.fa-chevron-right) {
           transform: rotate(90deg);
         }
       }

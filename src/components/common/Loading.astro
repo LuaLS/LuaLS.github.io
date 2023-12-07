@@ -44,7 +44,7 @@ import Icon from "./Icon.astro";
     }
 
     .loading-container {
-        i.spinner {
+       :global(i.spinner) {
             display: none;
             font-size: 2em;
             animation: spin 1s linear infinite both;
@@ -55,7 +55,7 @@ import Icon from "./Icon.astro";
             justify-content: center;
             align-items: center;
 
-            i.spinner {
+            :global(i.spinner) {
                 display: block;
             }
 

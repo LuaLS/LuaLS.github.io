@@ -39,12 +39,14 @@ export interface Props {
       align-items: center;
       justify-content: space-between;
 
-      :global(:first-child) {
-      }
-
-      i.fa-solid {
+      :global(i.fa-solid) {
         color: var(--level-color);
         font-size: 2em;
+      }
+
+      :global(a > i.fa-solid) {
+        color: white;
+        font-size: 1em;
       }
     }
 
