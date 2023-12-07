@@ -115,7 +115,6 @@ test.describe("Home Page", () => {
         const pagePromise = context.waitForEvent("page");
         await searchInput.press("Enter");
         const newPage = await pagePromise;
-        await newPage.waitForLoadState();
         expect(newPage.url()).toBe("https://github.com/LuaLS/LuaLS.github.io");
       });
     });
