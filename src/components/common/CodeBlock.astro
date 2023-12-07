@@ -129,15 +129,15 @@ export interface Props {
       opacity: 0;
       transition: opacity ease-in-out 0.3s;
 
-      i.fa-check {
+      :global(i.fa-check) {
         display: none;
       }
 
       &.success {
-        i.fa-copy {
+        :global(i.fa-copy) {
           display: none;
         }
-        i.fa-check {
+        :global(i.fa-check) {
           display: block;
         }
       }
