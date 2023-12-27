@@ -8,11 +8,14 @@ import Footer from "~/components/layout/Footer.astro";
 export interface Props {
   title: string;
   transition?: boolean;
+  displayFooter?: boolean;
 }
+
+const displayFooter = Astro.props.displayFooter ?? true;
 ---
 
 <Layout title={Astro.props.title} transition={Astro.props.transition}>
   <Header />
   <slot />
-  <Footer />
+  {displayFooter && <Footer />}
 </Layout>
