@@ -5,6 +5,7 @@ import Layout from "./Main.astro";
 import type { CollectionEntry } from "astro:content";
 import Icon from "~/components/common/Icon.astro";
 import Remark from "~/components/common/Remark.astro";
+import Footer from "~/components/layout/Footer.astro";
 import type { MarkdownHeading } from "astro";
 import path from "path";
 
@@ -87,6 +88,7 @@ export interface Props {
           </a>
         </div>
       </main>
+      <Footer />
     </div>
     <div id="outline" class="sidebar">
       <button class="open"><Icon name="list" group="solid" /></button>
