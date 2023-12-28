@@ -36,6 +36,10 @@ const getContributorLevel = (contributions: number) => {
   return "bronze";
 };
 
+const filteredContributors = [
+  49699333, // Dependabot
+];
+
 const headers: HeadersInit = {};
 if (import.meta.env.GITHUB_TOKEN) {
   headers.Authorization = import.meta.env.GITHUB_TOKEN;
@@ -99,25 +103,31 @@ if (!contributors) {
         </p>
         <div class="flex">
           {
-            contributors.map((user) => (
-              <div
-                class:list={[
-                  "contributor",
-                  getContributorLevel(user.contributions),
-                ]}
-              >
-                <a href={user.html_url} rel="noopener nofollow" target="_blank">
-                  <img src={user.avatar_url} />
-                </a>
-                <Tooltip
-                  content={user.login}
-                  placement="bottom"
-                  class="username"
+            contributors
+              .filter((user) => !filteredContributors.includes(user.id))
+              .map((user) => (
+                <div
+                  class:list={[
+                    "contributor",
+                    getContributorLevel(user.contributions),
+                  ]}
                 >
-                  <Fragment>{user.login}</Fragment>
-                </Tooltip>
-              </div>
-            ))
+                  <a
+                    href={user.html_url}
+                    rel="noopener nofollow"
+                    target="_blank"
+                  >
+                    <img src={user.avatar_url} />
+                  </a>
+                  <Tooltip
+                    content={user.login}
+                    placement="bottom"
+                    class="username"
+                  >
+                    <div>{user.login}</div>
+                  </Tooltip>
+                </div>
+              ))
           }
         </div>
       </section>
@@ -200,10 +210,8 @@ if (!contributors) {
     }
 
     div.contributor {
-      width: 100%;
       height: auto;
-      position: relative;
-      width: 5em;
+      width: 5.5em;
 
       a,
       img {
@@ -211,7 +219,6 @@ if (!contributors) {
         aspect-ratio: 1;
         width: 100%;
         border-radius: 99em;
-        border-width: 0.2em;
         &:focus {
           outline: var(--tier-color) solid 0.3em;
         }
@@ -220,6 +227,7 @@ if (!contributors) {
         border-style: solid;
         box-sizing: border-box;
         box-shadow: var(--tier-color) 0px 0px 10px 2px;
+        border-width: 0.2em;
         border-color: var(--tier-color);
         position: relative;
       }
@@ -237,14 +245,18 @@ if (!contributors) {
         --tier-color: #b46300;
       }
 
-      span.username {
+      :global(span.username.tooltip) {
+        margin-top: 0.2em;
         font-size: 0.9em;
         color: white;
         display: block;
-        text-align: center;
-        width: 100%;
-        text-overflow: ellipsis;
-        overflow: hidden;
+
+        & > div {
+          font-weight: 300;
+          text-align: center;
+          text-overflow: ellipsis;
+          overflow: hidden;
+        }
       }
     }
   }
