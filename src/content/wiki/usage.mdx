@@ -127,10 +127,11 @@ line and immediately exit.
 
 ### --check
 
-**Type:** `boolean`
+**Type:** `string`
 
-Perform a "diagnosis report" where the results of the diagnosis are written to a
-file.
+Perform a "diagnosis report" where the results of the diagnosis are written to the [logpath](/wiki/faq/#where-can-i-find-the-log-file).
+
+Example: `--check=C:\Users\Me\path\to\workspace`
 
 ### --checklevel
 
@@ -145,6 +146,7 @@ file. Options include, in order of priority:
 - Error
 - Warning
 - Information
+- Hint
 
 Example: `--checklevel=Information`
 
