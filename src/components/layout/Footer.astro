@@ -86,8 +86,8 @@ const { class: className } = Astro.props;
       }
     }
 
-    a,
-    a.external {
+    :global(a),
+    :global(a.external) {
       color: inherit;
       font-weight: normal;
     }
