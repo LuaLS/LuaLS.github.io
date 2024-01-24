@@ -21,7 +21,7 @@ You can use the provided [template](https://github.com/LuaLS/sample-plugin) to g
 ## Setup
 
 1. Add [`--develop=true`](/wiki/usage#--develop) to [`misc.parameters`](/wiki/settings#miscparameters).
-   - This allows the plugin to write to [`LOGPATH/diffed.Lua`](/wiki/faq#where-can-i-find-the-log-file).
+   - This allows the plugin to write to [`LOGPATH/diffed.lua`](/wiki/faq#where-can-i-find-the-log-file).
 2. Create a Lua file where you will crate the plugin. This could be in an [addon](/wiki/addons), your workspace, or some random directory on your machine.
 3. Specify the path to the plugin via the [`runtime.plugin`](/wiki/settings#plugin) setting.
 
@@ -31,7 +31,7 @@ For info on how to debug the plugin, see [Developing](/wiki/developing#debugging
 
 ### OnSetText
 
-This function provides the uri and text of the file that has been edited and expects a list of differences to be returned. The result will be written to `diffed.Lua` in your [log location](/wiki/faq#where-can-i-find-the-log-file).
+This function provides the uri and text of the file that has been edited and expects a list of differences to be returned. The result will be written to `diffed.lua` in your [log location](/wiki/faq#where-can-i-find-the-log-file).
 
 ```lua
 ---@class diff
