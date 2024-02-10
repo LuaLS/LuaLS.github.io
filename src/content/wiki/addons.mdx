@@ -92,6 +92,11 @@ The addon manager is a [webview](https://code.visualstudio.com/api/extension-gui
 
 If you have feedback on the addon manager, please leave it in the [vscode-lua repository](https://github.com/LuaLS/vscode-lua) <Icon name="heart" group="solid" color="red"/>.
 
+
+<Remark type="note">
+  The addon manager uses Git to retrieve addons, make sure you have access to GitHub if you receive failures to fetch.
+</Remark>
+
 ## Creating an Addon
 
 To create an addon, you will want to first create a directory where all your files will live. If you intend to [publish your addon](https://github.com/LuaLS/LLS-Addons/blob/main/CONTRIBUTING.md#adding-an-addon) to [LLS-Addons][LLS-Addons], you will also want a remote repository where people can access it. Both GitHub and GitLab have been confirmed to work, although any service that provides Git cloning over HTTP should work.
