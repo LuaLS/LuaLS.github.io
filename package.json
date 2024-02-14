@@ -16,7 +16,6 @@
     "astro": "^4.0.3",
     "autoprefixer": "^10.4.14",
     "axios": "^1.6.0",
-    "canvas-confetti": "^1.6.0",
     "dayjs": "^1.11.9",
     "fuse.js": "^6.6.2",
     "highlight.js": "^11.8.0",

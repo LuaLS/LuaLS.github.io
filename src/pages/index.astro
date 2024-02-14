@@ -327,22 +327,6 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
   import axios from "axios";
   import { TimeCache } from "~/classes/TimeCache";
   import { assertElement } from "~/util/DOM";
-  import confetti from "canvas-confetti";
-
-  const spawnConfetti = (element: HTMLElement) => {
-    const rect = element.getBoundingClientRect();
-    const x = (rect.left + rect.width / 2) / window.innerWidth;
-    const y = (rect.top + rect.height / 2) / window.innerHeight;
-
-    confetti({
-      startVelocity: 6,
-      origin: { x, y },
-      decay: 0.98,
-      gravity: 0.7,
-      disableForReducedMotion: true,
-      zIndex: 15,
-    });
-  };
 
   const ENDPOINT =
     "https://corsproxy.io/?https://marketplace.visualstudio.com/_apis/public/gallery/extensionquery";
@@ -395,9 +379,6 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
     }
   } else {
     installElement.textContent = numberFormatter.format(installs);
-  }
-  if (installs ?? 0 >= 1e6) {
-    spawnConfetti(installElement);
   }
 </script>
 
