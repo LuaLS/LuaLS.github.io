@@ -130,14 +130,15 @@ export interface Props {
 </script>
 
 <script>
+  import lodash from "lodash";
+
   const headings = document.querySelectorAll(
     "article .heading,.article-metadata h1"
   );
   const outline = document.querySelector("#outline .content");
 
+  let topLink: HTMLAnchorElement;
   const intersectionObserver = new IntersectionObserver((entries) => {
-    let topLink;
-
     for (const entry of entries) {
       const outlineLink = outline?.querySelector(
         `a[href="#${entry.target.id}"]`
@@ -145,24 +146,25 @@ export interface Props {
 
       if (entry.intersectionRatio > 0) {
         outlineLink?.classList.add("in-view");
-        topLink = outlineLink as HTMLDivElement;
+        topLink = outlineLink as HTMLAnchorElement;
       } else {
         outlineLink?.classList.remove("in-view");
       }
     }
+  });
 
-    const outlineHasScroll =
-      (outline?.scrollHeight ?? 0) > (outline?.clientHeight ?? 0);
+  headings.forEach((heading) => intersectionObserver.observe(heading));
 
-    if (outlineHasScroll && topLink) {
+  document.addEventListener(
+    "scroll",
+    lodash.debounce(() => {
+      console.warn("INVOKE");
       outline?.scrollTo({
         top: topLink.offsetTop - outline.clientHeight / 2,
         behavior: "smooth",
       });
-    }
-  });
-
-  headings.forEach((heading) => intersectionObserver.observe(heading));
+    }, 10)
+  );
 </script>
 
 <style lang="scss">

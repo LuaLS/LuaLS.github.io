@@ -13,6 +13,7 @@
   "dependencies": {
     "@astrojs/mdx": "^2.0.0",
     "@fortawesome/fontawesome-free": "^6.4.0",
+    "@types/lodash": "^4.14.202",
     "astro": "^4.0.3",
     "autoprefixer": "^10.4.14",
     "axios": "^1.6.0",
@@ -20,6 +21,7 @@
     "fuse.js": "^6.6.2",
     "highlight.js": "^11.8.0",
     "jsdom": "^22.1.0",
+    "lodash": "^4.17.21",
     "mermaid": "^10.2.4",
     "playwright": "^1.36.1",
     "rehype-mdx-code-props": "^1.0.0",
