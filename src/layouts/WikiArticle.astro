@@ -94,20 +94,18 @@ export interface Props {
       <button class="open"><Icon name="list" group="solid" /></button>
       <button class="close"><Icon name="x" group="solid" /></button>
       <div class="title">Outline</div>
-      <div class="content">
-        <nav>
-          <ol>
-            <li><a href={`#${titleSlug}`}>{article.data.title}</a></li>
-            {
-              headings.map((heading) => (
-                <li class={`depth-${heading.depth}`}>
-                  <a href={`#${heading.slug}`}>{heading.text}</a>
-                </li>
-              ))
-            }
-          </ol>
-        </nav>
-      </div>
+      <nav class="content">
+        <ol>
+          <li><a href={`#${titleSlug}`}>{article.data.title}</a></li>
+          {
+            headings.map((heading) => (
+              <li class={`depth-${heading.depth}`}>
+                <a href={`#${heading.slug}`}>{heading.text}</a>
+              </li>
+            ))
+          }
+        </ol>
+      </nav>
     </div>
   </div>
 </Layout>
@@ -155,16 +153,21 @@ export interface Props {
 
   headings.forEach((heading) => intersectionObserver.observe(heading));
 
-  document.addEventListener(
-    "scroll",
-    lodash.debounce(() => {
-      console.warn("INVOKE");
+  const scrollOutline = lodash.debounce(
+    () => {
       outline?.scrollTo({
         top: topLink.offsetTop - outline.clientHeight / 2,
         behavior: "smooth",
       });
-    }, 10)
+    },
+    30,
+    { leading: false, trailing: true }
   );
+
+  document.addEventListener("scroll", scrollOutline);
+  document
+    .querySelector(".columns .center")
+    ?.addEventListener("scroll", scrollOutline);
 </script>
 
 <style lang="scss">
