@@ -160,14 +160,19 @@ export interface Props {
         behavior: "smooth",
       });
     },
-    30,
+    50,
     { leading: false, trailing: true }
   );
 
+  const centerColumn =
+    document.querySelector<HTMLDivElement>(".columns .center");
+
   document.addEventListener("scroll", scrollOutline);
-  document
-    .querySelector(".columns .center")
-    ?.addEventListener("scroll", scrollOutline);
+  centerColumn?.addEventListener("scroll", scrollOutline);
+
+  // Flush debounced outline scroll functions when scrollend is fired (if browser supports it)
+  document.addEventListener("scrollend", () => scrollOutline.flush());
+  centerColumn?.addEventListener("scrollend", () => scrollOutline.flush());
 </script>
 
 <style lang="scss">
