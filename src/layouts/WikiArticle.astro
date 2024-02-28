@@ -111,17 +111,19 @@ export interface Props {
 </Layout>
 
 <script>
-  const sidebars = document.querySelectorAll(".sidebar");
+  import * as utils from "~/util/DOM";
+
+  const sidebars = utils.assertElements(".sidebar");
 
   for (const sidebar of sidebars) {
-    const openButton = sidebar.querySelector("button.open");
-    const closeButton = sidebar.querySelector("button.close");
+    const openButton = utils.assertElement("button.open", sidebar);
+    const closeButton = utils.assertElement("button.close", sidebar);
 
-    openButton?.addEventListener("click", () => {
+    openButton.addEventListener("click", () => {
       sidebar.setAttribute("open", "");
     });
 
-    closeButton?.addEventListener("click", () => {
+    closeButton.addEventListener("click", () => {
       sidebar.removeAttribute("open");
     });
   }
