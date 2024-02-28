@@ -129,50 +129,66 @@ export interface Props {
 
 <script>
   import lodash from "lodash";
+  import * as utils from "~/util/DOM";
 
-  const headings = document.querySelectorAll(
-    "article .heading,.article-metadata h1"
-  );
-  const outline = document.querySelector("#outline .content");
+  const outline = utils.assertElement("#outline .content");
+  const centerColumn = utils.assertElement<HTMLDivElement>(".columns .center");
 
+  let init = true;
   let topLink: HTMLAnchorElement;
-  const intersectionObserver = new IntersectionObserver((entries) => {
-    for (const entry of entries) {
-      const outlineLink = outline?.querySelector(
-        `a[href="#${entry.target.id}"]`
-      );
-
-      if (entry.intersectionRatio > 0) {
-        outlineLink?.classList.add("in-view");
-        topLink = outlineLink as HTMLAnchorElement;
-      } else {
-        outlineLink?.classList.remove("in-view");
-      }
-    }
-  });
-
-  headings.forEach((heading) => intersectionObserver.observe(heading));
-
   const scrollOutline = lodash.debounce(
-    () => {
-      outline?.scrollTo({
+    (smooth = true) => {
+      if (init) {
+        smooth = false;
+        init = false;
+
+        // Flush debounced outline scroll functions when scrollend is fired (if browser supports it)
+        document.addEventListener("scrollend", () => scrollOutline.flush());
+        centerColumn.addEventListener("scrollend", () => scrollOutline.flush());
+      }
+
+      outline.scrollTo({
         top: topLink.offsetTop - outline.clientHeight / 2,
-        behavior: "smooth",
+        behavior: smooth === false ? "instant" : "smooth",
       });
     },
     50,
     { leading: false, trailing: true }
   );
 
-  const centerColumn =
-    document.querySelector<HTMLDivElement>(".columns .center");
+  const intersectionObserver = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      const outlineLink = utils.assertElement<HTMLAnchorElement>(
+        `a[href="#${entry.target.id}"]`,
+        outline
+      );
 
-  document.addEventListener("scroll", scrollOutline);
-  centerColumn?.addEventListener("scroll", scrollOutline);
+      if (entry.intersectionRatio > 0 && outlineLink) {
+        outlineLink.classList.add("in-view");
+        topLink = outlineLink;
+      } else {
+        outlineLink.classList.remove("in-view");
+      }
+    }
+  });
 
-  // Flush debounced outline scroll functions when scrollend is fired (if browser supports it)
-  document.addEventListener("scrollend", () => scrollOutline.flush());
-  centerColumn?.addEventListener("scrollend", () => scrollOutline.flush());
+  // Watch headings for intersections
+  utils
+    .assertElements("article .heading,.article-metadata h1")
+    .forEach((heading) => intersectionObserver.observe(heading));
+
+  // Watch for article scrolling to scroll outline
+  document.addEventListener("scroll", () => scrollOutline());
+  centerColumn.addEventListener("scroll", () => scrollOutline());
+
+  // Force browser to scroll to targeted heading on page load
+  const target = centerColumn.querySelector<HTMLHeadingElement>(
+    `article ${location.hash}`
+  );
+  if (target) {
+    console.log("SCROLLING TO TARGET ON PAGE LOAD");
+    target.scrollIntoView();
+  }
 </script>
 
 <style lang="scss">
