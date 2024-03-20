@@ -549,7 +549,7 @@ Define a field within a table. Should be immediately following a [`@class`](#cla
 **Syntax**
 
 <div class="syntax">
-`---@field [scope] <name> <type> [description]`
+`---@field [scope] <name[?]> <type> [description]`
 </div>
 
 It is also possible to allow _any_ key of a certain type to be added using the below:
@@ -573,7 +573,7 @@ It is also possible to allow _any_ key of a certain type to be added using the b
 ---@field height number The height of this person in cm
 ---@field weight number The weight of this person in kg
 ---@field firstName string The first name of this person
----@field lastName string The last name of this person
+---@field lastName? string The last name of this person
 ---@field age integer The age of this person
 
 ---@param person Person
