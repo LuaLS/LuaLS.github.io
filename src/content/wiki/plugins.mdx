@@ -131,3 +131,36 @@ end
 ```
 
 </Accordion>
+
+### ResolveRequire
+
+This function allows plugin to manually resolve `require('...')` file paths. Useful for environments that implement custom require resolution.
+
+Return `nil` to use default LuaLS resolution. If you return an empty table - LuaLS will not resolve paths.
+
+```Lua
+---@param  uri  string # The URI of file
+---@param  name string # Argument of require()
+---@return string[]?
+function ResolveRequire(uri, name) end
+```
+
+<Accordion>
+<span slot="summary" id="demo-example">Example</span>
+
+```Lua
+---@param  uri  string # The URI of file
+---@param  name string # Argument of require()
+---@return string[]?
+function ResolveRequire(uri, name)
+    -- Check if it's our custom name format
+    if name:byte(1) ~= 0x40 then -- '@' at beginning
+        return nil
+    end
+
+    -- Return path to real file location
+    return { "file:///path/to/mods/" .. name:sub(2) .. "/main.lua" }
+end
+```
+
+</Accordion>
