@@ -56,12 +56,10 @@ const annotationCount = annotationsPage
           >
         </div>
       </div>
-      <div class="demo">
-        <video autoplay loop muted>
-          <source src="/videos/vscode-demo.webm" type="video/webm" />
-          <source src="/videos/vscode-demo.mp4" type="video/mp4" />
-        </video>
-      </div>
+      <video autoplay loop muted>
+        <source src="/videos/vscode-demo.webm" type="video/webm" />
+        <source src="/videos/vscode-demo.mp4" type="video/mp4" />
+      </video>
     </section>
 
     <section id="features">
@@ -492,14 +490,12 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
   }
 
   section#intro {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    margin: auto;
-    gap: 1em 2em;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    margin: auto 0.5em;
+    gap: 1em 1em;
 
     .description {
-      flex: 1 1 40%;
       height: 60%;
       font-size: 1em;
 
@@ -548,16 +544,12 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
       }
     }
 
-    .demo {
+    video {
       background-color: #232a2f;
-      flex: 1 1 55%;
-      height: 80%;
-      display: flex;
       border-radius: 0.5em;
-
-      video {
-        width: 100%;
-      }
+      width: 100%;
+      padding: 0.25em;
+      box-sizing: border-box;
     }
   }
 
@@ -570,7 +562,7 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
     }
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(24em, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(23em, 1fr));
       width: 100%;
       margin: 0.5rem;
       justify-items: stretch;
@@ -616,6 +608,7 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
       justify-items: center;
       position: relative;
       width: 100%;
+      margin-bottom: 1em;
       z-index: 1;
 
       button {
@@ -733,48 +726,27 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
     }
   }
 
-  @media screen and (orientation: portrait) {
-    section#intro {
-      grid-template-columns: 1fr;
-
-      .description {
-        font-size: 1em;
-      }
-    }
-
-    section#demo {
-      & > video.demo {
-        display: none;
-      }
-
-      & > div.demo {
-        display: block;
-      }
-    }
-
-    section#intro .grid {
-      grid-template-columns: 1fr;
-    }
-  }
-
   @media screen and (max-width: 1200px) {
     section#intro {
+      display: flex;
       flex-direction: column;
-      flex-wrap: nowrap;
+
+      video {
+        height: 100%;
+      }
     }
   }
 
-  @media screen and (max-width: 500px) {
+  @media screen and (max-width: 700px) {
     section#intro {
       .description {
-        font-size: 0.75em;
+        font-size: 0.85em;
       }
-      .demo {
+
+      video {
         display: none;
       }
-    }
 
-    section#features {
       .grid {
         grid-template-columns: 1fr;
       }
@@ -784,6 +756,20 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
       ol {
         padding-left: 1em;
       }
+    }
+  }
+
+  @media screen and (max-width: 400px) {
+    section#intro {
+      .description {
+        font-size: 0.7em;
+      }
+    }
+  }
+
+  @media screen and (orientation: portrait) {
+    section#demo video {
+      display: none;
     }
   }
 </style>
