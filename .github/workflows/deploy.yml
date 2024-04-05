@@ -99,7 +99,6 @@ jobs:
     needs:
       - build
       - test
-    if: false
     runs-on: ubuntu-latest
     environment:
       name: github-pages
