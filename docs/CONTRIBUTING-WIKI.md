@@ -6,7 +6,7 @@ The various components available for use can be found in [`src/components/common
 
 ## Article Frontmatter
 
-All wiki articles can contain frontmatter at the top of the file.
+All wiki articles must contain some frontmatter at the top of the file.
 
 |    Property     |    Type    | Required | Descripion                                                                                                                  |
 | :-------------: | :--------: | :------: | --------------------------------------------------------------------------------------------------------------------------- |
@@ -22,4 +22,41 @@ title: myArticleTitle
 description: Wow, my own article, cool!
 incomplete: true
 ---
+```
+
+## Images
+
+The way images are handled in Astro is slightly odd, but it does come with some nice benefits.
+
+### Remote Images
+
+Remote images can simply be linked to like standard markdown:
+
+```md
+![Alt text is important!](https://avatars.githubusercontent.com/u/124349233)
+```
+
+### Local Images
+
+Unless there is a good reason for an image to be [permanently and publically linkable](#public-images), images should saved to `src/assets/images/` and loaded like so:
+
+```astro
+![A cat walking](~/assets/images/cat.png)
+```
+
+In some rare cases, they may have to be manually imported and loaded using the `<Image>` or other component:
+
+```astro
+import { Image } from "astro:assets";
+import dog from "~/assets/images/dog.png";
+
+<Image src={dog} alt="A dog sitting" />
+```
+
+### Public Images
+Images that need to be publically available, say for serving to other software, or for linking to other websites, need to be saved to `public/images/`. They can then be used just like [local images](#local-images), but the file path is instead relative to the public directory:
+
+```diff
+- ![A cat walking](~/assets/images/cat.png)
++ ![A cat walking](/images/cat.png)
 ```

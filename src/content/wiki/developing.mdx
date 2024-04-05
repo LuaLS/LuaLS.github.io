@@ -8,6 +8,10 @@ import Remark from "~/components/common/Remark.astro";
 import Accordion from "~/components/common/Accordion.astro";
 import FileTreeItem from "~/components/common/FileTreeItem.astro";
 
+import windowsImg from "~/assets/images/windows.svg"
+import macImg from "~/assets/images/mac.svg"
+import linuxImg from "~/assets/images/linux.svg"
+
 Thank you for taking an interest in helping improve the language server!
 
 ## Debugging
@@ -55,9 +59,9 @@ You will need two Visual Studio Code instances open:
      <Tabs
        active="Windows"
        buttons={[
-         { name: "Windows", image: "/images/windows.svg", accent: "#23a9f2" },
-         { name: "MacOS", image: "/images/mac.svg", accent: "#ffffff" },
-         { name: "Linux", image: "/images/linux.svg", accent: "#ffff00" },
+         { name: "Windows", image: windowsImg, accent: "#23a9f2" },
+         { name: "MacOS", image: macImg, accent: "#ffffff" },
+         { name: "Linux", image: linuxImg, accent: "#ffff00" },
        ]}
      >
        <div data-tab="Windows">`%USERPROFILE%\.vscode\extensions\sumneko.lua-VERSION\server`</div>

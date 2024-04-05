@@ -6,6 +6,8 @@ import Tooltip from "~/components/common/Tooltip.astro";
 import fetch from "~/util/fetch";
 import ExternalLink from "~/components/common/ExternalLink.astro";
 
+import { Image } from "astro:assets";
+
 const CONTRIBUTOR_COUNT = 30;
 
 const allWikiArticles = await getCollection("wiki");
@@ -117,7 +119,7 @@ if (!contributors) {
                     rel="noopener nofollow"
                     target="_blank"
                   >
-                    <img src={user.avatar_url} />
+                    <Image src={user.avatar_url} alt={user.login} inferSize />
                   </a>
                   <Tooltip
                     content={user.login}
@@ -201,14 +203,6 @@ if (!contributors) {
       margin: 0px 1em;
     }
 
-    :global(div.contributor.placeholder) {
-      --tier-color: #fff;
-
-      :global(img) {
-        border: none;
-      }
-    }
-
     div.contributor {
       height: auto;
       width: 100%;
@@ -218,6 +212,7 @@ if (!contributors) {
         display: block;
         aspect-ratio: 1;
         width: 100%;
+        height: auto;
         border-radius: 99em;
         &:focus {
           outline: var(--tier-color) solid 0.3em;

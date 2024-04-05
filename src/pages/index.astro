@@ -4,9 +4,13 @@ import ExternalLink from "../components/common/ExternalLink.astro";
 import Icon from "../components/common/Icon.astro";
 import CodeBlock from "../components/common/CodeBlock.astro";
 import Remark from "../components/common/Remark.astro";
+import Tooltip from "../components/common/Tooltip.astro";
+
+import { Image } from "astro:assets";
+import vsCodeImg from "~/assets/images/vscode.svg";
+import neovimImg from "~/assets/images/neovim.svg";
 
 import "../scss/fonts/_Prompt.scss";
-import Tooltip from "../components/common/Tooltip.astro";
 
 const annotationsPage = await import("~/content/wiki/annotations.mdx");
 const annotationCount = annotationsPage
@@ -24,7 +28,7 @@ const annotationCount = annotationsPage
           <Tooltip content="Unique installs in Visual Studio Code">
             <span class="stat installs">
               <b>1M+</b>
-              <img src="/images/vscode.svg" alt="Visual Studio Code installs" />
+              <Image src={vsCodeImg} alt="Visual Studio Code installs" />
             </span>
           </Tooltip>
           <Tooltip content="Stars on GitHub">
@@ -157,12 +161,12 @@ const annotationCount = annotationsPage
     <section id="install">
       <h2>Install for...</h2>
       <div class="install-tabs">
-        <button value="vscode-install" class="vscode active" tabindex="0"
-          ><img src="/images/vscode.svg" alt="Visual Studio Code" /></button
-        >
-        <button value="neovim-install" class="neovim" tabindex="0"
-          ><img src="/images/neovim.svg" alt="Neovim" /></button
-        >
+        <button value="vscode-install" class="vscode active" tabindex="0">
+          <Image src={vsCodeImg} alt="Visual Studio Code" />
+        </button>
+        <button value="neovim-install" class="neovim" tabindex="0">
+          <Image src={neovimImg} alt="Neovim" />
+        </button>
         <button value="other-install" class="other" tabindex="0"
           ><Icon name="question" group="solid" /></button
         >
@@ -526,6 +530,7 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
 
         img {
           width: 1.4em;
+          height: auto;
         }
       }
     }

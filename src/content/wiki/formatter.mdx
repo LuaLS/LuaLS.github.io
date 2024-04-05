@@ -7,6 +7,9 @@ getting-started: true
 import Remark from "~/components/common/Remark.astro";
 import Tabs from "~/components/common/Tabs.astro";
 
+import jsonImg from "~/assets/images/json.svg"
+import luaImg from "~/assets/images/lua.svg"
+
 The language server has a built-in code formatter, courtesy of [`CppCXY/EmmyLuaCodeStyle`](https://github.com/CppCXY/EmmyLuaCodeStyle), that allows you to easily format your code. It also offers [code style checking](#code-style-checking)
 
 <Remark type="note">
@@ -29,8 +32,8 @@ To set a default global configuration across projects, navigate to your [configu
 <Tabs
   active="JSON"
   buttons={[
-    { name: "JSON", image: "/images/json.svg", accent: "#959595" },
-    { name: "Lua", image: "/images/lua.svg", accent: "#000080" },
+    { name: "JSON", image: jsonImg, accent: "#959595" },
+    { name: "Lua", image: luaImg, accent: "#000080" },
   ]}
 >
   <div data-tab="JSON">
