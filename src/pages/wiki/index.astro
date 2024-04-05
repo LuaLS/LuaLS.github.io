@@ -101,7 +101,7 @@ if (!contributors) {
             Contribute today!
           </ExternalLink>
         </p>
-        <div class="flex">
+        <div class="grid">
           {
             contributors
               .filter((user) => !filteredContributors.includes(user.id))
@@ -192,11 +192,11 @@ if (!contributors) {
   }
 
   #contributors {
-    div.flex {
-      display: flex;
+    div.grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(5em, 1fr));
       justify-content: space-evenly;
       align-items: center;
-      flex-wrap: wrap;
       gap: 1em;
       margin: 0px 1em;
     }
@@ -211,7 +211,7 @@ if (!contributors) {
 
     div.contributor {
       height: auto;
-      width: 5.5em;
+      width: 100%;
 
       a,
       img {
