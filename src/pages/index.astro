@@ -17,38 +17,53 @@ const annotationCount = annotationsPage
 <ScrollSnapLayout title="Home">
   <main>
     <section id="intro">
-      <h1>Lua Language Server</h1>
-      <p>
-        The Lua Language Server uses the <ExternalLink
-          url="https://microsoft.github.io/language-server-protocol/"
-        >
-          Language Server Protocol
-        </ExternalLink> to provide various features for <ExternalLink
-          url="https://www.lua.org/"
-        >
-          Lua
-        </ExternalLink> in your <ExternalLink
-          url="https://microsoft.github.io/language-server-protocol/implementors/tools/"
-        >
-          favourite code editors
-        </ExternalLink>, making development easier and faster!
-      </p>
+      <div class="description">
+        <h1>Lua Language Server</h1>
 
-      <div id="statistics">
-        <Tooltip content="Unique installs in Visual Studio Code">
-          <span class="stat installs">
-            <b>~1M</b>
-            <Icon name="download" group="solid" />
-          </span>
-        </Tooltip>
-        <Tooltip content="Stars on GitHub">
-          <span class="stat stars">
-            <b>-</b>
-            <Icon name="star" group="solid" color="#ffcb00" />
-          </span>
-        </Tooltip>
+        <div id="statistics">
+          <Tooltip content="Unique installs in Visual Studio Code">
+            <span class="stat installs">
+              <b>1M+</b>
+              <img src="/images/vscode.svg" alt="Visual Studio Code installs" />
+            </span>
+          </Tooltip>
+          <Tooltip content="Stars on GitHub">
+            <span class="stat stars">
+              <b>3K+</b>
+              <Icon name="star" group="solid" color="#ffcb00" />
+            </span>
+          </Tooltip>
+        </div>
+
+        <p>
+          The Lua Language Server uses the <ExternalLink
+            url="https://microsoft.github.io/language-server-protocol/"
+          >
+            Language Server Protocol
+          </ExternalLink> to provide various <a href="#features">features</a> for
+          <ExternalLink url="https://www.lua.org/">Lua</ExternalLink> in your <ExternalLink
+            url="https://microsoft.github.io/language-server-protocol/implementors/tools/"
+          >
+            favourite code editors
+          </ExternalLink>, making development easier, safer, and faster!
+        </p>
+
+        <p>It's time that Lua gets proper support in your editor!</p>
+
+        <div class="quick-links">
+          <a href="#install">
+            Install <Icon name="arrow-down" group="solid" /></a
+          >
+        </div>
       </div>
+      <video autoplay loop muted>
+        <source src="/videos/vscode-demo.webm" type="video/webm" />
+        <source src="/videos/vscode-demo.mp4" type="video/mp4" />
+      </video>
+    </section>
 
+    <section id="features">
+      <h2>Features</h2>
       <div class="grid">
         <div>
           <Icon name="at" group="solid" />
@@ -136,32 +151,6 @@ const annotationCount = annotationsPage
             > in Markdown and JSON formats from your codebase.
           </p>
         </div>
-      </div>
-    </section>
-
-    <section id="demo" class="simple">
-      <p>It's time that Lua gets proper support in your editor!</p>
-      {/* Landscape only */}
-      <video autoplay loop muted class="demo">
-        <source src="/videos/vscode-demo.webm" type="video/webm" />
-        <source src="/videos/vscode-demo.mp4" type="video/mp4" />
-      </video>
-      {/* Portrait only */}
-      <div class="demo">
-        <CodeBlock language="lua">
-          <pre>---@class Vehicle
----@field speed number
----@field weight number
----@field passengers Player[]
----@field health number
-local Vehicle = &#123;&#125;
-
----@class Player
----@field id integer
----@field name string
----@field health number
-local Player = &#123;&#125;</pre>
-        </CodeBlock>
       </div>
     </section>
 
@@ -320,6 +309,15 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
         </div>
       </div>
     </section>
+
+    <section id="next-steps">
+      <h2>Next Steps</h2>
+      <p>Check out the wiki to learn more about the language server.</p>
+      <a href="/wiki/">
+        Wiki
+        <Icon name="arrow-right" group="solid" />
+      </a>
+    </section>
   </main>
 </ScrollSnapLayout>
 
@@ -375,7 +373,6 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
       installElement.textContent = numberFormatter.format(installs as number);
     } catch (e) {
       console.error("Failed to get install count", e);
-      installElement.textContent = "~1M";
     }
   } else {
     installElement.textContent = numberFormatter.format(installs);
@@ -470,6 +467,7 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
     height: 100%;
     scroll-snap-type: y mandatory;
     overflow-y: scroll;
+    scroll-behavior: smooth;
   }
 
   section {
@@ -485,30 +483,37 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
     &:nth-of-type(2n) {
       background-color: #0c2e4d;
     }
-  }
 
-  section.simple {
-    p {
-      font-size: 3.5em;
-      font-family: "Prompt";
-      font-weight: 700;
-      line-height: 1.1em;
-      margin: 0.5em auto 0em auto;
-      width: fit-content;
-      text-align: center;
+    * {
+      box-sizing: border-box;
     }
   }
 
   section#intro {
-    h1 {
-      margin: 0px;
-      padding-bottom: 1rem;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    margin: auto 0.5em;
+    gap: 1em 1em;
+
+    .description {
+      height: 60%;
+      font-size: 1em;
+
+      h1 {
+        font-size: 3em;
+        margin: 0px;
+        padding-bottom: 1rem;
+      }
+      p {
+        font-size: 1.3em;
+      }
     }
 
     #statistics {
-      font-size: 2em;
+      font-size: 2.25em;
       display: flex;
-      gap: 1em;
+      justify-content: center;
+      gap: 1em 2em;
 
       .stat {
         display: flex;
@@ -518,12 +523,46 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
         & :not(:first-child) {
           font-size: 0.8em;
         }
+
+        img {
+          width: 1.4em;
+        }
       }
     }
 
+    .quick-links {
+      margin-top: 2em;
+      grid-column: 1/3;
+      display: flex;
+      justify-content: space-evenly;
+
+      a {
+        text-align: center;
+        color: white;
+        font-size: 1.5em;
+        padding: 0.1em 0.5em;
+      }
+    }
+
+    video {
+      background-color: #232a2f;
+      border-radius: 0.5em;
+      width: 100%;
+      padding: 0.25em;
+      box-sizing: border-box;
+    }
+  }
+
+  section#features {
+    justify-content: flex-start;
+
+    h2 {
+      font-size: 3em;
+      margin-top: 0px;
+    }
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(24em, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(23em, 1fr));
       width: 100%;
       margin: 0.5rem;
       justify-items: stretch;
@@ -531,15 +570,13 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
       max-height: 100%;
 
       & > div {
-        --glow-color: #00b3ff;
         text-align: center;
-        padding: 1em 0.5em;
+        padding: 0.5em 0.5em;
         border-radius: 1em;
-        border: var(--glow-color) solid 0.2em;
-        box-shadow: var(--glow-color) 0px 0px 0.3em 0.1em,
+        box-shadow:
+          var(--glow-color) 0px 0px 0.3em 0.1em,
           var(--glow-color) 0px 0px 0.3em 0.1em inset;
         box-sizing: border-box;
-        margin: 0.5em;
 
         :global(i) {
           display: block;
@@ -559,27 +596,7 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
     }
   }
 
-  section#demo {
-    & > video.demo {
-      box-shadow: #00b3ff 0px 0px 20px 5px;
-      display: block;
-      max-width: 80%;
-      height: auto;
-      margin: 5em auto;
-      border-radius: 0.5em;
-    }
-
-    & > div.demo {
-      display: none;
-      max-height: 100%;
-      margin: 5em auto;
-      width: 100%;
-    }
-  }
-
   section#install {
-    background-color: #020910;
-
     h2 {
       margin: 0px;
       margin-bottom: 0.5em;
@@ -591,6 +608,7 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
       justify-items: center;
       position: relative;
       width: 100%;
+      margin-bottom: 1em;
       z-index: 1;
 
       button {
@@ -599,7 +617,7 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
         border-radius: 99em;
         padding: 0.3em;
         aspect-ratio: 1;
-        font-size: 3em;
+        font-size: 4vh;
         display: flex;
         align-items: center;
         gap: 0.3em;
@@ -696,19 +714,62 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
     }
   }
 
-  @media screen and (orientation: portrait) {
-    section#demo {
-      & > video.demo {
+  section#next-steps {
+    font-size: 1.75em;
+
+    h2 {
+      margin-top: 0px;
+    }
+
+    a {
+      color: white;
+    }
+  }
+
+  @media screen and (max-width: 1200px) {
+    section#intro {
+      display: flex;
+      flex-direction: column;
+
+      video {
+        height: 100%;
+      }
+    }
+  }
+
+  @media screen and (max-width: 700px) {
+    section#intro {
+      .description {
+        font-size: 0.85em;
+      }
+
+      video {
         display: none;
       }
 
-      & > div.demo {
-        display: block;
+      .grid {
+        grid-template-columns: 1fr;
       }
     }
 
-    section#intro .grid {
-      grid-template-columns: 1fr;
+    section#install {
+      ol {
+        padding-left: 1em;
+      }
+    }
+  }
+
+  @media screen and (max-width: 400px) {
+    section#intro {
+      .description {
+        font-size: 0.7em;
+      }
+    }
+  }
+
+  @media screen and (orientation: portrait) {
+    section#demo video {
+      display: none;
     }
   }
 </style>
