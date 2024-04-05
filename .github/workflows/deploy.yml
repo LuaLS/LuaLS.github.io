@@ -8,31 +8,32 @@ on:
 permissions:
   contents: read
   pages: write
-  id-token: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      GITHUB_TOKEN: ${{github.token}}
+    strategy:
+      matrix:
+        node-version: [20]
+    timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
-      - name: Cache dependencies
-        uses: actions/cache@v3
-        id: npm-cache
-        env:
-          cache-name: npm-cache
+      - uses: pnpm/action-setup@v3
         with:
-          path: "**/node_modules"
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          version: 8
 
-      - name: Install dependencies
-        if: steps.npm-cache.outputs.cache-hit != 'true'
-        run: npm ci
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "pnpm"
+
+      - name: Install Dependencies
+        run: pnpm install
 
       - name: Install Playwright (for MermaidJS)
         run: npx playwright install --with-deps chromium
@@ -48,39 +49,33 @@ jobs:
   test:
     needs: build
     runs-on: ubuntu-latest
-    env:
-      GITHUB_TOKEN: ${{github.token}}
-    timeout-minutes: 60
+    strategy:
+      matrix:
+        node-version: [20]
+    timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: ${{ matrix.node-version }}
+          cache: "pnpm"
 
-      - uses: actions/download-artifact@v3
-        name: Retrieve output from build step
+      - name: Retrieve output from build step
+        uses: actions/download-artifact@v3
         with:
           name: github-pages
           path: ./website-build
 
-      - run: |
+      - name: Decompress build step output
+        run: |
           mkdir -p ./dist
           tar -xf ./website-build/artifact.tar -C ./dist/ --strip-components=1
-        name: Decompress build step output
 
-      - name: Cache dependencies
-        uses: actions/cache@v3
-        id: npm-cache
-        env:
-          cache-name: npm-cache
-        with:
-          path: "**/node_modules"
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-
-      - name: Install dependencies
-        if: steps.npm-cache.outputs.cache-hit != 'true'
-        run: npm ci
+      - name: Install Dependencies
+        run: pnpm install
 
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps chromium firefox
@@ -88,7 +83,8 @@ jobs:
       - name: Run Playwright tests
         run: npx playwright test
 
-      - uses: actions/upload-artifact@v3
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v3
         if: always()
         with:
           name: playwright-report
@@ -96,11 +92,15 @@ jobs:
           retention-days: 30
 
   deploy:
-    needs: test
+    needs:
+      - build
+      - test
+    if: false
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    timeout-minutes: 10
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
