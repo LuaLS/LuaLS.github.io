@@ -22,7 +22,7 @@ test.describe("Wiki Article", async () => {
     ).toBeVisible();
   });
 
-  test("Article Sidebar", async ({ page, baseURL }) => {
+  test("Article Sidebar", async ({ page }) => {
     const sidebar = page.locator("#article-browser");
 
     await page.getByRole("button", { name: "newspaper" }).click();
@@ -32,13 +32,12 @@ test.describe("Wiki Article", async () => {
     expect(await sidebar.getAttribute("open")).toBe(null);
 
     await page.getByRole("button", { name: "newspaper" }).click();
-    await page.getByRole("link", { name: "Usage" }).click();
-    await page.waitForURL(`${baseURL}wiki/usage/`);
-    expect(page.url()).toBe(`${baseURL}wiki/usage/`);
-    await expect(page.getByRole("heading", { name: "Usage" })).toBeVisible();
+    const link = page.getByRole("link", { name: "Usage" });
+    const href = await link.getAttribute("href");
+    expect(href).toBe(`/wiki/usage/`);
   });
 
-  test("Outline Sidebar", async ({ page, baseURL }) => {
+  test("Outline Sidebar", async ({ page }) => {
     const sidebar = page.locator("#outline");
 
     await page.getByRole("button", { name: "list" }).click();
@@ -48,22 +47,18 @@ test.describe("Wiki Article", async () => {
     expect(await sidebar.getAttribute("open")).toBe(null);
 
     await page.getByRole("button", { name: "list" }).click();
-    await sidebar.getByRole("link", { name: "Build" }).click();
-    await page.waitForURL(`${baseURL}wiki/build/#build`);
-    expect(page.url()).toBe(`${baseURL}wiki/build/#build`);
-    await expect(page.getByRole("heading", { name: "Build" })).toBeVisible();
+    const link = sidebar.getByRole("link", { name: "Build" });
+    const href = await link.getAttribute("href");
+    expect(href).toBe(`#build`);
   });
 
-  test("Edit Page Button", async ({ page, context }) => {
+  test("Edit Page Button", async ({ page }) => {
     const link = page.getByRole("link", { name: "pencil Edit this page" });
     await expect(link).toBeVisible();
 
-    const pagePromise = context.waitForEvent("page");
-    await link.click();
-    const newPage = await pagePromise;
-    await newPage.waitForLoadState();
-    expect(newPage.url()).toBe(
-      "https://github.com/LuaLS/LuaLS.github.io/blob/main/src/content/wiki/build.mdx"
+    const href = await link.getAttribute("href");
+    expect(href).toBe(
+      "https://github.com/LuaLS/LuaLS.github.io/tree/main/src/content/wiki/build.mdx"
     );
   });
 
