@@ -7,6 +7,10 @@ getting-started: true
 import Tabs from "~/components/common/Tabs.astro";
 import Remark from "~/components/common/Remark.astro";
 
+import windowsImg from "~/assets/images/windows.svg"
+import macImg from "~/assets/images/mac.svg"
+import linuxImg from "~/assets/images/linux.svg"
+
 ## Run
 
 The language server can be run using the below command:
@@ -14,9 +18,9 @@ The language server can be run using the below command:
 <Tabs
   active="Windows"
   buttons={[
-    { name: "Windows", image: "/images/windows.svg", accent: "#23a9f2" },
-    { name: "MacOS", image: "/images/mac.svg", accent: "#ffffff" },
-    { name: "Linux", image: "/images/linux.svg", accent: "#ffff00" },
+    { name: "Windows", image: windowsImg, accent: "#23a9f2" },
+    { name: "MacOS", image: macImg, accent: "#ffffff" },
+    { name: "Linux", image: linuxImg, accent: "#ffff00" },
   ]}
 >
   {/* prettier-ignore */}
@@ -41,7 +45,7 @@ The language server can be run using the below command:
 
 <Remark type="note">
   If you use the Visual Studio Code extension, the language server is run for
-  you. Arguments and flags be used by adding them to the
+  you. Arguments and flags can be used by adding them to the
   [`misc.parameters`](/wiki/settings#miscparameters) setting.
 </Remark>
 

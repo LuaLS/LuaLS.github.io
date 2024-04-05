@@ -9,6 +9,11 @@ import AccordionGroup from "~/components/common/AccordionGroup.astro";
 import Tabs from "~/components/common/Tabs.astro";
 import Remark from "~/components/common/Remark.astro";
 
+import vscodeImg from "~/assets/images/vscode.svg"
+import windowsImg from "~/assets/images/windows.svg"
+import wslImg from "~/assets/images/wsl.svg"
+import linuxImg from "~/assets/images/linux.svg"
+
 <AccordionGroup>
   <Accordion>
   <span slot="summary">
@@ -20,7 +25,7 @@ For debugging and a more detailed log file, you can add [`--loglevel=trace`](/wi
 <Tabs
   active="VS Code"
   buttons={[
-    { name: "VS Code", image: "/images/vscode.svg", accent: "#23a9f2" },
+    { name: "VS Code", image: vscodeImg, accent: "#23a9f2" },
     { name: "Other", icon: "question", accent: "#ff158e" },
   ]}
 >
@@ -28,9 +33,9 @@ For debugging and a more detailed log file, you can add [`--loglevel=trace`](/wi
     <Tabs
       active="Windows"
       buttons={[
-        { name: "Windows", image: "/images/windows.svg", accent: "#23a9f2" },
-        { name: "WSL", image: "/images/wsl.svg", accent: "#ffffff" },
-        { name: "Linux/MacOS", image: "/images/linux.svg", accent: "#ffff00" },
+        { name: "Windows", image: windowsImg, accent: "#23a9f2" },
+        { name: "WSL", image: wslImg, accent: "#ffffff" },
+        { name: "Linux/MacOS", image: linuxImg, accent: "#ffff00" },
       ]}
     >
       <div data-tab="Windows">

@@ -2,6 +2,7 @@
 import type { XOR } from "~/util/types";
 import Icon from "./Icon.astro";
 import jsdom from "jsdom";
+import { Image } from "astro:assets";
 
 type BaseButtonDefinition = {
   name: string;
@@ -10,7 +11,7 @@ type BaseButtonDefinition = {
 
 type ButtonDefinition = XOR<
   BaseButtonDefinition & { icon: string },
-  BaseButtonDefinition & { image: string }
+  BaseButtonDefinition & { image: ImageMetadata }
 >;
 
 export interface Props {
@@ -41,7 +42,7 @@ body.querySelector(`[data-tab="${active}"]`)?.classList.add("active");
           style={`--accent-color: ${button.accent ?? "#ffffff"}`}
         >
           <span>
-            {button.image && <img src={button.image} />}
+            {button.image && <Image src={button.image} alt={button.name}/>}
             {button.icon && <Icon name={button.icon} group="solid" />}
             {button.name}
           </span>

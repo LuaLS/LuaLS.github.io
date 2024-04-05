@@ -7,6 +7,10 @@ getting-started: true
 import Tabs from "~/components/common/Tabs.astro";
 import Remark from "~/components/common/Remark.astro";
 
+import windowsImg from "~/assets/images/windows.svg"
+import macImg from "~/assets/images/mac.svg"
+import linuxImg from "~/assets/images/linux.svg"
+
 1. Install [Ninja](https://github.com/ninja-build/ninja/wiki/Pre-built-Ninja-packages)
 2. Ensure you have C++17
 3. Clone the language server
@@ -19,9 +23,9 @@ import Remark from "~/components/common/Remark.astro";
 <Tabs
   active="Windows"
   buttons={[
-    { name: "Windows", image: "/images/windows.svg", accent: "#23a9f2" },
-    { name: "MacOS", image: "/images/mac.svg", accent: "#ffffff" },
-    { name: "Linux", image: "/images/linux.svg", accent: "#ffff00" },
+    { name: "Windows", image: windowsImg, accent: "#23a9f2" },
+    { name: "MacOS", image: macImg, accent: "#ffffff" },
+    { name: "Linux", image: linuxImg, accent: "#ffff00" },
   ]}
 >
   {/* prettier-ignore */}

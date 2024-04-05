@@ -10,8 +10,5 @@ Used to display the priority level of the diagnostic next to its heading.
 ## [Heading](./Heading.astro)
 Extends the default heading HTML element to have an anchor pointing to them, for ease of copying the URL to a specific heading.
 
-## [Image](./Image.astro)
-Wraps the default `<img>` HTML element so that images can be lazy loaded.
-
 ## [WikiLink](./WikiLink.astro)
 Either renders a normal link when linking somewhere in the same local domain or an [ExternalLink](../common/ExternalLink.astro) when linking externally.

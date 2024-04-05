@@ -6,6 +6,8 @@ description: The language server can export documentation for your project in Ma
 import Accordion from "~/components/common/Accordion.astro";
 import Tabs from "~/components/common/Tabs.astro";
 
+import vscodeImg from "~/assets/images/vscode.svg"
+
 ## Example
 
 <Accordion>
@@ -251,7 +253,7 @@ import Tabs from "~/components/common/Tabs.astro";
 <Tabs
   active="VS Code"
   buttons={[
-    { name: "VS Code", image: "/images/vscode.svg", accent: "#23a9f2" },
+    { name: "VS Code", image: vscodeImg, accent: "#23a9f2" },
     { name: "Other", icon: "question", accent: "#ff158e" },
   ]}
 >
