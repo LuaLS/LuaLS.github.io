@@ -106,6 +106,12 @@ hr {
   border: 0.05em solid white;
 }
 
+blockquote {
+  border-left: var(--link-color) 0.3em solid;
+  padding-left: 0.5em;
+  margin-left: 1em;
+}
+
 button {
   &:hover {
     cursor: pointer;
