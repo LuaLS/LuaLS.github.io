@@ -87,6 +87,10 @@ Below is a list of how you can document more advanced types:
         <td>`VALUE_TYPE[]`</td>
     </tr>
     <tr>
+        <td>Tuple</td>
+        <td>`[VALUE_TYPE, VALUE_TYPE]`</td>
+    </tr>
+    <tr>
         <td>Dictionary</td>
         <td>`{ [string]: VALUE_TYPE }`</td>
     </tr>
@@ -881,10 +885,10 @@ Define an additional signature for a function.
 
 <Remark type="note">
   If you are writing [definition files](/wiki/definition-files), it is
-  recommended to instead write multiple function definitions, one for each needed
-  signature with its [`@param`](#param) and [`@return`](#return) annotations.
-  This allows the functions to be as detailed as possible. Because the functions
-  do not exist at runtime, this is acceptable.
+  recommended to instead write multiple function definitions, one for each
+  needed signature with its [`@param`](#param) and [`@return`](#return)
+  annotations. This allows the functions to be as detailed as possible. Because
+  the functions do not exist at runtime, this is acceptable.
 </Remark>
 
 **Examples**
