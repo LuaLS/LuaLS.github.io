@@ -46,6 +46,17 @@ The below methods can be added to the end of a line:
 - Two trailing spaces (may be removed by formatting tools)
 - Markdown backslash `\` ([not recommended](https://www.markdownguide.org/basic-syntax#line-break-best-practices))
 
+## Referring to symbols
+
+As of [`v3.9.2`](https://github.com/LuaLS/lua-language-server/releases/tag/3.9.2) you can refer to symbols from your workspace in markdown descriptions using markdown links. Hovering the described value will show a hyperlink that, when clicked, will take you to where the symbol is defined.
+
+```lua
+---@alias MyCustomType integer
+
+---Calculate a value using [my custom type](lua://MyCustomType)
+function calculate(x) end
+```
+
 ## Tips
 
 - If you type `---` one line above a function, you will receive a suggested snippet that includes [`@param`](#param) and [`@return`](#return) annotations for each parameter and return value found in the function.
@@ -1194,7 +1205,7 @@ local function getNicknames() end
 
 ### @see
 
-Allows you to reference a specific symbol (e.g. `function`, `class`) from the workspace.
+Allows you to reference a specific symbol (e.g. `function`, `class`) from the workspace. You can also reference symbols using [markdown links instead](#referring-to-symbols).
 
 **Syntax**
 
