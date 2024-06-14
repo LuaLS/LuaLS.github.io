@@ -128,6 +128,16 @@ Triggered when the opinionated style checking detects an incorrectly styled line
 
 </Diagnostic>
 
+<Diagnostic level="Warning">
+<Fragment slot="name">
+### name-style-check
+</Fragment>
+**Default File Status:** `"None"`
+
+Triggered when the opinionated style checking detects an incorrectly named element.
+
+</Diagnostic>
+
 <Diagnostic level="Information">
 <Fragment slot="name">
 ### spell-check
@@ -135,6 +145,20 @@ Triggered when the opinionated style checking detects an incorrectly styled line
 **Default File Status:** `"None"`
 
 Triggered when a typo is detected in a string. The dictionary can be customized using the [`Lua.spell.dict` setting](https://github.com/LuaLS/lua-language-server/wiki/Settings#spelldict).
+
+</Diagnostic>
+
+## conventions
+
+The conventions group contains diagnostics for maintaining potentially subjective code conventions.
+
+<Diagnostic level="Warning">
+<Fragment slot="name">
+### global-element
+</Fragment>
+**Default File Status:** `"None"`
+
+Triggered when an element is not declared `local` to avoid accidentally global elements.
 
 </Diagnostic>
 
@@ -301,6 +325,40 @@ Triggered when there are two [`@field`](/wiki/annotations#field) annotations wit
 </Fragment>
 
 Triggered when there are two [`@param`](/wiki/annotations#param) annotations with matching names.
+
+</Diagnostic>
+
+<Diagnostic level="Warning">
+<Fragment slot="name">
+### incomplete-signature-doc
+</Fragment>
+**Default File Status:** `"None"`
+
+Triggered when a functions signature is partially documented with [annotations](/wiki/annotations), but the annotations do not cover every element of the signature. 
+E.g. one of the parameters is not annotated, or the return value is not annotated.
+
+</Diagnostic>
+
+<Diagnostic level="Warning">
+<Fragment slot="name">
+### missing-global-doc
+</Fragment>
+**Default File Status:** `"None"`
+
+Triggered when a global function is not documented with [annotations](/wiki/annotations), but has parameters (requiring
+[`@param`](/wiki/annotations#param) annotations) or a return value (requiring [`@return`](/wiki/annotations#return) annotations).
+This ensures that functions are annotated when they are accessible outside of the current module.
+
+</Diagnostic>
+
+<Diagnostic level="Warning">
+<Fragment slot="name">
+### missing-local-export-doc
+</Fragment>
+**Default File Status:** `"None"`
+
+Triggered when a local function is exported by adding it to the modules' return value, but the functions signature is not documented with [annotations](/wiki/annotations).
+This ensures that functions are annotated when they are accessible outside of the current module.
 
 </Diagnostic>
 
