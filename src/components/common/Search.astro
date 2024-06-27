@@ -50,8 +50,8 @@ if (searchTags.length === 0) {
 }
 ---
 
-<div>
-  <dialog id="site-search">
+<div id="site-search">
+  <dialog>
     <input type="search" placeholder="Search..." autofocus />
     <div class="suggestions" tabindex="-1">
       {
@@ -73,11 +73,11 @@ if (searchTags.length === 0) {
   import { SearchDialog } from "~/classes/SearchDialog";
   import { assertElement } from "~/util/DOM";
 
-  new SearchDialog(assertElement<HTMLDialogElement>("dialog#site-search"));
+  new SearchDialog(assertElement<HTMLDialogElement>("#site-search dialog"));
 </script>
 
 <style lang="scss">
-  dialog#site-search {
+  #site-search dialog {
     display: none;
     width: 60%;
     height: 60%;
@@ -98,6 +98,7 @@ if (searchTags.length === 0) {
       display: grid;
     }
     input[type="search"] {
+      font-family: Poppins;
       width: 100%;
       font-size: 1.5em;
       margin: auto;
@@ -156,7 +157,7 @@ if (searchTags.length === 0) {
   }
 
   @media screen and (max-width: 1000px) {
-    dialog#site-search {
+    #site-search dialog {
       width: 100%;
     }
   }
