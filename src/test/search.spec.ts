@@ -38,7 +38,7 @@ test.describe("Search", async () => {
   test("Close Search By Clicking Background", async ({ page }) => {
     await page.getByRole("document").press("/");
     await isOpen();
-    await page.locator("#site-search").click();
+    await page.locator("#site-search dialog").click();
     await isClosed();
   });
 
