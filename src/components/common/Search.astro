@@ -77,79 +77,83 @@ if (searchTags.length === 0) {
 </script>
 
 <style lang="scss">
-  #site-search dialog {
-    display: none;
-    width: 60%;
-    height: 60%;
-    background: none;
-    border: none;
-    grid-template-columns: 1fr;
-    grid-template-rows: 2.5em 4fr;
-    align-items: center;
-    justify-content: center;
-    gap: 1em;
+  #site-search {
+    position: absolute;
 
-    &::backdrop {
-      background-color: #000000aa;
-      backdrop-filter: blur(2px);
-    }
-
-    &[open] {
-      display: grid;
-    }
-    input[type="search"] {
-      font-family: Poppins;
-      width: 100%;
-      font-size: 1.5em;
-      margin: auto;
-      border-radius: 0.5rem;
-      padding: 0.25rem 0.5rem;
+    dialog {
+      display: none;
+      width: 60%;
+      height: 60%;
+      background: none;
       border: none;
-      background: #0f2e4b;
-      color: white;
+      grid-template-columns: 1fr;
+      grid-template-rows: 2.5em 4fr;
+      align-items: center;
+      justify-content: center;
+      gap: 1em;
 
-      &:focus + div.suggestions > a:first-child() {
-        color: white;
+      &::backdrop {
+        background-color: #000000aa;
+        backdrop-filter: blur(2px);
       }
-    }
 
-    div.suggestions {
-      align-self: flex-start;
-      overflow-y: auto;
-      max-height: 100%;
-      background-color: #081f34;
-      border-radius: 0.5em;
+      &[open] {
+        display: grid;
+      }
+      input[type="search"] {
+        font-family: Poppins;
+        width: 100%;
+        font-size: 1.5em;
+        margin: auto;
+        border-radius: 0.5rem;
+        padding: 0.25rem 0.5rem;
+        border: none;
+        background: #0f2e4b;
+        color: white;
 
-      & > a {
-        display: none;
-        font-size: 1em;
-        padding: 0.25em 0.5em;
-        box-sizing: border-box;
-
-        &:focus {
-          outline: none;
+        &:focus + div.suggestions > a:first-child() {
           color: white;
-          border-radius: unset;
         }
+      }
 
-        &.match {
-          display: flex;
-          justify-content: space-between;
-        }
-        span {
-          text-overflow: ellipsis;
-          overflow: hidden;
-          width: 100%;
-          white-space: nowrap;
+      div.suggestions {
+        align-self: flex-start;
+        overflow-y: auto;
+        max-height: 100%;
+        background-color: #081f34;
+        border-radius: 0.5em;
 
-          &.term {
-            flex: 1 1;
+        & > a {
+          display: none;
+          font-size: 1em;
+          padding: 0.25em 0.5em;
+          box-sizing: border-box;
+
+          &:focus {
+            outline: none;
+            color: white;
+            border-radius: unset;
           }
 
-          &.page {
-            flex: 1 2;
-            text-align: right;
-            opacity: 0.5;
+          &.match {
+            display: flex;
+            justify-content: space-between;
+          }
+          span {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            width: 100%;
+            white-space: nowrap;
+
+            &.term {
+              flex: 1 1;
+            }
+
+            &.page {
+              flex: 1 2;
+              text-align: right;
+              opacity: 0.5;
+            }
           }
         }
       }
