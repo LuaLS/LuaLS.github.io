@@ -1,0 +1,47 @@
+---
+import ExternalLink from "../components/common/ExternalLink.astro";
+import Icon from "../components/common/Icon.astro";
+import Layout from "../layouts/Main.astro";
+---
+
+<Layout title="404">
+  <main>
+    <h1>You hate to see it...</h1>
+    <h2>404</h2>
+
+    <p>The page you are looking for doesn't seem to exist.</p>
+
+    <p>
+      If you think this is an error, please, <ExternalLink
+        url="https://github.com/LuaLS/LuaLS.github.io/issues"
+        >let us know</ExternalLink
+      >.
+    </p>
+
+    <button id="back"><Icon group="solid" name="arrow-left" /> Go Back</button>
+  </main>
+</Layout>
+
+<script>
+  const btn = document.querySelector("button#back");
+  btn?.addEventListener("click", (e) => {
+    history.back();
+  });
+</script>
+
+<style lang="scss">
+  main {
+    max-width: 1300px;
+    margin-left: auto;
+    margin-right: auto;
+
+    button#back {
+      display: block;
+      margin: 2em auto 0px auto;
+      background: transparent;
+      border: none;
+      font-size: 1.5em;
+      color: white;
+    }
+  }
+</style>
