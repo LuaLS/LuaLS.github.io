@@ -12,6 +12,18 @@ import neovimImg from "~/assets/images/neovim.svg";
 
 import "../scss/fonts/_Prompt.scss";
 
+import { getExtensionInstalls } from "~/util/vscode";
+
+const numberFormatter = Intl.NumberFormat(undefined, {
+  notation: "compact",
+  roundingMode: "trunc",
+  maximumFractionDigits: 1,
+});
+
+const installs = numberFormatter.format(
+  await getExtensionInstalls("sumneko.lua")
+);
+
 const annotationsPage = await import("~/content/wiki/annotations.mdx");
 const annotationCount = annotationsPage
   .getHeadings()
@@ -27,7 +39,7 @@ const annotationCount = annotationsPage
         <div id="statistics">
           <Tooltip content="Unique installs in Visual Studio Code">
             <span class="stat installs">
-              <b>1M+</b>
+              <b>{installs}</b>
               <Image src={vsCodeImg} alt="Visual Studio Code installs" />
             </span>
           </Tooltip>
@@ -324,64 +336,6 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
     </section>
   </main>
 </ScrollSnapLayout>
-
-<script>
-  import axios from "axios";
-  import { TimeCache } from "~/classes/TimeCache";
-  import { assertElement } from "~/util/DOM";
-
-  const ENDPOINT =
-    "https://corsproxy.io/?https://marketplace.visualstudio.com/_apis/public/gallery/extensionquery";
-
-  const installElement = assertElement<HTMLSpanElement>(
-    "#statistics .installs > b"
-  );
-
-  const cache = new TimeCache<number>(ENDPOINT, 1800);
-  const numberFormatter = Intl.NumberFormat(undefined, {
-    notation: "compact",
-    roundingMode: "trunc",
-    maximumFractionDigits: 1,
-  });
-  let installs = cache.get();
-
-  if (!installs) {
-    try {
-      const response = await axios.post(ENDPOINT, {
-        filters: [
-          {
-            criteria: [
-              {
-                filterType: 8,
-                value: "Microsoft.VisualStudio.Code",
-              },
-              {
-                filterType: 10,
-                value: "sumneko.lua",
-              },
-            ],
-            pageNumber: 1,
-            pageSize: 1,
-            sortBy: 0,
-            sortOrder: 0,
-          },
-        ],
-        assetTypes: [],
-        flags: 256,
-      });
-      const statistics = response.data.results[0].extensions[0].statistics;
-      installs = statistics.find(
-        (stat: any) => stat.statisticName === "install"
-      ).value;
-      cache.store(installs);
-      installElement.textContent = numberFormatter.format(installs as number);
-    } catch (e) {
-      console.error("Failed to get install count", e);
-    }
-  } else {
-    installElement.textContent = numberFormatter.format(installs);
-  }
-</script>
 
 <script>
   import axios from "axios";
