@@ -10,7 +10,16 @@ import { Image } from "astro:assets";
 
 const CONTRIBUTOR_COUNT = 30;
 
-const allWikiArticles = await getCollection("wiki");
+const allWikiArticles = (await getCollection("wiki")).sort((a, b) =>
+  a.data.title.localeCompare(b.data.title)
+);
+await Promise.all(
+  allWikiArticles.map((article) =>
+    article.render().then((r) => {
+      article.data.lastModified = r.remarkPluginFrontmatter.lastModified;
+    })
+  )
+);
 const gettingStartedArticles = allWikiArticles.filter(
   (article) => article.data["getting-started"] === true
 );
@@ -135,13 +144,27 @@ if (!contributors) {
       </section>
       <section id="all-articles">
         <h2>All Wiki Articles</h2>
+        <div class="sorts">
+          <Tooltip content="Sort Method">
+            <Icon group="solid" name="sort" />
+          </Tooltip>
+          <select name="sort" id="sort">
+            <option value="alphabetical">A-Z</option>
+            <option value="last-modified">Last Modified</option>
+            <option value="length">Length</option>
+          </select>
+        </div>
         <div class="grid">
           {
             allWikiArticles.map((article) => (
-              <div class="article">
+              <div
+                class="article"
+                data-last-modified={article.data.lastModified}
+                data-length={article.body.length}
+              >
                 <a href={`/wiki/${article.slug}/`}>
-                  {article.data.title}
-                  <p>{article.data.description}</p>
+                  <div class="name">{article.data.title}</div>
+                  <p class="description">{article.data.description}</p>
                 </a>
               </div>
             ))
@@ -151,6 +174,54 @@ if (!contributors) {
     </div>
   </main>
 </Layout>
+
+<script>
+  import dayjs from "dayjs";
+
+  const articlesContainer = document.querySelector(
+    "section#all-articles div.grid"
+  );
+  const allArticles = Array.from(
+    document.querySelectorAll("section#all-articles div.grid > div.article")
+  );
+  const sortDropdown = document.querySelector(
+    "section#all-articles select#sort"
+  );
+
+  sortDropdown?.addEventListener("input", (e) => {
+    let sortFunction = (articleA: Element, articleB: Element): number => {
+      const nameA =
+        articleA.querySelector<HTMLAnchorElement>("div.name")?.innerText ?? "";
+      const nameB =
+        articleB.querySelector<HTMLAnchorElement>("div.name")?.innerText ?? "";
+
+      return nameA.localeCompare(nameB);
+    };
+
+    switch ((e.target as HTMLInputElement).value) {
+      case "last-modified":
+        sortFunction = (articleA, articleB) => {
+          const dateA = dayjs(articleA.getAttribute("data-last-modified"));
+          const dateB = dayjs(articleB.getAttribute("data-last-modified"));
+
+          return dateB.diff(dateA);
+        };
+        break;
+      case "length":
+        sortFunction = (articleA, articleB) => {
+          return (
+            Number(articleB.getAttribute("data-length") ?? 0) -
+            Number(articleA.getAttribute("data-length") ?? 0)
+          );
+        };
+        break;
+    }
+
+    allArticles
+      .sort(sortFunction)
+      .forEach((el) => articlesContainer?.appendChild(el));
+  });
+</script>
 
 <style lang="scss">
   .grid {
@@ -262,6 +333,29 @@ if (!contributors) {
     .grid {
       grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
       text-align: center;
+
+      .article {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 0.2em 0px;
+      }
+    }
+
+    .sorts {
+      width: fit-content;
+      margin-left: auto;
+
+      select#sort {
+        background: transparent;
+        border: none;
+        border-bottom: #276cae solid 0.2em;
+        color: white;
+
+        option {
+          color: black;
+        }
+      }
     }
   }
 
