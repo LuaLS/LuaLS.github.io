@@ -36,11 +36,13 @@ type Contributor = {
 };
 
 const getContributorLevel = (contributions: number) => {
-  if (contributions > 100) {
+  if (contributions >= 100) {
+    return "champion";
+  } else if (contributions >= 50) {
     return "diamond";
-  } else if (contributions > 50) {
+  } else if (contributions >= 25) {
     return "gold";
-  } else if (contributions > 25) {
+  } else if (contributions >= 10) {
     return "silver";
   }
 
@@ -292,12 +294,15 @@ if (!contributors) {
       img {
         border-style: solid;
         box-sizing: border-box;
-        box-shadow: var(--tier-color) 0px 0px 10px 2px;
+        box-shadow: var(--tier-color) 0px 0px 10px 3px;
         border-width: 0.2em;
         border-color: var(--tier-color);
         position: relative;
       }
 
+      &.champion {
+        --tier-color: #ff2626;
+      }
       &.diamond {
         --tier-color: #00f7ff;
       }
