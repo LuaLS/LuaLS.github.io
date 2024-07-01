@@ -10,24 +10,6 @@ test.describe("Home Page", () => {
       }
     );
 
-    page.route(
-      "https://corsproxy.io/?https://marketplace.visualstudio.com/_apis/public/gallery/extensionquery",
-      async (route) => {
-        const json = {
-          results: [
-            {
-              extensions: [
-                {
-                  statistics: [{ statisticName: "install", value: 1500000 }],
-                },
-              ],
-            },
-          ],
-        };
-        return route.fulfill({ json });
-      }
-    );
-
     await page.goto("/", { waitUntil: "load", timeout: 3000 });
   });
 
