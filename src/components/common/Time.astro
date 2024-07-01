@@ -1,0 +1,39 @@
+---
+const { datetime, relative } = Astro.props;
+
+export interface Props {
+  datetime: string;
+  relative?: boolean;
+}
+---
+
+<time datetime={datetime} data-relative={relative ? "true" : null}
+  ><slot /></time
+>
+
+<script>
+  import dayjs from "dayjs";
+  import relativeTime from "dayjs/plugin/relativeTime";
+  import localizedFormat from "dayjs/plugin/localizedFormat";
+
+  dayjs.extend(relativeTime);
+  dayjs.extend(localizedFormat);
+
+  const timeElements = document.querySelectorAll("time");
+
+  for (const element of timeElements) {
+    const dateTime = element.getAttribute("datetime");
+
+    if (!dateTime) {
+      console.warn(element, "is missing datetime attribute");
+      continue;
+    }
+
+    const date = dayjs(dateTime);
+    if (element.getAttribute("data-relative") === "true") {
+      element.innerText = date.fromNow();
+    } else {
+      element.innerText = date.format("lll");
+    }
+  }
+</script>

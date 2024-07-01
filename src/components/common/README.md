@@ -80,7 +80,7 @@ Extends the default `<a>` HTML element to add custom styles. Should be used on a
 | `url`    | `string`   | The url to link to                                                                                                               |
 | `newTab` | `boolean?` | Whether the linked page should be opened in another tab. Defaults to `true`.                                                     |
 | `refer`  | `boolean?` | Whether to [refer](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referer) when navigating away. Defaults to `false`. |
-| `icon` | `boolean?` | Whether or not to display the "external" icon next to the link. Defaults to `true`.                                             |
+| `icon`   | `boolean?` | Whether or not to display the "external" icon next to the link. Defaults to `true`.                                              |
 | `class`  | `string?`  | Allows you to pass in a class to be applied to the link.                                                                         |
 
 ### Slots
@@ -210,6 +210,27 @@ A group of tabs where the content of only one tab is visible at a time.
   <div data-tab="VS Code"></div>
   <div data-tab="Neovim"></div>
 </Tabs>
+```
+
+## [Time](./Time.astro)
+
+An extension of the [`<time>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/time) element that can display a datetime in the user's local timezone or as a relative time.
+
+### Arguments
+
+| Name     | Type    | Description                                                  |
+| -------- | ------- | ------------------------------------------------------------ |
+| datetime | string  | The datetime stamp, e.g. `2024-01-14T01:50:27-04:00`.        |
+| relative | boolean | Whether to display the time relatively, e.g. `2 months ago`. |
+
+### Slots
+
+`default` - Default time to display before being overridden on page load
+
+### Examples
+
+```HTML
+<Time datetime="2024-04-05T01:50:27-04:00" relative>Some time ago</Time>
 ```
 
 ## [Tooltip](./Tooltip.astro)
