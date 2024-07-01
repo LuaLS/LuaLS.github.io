@@ -16,7 +16,6 @@ export const getExtensionInstalls = async (
     if (match === null) {
       throw new Error("Failed to parse out install count");
     }
-    console.log(match)
     return Number(match[1]);
   } catch (e) {
     throw new Error("Failed to get extension information", { cause: e });
