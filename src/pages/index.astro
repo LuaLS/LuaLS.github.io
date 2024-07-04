@@ -9,6 +9,7 @@ import Tooltip from "../components/common/Tooltip.astro";
 import { Image } from "astro:assets";
 import vsCodeImg from "~/assets/images/vscode.svg";
 import neovimImg from "~/assets/images/neovim.svg";
+import jetbrainsImg from "~/assets/images/jetbrains.svg";
 
 import "../scss/fonts/_Prompt.scss";
 
@@ -179,6 +180,9 @@ const annotationCount = annotationsPage
         <button value="neovim-install" class="neovim" tabindex="0">
           <Image src={neovimImg} alt="Neovim" />
         </button>
+        <button value="jetbrains-install" class="jetbrains" tabindex="0">
+          <Image src={jetbrainsImg} alt="JetBrains" />
+        </button>
         <button value="other-install" class="other" tabindex="0"
           ><Icon name="question" group="solid" /></button
         >
@@ -257,6 +261,22 @@ const annotationCount = annotationsPage
               </li>
             </ol>
           </div>
+        </div>
+        <div id="jetbrains-install">
+          <h3>JetBrains</h3>
+          <p>
+            Install the <ExternalLink
+              url="https://plugins.jetbrains.com/plugin/22315-sumnekolua"
+            >
+              SumnekoLua
+            </ExternalLink> plugin from the JetBrains Marketplace!
+          </p>
+          <p>
+            See <ExternalLink
+              url="https://www.jetbrains.com/help/idea/managing-plugins.html"
+              >JetBrains docs</ExternalLink
+            > for instructions on installing plugins.
+          </p>
         </div>
         <div id="other-install">
           <h3>Other</h3>
@@ -563,7 +583,7 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
 
     .install-tabs {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: repeat(4, 1fr);
       justify-items: center;
       position: relative;
       width: 100%;
@@ -590,8 +610,11 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
         &.neovim {
           --brand-primary: #78e027;
         }
+        &.jetbrains {
+          --brand-primary: #fb0240;
+        }
         &.other {
-          --brand-primary: #ff158e;
+          --brand-primary: #ffdc15;
         }
 
         &:hover {
