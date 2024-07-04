@@ -52,6 +52,13 @@ const annotationCount = annotationsPage
           </Tooltip>
         </div>
 
+        <div class="announcement">
+          <a href="#jetbrains-install">
+            <span class="tag">NEW</span>
+            <span class="description">JetBrains IntelliJ Plugin</span>
+          </a>
+        </div>
+
         <p>
           The Lua Language Server uses the <ExternalLink
             url="https://microsoft.github.io/language-server-protocol/"
@@ -429,15 +436,20 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
   }
 
   // If URL is targeting a specific install method, set it as active and scroll to it.
-  const target = window.location.hash;
-  if (target) {
-    const tabName = target.replace("#", "");
-    const tab = document.querySelector(`#install .tab-content #${tabName}`);
-    if (tab) {
-      setTabActive(tabName);
-      tabs[tabName].content?.scrollIntoView();
+  const onHashChange = () => {
+    const target = window.location.hash;
+    if (target) {
+      const tabName = target.replace("#", "");
+      const tab = document.querySelector(`#install .tab-content #${tabName}`);
+      if (tab) {
+        setTabActive(tabName);
+        tabs[tabName].content?.scrollIntoView();
+      }
     }
-  }
+  };
+
+  onHashChange();
+  window.addEventListener("hashchange", onHashChange);
 </script>
 
 <style lang="scss">
@@ -506,6 +518,44 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
           width: 1.4em;
           height: auto;
         }
+      }
+    }
+
+    .announcement {
+      width: fit-content;
+      margin: 1em auto auto auto;
+      border: 0.1em #2d8ae3 solid;
+      border-radius: 99em;
+      background-color: #16436e00;
+      box-shadow: #16436e 0px 0px 0.5em 0px;
+
+      a {
+        color: white;
+      }
+
+      span {
+        padding: 0.1em 0.5em;
+      }
+
+      span.tag {
+        background-color: #2d8ae3;
+        border-radius: 1em 0px 0px 1em;
+        position: relative;
+        padding-left: 0.75em;
+
+        &::after {
+          content: "";
+          position: absolute;
+          top: 0px;
+          right: -0.25em;
+          width: 0.25em;
+          height: 100%;
+          background: linear-gradient(90deg, #2d8ae3, #00000000);
+        }
+      }
+
+      span.description {
+        margin: 0px 0.25em;
       }
     }
 
