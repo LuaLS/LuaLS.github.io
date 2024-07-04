@@ -61,3 +61,33 @@ const modifiedTime = remarkPluginFrontmatter.lastModified
     </p>
   </div>
 </Layout>
+
+<style lang="scss" is:global>
+  article ol {
+    margin-left: 0.5em;
+    counter-reset: item;
+    list-style: none;
+
+    &:first-of-type {
+      padding-left: 0px;
+    }
+
+    & > li {
+      margin: 0.5em auto;
+
+      &::before {
+        display: inline-block;
+        content: counter(item);
+        counter-increment: item;
+        font-size: 1.25em;
+        background-color: #ffffff;
+        color: #000000;
+        width: fit-content;
+        min-width: 1.5em;
+        text-align: center;
+        border-radius: 1em;
+        margin-right: 0.5em;
+      }
+    }
+  }
+</style>
