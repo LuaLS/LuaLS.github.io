@@ -14,13 +14,13 @@ const { class: className } = Astro.props;
   <nav>
     <a href="/" class="home">
       <Tooltip content="Home">
-        <Icon name="house" group="solid" />
+        <Icon name="house" group="solid" ariaLabel="Home"/>
       </Tooltip>
     </a>
     <div>
       <a href="/wiki/">
         <Tooltip content="Wiki">
-          <Icon name="book-open" group="solid" />
+          <Icon name="book-open" group="solid" ariaLabel="Wiki"/>
         </Tooltip>
       </a>
     </div>
@@ -29,7 +29,7 @@ const { class: className } = Astro.props;
       allowHTML
     >
       <button class="site-search-icon" aria-keyshortcuts="/">
-        <Icon name="search" group="solid" />
+        <Icon name="search" group="solid" ariaLabel="Search"/>
       </button>
     </Tooltip>
     <span class="github">

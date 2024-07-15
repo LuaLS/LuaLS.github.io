@@ -31,10 +31,10 @@ export interface Props {
 
 <Layout title="Wiki" transition={true} displayFooter={false}>
   <div class="columns">
-    <div id="article-browser" class="sidebar">
+    <aside id="article-browser" class="sidebar">
       <button class="open"><Icon name="newspaper" group="solid" /></button>
       <button class="close"><Icon name="x" group="solid" /></button>
-      <div class="title">Articles</div>
+      <h2 class="title">Articles</h2>
       <div class="content">
         <nav>
           {
@@ -52,7 +52,7 @@ export interface Props {
           }
         </nav>
       </div>
-    </div>
+    </aside>
     <div class="center">
       <main>
         <article>
@@ -90,10 +90,10 @@ export interface Props {
       </main>
       <Footer />
     </div>
-    <div id="outline" class="sidebar">
+    <aside id="outline" class="sidebar">
       <button class="open"><Icon name="list" group="solid" /></button>
       <button class="close"><Icon name="x" group="solid" /></button>
-      <div class="title">Outline</div>
+      <h2 class="title">Outline</h2>
       <nav class="content">
         <ol>
           <li><a href={`#${titleSlug}`}>{article.data.title}</a></li>
@@ -106,14 +106,14 @@ export interface Props {
           }
         </ol>
       </nav>
-    </div>
+    </aside>
   </div>
 </Layout>
 
 <script>
   import * as utils from "~/util/DOM";
 
-  const sidebars = utils.assertElements(".sidebar");
+  const sidebars = utils.assertElements("aside.sidebar");
 
   for (const sidebar of sidebars) {
     const openButton = utils.assertElement("button.open", sidebar);
@@ -238,7 +238,7 @@ export interface Props {
     }
   }
 
-  .sidebar {
+  aside.sidebar {
     --sidebar-width: 20em;
     background-color: #081f34;
     height: 100%;
@@ -474,7 +474,7 @@ export interface Props {
       display: none;
     }
 
-    .sidebar {
+    aside.sidebar {
       position: static;
       z-index: 0;
       width: 100%;
@@ -491,7 +491,7 @@ export interface Props {
   }
 
   @media screen and (max-width: 800px) {
-    .sidebar {
+    aside.sidebar {
       --sidebar-width: 70%;
     }
 

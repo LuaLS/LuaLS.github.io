@@ -1,9 +1,9 @@
 ---
 const { group, name, class: className, color } = Astro.props;
 
-const displayName = name.replaceAll("-", " ");
-
 const styles = color ? `color: ${color}` : null;
+
+const ariaLabel = Astro.props.ariaLabel ?? name.replaceAll("-", " ");
 
 export interface Props {
   /** The group that the icon belongs to. */
@@ -14,12 +14,13 @@ export interface Props {
   class?: string;
   /** The colour of the icon. */
   color?: string;
+  ariaLabel?: string;
 }
 ---
 
 <i
   class:list={[`fa-${group}`, `fa-${name}`, className]}
-  aria-label={displayName}
+  aria-label={ariaLabel}
   style={styles}
 >
 </i>

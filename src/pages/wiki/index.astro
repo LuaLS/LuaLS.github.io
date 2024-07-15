@@ -20,6 +20,11 @@ await Promise.all(
     })
   )
 );
+const articleCount = allWikiArticles.length;
+const wordCount = allWikiArticles.reduce(
+  (x, article) => x + Array.from(article.body.matchAll(/\w+/g)).length,
+  0
+);
 const gettingStartedArticles = allWikiArticles.filter(
   (article) => article.data["getting-started"] === true
 );
@@ -73,20 +78,26 @@ if (!contributors) {
 
 <Layout title="Wiki">
   <main>
-    <h1>Welcome to the wiki!</h1>
+    <h1>Welcome To The Wiki!</h1>
+    <div id="quick-links">
+      <a href="/#install">
+        <Icon name="download" group="solid" class="icon" />
+        <h2>Install</h2>
+        <p>Install instructions for the Lua Language Server.</p>
+      </a>
+      <a href="/wiki/faq/">
+        <Icon name="question" group="solid" class="icon" />
+        <h2>FAQ</h2>
+        <p>Frequently asked questions and answers to them.</p>
+      </a>
+    </div>
     <div class="grid">
       <section id="get-started">
         <h2>Get Started</h2>
         <p>
-          Below are some good articles for those new to the Lua Language Server
+          Below are some good articles for those new to the Lua Language Server.
         </p>
         <div class="grid">
-          <div class="article">
-            <a href="/#install" target="_blank">
-              Install
-              <p>Installation instructions</p>
-            </a>
-          </div>
           {
             gettingStartedArticles.map((article) => (
               <div class="article">
@@ -99,6 +110,46 @@ if (!contributors) {
           }
         </div>
       </section>
+      <section id="all-articles">
+        <h2>All Wiki Articles</h2>
+        <div class="subtitle">
+          <p class="tip">
+            <i
+              ><b>Tip:</b> You can press <code>&#47;</code> to search the wiki!</i
+            >
+          </p>
+          <div class="sorts">
+            <Tooltip content="Sort Method">
+              <Icon group="solid" name="sort" />
+            </Tooltip>
+            <select name="sort" id="sort">
+              <option value="alphabetical">A-Z</option>
+              <option value="last-modified">Last Modified</option>
+              <option value="length">Length</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid">
+          {
+            allWikiArticles.map((article) => (
+              <div
+                class="article"
+                data-last-modified={article.data.lastModified}
+                data-length={article.body.length}
+              >
+                <a href={`/wiki/${article.slug}/`}>
+                  <div class="name">{article.data.title}</div>
+                  <p class="description">{article.data.description}</p>
+                </a>
+              </div>
+            ))
+          }
+        </div>
+        <div class="stats">
+          <span><b>{articleCount}</b> Articles</span>
+          <span><b>{wordCount}</b> Words</span>
+        </div>
+      </section>
       <section id="contributors">
         <h2>Top Contributors</h2>
         <p>
@@ -107,12 +158,6 @@ if (!contributors) {
             group="solid"
             color="red"
           />
-          <br />
-          <ExternalLink
-            url="https://github.com/LuaLS/LuaLS.github.io/blob/main/docs/CONTRIBUTING.md"
-          >
-            Contribute today!
-          </ExternalLink>
         </p>
         <div class="grid">
           {
@@ -143,35 +188,13 @@ if (!contributors) {
               ))
           }
         </div>
-      </section>
-      <section id="all-articles">
-        <h2>All Wiki Articles</h2>
-        <div class="sorts">
-          <Tooltip content="Sort Method">
-            <Icon group="solid" name="sort" />
-          </Tooltip>
-          <select name="sort" id="sort">
-            <option value="alphabetical">A-Z</option>
-            <option value="last-modified">Last Modified</option>
-            <option value="length">Length</option>
-          </select>
-        </div>
-        <div class="grid">
-          {
-            allWikiArticles.map((article) => (
-              <div
-                class="article"
-                data-last-modified={article.data.lastModified}
-                data-length={article.body.length}
-              >
-                <a href={`/wiki/${article.slug}/`}>
-                  <div class="name">{article.data.title}</div>
-                  <p class="description">{article.data.description}</p>
-                </a>
-              </div>
-            ))
-          }
-        </div>
+        <p>
+          <ExternalLink
+            url="https://github.com/LuaLS/LuaLS.github.io/blob/main/docs/CONTRIBUTING.md"
+          >
+            Help Contribute To The Wiki!
+          </ExternalLink>
+        </p>
       </section>
     </div>
   </main>
@@ -226,25 +249,73 @@ if (!contributors) {
 </script>
 
 <style lang="scss">
+  #quick-links {
+    display: flex;
+    justify-content: center;
+    gap: 5vw 5vw;
+    margin: 0px 1em;
+
+    & > a {
+      color: white;
+      border: solid #0084ff 0.1em;
+      box-shadow: #0084ff 0px 0px 0.2em 0.1em;
+      transition: box-shadow 0.25s ease-in-out;
+      border-radius: 0.5em;
+      padding: 0.5em 1em;
+      gap: 0px 0.75em;
+
+      &:hover {
+        box-shadow: #178fff 0px 0px 0.4em 0.3em;
+      }
+
+      :global(.icon) {
+        font-size: 2.5em;
+        display: inline-block;
+      }
+
+      h2 {
+        display: inline-block;
+        width: fit-content;
+        margin: 0px 0px 0px 0.5em;
+        font-size: 2em;
+      }
+
+      p {
+        margin: 0px 0px;
+      }
+    }
+  }
+
   .grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1em;
-    margin: 1em;
 
     & > section {
-      background-color: #163d62;
+      border: solid #0084ff 0.1em;
+      box-shadow: #0084ff 0px 0px 0.2em 0.1em;
       padding: 1em;
       border-radius: 0.5em;
 
       h2 {
         margin: 0px;
+        width: fit-content;
+      }
+
+      p {
+        &:first-of-type {
+          margin: 0px 0px 1em 0px;
+        }
+        &:nth-of-type(2) {
+          text-align: center;
+          margin-bottom: 0px;
+        }
       }
     }
+  }
 
-    p {
-      text-align: center;
-    }
+  main > .grid {
+    margin: 2em 1em;
   }
 
   div.article {
@@ -263,6 +334,17 @@ if (!contributors) {
     .grid {
       grid-template-columns: repeat(auto-fill, minmax(10em, 1fr));
       text-align: center;
+
+      p {
+        color: #ffffffcc;
+      }
+
+      a {
+        transition: color 0.25s ease-in-out;
+        &:hover {
+          color: #ffb700;
+        }
+      }
     }
   }
 
@@ -333,7 +415,8 @@ if (!contributors) {
   }
 
   section#all-articles {
-    grid-column: 1 / span 2;
+    grid-column: 2 / 3;
+    grid-row: 1 / 3;
 
     .grid {
       grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
@@ -344,21 +427,49 @@ if (!contributors) {
         flex-direction: column;
         justify-content: space-between;
         gap: 0.2em 0px;
+
+        p {
+          color: #ffffffcc;
+        }
+
+        a {
+          transition: color 0.25s ease-in-out;
+          &:hover {
+            color: #ffb700;
+          }
+        }
       }
     }
 
-    .sorts {
-      width: fit-content;
-      margin-left: auto;
+    .stats {
+      display: flex;
+      gap: 1em;
+      justify-content: right;
+    }
 
-      select#sort {
-        background: transparent;
-        border: none;
-        border-bottom: #276cae solid 0.2em;
-        color: white;
+    .subtitle {
+      display: flex;
+      flex-wrap: wrap;
+      margin-bottom: 0.5em;
 
-        option {
-          color: black;
+      p.tip {
+        font-size: 0.7em;
+        opacity: 0.8;
+        margin: 0px;
+      }
+      .sorts {
+        width: fit-content;
+        margin-left: auto;
+
+        select#sort {
+          background: transparent;
+          border: none;
+          border-bottom: #276cae solid 0.2em;
+          color: white;
+
+          option {
+            color: black;
+          }
         }
       }
     }
@@ -370,13 +481,18 @@ if (!contributors) {
     }
 
     section#all-articles {
-      grid-column: 1;
+      grid-column: unset;
+      grid-row: 3 / 3;
     }
   }
 
   @media screen and (max-width: 700px) {
     #contributors div.grid {
       grid-template-columns: repeat(auto-fill, minmax(5em, 1fr));
+    }
+
+    #quick-links {
+      flex-wrap: wrap;
     }
   }
 </style>
