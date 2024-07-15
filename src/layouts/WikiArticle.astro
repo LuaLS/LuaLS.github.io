@@ -32,8 +32,8 @@ export interface Props {
 <Layout title="Wiki" transition={true} displayFooter={false}>
   <div class="columns">
     <aside id="article-browser" class="sidebar">
-      <button class="open"><Icon name="newspaper" group="solid" /></button>
-      <button class="close"><Icon name="x" group="solid" /></button>
+      <button class="open"><Icon name="newspaper" group="solid" ariaLabel="Open article browser"/></button>
+      <button class="close"><Icon name="x" group="solid" ariaLabel="Close article browser" /></button>
       <h2 class="title">Articles</h2>
       <div class="content">
         <nav>
@@ -91,8 +91,8 @@ export interface Props {
       <Footer />
     </div>
     <aside id="outline" class="sidebar">
-      <button class="open"><Icon name="list" group="solid" /></button>
-      <button class="close"><Icon name="x" group="solid" /></button>
+      <button class="open"><Icon name="list" group="solid" ariaLabel="Open outline"/></button>
+      <button class="close"><Icon name="x" group="solid" ariaLabel="Close outline" /></button>
       <h2 class="title">Outline</h2>
       <nav class="content">
         <ol>

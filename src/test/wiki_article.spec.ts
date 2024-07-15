@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 test.describe("Wiki Article", async () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("/wiki/build/");
+    await page.goto("/wiki/diagnosis-report/");
   });
 
   test("Header Exists", async ({ page }) => {
@@ -10,10 +10,12 @@ test.describe("Wiki Article", async () => {
   });
 
   test("Article Loads", async ({ page }) => {
-    await expect(page.getByRole("heading", { name: "Build" })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "Diagnosis Report" })
+    ).toBeVisible();
     await expect(
       page.getByText(
-        "Instructions for building the Lua Language Server from source."
+        "Generate a report containing diagnostics usually received by an LSP client."
       )
     ).toBeVisible();
     await expect(page.getByText("Last Modified:")).toBeVisible();
@@ -25,31 +27,31 @@ test.describe("Wiki Article", async () => {
   test("Article Sidebar", async ({ page }) => {
     const sidebar = page.locator("#article-browser");
 
-    await page.getByRole("button", { name: "newspaper" }).click();
+    await page.getByRole("button", { name: "Open article browser" }).click();
     expect(await sidebar.getAttribute("open")).toBe("");
 
-    await sidebar.getByRole("button", { name: "x" }).click();
-    expect(await sidebar.getAttribute("open")).toBe(null);
-
-    await page.getByRole("button", { name: "newspaper" }).click();
     const link = page.getByRole("link", { name: "Usage" });
     const href = await link.getAttribute("href");
     expect(href).toBe(`/wiki/usage/`);
+
+    await sidebar
+      .getByRole("button", { name: "Close article browser" })
+      .click();
+    expect(await sidebar.getAttribute("open")).toBe(null);
   });
 
   test("Outline Sidebar", async ({ page }) => {
     const sidebar = page.locator("#outline");
 
-    await page.getByRole("button", { name: "list" }).click();
+    await page.getByRole("button", { name: "Open outline" }).click();
     expect(await sidebar.getAttribute("open")).toBe("");
 
-    await sidebar.getByRole("button", { name: "x" }).click();
-    expect(await sidebar.getAttribute("open")).toBe(null);
-
-    await page.getByRole("button", { name: "list" }).click();
-    const link = sidebar.getByRole("link", { name: "Build" });
+    const link = sidebar.getByRole("link", { name: "Diagnosis Report" });
     const href = await link.getAttribute("href");
-    expect(href).toBe(`#build`);
+    expect(href).toBe(`#diagnosis-report`);
+
+    await sidebar.getByRole("button", { name: "Close outline" }).click();
+    expect(await sidebar.getAttribute("open")).toBe(null);
   });
 
   test("Edit Page Button", async ({ page }) => {
@@ -58,7 +60,7 @@ test.describe("Wiki Article", async () => {
 
     const href = await link.getAttribute("href");
     expect(href).toBe(
-      "https://github.com/LuaLS/LuaLS.github.io/tree/main/src/content/wiki/build.mdx"
+      "https://github.com/LuaLS/LuaLS.github.io/tree/main/src/content/wiki/diagnosis-report.mdx"
     );
   });
 

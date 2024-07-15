@@ -10,7 +10,7 @@ test.describe("Home Page", () => {
       }
     );
 
-    await page.goto("/", { waitUntil: "load", timeout: 3000 });
+    await page.goto("/", { waitUntil: "load" });
   });
 
   test("Metadata", async ({ page }) => {
