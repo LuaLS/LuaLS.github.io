@@ -95,7 +95,7 @@ if (!contributors) {
       <section id="get-started">
         <h2>Get Started</h2>
         <p>
-          Below are some good articles for those new to the Lua Language Server
+          Below are some good articles for those new to the Lua Language Server.
         </p>
         <div class="grid">
           {
@@ -115,7 +115,7 @@ if (!contributors) {
         <div class="subtitle">
           <p class="tip">
             <i
-              ><b>Tip:</b> You can press <code>&#47;</code> to search the wiki</i
+              ><b>Tip:</b> You can press <code>&#47;</code> to search the wiki!</i
             >
           </p>
           <div class="sorts">
@@ -192,7 +192,7 @@ if (!contributors) {
           <ExternalLink
             url="https://github.com/LuaLS/LuaLS.github.io/blob/main/docs/CONTRIBUTING.md"
           >
-            Contribute today!
+            Help Contribute To The Wiki!
           </ExternalLink>
         </p>
       </section>
@@ -259,10 +259,14 @@ if (!contributors) {
       color: white;
       border: solid #0084ff 0.1em;
       box-shadow: #0084ff 0px 0px 0.2em 0.1em;
-      // background-color: #0d2842;
+      transition: box-shadow 0.25s ease-in-out;
       border-radius: 0.5em;
       padding: 0.5em 1em;
       gap: 0px 0.75em;
+
+      &:hover {
+        box-shadow: #178fff 0px 0px 0.4em 0.3em;
+      }
 
       :global(.icon) {
         font-size: 2.5em;
@@ -333,6 +337,13 @@ if (!contributors) {
 
       p {
         color: #ffffffcc;
+      }
+
+      a {
+        transition: color 0.25s ease-in-out;
+        &:hover {
+          color: #ffb700;
+        }
       }
     }
   }
@@ -420,6 +431,13 @@ if (!contributors) {
         p {
           color: #ffffffcc;
         }
+
+        a {
+          transition: color 0.25s ease-in-out;
+          &:hover {
+            color: #ffb700;
+          }
+        }
       }
     }
 
@@ -432,6 +450,7 @@ if (!contributors) {
     .subtitle {
       display: flex;
       flex-wrap: wrap;
+      margin-bottom: 0.5em;
 
       p.tip {
         font-size: 0.7em;
