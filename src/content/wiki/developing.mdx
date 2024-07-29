@@ -8,23 +8,50 @@ import Remark from "~/components/common/Remark.astro";
 import Accordion from "~/components/common/Accordion.astro";
 import FileTreeItem from "~/components/common/FileTreeItem.astro";
 
-import windowsImg from "~/assets/images/windows.svg"
-import macImg from "~/assets/images/mac.svg"
-import linuxImg from "~/assets/images/linux.svg"
+import windowsImg from "~/assets/images/windows.svg";
+import macImg from "~/assets/images/mac.svg";
+import linuxImg from "~/assets/images/linux.svg";
 
 Thank you for taking an interest in helping improve the language server!
 
+## Overview
+
+The Lua Language Server is written, rather fittingly, in Lua. As a result of Lua being designed for embedding in other programs, its standard library is pretty basic. This means that in order for it to be run as a standalone program, with better io, threading, etc., it requires a runtime written in another language. The language server uses [bee.lua](https://github.com/actboy168/bee.lua) (C++) as its runtime.
+
+An advantage of Lua being an interpreted language is that the source files can be quickly edited and tested with no compile step needed, although hot-reloading is not supported (the server must be restarted).
+
 ## Debugging
 
-Debugging can be performed in a few ways. You can [do a quick `print()`](#quick-print), [write to the log file](#append-to-log-file), or [attach a debugger](#attach-debugger) to get all the info you need.
+Debugging can be performed in a few ways:
 
-### Quick Print
+- [Print](#print)
+- [Log](#append-to-log-file)
+- [Debugger](#attach-debugger)
 
-You can quickly `print()` to the `OUTPUT` panel (<kbd>Ctrl + Shift + U</kbd>) in Visual Studio Code.
+### Print
+
+A quick call to the familiar `print()` will, as expected, write the given parameters out to `stdout`. When running the language server using Visual Studio Code, the output can be seen in the `OUTPUT` panel (<kbd>Ctrl + Shift + U</kbd>):
 
 ![outputPanel](https://user-images.githubusercontent.com/61925890/181308229-52b7e9b7-2893-429b-bca2-8386670df6b0.png)
 
-Below is an example of how a [plugin](/wiki/plugins) can be debugged.
+This allows for pretty quick and easy development entirely in VS Code by opening up the language server source:
+
+<Tabs
+  active="Windows"
+  buttons={[
+    { name: "Windows", image: windowsImg, accent: "#23a9f2" },
+    { name: "MacOS", image: macImg, accent: "#ffffff" },
+    { name: "Linux", image: linuxImg, accent: "#ffff00" },
+  ]}
+>
+  <div data-tab="Windows">
+    `%USERPROFILE%\.vscode\extensions\sumneko.lua-VERSION\server`
+  </div>
+  <div data-tab="MacOS">`~/.vscode/extensions/sumneko.lua-VERSION/server`</div>
+  <div data-tab="Linux">`~/.vscode/extensions/sumneko.lua-VERSION/server`</div>
+</Tabs>
+
+A [plugin](/wiki/plugins) can also be debugged quickly this way:
 
 ```Lua
 local util   = require 'utility'
@@ -35,9 +62,9 @@ function OnSetText(uri, text)
 end
 ```
 
-### Append to Log File
+### Log
 
-You can add an entry to the [log file](/wiki/FAQ#where-can-i-find-the-log-file). Below is an example of how a [plugin](/wiki/plugins) can be debugged.
+You can add an entry to the [log file](/wiki/FAQ#where-can-i-find-the-log-file) using the levels `trace`, `debug`, `info`, `warn`, `error`, and `fatal`. Below is an example of how a [plugin](/wiki/plugins) can be debugged.
 
 ```Lua
 local util   = require 'utility'
@@ -48,14 +75,14 @@ function OnSetText(uri, text)
 end
 ```
 
-### Attach Debugger
+### Debugger
 
 This is the most advanced method, but provides all kinds of useful info and is the most "proper" way to debug the language server.
 
 You will need two Visual Studio Code instances open:
 
 1. The **Debug Host**
-   - This instance has the language server open which can be found in one of these locations:
+   - This instance has the language server open, which can be found in one of these locations:
      <Tabs
        active="Windows"
        buttons={[
@@ -64,9 +91,15 @@ You will need two Visual Studio Code instances open:
          { name: "Linux", image: linuxImg, accent: "#ffff00" },
        ]}
      >
-       <div data-tab="Windows">`%USERPROFILE%\.vscode\extensions\sumneko.lua-VERSION\server`</div>
-       <div data-tab="MacOS">`~/.vscode/extensions/sumneko.lua-VERSION/server`</div>
-       <div data-tab="Linux">`~/.vscode/extensions/sumneko.lua-VERSION/server`</div>
+       <div data-tab="Windows">
+         `%USERPROFILE%\.vscode\extensions\sumneko.lua-VERSION\server`
+       </div>
+       <div data-tab="MacOS">
+         `~/.vscode/extensions/sumneko.lua-VERSION/server`
+       </div>
+       <div data-tab="Linux">
+         `~/.vscode/extensions/sumneko.lua-VERSION/server`
+       </div>
      </Tabs>
 2. The **Debug Target**
    - This instance is where you will test the language server. It should have a folder opened where you can write Lua to test the various features of the language server and use it as normal.
