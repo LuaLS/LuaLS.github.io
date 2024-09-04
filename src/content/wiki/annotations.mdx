@@ -390,12 +390,12 @@ print(x) --> x:string?
 
 ### @class
 
-Define a class. Can be used with [`@field`](#field) to define a table structure. Once a class is defined, it can be used as a type for [parameters](#param), [returns](#return), and more. A class can also inherit from a parent class. Marking the class as `(exact)` means fields cannot be injected after the definition.
+Define a class. Can be used with [`@field`](#field) to define a table structure. Once a class is defined, it can be used as a type for [parameters](#param), [returns](#return), and more. A class can also inherit one or more parent classes. Marking the class as `(exact)` means fields cannot be injected after the definition.
 
 **Syntax**
 
 <div class="syntax">
-`---@class [(exact)] <name>[: <parent>]`
+`---@class [(exact)] <name>[: <parent>[, <parent>...]]`
 </div>
 
 **Examples**
