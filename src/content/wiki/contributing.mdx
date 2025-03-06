@@ -1,0 +1,34 @@
+---
+title: Contributing
+description: A guide to contributing to the Lua Language Server.
+getting-started: true
+---
+
+Thank you for your interest in contributing to the Lua Language Server! Your contributions help improve the experience for all users.
+
+> I want to...
+
+- [Contribute features/fixes](#contributing-code)
+- [Create LuaCATS annotations](#contributing-luacats-annotations)
+- [Help translate to another language](/wiki/translations)
+- [Improve this wiki](https://github.com/LuaLS/LuaLS.github.io/blob/main/docs/CONTRIBUTING.md)
+
+> Is there something else I can do?
+
+- [Star the repository](https://github.com/LuaLS/lua-language-server) if you find the project helpful
+- Spread the word!
+- You can [sponsor](https://github.com/LuaLS/lua-language-server/issues/484) the project
+
+## Contributing code
+
+If you're familiar with Lua, you can grab the [source code](https://github.com/LuaLS/lua-language-server) and dive in. There are additional wiki articles that go more in-depth on [building from source](/wiki/build) and [developing](/wiki/developing). An overview of the project's file structure can be found [on the developing page](/wiki/developing#file-structure).
+
+We don't have a strict git workflow that needs to be followed. When you have some changes ready to merge, [open a pull request](https://github.com/LuaLS/lua-language-server/pulls). If you need some help, feel free to open a draft pull request – although please be patient and keep in mind that the team is very small.
+
+When making changes to the language server, please make sure to add an entry to the project's [changelog](https://github.com/LuaLS/lua-language-server/blob/master/changelog.md) file, so it is documented and advertised to users.
+
+## Contributing LuaCATS Annotations
+
+The Lua Language Server implements a system for defining and documenting code called LuaCATS (Lua Comment And Type System). You can contribute to our ecosystem by writing [LuaCATS annotations](/wiki/annotations) for widely used Lua libraries. These can help give users out-of-the-box autocompletion and type checking for the library. This is done by creating [definition files](/wiki/definition-files) that can then be included in an [addon](/wiki/addons) and distributed using the [addon manager](/wiki/addons#addon-manager).
+
+You can browse annotations maintained by the community in the [LuaCATS organization](https://github.com/LuaCATS).
