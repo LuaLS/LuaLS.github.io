@@ -230,6 +230,7 @@ An array of variable names that will be declared as global.
   "await": "Fallback",
   /*
    * codestyle-check
+   * name-style-check
    * spell-check
    */
   "codestyle": "Fallback",
@@ -246,12 +247,14 @@ An array of variable names that will be declared as global.
    */
   "global": "Fallback",
   /*
-   * cast-type-mismatch
    * circle-doc-class
    * doc-field-no-class
    * duplicate-doc-alias
    * duplicate-doc-field
    * duplicate-doc-param
+   * incomplete-signature-doc
+   * missing-global-doc
+   * missing-local-export-doc
    * undefined-doc-class
    * undefined-doc-name
    * undefined-doc-param
@@ -268,6 +271,7 @@ An array of variable names that will be declared as global.
    * close-non-object
    * deprecated
    * discard-returns
+   * invisible
    */
   "strict": "Fallback",
   /*
@@ -278,6 +282,7 @@ An array of variable names that will be declared as global.
    * assign-type-mismatch
    * cast-local-type
    * cast-type-mismatch
+   * inject-field
    * need-check-nil
    * param-type-mismatch
    * return-type-mismatch
@@ -285,6 +290,7 @@ An array of variable names that will be declared as global.
    */
   "type-check": "Fallback",
   /*
+   * missing-fields
    * missing-parameter
    * missing-return
    * missing-return-value
@@ -346,6 +352,7 @@ Set the file status required for each diagnostic group. This setting is an `Obje
   "await": "Fallback",
   /*
    * codestyle-check
+   * name-style-check
    * spell-check
    */
   "codestyle": "Fallback",
@@ -362,12 +369,14 @@ Set the file status required for each diagnostic group. This setting is an `Obje
    */
   "global": "Fallback",
   /*
-   * cast-type-mismatch
    * circle-doc-class
    * doc-field-no-class
    * duplicate-doc-alias
    * duplicate-doc-field
    * duplicate-doc-param
+   * incomplete-signature-doc
+   * missing-global-doc
+   * missing-local-export-doc
    * undefined-doc-class
    * undefined-doc-name
    * undefined-doc-param
@@ -384,6 +393,7 @@ Set the file status required for each diagnostic group. This setting is an `Obje
    * close-non-object
    * deprecated
    * discard-returns
+   * invisible
    */
   "strict": "Fallback",
   /*
@@ -394,6 +404,7 @@ Set the file status required for each diagnostic group. This setting is an `Obje
    * assign-type-mismatch
    * cast-local-type
    * cast-type-mismatch
+   * inject-field
    * need-check-nil
    * param-type-mismatch
    * return-type-mismatch
@@ -401,6 +412,7 @@ Set the file status required for each diagnostic group. This setting is an `Obje
    */
   "type-check": "Fallback",
   /*
+   * missing-fields
    * missing-parameter
    * missing-return
    * missing-return-value
@@ -488,13 +500,21 @@ Set how files loaded with [`workspace.library`](#workspacelibrary) are diagnosed
   "duplicate-doc-field": "Any",
   "duplicate-doc-param": "Any",
   "duplicate-index": "Any",
-  "duplicate-set-field": "Any",
+  "duplicate-set-field": "Opened",
   "empty-block": "Opened",
+  "global-elements": "None",
   "global-in-nil-env": "Any",
+  "incomplete-signature-doc": "None",
+  "inject-field": "Opened",
+  "invisible": "Any",
   "lowercase-global": "Any",
+  "missing-fields": "Any",
+  "missing-global-doc": "None",
+  "missing-local-export-doc": "None",
   "missing-parameter": "Any",
   "missing-return": "Any",
   "missing-return-value": "Any",
+  "name-style-check": "None",
   "need-check-nil": "Opened",
   "newfield-call": "Any",
   "newline-call": "Any",
@@ -570,11 +590,19 @@ Set how files loaded with [`workspace.library`](#workspacelibrary) are diagnosed
   "duplicate-index": "Warning",
   "duplicate-set-field": "Warning",
   "empty-block": "Hint",
+  "global-elements": "Warning",
   "global-in-nil-env": "Warning",
+  "incomplete-signature-doc": "Warning",
+  "inject-field": "Warning",
+  "invisible": "Warning",
   "lowercase-global": "Information",
+  "missing-fields": "Warning",
+  "missing-global-doc": "Warning",
+  "missing-local-export-doc": "Warning",
   "missing-parameter": "Warning",
   "missing-return": "Warning",
   "missing-return-value": "Warning",
+  "name-style-check": "Warning",
   "need-check-nil": "Warning",
   "newfield-call": "Warning",
   "newline-call": "Warning",

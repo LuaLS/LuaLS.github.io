@@ -334,7 +334,7 @@ Triggered when there are two [`@param`](/wiki/annotations#param) annotations wit
 </Fragment>
 **Default File Status:** `"None"`
 
-Triggered when a functions signature is partially documented with [annotations](/wiki/annotations), but the annotations do not cover every element of the signature. 
+Triggered when a functions signature is partially documented with [annotations](/wiki/annotations), but the annotations do not cover every element of the signature.
 E.g. one of the parameters is not annotated, or the return value is not annotated.
 
 </Diagnostic>
@@ -465,6 +465,14 @@ Triggered when a variable has been marked as deprecated yet is still being used.
 ### discard-returns
 </Fragment>
 Triggered when the returns of a function are being ignored when it is not permitted. Functions can specify that their returns cannot be ignored with [`@nodiscard`](/wiki/annotations#nodiscard).
+
+</Diagnostic>
+
+<Diagnostic level="Warning">
+<Fragment slot="name">
+### invisible
+</Fragment>
+Triggered when accesses to fields which are invisible. Specifically, access to [`@package`](/wiki/annotations#package) from another file, [`@private`](/wiki/annotations#private) not within self class, or [`@protected`](/wiki/annotations#protected) not within self class or child classes.
 
 </Diagnostic>
 
