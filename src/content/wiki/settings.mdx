@@ -27,6 +27,31 @@ Settings that affect the [addon manager](/wiki/addons#addon-manager).
 
 Set the on/off state of the addon manager. Disabling the addon manager prevents it from registering its command.
 
+### addonManager.repositoryBranch
+
+**Type:** `string`<br/>
+**Default:** `""`
+
+Specifies the git branch used by the addon manager.
+
+### addonManager.repositoryPath
+
+**Type:** `string`<br/>
+**Default:** `""`
+
+Specifies the git path used by the addon manager.
+
+## codeLens
+
+Settings that affect the [codeLens](https://code.visualstudio.com/blogs/2017/02/12/code-lens-roundup).
+
+### codeLens.enable
+
+**Type:** `boolean`<br/>
+**Default:** `false`
+
+Enable code lens.
+
 ## completion
 
 Settings that adjust how autocompletions are provided while typing.
@@ -197,6 +222,13 @@ An array of variable names that will be declared as global.
   "diagnostics.globals": ["myGlobal"]
 }
 ```
+
+### diagnostics.globalsRegex
+
+**Type:** `Array<string>`<br/>
+**Default:** `[]`
+
+Find defined global variables using regex.
 
 ### diagnostics.groupFileStatus
 
@@ -695,13 +727,55 @@ The pattern used for matching table field names as a [private](/wiki/annotations
 
 The pattern used for matching field names as a [protected](/wiki/annotations#protected) field. Fields that match any of the patterns provided will be private to that class and its child classes.
 
+### doc.regengine
+
+**Type:** `string`<br/>
+**Default:** `"glob"`<br/>
+**Options:**
+
+- `"glob"` - The default lightweight pattern syntax
+- `"lua"` - Full Lua-style regular expressions
+
+Specifies the regular expression engine used for matching documentation scope names.
+
+## docScriptPath
+
+**Type:** `string`<br/>
+**Default:** `""`<br/>
+
+Specifies a custom Lua script path to override the default documentation generation behavior. When set, the server uses this script (instead of [the built-in one](https://github.com/LuaLS/lua-language-server/blob/master/script/cli/doc/export.lua)) to generate LuaDocs, allowing customization of filtering, sorting, and formatting rules. Leave empty to use the default script. Requires the custom script to implement specific APIs for compatibility.
+
+<Accordion>
+
+<span slot="summary">API</span>
+
+```Lua
+export.getLocalPath(uri) -- Called when the documentation needs to get the path of a source relative to the DOC path. Returns the relative path, or the absolute path, prefixed with the string '[FOREIGN]'
+
+export.positionOf(rowcol) -- Wrapper for guide.positionOf(rowcol[1], rowcol[2])
+
+export.sortDoc(a,b) -- A comparison function used by table.sort that is used to sort every piece of documentation in alphabetical order.
+
+export.documentObject(source, has_seen) -- A function that gets called on every source object. It is responsible for filtering each source to their corresponding export.makeDocObject[<TYPE>] function
+
+export.makeDocObject[<TYPE>] -- A table of functions that are responsible for building their corresponding <TYPE>'s documentation. TYPES include 'type', 'variable', 'doc.class', etc. 'INIT' corresponds to every documentation object before it is processed by its corresponding type.
+
+export.gatherGlobals() -- Called when the documentation needs an exhaustive list of the globals it should export documentation. By default this includes the result of vm.getAllGlobals(). Returns the collected variables/types.
+
+export.makeDocs(globals, callback) -- Documents globals from export.gatherGlobals() by calling export.documentObject on each one; updates its progress by calling callback when a global is finished being documented. Returns a table of the collected documentation
+
+export.serializeAndExport(docs, outputDir) -- Serializes documentation tables from export.makeDocs to json and markdown, Writes them to <outputDir>/doc.json and <outputDir>/doc.md, respectively. Returns these paths.
+```
+
+</Accordion>
+
 ## format
 
-Settings for configuring the built-in code formatter.
+Settings for configuring the [built-in code formatter](/wiki/formatter).
 
 ### format.defaultConfig
 
-**Type:** `Object<string, string`<br/>
+**Type:** `Object<string, string>`<br/>
 **Default:** `{}`
 
 The default configuration for the formatter. If there is a `.editorconfig` in the workspace, it will take priority. Read more on the [formatter's GitHub page](https://github.com/CppCXY/EmmyLuaCodeStyle/tree/master/docs).
@@ -735,6 +809,13 @@ Settings for configuring inline hints. See an example below.
 **Default:** `true`
 
 If a function has been defined as [`@async`](/wiki/annotations#async), display an `await` hint when it is being called.
+
+### hint.awaitPropagate
+
+**Type:** `boolean`<br/>
+**Default:** `false`
+
+Enable the propagation of `await`. When a function calls a function marked [`@async`](/wiki/annotations#async), it will be automatically marked as [`@async`](/wiki/annotations#async).
 
 ### hint.enable
 
@@ -783,7 +864,7 @@ Show a hint to display the type being applied at assignment operations.
 
 ## hover
 
-Setting for configuring hover tooltips. The hover tooltips can contain all kinds of useful information.
+Settings for configuring hover tooltips. The hover tooltips can contain all kinds of useful information.
 
 ### hover.enable
 
@@ -834,6 +915,24 @@ Enable hovering a string that contains an escape character to see its true strin
 
 The maximum number of characters that can be previewed by hovering a string before it is truncated.
 
+## language
+
+Settings for VSCode only.
+
+### language.completeAnnotation
+
+**Type:** `boolean`<br/>
+**Default:** `true`
+
+Automatically insert "---@ " after a line break following a annotation.
+
+### language.fixIndent
+
+**Type:** `boolean`<br/>
+**Default:** `true`
+
+Fix incorrect auto-indentation, such as incorrect indentation when line breaks occur within a string containing the word "function".
+
 ## misc
 
 Miscellaneous settings that do not belong to any of the other groups.
@@ -852,6 +951,17 @@ Miscellaneous settings that do not belong to any of the other groups.
 
 Manually specify the path for the Lua Language Server executable file.
 
+## nameStyle
+
+Settings for configuring [name style diagnostics](/wiki/diagnostics#name-style-check).
+
+### nameStyle.config
+
+**Type:** <code>Object&lt;string, case&gt;</code><br/>
+**Default:** `{}`
+
+Set name style config. Read more on the [formatter's GitHub page](https://github.com/CppCXY/EmmyLuaCodeStyle/tree/master/docs).
+
 ## runtime
 
 Settings for configuring the runtime environment.
@@ -862,7 +972,7 @@ Settings for configuring the runtime environment.
 
 **`status` Options:**
 
-- `"default"` - The library will be enabled if it is a part of the current [`runtime.version`](#runtimeversion).
+- `"default"` - The library will be enabled if it is a part of the current [`runtime.version`](#runtimeversion)
 - `"enable"` - Always enable this library
 - `"disable"` - Always disable this library
 
@@ -1050,7 +1160,7 @@ The spell group contains settings that help detect typos and misspellings.
 **Type:** `Array<string>`<br/>
 **Default:** `[]`
 
-A custom dictionary of words that you know are spelled correctly but are being reported as incorrect. Adding words to this dictionary will make them exempt from spell checking.
+A custom dictionary of words that you know are spelled correctly but are being reported as incorrect. Adding words to this dictionary will make them exempt from [spell checking](/wiki/diagnostics#spell-check).
 
 ## telemetry
 
@@ -1078,6 +1188,31 @@ The type group contains settings for type checking.
 **Default:** `false`
 
 Whether casting a `number` to an `integer` is allowed.
+
+### type.checkTableShape
+
+**Type:** `boolean`<br/>
+**Default:** `false`
+
+Strictly check the shape of the table.
+
+### type.inferParamType
+
+**Type:** `boolean`<br/>
+**Default:** `false`
+
+When a parameter type is not annotated, it is inferred from the function's call sites.
+
+When this setting is `false`, the type of the parameter is `any` when it is not annotated.
+
+### type.inferTableSize
+
+**Type:** `integer`<br/>
+**Default:** `10`
+
+Controls the maximum number of table fields analyzed during type inference. For tables with fields exceeding this value, only the first N fields (where N is this setting's value) are used to infer types, prioritizing analysis performance. Smaller tables will have all fields analyzed for higher type accuracy.
+
+Adjust this value to balance between precise type hints and efficient analysis, especially when working with large configuration tables or performance-sensitive projects.
 
 ### type.weakNilCheck
 
@@ -1108,6 +1243,41 @@ Whether it is permitted to assign a union type which only has one matching type 
 ---@type string
 local str = false
 ```
+
+## typeFormat
+
+The typeFormat group contains settings that configures the formatting behavior.
+
+### typeFormat.config
+
+**Type:** <code>Object&lt;behavior, boolean_string&gt;</code><br/>
+
+**`behavior` Options:**
+
+- `"auto_complete_end"` - Controls if `end` is automatically completed at suitable positions
+- `"auto_complete_table_sep"` - Controls if a separator is automatically appended at the end of a table declaration
+- `"format_line"` - Controls if a line is formatted at all
+
+**`boolean_string` Options:**
+
+- `"true"` - On
+- `"false"` - Off
+
+<Accordion>
+
+<span slot="summary">Default Value</span>
+
+```JSON
+{
+  "auto_complete_end": "true",
+  "auto_complete_table_sep": "true",
+  "format_line": "true"
+}
+```
+
+</Accordion>
+
+Configure the formatting behavior while typing Lua code.
 
 ## window
 
