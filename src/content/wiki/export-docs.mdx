@@ -266,3 +266,31 @@ import vscodeImg from "~/assets/images/vscode.svg"
 
    </div>
 </Tabs>
+
+## Custom
+
+By specifying [`Lua.docScriptPath` setting](/wiki/settings#docscriptpath), you could override the default documentation generation behavior. When set, the server uses this script (instead of [the built-in one](https://github.com/LuaLS/lua-language-server/blob/master/script/cli/doc/export.lua)) to generate LuaDocs, allowing customization of filtering, sorting, and formatting rules. Leave empty to use the default script. Requires the custom script to implement specific APIs for compatibility.
+
+<Accordion>
+
+    <span slot="summary">API</span>
+
+    ```Lua
+    export.getLocalPath(uri) -- Called when the documentation needs to get the path of a source relative to the DOC path. Returns the relative path, or the absolute path, prefixed with the string '[FOREIGN]'
+
+    export.positionOf(rowcol) -- Wrapper for guide.positionOf(rowcol[1], rowcol[2])
+
+    export.sortDoc(a,b) -- A comparison function used by table.sort that is used to sort every piece of documentation in alphabetical order.
+
+    export.documentObject(source, has_seen) -- A function that gets called on every source object. It is responsible for filtering each source to their corresponding export.makeDocObject[<TYPE>] function
+
+    export.makeDocObject[<TYPE>] -- A table of functions that are responsible for building their corresponding <TYPE>'s documentation. TYPES include 'type', 'variable', 'doc.class', etc. 'INIT' corresponds to every documentation object before it is processed by its corresponding type.
+
+    export.gatherGlobals() -- Called when the documentation needs an exhaustive list of the globals it should export documentation. By default this includes the result of vm.getAllGlobals(). Returns the collected variables/types.
+
+    export.makeDocs(globals, callback) -- Documents globals from export.gatherGlobals() by calling export.documentObject on each one; updates its progress by calling callback when a global is finished being documented. Returns a table of the collected documentation
+
+    export.serializeAndExport(docs, outputDir) -- Serializes documentation tables from export.makeDocs to json and markdown, Writes them to <outputDir>/doc.json and <outputDir>/doc.md, respectively. Returns these paths.
+    ```
+
+</Accordion>
