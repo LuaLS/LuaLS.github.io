@@ -124,7 +124,7 @@ The codestyle group contains diagnostics for maintaining a good code style.
 </Fragment>
 **Default File Status:** `"None"`
 
-Triggered when the opinionated style checking detects an incorrectly styled line.
+Triggered when the opinionated style checking detects an incorrectly styled line. The style can be customized using the [`Lua.format.defaultConfig` setting](/wiki/settings#formatdefaultconfig).
 
 </Diagnostic>
 
@@ -134,7 +134,7 @@ Triggered when the opinionated style checking detects an incorrectly styled line
 </Fragment>
 **Default File Status:** `"None"`
 
-Triggered when the opinionated style checking detects an incorrectly named element.
+Triggered when the opinionated style checking detects an incorrectly named element. The style can be customized using the [`Lua.nameStyle.config` setting](/wiki/settings#namestyleconfig).
 
 </Diagnostic>
 
@@ -144,7 +144,7 @@ Triggered when the opinionated style checking detects an incorrectly named eleme
 </Fragment>
 **Default File Status:** `"None"`
 
-Triggered when a typo is detected in a string. The dictionary can be customized using the [`Lua.spell.dict` setting](https://github.com/LuaLS/lua-language-server/wiki/Settings#spelldict).
+Triggered when a typo is detected in a string. The dictionary can be customized using the [`Lua.spell.dict` setting](/wiki/settings#spelldict).
 
 </Diagnostic>
 
@@ -334,7 +334,7 @@ Triggered when there are two [`@param`](/wiki/annotations#param) annotations wit
 </Fragment>
 **Default File Status:** `"None"`
 
-Triggered when a functions signature is partially documented with [annotations](/wiki/annotations), but the annotations do not cover every element of the signature. 
+Triggered when a functions signature is partially documented with [annotations](/wiki/annotations), but the annotations do not cover every element of the signature.
 E.g. one of the parameters is not annotated, or the return value is not annotated.
 
 </Diagnostic>
@@ -465,6 +465,14 @@ Triggered when a variable has been marked as deprecated yet is still being used.
 ### discard-returns
 </Fragment>
 Triggered when the returns of a function are being ignored when it is not permitted. Functions can specify that their returns cannot be ignored with [`@nodiscard`](/wiki/annotations#nodiscard).
+
+</Diagnostic>
+
+<Diagnostic level="Warning">
+<Fragment slot="name">
+### invisible
+</Fragment>
+Triggered when accesses to fields which are invisible. Specifically, access to [`@package`](/wiki/annotations#package) from another file, [`@private`](/wiki/annotations#private) not within self class, or [`@protected`](/wiki/annotations#protected) not within self class or child classes.
 
 </Diagnostic>
 

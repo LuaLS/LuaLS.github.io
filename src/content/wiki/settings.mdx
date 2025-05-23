@@ -27,6 +27,31 @@ Settings that affect the [addon manager](/wiki/addons#addon-manager).
 
 Set the on/off state of the addon manager. Disabling the addon manager prevents it from registering its command.
 
+### addonManager.repositoryBranch
+
+**Type:** `string`<br/>
+**Default:** `""`
+
+Specifies the git branch used by the addon manager.
+
+### addonManager.repositoryPath
+
+**Type:** `string`<br/>
+**Default:** `""`
+
+Specifies the git path used by the addon manager.
+
+## codeLens
+
+Settings that affect the [codeLens](https://code.visualstudio.com/blogs/2017/02/12/code-lens-roundup).
+
+### codeLens.enable
+
+**Type:** `boolean`<br/>
+**Default:** `false`
+
+Enable code lens.
+
 ## completion
 
 Settings that adjust how autocompletions are provided while typing.
@@ -198,6 +223,13 @@ An array of variable names that will be declared as global.
 }
 ```
 
+### diagnostics.globalsRegex
+
+**Type:** `Array<string>`<br/>
+**Default:** `[]`
+
+Find defined global variables using regex.
+
 ### diagnostics.groupFileStatus
 
 **Type:** <code>Object&lt;[diagnostic_group_name](/wiki/diagnostics), file_state&gt;</code>
@@ -230,6 +262,7 @@ An array of variable names that will be declared as global.
   "await": "Fallback",
   /*
    * codestyle-check
+   * name-style-check
    * spell-check
    */
   "codestyle": "Fallback",
@@ -246,12 +279,14 @@ An array of variable names that will be declared as global.
    */
   "global": "Fallback",
   /*
-   * cast-type-mismatch
    * circle-doc-class
    * doc-field-no-class
    * duplicate-doc-alias
    * duplicate-doc-field
    * duplicate-doc-param
+   * incomplete-signature-doc
+   * missing-global-doc
+   * missing-local-export-doc
    * undefined-doc-class
    * undefined-doc-name
    * undefined-doc-param
@@ -268,6 +303,7 @@ An array of variable names that will be declared as global.
    * close-non-object
    * deprecated
    * discard-returns
+   * invisible
    */
   "strict": "Fallback",
   /*
@@ -278,6 +314,7 @@ An array of variable names that will be declared as global.
    * assign-type-mismatch
    * cast-local-type
    * cast-type-mismatch
+   * inject-field
    * need-check-nil
    * param-type-mismatch
    * return-type-mismatch
@@ -285,6 +322,7 @@ An array of variable names that will be declared as global.
    */
   "type-check": "Fallback",
   /*
+   * missing-fields
    * missing-parameter
    * missing-return
    * missing-return-value
@@ -346,6 +384,7 @@ Set the file status required for each diagnostic group. This setting is an `Obje
   "await": "Fallback",
   /*
    * codestyle-check
+   * name-style-check
    * spell-check
    */
   "codestyle": "Fallback",
@@ -362,12 +401,14 @@ Set the file status required for each diagnostic group. This setting is an `Obje
    */
   "global": "Fallback",
   /*
-   * cast-type-mismatch
    * circle-doc-class
    * doc-field-no-class
    * duplicate-doc-alias
    * duplicate-doc-field
    * duplicate-doc-param
+   * incomplete-signature-doc
+   * missing-global-doc
+   * missing-local-export-doc
    * undefined-doc-class
    * undefined-doc-name
    * undefined-doc-param
@@ -384,6 +425,7 @@ Set the file status required for each diagnostic group. This setting is an `Obje
    * close-non-object
    * deprecated
    * discard-returns
+   * invisible
    */
   "strict": "Fallback",
   /*
@@ -394,6 +436,7 @@ Set the file status required for each diagnostic group. This setting is an `Obje
    * assign-type-mismatch
    * cast-local-type
    * cast-type-mismatch
+   * inject-field
    * need-check-nil
    * param-type-mismatch
    * return-type-mismatch
@@ -401,6 +444,7 @@ Set the file status required for each diagnostic group. This setting is an `Obje
    */
   "type-check": "Fallback",
   /*
+   * missing-fields
    * missing-parameter
    * missing-return
    * missing-return-value
@@ -488,13 +532,21 @@ Set how files loaded with [`workspace.library`](#workspacelibrary) are diagnosed
   "duplicate-doc-field": "Any",
   "duplicate-doc-param": "Any",
   "duplicate-index": "Any",
-  "duplicate-set-field": "Any",
+  "duplicate-set-field": "Opened",
   "empty-block": "Opened",
+  "global-elements": "None",
   "global-in-nil-env": "Any",
+  "incomplete-signature-doc": "None",
+  "inject-field": "Opened",
+  "invisible": "Any",
   "lowercase-global": "Any",
+  "missing-fields": "Any",
+  "missing-global-doc": "None",
+  "missing-local-export-doc": "None",
   "missing-parameter": "Any",
   "missing-return": "Any",
   "missing-return-value": "Any",
+  "name-style-check": "None",
   "need-check-nil": "Opened",
   "newfield-call": "Any",
   "newline-call": "Any",
@@ -570,11 +622,19 @@ Set how files loaded with [`workspace.library`](#workspacelibrary) are diagnosed
   "duplicate-index": "Warning",
   "duplicate-set-field": "Warning",
   "empty-block": "Hint",
+  "global-elements": "Warning",
   "global-in-nil-env": "Warning",
+  "incomplete-signature-doc": "Warning",
+  "inject-field": "Warning",
+  "invisible": "Warning",
   "lowercase-global": "Information",
+  "missing-fields": "Warning",
+  "missing-global-doc": "Warning",
+  "missing-local-export-doc": "Warning",
   "missing-parameter": "Warning",
   "missing-return": "Warning",
   "missing-return-value": "Warning",
+  "name-style-check": "Warning",
   "need-check-nil": "Warning",
   "newfield-call": "Warning",
   "newline-call": "Warning",
@@ -667,13 +727,33 @@ The pattern used for matching table field names as a [private](/wiki/annotations
 
 The pattern used for matching field names as a [protected](/wiki/annotations#protected) field. Fields that match any of the patterns provided will be private to that class and its child classes.
 
+### doc.regengine
+
+**Type:** `string`<br/>
+**Default:** `"glob"`<br/>
+**Options:**
+
+- `"glob"` - The default lightweight pattern syntax
+- `"lua"` - Full Lua-style regular expressions
+
+Specifies the regular expression engine used for matching documentation scope names.
+
+## docScriptPath
+
+**Type:** `string`<br/>
+**Default:** `""`<br/>
+
+Specifies a custom Lua script path to [override the default documentation generation behavior](/wiki/export-docs#custom).
+
+</Accordion>
+
 ## format
 
-Settings for configuring the built-in code formatter.
+Settings for configuring the [built-in code formatter](/wiki/formatter).
 
 ### format.defaultConfig
 
-**Type:** `Object<string, string`<br/>
+**Type:** `Object<string, string>`<br/>
 **Default:** `{}`
 
 The default configuration for the formatter. If there is a `.editorconfig` in the workspace, it will take priority. Read more on the [formatter's GitHub page](https://github.com/CppCXY/EmmyLuaCodeStyle/tree/master/docs).
@@ -707,6 +787,13 @@ Settings for configuring inline hints. See an example below.
 **Default:** `true`
 
 If a function has been defined as [`@async`](/wiki/annotations#async), display an `await` hint when it is being called.
+
+### hint.awaitPropagate
+
+**Type:** `boolean`<br/>
+**Default:** `false`
+
+Enable the propagation of `await`. When a function calls a function marked [`@async`](/wiki/annotations#async), it will be automatically marked as [`@async`](/wiki/annotations#async).
 
 ### hint.enable
 
@@ -755,7 +842,7 @@ Show a hint to display the type being applied at assignment operations.
 
 ## hover
 
-Setting for configuring hover tooltips. The hover tooltips can contain all kinds of useful information.
+Settings for configuring hover tooltips. The hover tooltips can contain all kinds of useful information.
 
 ### hover.enable
 
@@ -806,6 +893,24 @@ Enable hovering a string that contains an escape character to see its true strin
 
 The maximum number of characters that can be previewed by hovering a string before it is truncated.
 
+## language
+
+Settings for VSCode only.
+
+### language.completeAnnotation
+
+**Type:** `boolean`<br/>
+**Default:** `true`
+
+Automatically insert "---@ " after a line break following a annotation.
+
+### language.fixIndent
+
+**Type:** `boolean`<br/>
+**Default:** `true`
+
+Fix incorrect auto-indentation, such as incorrect indentation when line breaks occur within a string containing the word "function".
+
 ## misc
 
 Miscellaneous settings that do not belong to any of the other groups.
@@ -824,6 +929,17 @@ Miscellaneous settings that do not belong to any of the other groups.
 
 Manually specify the path for the Lua Language Server executable file.
 
+## nameStyle
+
+Settings for configuring [name style diagnostics](/wiki/diagnostics#name-style-check).
+
+### nameStyle.config
+
+**Type:** <code>Object&lt;string, case&gt;</code><br/>
+**Default:** `{}`
+
+Set name style config. Read more on the [formatter's GitHub page](https://github.com/CppCXY/EmmyLuaCodeStyle/tree/master/docs).
+
 ## runtime
 
 Settings for configuring the runtime environment.
@@ -834,7 +950,7 @@ Settings for configuring the runtime environment.
 
 **`status` Options:**
 
-- `"default"` - The library will be enabled if it is a part of the current [`runtime.version`](#runtimeversion).
+- `"default"` - The library will be enabled if it is a part of the current [`runtime.version`](#runtimeversion)
 - `"enable"` - Always enable this library
 - `"disable"` - Always disable this library
 
@@ -1022,7 +1138,7 @@ The spell group contains settings that help detect typos and misspellings.
 **Type:** `Array<string>`<br/>
 **Default:** `[]`
 
-A custom dictionary of words that you know are spelled correctly but are being reported as incorrect. Adding words to this dictionary will make them exempt from spell checking.
+A custom dictionary of words that you know are spelled correctly but are being reported as incorrect. Adding words to this dictionary will make them exempt from [spell checking](/wiki/diagnostics#spell-check).
 
 ## telemetry
 
@@ -1050,6 +1166,31 @@ The type group contains settings for type checking.
 **Default:** `false`
 
 Whether casting a `number` to an `integer` is allowed.
+
+### type.checkTableShape
+
+**Type:** `boolean`<br/>
+**Default:** `false`
+
+Strictly check the shape of the table.
+
+### type.inferParamType
+
+**Type:** `boolean`<br/>
+**Default:** `false`
+
+When a parameter type is not annotated, it is inferred from the function's call sites.
+
+When this setting is `false`, the type of the parameter is `any` when it is not annotated.
+
+### type.inferTableSize
+
+**Type:** `integer`<br/>
+**Default:** `10`
+
+Controls the maximum number of table fields analyzed during type inference. For tables with fields exceeding this value, only the first N fields (where N is this setting's value) are used to infer types, prioritizing analysis performance. Smaller tables will have all fields analyzed for higher type accuracy.
+
+Adjust this value to balance between precise type hints and efficient analysis, especially when working with large configuration tables or performance-sensitive projects.
 
 ### type.weakNilCheck
 
@@ -1080,6 +1221,41 @@ Whether it is permitted to assign a union type which only has one matching type 
 ---@type string
 local str = false
 ```
+
+## typeFormat
+
+The typeFormat group contains settings that configures the formatting behavior.
+
+### typeFormat.config
+
+**Type:** <code>Object&lt;behavior, boolean_string&gt;</code><br/>
+
+**`behavior` Options:**
+
+- `"auto_complete_end"` - Controls if `end` is automatically completed at suitable positions
+- `"auto_complete_table_sep"` - Controls if a separator is automatically appended at the end of a table declaration
+- `"format_line"` - Controls if a line is formatted at all
+
+**`boolean_string` Options:**
+
+- `"true"` - On
+- `"false"` - Off
+
+<Accordion>
+
+<span slot="summary">Default Value</span>
+
+```JSON
+{
+  "auto_complete_end": "true",
+  "auto_complete_table_sep": "true",
+  "format_line": "true"
+}
+```
+
+</Accordion>
+
+Configure the formatting behavior while typing Lua code.
 
 ## window
 
