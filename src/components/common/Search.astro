@@ -1,12 +1,21 @@
 ---
+import { render } from "astro:content";
+import { getCollection } from "astro:content";
 import type { searchItem } from "~/services/search";
 import { searchTerms } from "~/services/search";
 
-const getContentStaticURL = (path: string, target?: string): string | null => {
-  const rgx = /\/src\/.+?\/(.+)\..*?/g;
+/**
+ * Infers the static URL of a wiki article from its file path.
+ * @param path filepath of article
+ * @param target optional target heading
+ */
+const getContentStaticURL = (path: string, target?: string): string => {
+  const rgx = /src\/.+?\/(.+)\..*?/g;
+
+  console.log(path);
 
   const result = rgx.exec(path);
-  if (result === null) return null;
+  if (result === null) throw new Error(`Failed to infer static URL of ${path}`);
 
   if (target) {
     return `/${result[1]}/#${target}`;
@@ -15,38 +24,36 @@ const getContentStaticURL = (path: string, target?: string): string | null => {
   }
 };
 
-let searchTags: searchItem[] = [];
+const searchTags: searchItem[] = [...searchTerms];
 
-if (searchTags.length === 0) {
-  const pages = await Astro.glob("../../content/**/*.mdx");
+if (searchTags.length === searchTerms.length) {
+  const pages = await getCollection("wiki");
 
   for (const page of pages) {
-    const frontmatter = page.frontmatter;
-    const headings = page.getHeadings();
-
-    const href = getContentStaticURL(page.file);
-    if (!href) {
-      throw new Error(`Failed to get static url of ${page.url}`);
+    if (!page.filePath) {
+      throw new Error(`Page ${page.id} does not have a file path}`);
     }
 
-    //   Add article title to search options
-    searchTags.push({ text: page.frontmatter.title, href });
+    const { headings } = await render(page);
+
+    const href = getContentStaticURL(page.filePath);
+
+    // Add article title to search options
+    searchTags.push({ text: page.data.title, href });
 
     // Add custom article tags to search options
-    for (const tag of frontmatter.tags ?? []) {
+    for (const tag of page.data.tags ?? []) {
       searchTags.push({ text: tag, href });
     }
 
     // Add article headings to search options
     for (const heading of headings) {
-      const href = getContentStaticURL(page.file, heading.slug);
-      if (!href) {
-        throw new Error(`Failed to get static url of ${page.url}`);
-      }
-      searchTags.push({ text: heading.text, href });
+      searchTags.push({
+        text: heading.text,
+        href: getContentStaticURL(page.filePath, heading.slug),
+      });
     }
   }
-  searchTags = searchTags.concat(searchTerms);
 }
 ---
 

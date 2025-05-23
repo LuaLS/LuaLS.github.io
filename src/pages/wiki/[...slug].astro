@@ -14,17 +14,18 @@ import H6 from "~/components/wiki/headings/H6.astro";
 import dayjs from "~/services/time";
 import Tooltip from "~/components/common/Tooltip.astro";
 import Time from "~/components/common/Time.astro";
+import { render } from "astro:content";
 
 export const getStaticPaths = async () => {
   const articles = await getCollection("wiki");
   return articles.map((article) => {
-    return { params: { slug: article.slug }, props: { article } };
+    return { params: { slug: article.id }, props: { article } };
   });
 };
 
 const { article } = Astro.props;
 
-const { Content, headings, remarkPluginFrontmatter } = await article.render();
+const { Content, headings, remarkPluginFrontmatter } = await render(article);
 
 export interface Props {
   article: CollectionEntry<"wiki">;
