@@ -14,7 +14,7 @@ const articles = await getCollection("wiki");
 export const getStaticPaths = async () => {
   const articles = await getCollection("wiki");
   return articles.map((entry) => {
-    return { params: { slug: entry.slug }, props: { entry } };
+    return { params: { slug: entry.id }, props: { entry } };
   });
 };
 
@@ -41,12 +41,12 @@ export interface Props {
             articles
               .sort((a, b) => a.data.title.localeCompare(b.data.title))
               .map((article) =>
-                article.slug == hereSlug ? (
-                  <a href={`/wiki/${article.slug}/`} class="here">
+                article.id == hereSlug ? (
+                  <a href={`/wiki/${article.id}/`} class="here">
                     {article.data.title}
                   </a>
                 ) : (
-                  <a href={`/wiki/${article.slug}/`}>{article.data.title}</a>
+                  <a href={`/wiki/${article.id}/`}>{article.data.title}</a>
                 )
               )
           }
@@ -73,7 +73,7 @@ export interface Props {
           <a
             class="edit-page"
             target="_blank"
-            href={`https://github.com/LuaLS/LuaLS.github.io/tree/main/src/content/wiki/${article.slug}.mdx`}
+            href={`https://github.com/LuaLS/LuaLS.github.io/tree/main/src/content/wiki/${article.id}.mdx`}
           >
             <Icon name="pencil" group="solid" /> Edit this page
           </a>
@@ -81,7 +81,7 @@ export interface Props {
             class="open-issue"
             target="_blank"
             href={`https://github.com/LuaLS/LuaLS.github.io/issues/new?title=${encodeURIComponent(
-              `Issue with wiki page "${article.slug}"`
+              `Issue with wiki page "${article.id}"`
             )}`}
           >
             <Icon name="circle-dot" group="solid" /> Open Issue
