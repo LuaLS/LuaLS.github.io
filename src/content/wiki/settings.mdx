@@ -1311,6 +1311,13 @@ Whether [git submodules](https://github.blog/2016-02-01-working-with-submodules/
 
 Used to add library implementation code and [definition files](/wiki/definition-files) to the workspace scope. An array of absolute/workspace-relative paths that will be added to the workspace diagnosis - meaning you will get completion and context from these files. Can be a file or directory. Files included here will have some features disabled such as renaming fields to prevent accidentally renaming your library files.
 
+A variety of variables can be used in the paths provided:
+
+- `${env:FOO}` resolves the environment variable `FOO`.
+- `${workspaceFolder}` resolves to the path of the workspace folder.
+- `${workspaceFolder:bar}` resolves to the path of workspace folder named `bar`.
+- `${3rd}` resolves to the location of the [built-in addons](/wiki/addons/#built-in-addons).
+
 ### workspace.maxPreload
 
 **Type:** `integer`<br/>
