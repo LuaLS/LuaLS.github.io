@@ -148,5 +148,23 @@ The `config.json` file is very important for addons and must be included. A sche
 }
 ```
 
+## LuaRocks
+
+<Remark type="WIP">
+LuaRocks addons are currently in beta. Please report any encountered issues in the [luarocks build backend repo](https://github.com/LuaLS/luarocks-build-addon)!
+</Remark>
+
+We'd love feedback with publishing and installing addons via LuaRocks. Using LuaRocks for managing addons should be much more sustainable than the current method (and its independent of editor!). It is very similar to how addons have previously functioned, with some notable changes:
+
+1. The `config.json` file is deprecated, replaced by the `*.rockspec` file.
+    - `words` and `files` properties are no longer supported.
+    - `settings` are to be defined in `build.settings` in the `*.rockspec` file
+2. Plugins are now automatically discovered and enabled upon addon installation.
+3. Addons can depend on each other using the native `dependencies` table of the `*.rockspec` file.
+
+See the [README for the luarocks build backend](https://github.com/LuaLS/luarocks-build-addon#readme) to learn more. Please provide all feedback in that repo. <Icon name="heart" group="solid" color="red"/>
+
+See https://gitlab.com/carsakiller/lls-addon-cc-tweaked as an example, which is a migrated version of the [cc-tweaked addon](https://gitlab.com/carsakiller/cc-tweaked-documentation).
+
 {/* Links */}
 [LLS-Addons]: https://github.com/LuaLS/LLS-Addons
