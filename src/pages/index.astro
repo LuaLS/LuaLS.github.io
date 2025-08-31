@@ -53,9 +53,10 @@ const annotationCount = annotationsPage
         </div>
 
         <div class="announcement">
-          <a href="#jetbrains-install">
-            <span class="tag">NEW</span>
-            <span class="description">JetBrains IntelliJ Plugin</span>
+          <a href="/wiki/addons/#luarocks">
+            <span class="tag">BETA</span><span class="description"
+              >Install Addons From LuaRocks</span
+            >
           </a>
         </div>
 
@@ -524,10 +525,12 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
     .announcement {
       width: fit-content;
       margin: 1em auto auto auto;
-      border: 0.1em #2d8ae3 solid;
       border-radius: 99em;
       background-color: #16436e00;
-      box-shadow: #16436e 0px 0px 0.5em 0px;
+      font-size: 1.1em;
+      padding: 0.2em 0.2em;
+      background: linear-gradient(90deg, #702fc6 0%, #b710c0 100%);
+      box-shadow: #b669ff 0px 0px 1em 0px;
 
       a {
         color: white;
@@ -538,24 +541,16 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
       }
 
       span.tag {
-        background-color: #2d8ae3;
+        font-weight: bold;
         border-radius: 1em 0px 0px 1em;
         position: relative;
-        padding-left: 0.75em;
-
-        &::after {
-          content: "";
-          position: absolute;
-          top: 0px;
-          right: -0.25em;
-          width: 0.25em;
-          height: 100%;
-          background: linear-gradient(90deg, #2d8ae3, #00000000);
-        }
+        padding: 0.2em 0.5em 0.2em 0.75em;
       }
 
       span.description {
-        margin: 0px 0.25em;
+        margin: 0px;
+        border-radius: 0px 99em 99em 0px;
+        border-left: 2px solid white
       }
     }
 
