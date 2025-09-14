@@ -55,21 +55,32 @@ Below are some examples for getting set up in Neovim in different environments.
 Below is a minimal example showing how to set the runtime version of the language server.
 
 ```Lua
-require'lspconfig'.lua_ls.setup{
+vim.lsp.config['luals'] = {
+  cmd = { 'lua-language-server' },
+  filetypes = { 'lua' },
+  -- Sets the "workspace" to the directory where any of these files is found.
+  -- Files that share a root directory will reuse the LSP server connection.
+  -- Nested lists indicate equal priority, see vim.lsp.Config.
+  root_markers = { { '.luarc.json', '.luarc.jsonc' }, '.git' },
   settings = {
     Lua = {
       runtime = {
-        version = "LuaJIT"
+        version = 'LuaJIT',
       }
     }
   }
 }
 ```
 
+See [github.com/neovim/nvim-lspconfig](https://github.com/neovim/nvim-lspconfig/blob/master/lsp/lua_ls.lua) for a more detailed example.
+
 And here is an example that can be used when using Luarocks:
 
 ```Lua
-require'lspconfig'.lua_ls.setup{
+vim.lsp.config['luals'] = {
+  cmd = { 'lua-language-server' },
+  filetypes = { 'lua' },
+  root_markers = { { '.luarc.json', '.luarc.jsonc' }, '.git' },
   settings = {
     Lua = {
       runtime = {
