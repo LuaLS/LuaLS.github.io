@@ -217,57 +217,56 @@ const annotationCount = annotationsPage
         <div id="neovim-install">
           <h3>Neovim</h3>
           <div class="instructions">
-            <ol>
-              <li>
-                Install lua-language-server
-                <ol type="A">
-                  <li>
-                    From package manager
-                    <ul>
+            <div>
+              <ol>
+                <li>
+                  Install lua-language-server
+                  <ol type="A">
+                    <li>
+                      From package manager
+                      <ul>
+                        <li>
+                          Scoop: <code>scoop install lua-language-server</code>
+                        </li>
+                        <li>
+                          Homebrew: <code>brew install lua-language-server</code
+                          >
+                        </li>
+                        <li>
+                          Macports: <code
+                            >sudo port install lua-language-server</code
+                          >
+                        </li>
+                      </ul>
                       <li>
-                        Scoop: <code>scoop install lua-language-server</code>
+                        From <ExternalLink
+                          url="https://github.com/LuaLS/lua-language-server/releases/latest"
+                        >
+                          latest release
+                        </ExternalLink>
                       </li>
                       <li>
-                        Homebrew: <code>brew install lua-language-server</code>
-                      </li>
-                      <li>
-                        Macports: <code
-                          >sudo port install lua-language-server</code
+                        <a href="/wiki/build/" target="_blank"
+                          >Build from scratch</a
                         >
                       </li>
-                    </ul>
-                    <li>
-                      From <ExternalLink
-                        url="https://github.com/LuaLS/lua-language-server/releases/latest"
-                      >
-                        latest release
-                      </ExternalLink>
                     </li>
-                    <li>
-                      <a href="/wiki/build/" target="_blank"
-                        >Build from scratch</a
-                      >
-                    </li>
-                  </li>
-                </ol>
-              </li>
-              <li>
-                Ensure that the <code>lua-language-server</code> is executable from
-                the command line. It may need to be added to <code>$PATH</code>.
-              </li>
-              <li>
-                In your Neovim configuration file, add the following:
-                <!-- prettier-ignore -->
-                <CodeBlock language="Lua"><pre>require'lspconfig'.lua_ls.setup&#123;&#125;</pre></CodeBlock>
-              </li>
-              <li>
-                See the <ExternalLink
-                  url="https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#lua_ls"
-                >
-                  Neovim documentation for more
-                </ExternalLink>
-              </li>
-            </ol>
+                  </ol>
+                </li>
+                <li>
+                  Ensure that the <code>lua-language-server</code> is executable
+                  from the command line. It may need to be added to <code
+                    >$PATH</code
+                  >.
+                </li>
+                <li>
+                  See <ExternalLink
+                    url="https://neovim.io/doc/user/lsp.html#lsp-quickstart"
+                    >Neovim's quickstart guide for language servers</ExternalLink
+                  >
+                </li>
+              </ol>
+            </div>
           </div>
         </div>
         <div id="jetbrains-install">
