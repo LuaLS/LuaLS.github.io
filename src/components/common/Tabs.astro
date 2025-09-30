@@ -42,7 +42,7 @@ body.querySelector(`[data-tab="${active}"]`)?.classList.add("active");
           style={`--accent-color: ${button.accent ?? "#ffffff"}`}
         >
           <span>
-            {button.image && <Image src={button.image} alt={button.name}/>}
+            {button.image && <Image src={button.image} alt={button.name} />}
             {button.icon && <Icon name={button.icon} group="solid" />}
             {button.name}
           </span>
@@ -89,6 +89,8 @@ body.querySelector(`[data-tab="${active}"]`)?.classList.add("active");
 </script>
 
 <style lang="scss">
+  $transition-length: 0.3s;
+
   .tabs {
     position: relative;
     width: 100%;
@@ -136,11 +138,12 @@ body.querySelector(`[data-tab="${active}"]`)?.classList.add("active");
           bottom: 0px;
           left: 0px;
           z-index: 0;
-          transition: height ease-in-out 0.3s;
+          transition: height ease-in-out $transition-length;
           background-color: var(--accent-color);
         }
 
         & > span {
+          transition: filter $transition-length ease-in-out;
           filter: saturate(0);
           display: inline-flex;
           align-items: center;
@@ -161,6 +164,7 @@ body.querySelector(`[data-tab="${active}"]`)?.classList.add("active");
           }
           &::after {
             height: 0.1em;
+            box-shadow: 0px -1px 6px 0px var(--accent-color);
           }
         }
 
