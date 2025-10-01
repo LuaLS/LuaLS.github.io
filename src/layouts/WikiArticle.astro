@@ -180,7 +180,6 @@ export interface Props {
     .forEach((heading) => intersectionObserver.observe(heading));
 
   // Watch for article scrolling to scroll outline
-  document.addEventListener("scroll", () => scrollOutline());
   centerColumn.addEventListener("scroll", () => scrollOutline());
 
   // Force browser to scroll to targeted heading on page load
