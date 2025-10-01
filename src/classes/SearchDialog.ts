@@ -74,6 +74,7 @@ export class SearchDialog {
     this.haystack = new Fuse(this.suggestions, {
       keys: [{ name: "text", weight: 3 }, "href"],
       includeScore: true,
+      threshold: 0.5,
     });
 
     // Open event listeners
