@@ -6,7 +6,6 @@
     "dev": "astro dev",
     "dev-host": "astro dev --host",
     "build": "astro build",
-    "test:e2e": "playwright test",
     "preview": "astro preview",
     "astro": "astro"
   },

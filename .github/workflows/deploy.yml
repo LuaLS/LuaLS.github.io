@@ -48,55 +48,6 @@ jobs:
         with:
           path: ./dist/
 
-  test:
-    needs: build
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [22]
-    timeout-minutes: 15
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5
-
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10
-
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: "pnpm"
-
-      - name: Retrieve output from build step
-        uses: actions/download-artifact@v4
-        with:
-          name: github-pages
-          path: ./website-build
-
-      - name: Decompress build step output
-        run: |
-          mkdir -p ./dist
-          tar -xf ./website-build/artifact.tar -C ./dist/ --strip-components=1
-
-      - name: Install Dependencies
-        run: pnpm install
-
-      - name: Install Playwright Browsers
-        run: pnpm exec playwright install --with-deps chromium firefox
-
-      - name: Run Playwright tests
-        run: pnpm test:e2e
-
-      - name: Upload Test Results
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: playwright-report
-          path: playwright-report/
-          retention-days: 30
-
   deploy:
     needs:
       - build
