@@ -1,60 +1,73 @@
 ---
 import { render } from "astro:content";
 import { getCollection } from "astro:content";
+import path from "path";
 import type { searchItem } from "~/services/search";
 import { searchTerms } from "~/services/search";
 
 /**
  * Infers the static URL of a wiki article from its file path.
- * @param path filepath of article
+ * @param filepath filepath of article
  * @param target optional target heading
  */
-const getContentStaticURL = (path: string, target?: string): string => {
-  const rgx = /src\/.+?\/(.+)\..*?/g;
+const getContentStaticURL = (filepath: string, target?: string): string => {
+  const relative = path.relative("src/content", filepath);
+  const extension = path.extname(relative);
 
-  console.log(path);
-
-  const result = rgx.exec(path);
-  if (result === null) throw new Error(`Failed to infer static URL of ${path}`);
+  const absolute = `/${relative.replace(extension, "")}/`;
 
   if (target) {
-    return `/${result[1]}/#${target}`;
+    return absolute + "#" + target
   } else {
-    return `/${result[1]}/`;
+    return absolute
   }
 };
 
-const searchTags: searchItem[] = [...searchTerms];
+const needles: searchItem[] = [...searchTerms];
 
-if (searchTags.length === searchTerms.length) {
+const loadNeedles = async () => {
   const pages = await getCollection("wiki");
 
+  const promises = [];
+
   for (const page of pages) {
-    if (!page.filePath) {
-      throw new Error(`Page ${page.id} does not have a file path}`);
-    }
+    promises.push(
+      new Promise(async (resolve, reject) => {
+        if (!page.filePath) {
+          return reject(
+            `Page ${page.id} does not have a file path. This shouldn't ever happen unless something has gone wrong with Astro.`
+          );
+        }
 
-    const { headings } = await render(page);
+        const { headings } = await render(page);
 
-    const href = getContentStaticURL(page.filePath);
+        const href = getContentStaticURL(page.filePath);
 
-    // Add article title to search options
-    searchTags.push({ text: page.data.title, href });
+        // Article title entry
+        needles.push({ text: page.data.title, href });
 
-    // Add custom article tags to search options
-    for (const tag of page.data.tags ?? []) {
-      searchTags.push({ text: tag, href });
-    }
+        // Article tags
+        for (const tag of page.data.tags ?? []) {
+          needles.push({ text: tag, href });
+        }
 
-    // Add article headings to search options
-    for (const heading of headings) {
-      searchTags.push({
-        text: heading.text,
-        href: getContentStaticURL(page.filePath, heading.slug),
-      });
-    }
+        // Article headings
+        for (const heading of headings) {
+          needles.push({
+            text: heading.text,
+            href: getContentStaticURL(page.filePath, heading.slug),
+          });
+        }
+
+        resolve(true);
+      })
+    );
   }
-}
+
+  await Promise.all(promises);
+};
+
+await loadNeedles();
 ---
 
 <div id="site-search">
@@ -62,7 +75,7 @@ if (searchTags.length === searchTerms.length) {
     <input type="search" placeholder="Search..." autofocus />
     <div class="suggestions" tabindex="-1">
       {
-        searchTags.map((entry) => (
+        needles.map((entry) => (
           <a
             href={entry.href}
             target={entry.href.startsWith("/") ? undefined : "_blank"}
