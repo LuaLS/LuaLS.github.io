@@ -11,9 +11,6 @@ import H3 from "~/components/wiki/headings/H3.astro";
 import H4 from "~/components/wiki/headings/H4.astro";
 import H5 from "~/components/wiki/headings/H5.astro";
 import H6 from "~/components/wiki/headings/H6.astro";
-import dayjs from "~/services/time";
-import Tooltip from "~/components/common/Tooltip.astro";
-import Time from "~/components/common/Time.astro";
 import { render } from "astro:content";
 
 export const getStaticPaths = async () => {
@@ -30,15 +27,9 @@ const { Content, headings, remarkPluginFrontmatter } = await render(article);
 export interface Props {
   article: CollectionEntry<"wiki">;
 }
-
-const modifiedTime = remarkPluginFrontmatter.lastModified
-  ? dayjs(remarkPluginFrontmatter.lastModified)
-      .utc()
-      .format("HH:mm:ss D MMMM, YYYY UTC")
-  : "Not committed yet";
 ---
 
-<Layout article={article} headings={headings}>
+<Layout article={article} headings={headings} lastModified={remarkPluginFrontmatter.lastModified}>
   <Content
     components={{
       pre: CodeBlock,
@@ -51,16 +42,6 @@ const modifiedTime = remarkPluginFrontmatter.lastModified
       h6: H6,
     }}
   />
-  <div class="modified-timestamp">
-    <p>
-      Last Modified:
-      <Tooltip content={modifiedTime}>
-        <Time datetime={remarkPluginFrontmatter.lastModified}
-          >{modifiedTime}</Time
-        >
-      </Tooltip>
-    </p>
-  </div>
 </Layout>
 
 <style lang="scss" is:global>

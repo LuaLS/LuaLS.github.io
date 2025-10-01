@@ -8,6 +8,9 @@ import Remark from "~/components/common/Remark.astro";
 import Footer from "~/components/layout/Footer.astro";
 import type { MarkdownHeading } from "astro";
 import path from "path";
+import dayjs from "~/services/time";
+import Tooltip from "~/components/common/Tooltip.astro";
+import Time from "~/components/common/Time.astro";
 
 const articles = await getCollection("wiki");
 
@@ -18,7 +21,7 @@ export const getStaticPaths = async () => {
   });
 };
 
-const { article, headings } = Astro.props;
+const { article, headings, lastModified } = Astro.props;
 
 const titleSlug = article.data.title.toLowerCase().replaceAll(" ", "-");
 const hereSlug = path.basename(Astro.url.pathname);
@@ -26,7 +29,12 @@ const hereSlug = path.basename(Astro.url.pathname);
 export interface Props {
   article: CollectionEntry<"wiki">;
   headings: MarkdownHeading[];
+  lastModified: string;
 }
+
+const modifiedTime = lastModified
+  ? dayjs(lastModified).utc().format("HH:mm:ss D MMMM, YYYY UTC")
+  : "Not committed yet";
 ---
 
 <Layout title="Wiki" transition={true} displayFooter={false}>
@@ -68,6 +76,42 @@ export interface Props {
     <div class="center">
       <main>
         <article>
+          <div class="title" id={article.id}>
+            <div class="topbar">
+              <div class="modified">
+                <Tooltip content={modifiedTime} placement="bottom">
+                  <Icon name="clock-rotate-left" group="solid" />
+                  <Time datetime={article.data.lastModified}
+                    >{modifiedTime}</Time
+                  >
+                </Tooltip>
+              </div>
+              <div class="options">
+                <Tooltip content="Edit page" placement="bottom">
+                  <a
+                    class="edit-page"
+                    target="_blank"
+                    href={`https://github.com/LuaLS/LuaLS.github.io/tree/main/src/content/wiki/${article.id}.mdx`}
+                  >
+                    <Icon name="pencil" group="solid" />
+                  </a>
+                </Tooltip>
+                <Tooltip content="Report issue with page" placement="bottom">
+                  <a
+                    class="open-issue"
+                    target="_blank"
+                    href={`https://github.com/LuaLS/LuaLS.github.io/issues/new?title=${encodeURIComponent(
+                      `Issue with wiki page "${article.id}"`
+                    )}`}
+                  >
+                    <Icon name="circle-exclamation" group="solid" />
+                  </a>
+                </Tooltip>
+              </div>
+            </div>
+            <h1 id={titleSlug}>{article.data.title}</h1>
+            <p>{article.data.description}</p>
+          </div>
           {
             article.data.incomplete && (
               <Remark type="WIP" display="compact">
@@ -75,30 +119,10 @@ export interface Props {
               </Remark>
             )
           }
-          <div class="article-metadata">
-            <h1 id={titleSlug}>{article.data.title}</h1>
-            <p>{article.data.description}</p>
+          <div class="content">
+            <slot />
           </div>
-          <slot />
         </article>
-        <div class="article-footer-links">
-          <a
-            class="edit-page"
-            target="_blank"
-            href={`https://github.com/LuaLS/LuaLS.github.io/tree/main/src/content/wiki/${article.id}.mdx`}
-          >
-            <Icon name="pencil" group="solid" /> Edit this page
-          </a>
-          <a
-            class="open-issue"
-            target="_blank"
-            href={`https://github.com/LuaLS/LuaLS.github.io/issues/new?title=${encodeURIComponent(
-              `Issue with wiki page "${article.id}"`
-            )}`}
-          >
-            <Icon name="circle-dot" group="solid" /> Open Issue
-          </a>
-        </div>
       </main>
       <Footer />
     </div>
@@ -161,7 +185,6 @@ export interface Props {
         init = false;
 
         // Flush debounced outline scroll functions when scrollend is fired (if browser supports it)
-        document.addEventListener("scrollend", () => scrollOutline.flush());
         centerColumn.addEventListener("scrollend", () => scrollOutline.flush());
       }
 
@@ -170,7 +193,7 @@ export interface Props {
         behavior: smooth === false ? "instant" : "smooth",
       });
     },
-    200,
+    50,
     { leading: false, trailing: true }
   );
 
@@ -192,7 +215,7 @@ export interface Props {
 
   // Watch headings for intersections
   utils
-    .assertElements("article .heading,.article-metadata h1")
+    .assertElements("article .heading,.title h1")
     .forEach((heading) => intersectionObserver.observe(heading));
 
   // Watch for article scrolling to scroll outline
@@ -208,45 +231,25 @@ export interface Props {
 </script>
 
 <style lang="scss">
+  $fade-height: 5vh;
+  $header-height: 3.5em;
+
   html {
     scroll-behavior: smooth;
     overscroll-behavior-block: none;
   }
 
-  .article-footer-links {
-    margin: 1em auto;
-    display: flex;
-    justify-content: center;
-    gap: 1em;
-
-    a {
-      display: inline-block;
-      box-sizing: border-box;
-      padding: 0.15em 0.5em;
-      border-radius: 0.33em;
-      color: white;
-
-      :global(i) {
-        margin-right: 0.25em;
-      }
-
-      &.edit-page {
-        background-color: #1e5c97;
-      }
-      &.open-issue {
-        background-color: #008a2c;
-      }
-    }
-  }
-
   aside.sidebar {
+    --sidebar-padding: 0.5em;
     --sidebar-width: 20em;
+
     background-color: #081f34;
     position: fixed;
-    padding-bottom: 1em;
-    top: 3.5em;
-    width: var(--sidebar-width);
+    top: $header-height;
+    width: calc(var(--sidebar-width) - var(--sidebar-padding) * 2);
+    padding: 0px var(--sidebar-padding) 1em var(--sidebar-padding);
     z-index: 25;
+    height: calc(100% - 1em);
 
     h2 {
       margin: 0.4em 0px 0.1em 0px;
@@ -263,6 +266,7 @@ export interface Props {
     }
 
     button.open {
+      top: 5em;
       position: fixed;
       background-color: #0e3e6b;
       padding: 0.25em 0.5em;
@@ -310,7 +314,6 @@ export interface Props {
 
       button.open {
         left: 0px;
-        top: 4em;
         border-radius: 0px 0.5em 0.5em 0px;
         transition: left ease-in-out 0.5s;
       }
@@ -319,7 +322,7 @@ export interface Props {
         left: 0px;
 
         button.open {
-          left: -2.2em;
+          left: -2.3em;
         }
       }
 
@@ -341,7 +344,6 @@ export interface Props {
 
       button.open {
         right: 0px;
-        top: 4em;
         border-radius: 0.5em 0px 0px 0.5em;
         transition: right ease-in-out 0.5s;
       }
@@ -350,7 +352,7 @@ export interface Props {
         right: 0px;
 
         button.open {
-          right: -2.2em;
+          right: -2.3em;
         }
       }
 
@@ -390,18 +392,62 @@ export interface Props {
     }
   }
 
-  article {
-    padding: 1em 4em;
+  div.columns,
+  div.columns > div.center {
+    height: 100%;
+  }
 
-    div.article-metadata {
+  div.columns > div.center {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  article {
+    div.title {
       text-align: center;
+      background-color: #071521;
+      display: block;
+      z-index: 5;
+      padding: 0px 0.5em 0.5em 0.5em;
+
       h1 {
-        margin-bottom: 0px;
+        margin: 0px;
       }
       p {
-        margin: 0px 0px 3em 0px;
+        margin: 0px 0px 1em 0px;
         color: #ffffffaa;
       }
+
+      div.topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.6em 0.25em 0em 0.25em;
+      }
+
+      div.modified {
+        font-size: 0.8em;
+        color: #ffffff80;
+      }
+
+      div.options {
+        z-index: 5;
+        display: flex;
+        justify-content: center;
+        gap: 1em;
+
+        a {
+          display: inline-block;
+          box-sizing: border-box;
+          border-radius: 0.33em;
+          color: #ffffff80;
+        }
+      }
+    }
+
+    div.content {
+      padding: 1em 3em 4em 3em;
     }
 
     :global(img) {
@@ -444,23 +490,9 @@ export interface Props {
     }
   }
 
-  :global(div.modified-timestamp) {
-    text-align: center;
-    margin: 3em auto 0px auto;
-
-    :global(p) {
-      opacity: 0.6;
-      margin: 0px;
-    }
-  }
-
   @media screen and (min-width: 1600px) {
-    html {
-      max-height: 100%;
-      overflow-y: hidden;
-    }
-    .columns {
-      height: calc(100% - 3.5em);
+    div.columns {
+      height: calc(100% - $header-height);
       display: grid;
       grid-template-columns: 20% 60% 20%;
       grid-template-rows: 100%;
@@ -482,7 +514,7 @@ export interface Props {
     aside.sidebar {
       position: static;
       z-index: 0;
-      width: 100%;
+      width: calc(100% - var(--sidebar-padding) * 2);
 
       button.open,
       button.close {
@@ -490,33 +522,20 @@ export interface Props {
       }
 
       .content {
-        max-height: calc(100% - 3.5em);
+        max-height: calc(100% - $header-height);
       }
     }
   }
 
   @media screen and (max-width: 800px) {
-    aside.sidebar {
-      --sidebar-width: 70%;
-    }
-
-    article {
+    article > div.content {
       padding: 1em 1.5em;
     }
   }
 
   @media screen and (max-width: 400px) {
-    article {
+    article > div.content {
       padding: 1em;
     }
-  }
-
-  article > div.metadata h1 {
-    font-family: "Prompt";
-    margin: 0.25em auto 0.25em auto;
-  }
-  article > div.metadata p {
-    margin: 0px auto 3em auto;
-    text-align: center;
   }
 </style>
