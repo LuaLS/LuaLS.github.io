@@ -19,8 +19,8 @@ importers:
         specifier: ^4.3.6
         version: 4.3.6(astro@5.14.3(@azure/identity@4.12.0)(@types/node@24.6.0)(rollup@4.52.4)(sass@1.93.2)(typescript@5.8.3))
       '@fortawesome/fontawesome-free':
-        specifier: ^7.0.1
-        version: 7.0.1
+        specifier: ^7.1.0
+        version: 7.1.0
       '@types/lodash':
         specifier: ^4.17.20
         version: 4.17.20
@@ -409,8 +409,8 @@ packages:
     resolution: {integrity: sha512-JUOtgFW6k9u4Y+xeIaEiLr3+cjoUPiAuLXoyKOJSia6Duzb7pq+A76P9ZdPDoAoxHdHzq6gE9/jKBGXlZT8FbA==}
     engines: {node: '>=6'}
 
-  '@fortawesome/fontawesome-free@7.0.1':
-    resolution: {integrity: sha512-RLmb9U6H2rJDnGxEqXxzy7ANPrQz7WK2/eTjdZqyU9uRU5W+FkAec9uU5gTYzFBH7aoXIw2WTJSCJR4KPlReQw==}
+  '@fortawesome/fontawesome-free@7.1.0':
+    resolution: {integrity: sha512-+WxNld5ZCJHvPQCr/GnzCTVREyStrAJjisUPtUxG5ngDA8TMlPnKp6dddlTpai4+1GNmltAeuk1hJEkBohwZYA==}
     engines: {node: '>=6'}
 
   '@iconify/types@2.0.0':
@@ -3722,7 +3722,7 @@ snapshots:
 
   '@fortawesome/fontawesome-free@6.7.2': {}
 
-  '@fortawesome/fontawesome-free@7.0.1': {}
+  '@fortawesome/fontawesome-free@7.1.0': {}
 
   '@iconify/types@2.0.0': {}
 
