@@ -7,7 +7,8 @@
     "dev-host": "astro dev --host",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "format": "prettier . --write"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.10",
@@ -37,6 +38,8 @@
     "@types/node-fetch": "^2.6.13",
     "@types/node-fetch-cache": "^3.0.5",
     "@vscode/vsce": "^3.6.2",
-    "node-fetch-cache": "^5.1.0"
+    "node-fetch-cache": "^5.1.0",
+    "prettier": "3.6.2",
+    "prettier-plugin-astro": "0.14.1"
   }
 }
