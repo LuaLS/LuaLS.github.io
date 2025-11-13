@@ -585,22 +585,22 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
       margin-top: 0px;
     }
     .grid {
+      --cell-width: calc(5rem + 18vw);
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(23em, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(var(--cell-width), 1fr));
+      gap: 2vw;
       width: 100%;
+      height: 100%;
       margin: 0.5rem;
-      justify-items: stretch;
+      padding: 0px 0px 3rem 0px;
       overflow-y: auto;
       max-height: 100%;
 
       & > div {
+        width: var(--cell-width);
+        margin: auto;
+        font-size: calc(0.7rem + 0.4vw);
         text-align: center;
-        padding: 0.5em 0.5em;
-        border-radius: 1em;
-        box-shadow:
-          var(--glow-color) 0px 0px 0.3em 0.1em,
-          var(--glow-color) 0px 0px 0.3em 0.1em inset;
-        box-sizing: border-box;
 
         :global(i) {
           margin: auto;
@@ -615,7 +615,7 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
           margin: 0.2em auto;
         }
         p {
-          margin: 0px;
+          margin: auto;
         }
       }
     }
@@ -836,6 +836,9 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
       .description {
         font-size: 0.7em;
       }
+    }
+    section#features .grid {
+      grid-template-columns: 1fr;
     }
   }
 
