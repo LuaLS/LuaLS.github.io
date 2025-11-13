@@ -646,7 +646,7 @@ local Numbers = {}
 
 ### @generic
 
-Generics allow code to be reused and serve as a sort of "placeholder" for a type. Surrounding the generic in backticks (<code>`</code>) will capture the value and use it for the type. [Generics are still WIP](https://github.com/LuaLS/lua-language-server/issues/1861).
+Generics allow code to be reused and serve as a sort of "placeholder" for a type. Surrounding the generic in backticks (<code>`</code>) will capture the string value from the argument and infer the named class/type as the generic type. [Generics are still WIP](https://github.com/LuaLS/lua-language-server/issues/1861).
 
 **Syntax**
 
@@ -680,16 +680,22 @@ local v3, v4 = Generic(10)
 
 ```Lua
 ---@class Vehicle
-local Vehicle = {}
-function Vehicle:drive() end
 
 ---@generic T
----@param class `T` # the type is captured using `T`
----@return T       # generic type is returned
-local function new(class) end
+---@param class `T` # the type is captured
+---@return T # The return type will be the class/type inferred from the string value of the `class` argument
+local function newWithCapture(class) end
 
--- obj: Vehicle
-local obj = new("Vehicle")
+-- obj1 has type `Vehicle` here, because "Vehicle" is captured from the provided argument
+local obj1 = newWithCapture("Vehicle")
+
+---@generic T
+---@param class T # the type is NOT captured
+---@return T # The return type will be the same as the type of the `class` argument
+local function newWithoutCapture(class) end
+
+-- obj2 has type `string` here, because the provided argument is a string
+local obj2 = newWithoutCapture("Vehicle")
 ```
 
 </Accordion>
