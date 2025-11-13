@@ -10,33 +10,33 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/mdx": "^4.3.6",
-    "@fortawesome/fontawesome-free": "^7.0.1",
+    "@astrojs/mdx": "^4.3.10",
+    "@fortawesome/fontawesome-free": "^7.1.0",
     "@types/lodash": "^4.17.20",
-    "astro": "^5.14.3",
-    "autoprefixer": "^10.4.21",
-    "axios": "^1.12.2",
-    "dayjs": "^1.11.18",
+    "astro": "^5.15.6",
+    "autoprefixer": "^10.4.22",
+    "axios": "^1.13.2",
+    "dayjs": "^1.11.19",
     "fuse.js": "^7.1.0",
     "highlight.js": "^11.11.1",
-    "jsdom": "^24.1.3",
+    "jsdom": "^27.2.0",
     "lodash": "^4.17.21",
-    "mermaid": "^11.12.0",
-    "playwright": "^1.55.1",
+    "mermaid": "^11.12.1",
+    "playwright": "^1.56.1",
     "rehype-mdx-code-props": "^3.0.1",
     "rehype-mermaid": "^3.0.0",
-    "sass": "^1.93.2",
-    "sharp": "^0.34.4",
+    "sass": "^1.94.0",
+    "sharp": "^0.34.5",
     "tippy.js": "^6.3.7"
   },
   "devDependencies": {
-    "@playwright/test": "^1.55.1",
+    "@playwright/test": "^1.56.1",
     "@types/canvas-confetti": "^1.9.0",
     "@types/jsdom": "^21.1.7",
-    "@types/node": "^24.6.0",
+    "@types/node": "^24.10.1",
     "@types/node-fetch": "^2.6.13",
     "@types/node-fetch-cache": "^3.0.5",
-    "@vscode/vsce": "^2.32.0",
-    "node-fetch-cache": "^4.1.2"
+    "@vscode/vsce": "^3.6.2",
+    "node-fetch-cache": "^5.1.0"
   }
 }
