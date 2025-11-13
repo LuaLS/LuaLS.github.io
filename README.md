@@ -25,4 +25,5 @@ You can then use `npm run dev` to start a local development server on `localhost
 `npm run build` will build the site for production so it can be previewed. `npm run preview` will preview your build of the website.
 
 ## Acknowledgments
+
 This website uses tons of amazing open source software. Thanks to all the [great tools in use](package.json)!

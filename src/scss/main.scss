@@ -84,7 +84,7 @@ pre {
   margin: 0px;
 }
 
-:not(pre)>code,
+:not(pre) > code,
 kbd {
   font-family: "Source Code Pro", "Consolas", monospace;
   font-size: 0.8em;
@@ -94,7 +94,7 @@ kbd {
   vertical-align: middle;
 }
 
-:not(pre)>code {
+:not(pre) > code {
   background-color: #323237;
 }
 

@@ -58,16 +58,16 @@ export class SearchDialog {
     this.openElement = assertElement("header button.site-search-icon");
     this.inputElement = assertElement<HTMLInputElement>(
       ":scope > input[type='search']",
-      element
+      element,
     );
     this.suggestionsElement = assertElement<HTMLDivElement>(
       ":scope > div.suggestions",
-      element
+      element,
     );
     this.suggestions = [];
     for (const suggestion of this.suggestionsElement.querySelectorAll("a")) {
       this.suggestions.push(
-        new SearchSuggestion(suggestion as HTMLAnchorElement)
+        new SearchSuggestion(suggestion as HTMLAnchorElement),
       );
     }
 
@@ -88,7 +88,7 @@ export class SearchDialog {
     // Close event listeners
     this.element.addEventListener(
       "click",
-      (e) => e.target === this.element && this.close()
+      (e) => e.target === this.element && this.close(),
     );
     this.suggestionsElement.addEventListener("click", () => this.close());
 
@@ -106,7 +106,7 @@ export class SearchDialog {
         case "ArrowDown":
           (
             this.suggestionsElement.querySelector(
-              "a:nth-child(2)"
+              "a:nth-child(2)",
             ) as HTMLAnchorElement
           ).focus();
           break;

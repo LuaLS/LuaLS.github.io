@@ -17,7 +17,7 @@
         // When accordion is opened, close all others
         if (child.getAttribute("open") !== null) {
           const others = Array.from(children).filter(
-            (c) => !c.isSameNode(child)
+            (c) => !c.isSameNode(child),
           );
           others.forEach((e) => {
             if (e.getAttribute("open") !== null) {

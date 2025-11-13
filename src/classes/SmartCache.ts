@@ -25,7 +25,7 @@ export class SmartCache {
         data: response.data,
         eTag: response.headers["etag"],
         lastModified: response.headers["last-modified"],
-      })
+      }),
     );
   }
 

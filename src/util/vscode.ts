@@ -6,11 +6,11 @@ const exec = util.promisify((await import("child_process")).exec);
 const pathToVSCE = path.resolve("node_modules/.bin/vsce");
 
 export const getExtensionInstalls = async (
-  extensionName: string
+  extensionName: string,
 ): Promise<number> => {
   try {
     const { stdout, stderr } = await exec(
-      `${pathToVSCE} show ${extensionName}`
+      `${pathToVSCE} show ${extensionName}`,
     );
     const match = /install\s*(\d+)\s*installs/g.exec(stdout);
     if (match === null) {

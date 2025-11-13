@@ -20,7 +20,7 @@ export default async (request: RequestInfo, init?: RequestInit) => {
   } else {
     return await cacheFetch(
       request as Parameters<typeof nodeFetch>[0],
-      init as Parameters<typeof nodeFetch>[1]
+      init as Parameters<typeof nodeFetch>[1],
     ).then(async (response) => {
       if (!response.ok) {
         await response.ejectFromCache();

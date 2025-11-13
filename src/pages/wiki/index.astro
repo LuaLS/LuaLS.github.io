@@ -12,22 +12,22 @@ import { render } from "astro:content";
 const CONTRIBUTOR_COUNT = 30;
 
 const allWikiArticles = (await getCollection("wiki")).sort((a, b) =>
-  a.data.title.localeCompare(b.data.title)
+  a.data.title.localeCompare(b.data.title),
 );
 await Promise.all(
   allWikiArticles.map((article) =>
     render(article).then((r) => {
       article.data.lastModified = r.remarkPluginFrontmatter.lastModified;
-    })
-  )
+    }),
+  ),
 );
 const articleCount = allWikiArticles.length;
 const wordCount = allWikiArticles.reduce(
   (x, article) => x + Array.from((article.body ?? "").matchAll(/\w+/g)).length,
-  0
+  0,
 );
 const gettingStartedArticles = allWikiArticles.filter(
-  (article) => article.data["getting-started"] === true
+  (article) => article.data["getting-started"] === true,
 );
 
 type Contributor = {
@@ -67,7 +67,7 @@ const response = await fetch(
   `https://api.github.com/repos/LuaLS/LuaLS.github.io/contributors?per_page=${CONTRIBUTOR_COUNT}`,
   {
     headers,
-  }
+  },
 );
 
 const contributors = (await response.json()) as Contributor[];
@@ -205,13 +205,13 @@ if (!contributors) {
   import dayjs from "dayjs";
 
   const articlesContainer = document.querySelector(
-    "section#all-articles div.grid"
+    "section#all-articles div.grid",
   );
   const allArticles = Array.from(
-    document.querySelectorAll("section#all-articles div.grid > div.article")
+    document.querySelectorAll("section#all-articles div.grid > div.article"),
   );
   const sortDropdown = document.querySelector(
-    "section#all-articles select#sort"
+    "section#all-articles select#sort",
   );
 
   sortDropdown?.addEventListener("input", (e) => {

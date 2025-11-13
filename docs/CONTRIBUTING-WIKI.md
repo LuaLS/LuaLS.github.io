@@ -47,13 +47,13 @@ Unless there is a good reason for an image to be [permanently and publically lin
 In some rare cases, they may have to be manually imported and loaded using the `<Image>` or other component:
 
 ```astro
-import { Image } from "astro:assets";
-import dog from "~/assets/images/dog.png";
+import {Image} from "astro:assets"; import dog from "~/assets/images/dog.png";
 
 <Image src={dog} alt="A dog sitting" />
 ```
 
 ### Public Images
+
 Images that need to be publically available, say for serving to other software, or for linking to other websites, need to be saved to `public/images/`. They can then be used just like [local images](#local-images), but the file path is instead relative to the public directory:
 
 ```diff

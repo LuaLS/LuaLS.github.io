@@ -12,6 +12,7 @@ import Accordion from "~/components/common/Accordion.astro";
 <div align="center">*[View code](#demo-example)*</div>
 
 ## Introduction
+
 Plugins allow you to create a custom syntax that will then be output to a separate file. They cannot be used to report custom [diagnostics](/wiki/diagnostics).
 
 ## Template
@@ -80,6 +81,7 @@ end
 </Accordion>
 
 ### OnTransformAst
+
 This function provides the ability to modify `ast`.
 
 After the token is generated and before the comments are compiled, so it is possible to modify ast directly and ensure that changes to the comments take effect as well.
@@ -94,6 +96,7 @@ function OnTransformAst(uri, ast) end
 ```
 
 ### VM.OnCompileFunctionParam
+
 This function modifies the behavior of a function when compiling (presumably) the type of its arguments.
 
 `next` is the compiler's default behavior for functions. `func` is the function to be compiled, `param` is the parameter.

@@ -92,9 +92,9 @@ The addon manager is a [webview](https://code.visualstudio.com/api/extension-gui
 
 If you have feedback on the addon manager, please leave it in the [vscode-lua repository](https://github.com/LuaLS/vscode-lua) <Icon name="heart" group="solid" color="red"/>.
 
-
 <Remark type="note">
-  The addon manager uses Git to retrieve addons, make sure you have access to GitHub if you receive failures to fetch.
+  The addon manager uses Git to retrieve addons, make sure you have access to
+  GitHub if you receive failures to fetch.
 </Remark>
 
 ## Creating an Addon
@@ -151,14 +151,16 @@ The `config.json` file is very important for addons and must be included. A sche
 ## LuaRocks
 
 <Remark type="WIP">
-LuaRocks addons are currently in beta. Please report any encountered issues in the [luarocks build backend repo](https://github.com/LuaLS/luarocks-build-addon)!
+  LuaRocks addons are currently in beta. Please report any encountered issues in
+  the [luarocks build backend
+  repo](https://github.com/LuaLS/luarocks-build-addon)!
 </Remark>
 
 We'd love feedback with publishing and installing addons via LuaRocks. Using LuaRocks for managing addons should be much more sustainable than the current method (and its independent of editor!). It is very similar to how addons have previously functioned, with some notable changes:
 
 1. The `config.json` file is deprecated, replaced by the `*.rockspec` file.
-    - `words` and `files` properties are no longer supported.
-    - `settings` are to be defined in `build.settings` in the `*.rockspec` file
+   - `words` and `files` properties are no longer supported.
+   - `settings` are to be defined in `build.settings` in the `*.rockspec` file
 2. Plugins are now automatically discovered and enabled upon addon installation.
 3. Addons can depend on each other using the native `dependencies` table of the `*.rockspec` file.
 

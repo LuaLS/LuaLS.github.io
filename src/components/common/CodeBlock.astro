@@ -15,7 +15,7 @@ const getLanguageFromCodeElement = (element: Element): string | undefined => {
 };
 
 const getHighlightedLinesFromCodeElement = (
-  element: Element
+  element: Element,
 ): number[] | undefined => {
   const attribute = element.getAttribute("metastring");
   if (!attribute) return;

@@ -22,7 +22,7 @@ const numberFormatter = Intl.NumberFormat(undefined, {
 });
 
 const installs = numberFormatter.format(
-  await getExtensionInstalls("sumneko.lua")
+  await getExtensionInstalls("sumneko.lua"),
 );
 
 const annotationsPage = await import("~/content/wiki/annotations.mdx");
@@ -229,13 +229,18 @@ const annotationCount = annotationsPage
                           Scoop: <code>scoop install lua-language-server</code>
                         </li>
                         <li>
-                          Homebrew: <code>brew install lua-language-server</code>
+                          Homebrew: <code>brew install lua-language-server</code
+                          >
                         </li>
                         <li>
-                          Macports: <code>sudo port install lua-language-server</code>
+                          Macports: <code
+                            >sudo port install lua-language-server</code
+                          >
                         </li>
                         <li>
-                          mise-en-place: <code>mise use aqua:LuaLS/lua-language-server</code>
+                          mise-en-place: <code
+                            >mise use aqua:LuaLS/lua-language-server</code
+                          >
                         </li>
                       </ul>
                       <li>
@@ -310,10 +315,14 @@ const annotationCount = annotationsPage
                         Homebrew: <code>brew install lua-language-server</code>
                       </li>
                       <li>
-                        Macports: <code>sudo port install lua-language-server</code>
+                        Macports: <code
+                          >sudo port install lua-language-server</code
+                        >
                       </li>
                       <li>
-                        mise-en-place: <code>mise use aqua:LuaLS/lua-language-server</code>
+                        mise-en-place: <code
+                          >mise use aqua:LuaLS/lua-language-server</code
+                        >
                       </li>
                     </ul>
                     <li>
@@ -394,7 +403,7 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
 <script>
   // Swap active tab on hover of install method
   const installButtons = document.querySelectorAll<HTMLButtonElement>(
-    ".install-tabs > button"
+    ".install-tabs > button",
   );
   const tabs: {
     [key: string]: { button: HTMLButtonElement; content: HTMLDivElement };
@@ -411,7 +420,7 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
 
   for (const button of installButtons) {
     const tab = document.querySelector<HTMLDivElement>(
-      `#install .tab-content #${button.value}`
+      `#install .tab-content #${button.value}`,
     );
 
     if (!tab) {

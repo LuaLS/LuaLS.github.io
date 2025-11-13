@@ -67,7 +67,7 @@ const modifiedTime = lastModified
                   </a>
                 ) : (
                   <a href={`/wiki/${article.id}/`}>{article.data.title}</a>
-                )
+                ),
               )
           }
         </nav>
@@ -81,9 +81,7 @@ const modifiedTime = lastModified
               <div class="modified">
                 <Tooltip content={modifiedTime} placement="bottom">
                   <Icon name="clock-rotate-left" group="solid" />
-                  <Time datetime={lastModified}
-                    >{modifiedTime}</Time
-                  >
+                  <Time datetime={lastModified}>{modifiedTime}</Time>
                 </Tooltip>
               </div>
               <div class="options">
@@ -101,7 +99,7 @@ const modifiedTime = lastModified
                     class="open-issue"
                     target="_blank"
                     href={`https://github.com/LuaLS/LuaLS.github.io/issues/new?title=${encodeURIComponent(
-                      `Issue with wiki page "${article.id}"`
+                      `Issue with wiki page "${article.id}"`,
                     )}`}
                   >
                     <Icon name="circle-exclamation" group="solid" />
@@ -194,14 +192,14 @@ const modifiedTime = lastModified
       });
     },
     50,
-    { leading: false, trailing: true }
+    { leading: false, trailing: true },
   );
 
   const intersectionObserver = new IntersectionObserver((entries) => {
     for (const entry of entries) {
       const outlineLink = utils.assertElement<HTMLAnchorElement>(
         `a[href="#${entry.target.id}"]`,
-        outline
+        outline,
       );
 
       if (entry.intersectionRatio > 0 && outlineLink) {
@@ -223,7 +221,7 @@ const modifiedTime = lastModified
 
   // Force browser to scroll to targeted heading on page load
   const target = centerColumn.querySelector<HTMLHeadingElement>(
-    `article ${location.hash}`
+    `article ${location.hash}`,
   );
   if (target) {
     target.scrollIntoView();

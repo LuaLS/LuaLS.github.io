@@ -2,7 +2,7 @@ import { glob } from "astro/loaders";
 import { defineCollection, z } from "astro:content";
 
 const wikiArticleCollection = defineCollection({
-  loader: glob({pattern: '**/[^_]*.{md,mdx}', base: "./src/content/wiki" }),
+  loader: glob({ pattern: "**/[^_]*.{md,mdx}", base: "./src/content/wiki" }),
   schema: z.object({
     title: z.string(),
     description: z.string(),

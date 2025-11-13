@@ -15,7 +15,7 @@ export class TimeCache<T> {
   constructor(
     name: string,
     lifetime: number,
-    options?: { includeSearch?: boolean }
+    options?: { includeSearch?: boolean },
   ) {
     if (options?.includeSearch || options?.includeSearch === undefined) {
       const url = new URL(name);
@@ -49,6 +49,9 @@ export class TimeCache<T> {
   }
 
   store(value: any) {
-    localStorage.setItem(PREFIX + this.name, JSON.stringify({data: value, expiry: this.expiry}));
+    localStorage.setItem(
+      PREFIX + this.name,
+      JSON.stringify({ data: value, expiry: this.expiry }),
+    );
   }
 }

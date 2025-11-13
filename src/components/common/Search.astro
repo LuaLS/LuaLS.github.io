@@ -17,9 +17,9 @@ const getContentStaticURL = (filepath: string, target?: string): string => {
   const absolute = `/${relative.replace(extension, "")}/`;
 
   if (target) {
-    return absolute + "#" + target
+    return absolute + "#" + target;
   } else {
-    return absolute
+    return absolute;
   }
 };
 
@@ -35,7 +35,7 @@ const loadNeedles = async () => {
       new Promise(async (resolve, reject) => {
         if (!page.filePath) {
           return reject(
-            `Page ${page.id} does not have a file path. This shouldn't ever happen unless something has gone wrong with Astro.`
+            `Page ${page.id} does not have a file path. This shouldn't ever happen unless something has gone wrong with Astro.`,
           );
         }
 
@@ -60,7 +60,7 @@ const loadNeedles = async () => {
         }
 
         resolve(true);
-      })
+      }),
     );
   }
 

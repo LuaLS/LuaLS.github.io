@@ -29,7 +29,11 @@ export interface Props {
 }
 ---
 
-<Layout article={article} headings={headings} lastModified={remarkPluginFrontmatter.lastModified}>
+<Layout
+  article={article}
+  headings={headings}
+  lastModified={remarkPluginFrontmatter.lastModified}
+>
   <Content
     components={{
       pre: CodeBlock,

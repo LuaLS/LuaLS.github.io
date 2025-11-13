@@ -58,10 +58,10 @@ body.querySelector(`[data-tab="${active}"]`)?.classList.add("active");
 
   for (const instance of instances) {
     const buttons = instance.querySelectorAll<HTMLButtonElement>(
-      ":scope > div.buttons > button"
+      ":scope > div.buttons > button",
     );
     const tabContainer = instance.querySelector<HTMLDivElement>(
-      ":scope > div.windows"
+      ":scope > div.windows",
     );
 
     if (!tabContainer) {
@@ -79,7 +79,7 @@ body.querySelector(`[data-tab="${active}"]`)?.classList.add("active");
       button.addEventListener("click", () => {
         buttons.forEach((button) => button.classList.remove("active"));
         Array.from(tabContainer.children).forEach((tab) =>
-          tab.classList.remove("active")
+          tab.classList.remove("active"),
         );
         button.classList.add("active");
         tab.classList.add("active");
