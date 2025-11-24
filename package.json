@@ -37,7 +37,7 @@
     "@types/node": "^24.10.1",
     "@types/node-fetch": "^2.6.13",
     "@types/node-fetch-cache": "^3.0.5",
-    "@vscode/vsce": "^3.6.2",
+    "@vscode/vsce": "^3.7.1",
     "node-fetch-cache": "^5.1.0",
     "prettier": "3.6.2",
     "prettier-plugin-astro": "0.14.1"
