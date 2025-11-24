@@ -11,7 +11,7 @@
     "format": "prettier . --write"
   },
   "dependencies": {
-    "@astrojs/mdx": "^4.3.10",
+    "@astrojs/mdx": "^4.3.12",
     "@fortawesome/fontawesome-free": "^7.1.0",
     "@types/lodash": "^4.17.20",
     "astro": "^5.15.6",
