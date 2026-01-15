@@ -1,6 +1,0 @@
-overrides:
-  braces@<2.3.1: ">=2.3.1"
-  braces@<3.0.3: ">=3.0.3"
-  micromatch@<4.0.8: ">=4.0.8"
-  set-value@<2.0.1: ">=2.0.1"
-  yargs-parser@<=5.0.0: ">=5.0.1"
