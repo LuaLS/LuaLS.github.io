@@ -64,24 +64,19 @@ if (!refer) {
 
 <style lang="scss">
   .external-link {
-    display: inline-flex;
-    flex-wrap: nowrap;
-    position: relative;
     color: var(--link-color);
 
     &:not(.no-icon) {
-      margin-right: 0.2em;
+      margin-right: -0.3em;
     }
 
     a {
       font-weight: 500;
-      white-space: normal;
     }
 
     & > :global(.tooltip > .icon.external-indicator) {
-      position: absolute;
-      right: -1.1em;
-      top: 0.3em;
+      display: inline;
+      margin-left: -0.2em;
       vertical-align: text-top;
       font-size: 0.4em;
     }
