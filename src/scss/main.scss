@@ -118,3 +118,9 @@ button {
     cursor: pointer;
   }
 }
+
+@media screen and (max-width: 1200px) {
+  body {
+    font-size: 0.9rem;
+  }
+}
