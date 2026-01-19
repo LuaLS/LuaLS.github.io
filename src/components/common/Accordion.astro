@@ -40,19 +40,6 @@ const open = Astro.props.open ?? false;
   checkExpansion();
 </script>
 
-<script>
-  const summaries = document.querySelectorAll("details.accordion > summary");
-
-  summaries.forEach((el) => {
-    el.addEventListener("click", (e) => {
-      if ((e.target as Element).classList.contains("icon")) {
-        return;
-      }
-      el.parentElement?.toggleAttribute("open");
-    });
-  });
-</script>
-
 <style lang="scss">
   details.accordion {
     position: relative;
@@ -65,7 +52,6 @@ const open = Astro.props.open ?? false;
       align-items: center;
       list-style: none;
       padding: 0.25em;
-      user-select: none;
 
       :global(i.fa-chevron-right) {
         margin: 0px 1em 0px 0.5em;
