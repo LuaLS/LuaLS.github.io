@@ -8,6 +8,7 @@ const TYPES = {
   WIP: { displayName: "WIP", icon: "pen-ruler" },
   deprecated: { displayName: "Deprecated", icon: "trash-can" },
   issue: { displayName: "Issue", icon: "circle-dot" },
+  recommendation: {displayName: "Recommendation", icon: "asterisk"}
 };
 
 type RemarkType =
@@ -16,7 +17,8 @@ type RemarkType =
   | "important"
   | "WIP"
   | "deprecated"
-  | "issue";
+  | "issue"
+  | "recommendation"
 
 export interface Props {
   type: RemarkType;
@@ -102,6 +104,10 @@ if (display) {
 
     &.issue {
       --remark-color: #2ea043;
+    }
+
+    &.recommendation {
+      --remark-color: #1aecbe;
     }
 
     & > div:first-of-type {
