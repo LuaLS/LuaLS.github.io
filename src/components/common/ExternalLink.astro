@@ -28,7 +28,10 @@ export interface Props {
   class?: string;
 }
 
-const classes = [className, "external"];
+const classes = ["external"];
+if (className) {
+  classes.push(className);
+}
 if (icon === false) {
   classes.push("no-icon");
 }
@@ -64,13 +67,13 @@ if (!refer) {
     display: inline-flex;
     flex-wrap: nowrap;
     position: relative;
+    color: var(--link-color);
 
     &:not(.no-icon) {
       margin-right: 0.2em;
     }
 
-    a.external {
-      color: var(--link-color);
+    a {
       font-weight: 500;
       white-space: normal;
     }
@@ -81,7 +84,6 @@ if (!refer) {
       top: 0.3em;
       vertical-align: text-top;
       font-size: 0.4em;
-      color: var(--link-color);
     }
   }
 </style>
