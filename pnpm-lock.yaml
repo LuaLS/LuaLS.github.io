@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@astrojs/mdx':
         specifier: ^4.3.13
-        version: 4.3.13(astro@5.16.9(@azure/identity@4.13.0)(@types/node@24.10.8)(rollup@4.55.1)(sass@1.97.2)(typescript@5.8.3))
+        version: 4.3.13(astro@5.16.9(@azure/identity@4.13.0)(@types/node@25.0.9)(rollup@4.55.1)(sass@1.97.2)(typescript@5.8.3))
       '@fortawesome/fontawesome-free':
         specifier: ^7.1.0
         version: 7.1.0
@@ -19,7 +19,7 @@ importers:
         version: 4.17.23
       astro:
         specifier: ^5.16.9
-        version: 5.16.9(@azure/identity@4.13.0)(@types/node@24.10.8)(rollup@4.55.1)(sass@1.97.2)(typescript@5.8.3)
+        version: 5.16.9(@azure/identity@4.13.0)(@types/node@25.0.9)(rollup@4.55.1)(sass@1.97.2)(typescript@5.8.3)
       autoprefixer:
         specifier: ^10.4.23
         version: 10.4.23(postcss@8.5.6)
@@ -73,8 +73,8 @@ importers:
         specifier: ^21.1.7
         version: 21.1.7
       '@types/node':
-        specifier: ^24.10.8
-        version: 24.10.8
+        specifier: ^25.0.9
+        version: 25.0.9
       '@types/node-fetch':
         specifier: ^2.6.13
         version: 2.6.13
@@ -1062,8 +1062,8 @@ packages:
   '@types/node-fetch@2.6.13':
     resolution: {integrity: sha512-QGpRVpzSaUs30JBSGPjOg4Uveu384erbHBoT1zeONvyCfwQxIkUshLAOqN/k9EjGviPRmWTTe6aH2qySWKTVSw==}
 
-  '@types/node@24.10.8':
-    resolution: {integrity: sha512-r0bBaXu5Swb05doFYO2kTWHMovJnNVbCsII0fhesM8bNRlLhXIuckley4a2DaD+vOdmm5G+zGkQZAPZsF80+YQ==}
+  '@types/node@25.0.9':
+    resolution: {integrity: sha512-/rpCXHlCWeqClNBwUhDcusJxXYDjZTyE8v5oTO7WbL8eij2nKhUeU89/6xgjU7N4/Vh3He0BtyhJdQbDyhiXAw==}
 
   '@types/normalize-package-data@2.4.4':
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
@@ -3693,12 +3693,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@astrojs/mdx@4.3.13(astro@5.16.9(@azure/identity@4.13.0)(@types/node@24.10.8)(rollup@4.55.1)(sass@1.97.2)(typescript@5.8.3))':
+  '@astrojs/mdx@4.3.13(astro@5.16.9(@azure/identity@4.13.0)(@types/node@25.0.9)(rollup@4.55.1)(sass@1.97.2)(typescript@5.8.3))':
     dependencies:
       '@astrojs/markdown-remark': 6.3.10
       '@mdx-js/mdx': 3.1.1
       acorn: 8.15.0
-      astro: 5.16.9(@azure/identity@4.13.0)(@types/node@24.10.8)(rollup@4.55.1)(sass@1.97.2)(typescript@5.8.3)
+      astro: 5.16.9(@azure/identity@4.13.0)(@types/node@25.0.9)(rollup@4.55.1)(sass@1.97.2)(typescript@5.8.3)
       es-module-lexer: 1.7.0
       estree-util-visit: 2.0.0
       hast-util-to-html: 9.0.5
@@ -4568,7 +4568,7 @@ snapshots:
 
   '@types/jsdom@21.1.7':
     dependencies:
-      '@types/node': 24.10.8
+      '@types/node': 25.0.9
       '@types/tough-cookie': 4.0.5
       parse5: 7.3.0
 
@@ -4592,10 +4592,10 @@ snapshots:
 
   '@types/node-fetch@2.6.13':
     dependencies:
-      '@types/node': 24.10.8
+      '@types/node': 25.0.9
       form-data: 4.0.5
 
-  '@types/node@24.10.8':
+  '@types/node@25.0.9':
     dependencies:
       undici-types: 7.16.0
 
@@ -4745,7 +4745,7 @@ snapshots:
 
   astring@1.9.0: {}
 
-  astro@5.16.9(@azure/identity@4.13.0)(@types/node@24.10.8)(rollup@4.55.1)(sass@1.97.2)(typescript@5.8.3):
+  astro@5.16.9(@azure/identity@4.13.0)(@types/node@25.0.9)(rollup@4.55.1)(sass@1.97.2)(typescript@5.8.3):
     dependencies:
       '@astrojs/compiler': 2.13.0
       '@astrojs/internal-helpers': 0.7.5
@@ -4802,8 +4802,8 @@ snapshots:
       unist-util-visit: 5.0.0
       unstorage: 1.17.4(@azure/identity@4.13.0)
       vfile: 6.0.3
-      vite: 6.4.1(@types/node@24.10.8)(sass@1.97.2)
-      vitefu: 1.1.1(vite@6.4.1(@types/node@24.10.8)(sass@1.97.2))
+      vite: 6.4.1(@types/node@25.0.9)(sass@1.97.2)
+      vitefu: 1.1.1(vite@6.4.1(@types/node@25.0.9)(sass@1.97.2))
       xxhash-wasm: 1.1.0
       yargs-parser: 21.1.1
       yocto-spinner: 0.2.3
@@ -7700,7 +7700,7 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.3
 
-  vite@6.4.1(@types/node@24.10.8)(sass@1.97.2):
+  vite@6.4.1(@types/node@25.0.9)(sass@1.97.2):
     dependencies:
       esbuild: 0.25.12
       fdir: 6.5.0(picomatch@4.0.3)
@@ -7709,13 +7709,13 @@ snapshots:
       rollup: 4.55.1
       tinyglobby: 0.2.15
     optionalDependencies:
-      '@types/node': 24.10.8
+      '@types/node': 25.0.9
       fsevents: 2.3.3
       sass: 1.97.2
 
-  vitefu@1.1.1(vite@6.4.1(@types/node@24.10.8)(sass@1.97.2)):
+  vitefu@1.1.1(vite@6.4.1(@types/node@25.0.9)(sass@1.97.2)):
     optionalDependencies:
-      vite: 6.4.1(@types/node@24.10.8)(sass@1.97.2)
+      vite: 6.4.1(@types/node@25.0.9)(sass@1.97.2)
 
   vscode-jsonrpc@8.2.0: {}
 
