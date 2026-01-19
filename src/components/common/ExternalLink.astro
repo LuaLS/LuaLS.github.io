@@ -1,4 +1,5 @@
 ---
+import Icon from "./Icon.astro";
 import Tooltip from "./Tooltip.astro";
 
 const {
@@ -38,28 +39,49 @@ if (!refer) {
 }
 ---
 
-<Tooltip content={hostname}>
-  <a
-    href={url}
-    target={newTab ? "_blank" : null}
-    rel={relationships.join(" ")}
-    class={classes.join(" ")}
-    set:html={child}
-  />
-</Tooltip>
+<span class="external-link">
+  <Tooltip content={hostname}>
+    <a
+      href={url}
+      target={newTab ? "_blank" : null}
+      rel={relationships.join(" ")}
+      class={classes.join(" ")}
+      set:html={child}
+    />{
+      icon !== false && (
+        <Icon
+          group="solid"
+          name="up-right-from-square"
+          class="external-indicator"
+        />
+      )
+    }
+  </Tooltip>
+</span>
 
 <style lang="scss">
-  a.external {
-    color: var(--link-color);
-    font-weight: 500;
-    white-space: normal;
-  }
-  a.external:not(.no-icon)::after {
-    content: "\f08e";
-    vertical-align: text-top;
-    font-family: "Font Awesome 7 Free";
-    font-size: 0.5em;
-    display: inline-block;
-    padding-left: 0.2em;
+  .external-link {
+    display: inline-flex;
+    flex-wrap: nowrap;
+    position: relative;
+
+    &:not(.no-icon) {
+      margin-right: 0.2em;
+    }
+
+    a.external {
+      color: var(--link-color);
+      font-weight: 500;
+      white-space: normal;
+    }
+
+    & > :global(.tooltip > .icon.external-indicator) {
+      position: absolute;
+      right: -1.1em;
+      top: 0.3em;
+      vertical-align: text-top;
+      font-size: 0.4em;
+      color: var(--link-color);
+    }
   }
 </style>
