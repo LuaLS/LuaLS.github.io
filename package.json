@@ -14,7 +14,7 @@
     "@astrojs/mdx": "^4.3.13",
     "@fortawesome/fontawesome-free": "^7.1.0",
     "@types/lodash": "^4.17.23",
-    "astro": "^5.16.9",
+    "astro": "^5.16.11",
     "autoprefixer": "^10.4.23",
     "axios": "^1.13.2",
     "dayjs": "^1.11.19",
