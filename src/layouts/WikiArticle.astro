@@ -90,8 +90,9 @@ const modifiedTime = lastModified
                     class="edit-page"
                     target="_blank"
                     href={`https://github.com/LuaLS/LuaLS.github.io/edit/main/src/content/wiki/${article.id}.mdx`}
+                    aria-label="Edit page"
                   >
-                    <Icon name="pencil" group="solid" />
+                    <Icon name="pencil" group="solid"/>
                   </a>
                 </Tooltip>
                 <Tooltip content="Report issue with page" placement="bottom">
@@ -101,8 +102,9 @@ const modifiedTime = lastModified
                     href={`https://github.com/LuaLS/LuaLS.github.io/issues/new?title=${encodeURIComponent(
                       `Issue with wiki page "${article.id}"`,
                     )}`}
+                    aria-label="Report issue"
                   >
-                    <Icon name="circle-exclamation" group="solid" />
+                    <Icon name="circle-exclamation" group="solid"/>
                   </a>
                 </Tooltip>
               </div>
