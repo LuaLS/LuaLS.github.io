@@ -41,7 +41,7 @@ const open = Astro.props.open ?? false;
 </script>
 
 <style lang="scss">
-  details {
+  details.accordion {
     position: relative;
     background-color: #1b1e1f;
     border-radius: 0.5em;
@@ -52,7 +52,6 @@ const open = Astro.props.open ?? false;
       align-items: center;
       list-style: none;
       padding: 0.25em;
-      user-select: none;
 
       :global(i.fa-chevron-right) {
         margin: 0px 1em 0px 0.5em;
@@ -77,6 +76,10 @@ const open = Astro.props.open ?? false;
     & > div.content {
       background-color: #131516;
       padding: 1em;
+
+      & > :global(:nth-child(1)) {
+        margin-top: 0px;
+      }
     }
 
     &[open] {

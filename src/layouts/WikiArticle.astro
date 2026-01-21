@@ -90,8 +90,9 @@ const modifiedTime = lastModified
                     class="edit-page"
                     target="_blank"
                     href={`https://github.com/LuaLS/LuaLS.github.io/edit/main/src/content/wiki/${article.id}.mdx`}
+                    aria-label="Edit page"
                   >
-                    <Icon name="pencil" group="solid" />
+                    <Icon name="pencil" group="solid"/>
                   </a>
                 </Tooltip>
                 <Tooltip content="Report issue with page" placement="bottom">
@@ -101,8 +102,9 @@ const modifiedTime = lastModified
                     href={`https://github.com/LuaLS/LuaLS.github.io/issues/new?title=${encodeURIComponent(
                       `Issue with wiki page "${article.id}"`,
                     )}`}
+                    aria-label="Report issue"
                   >
-                    <Icon name="circle-exclamation" group="solid" />
+                    <Icon name="circle-exclamation" group="solid"/>
                   </a>
                 </Tooltip>
               </div>
@@ -264,7 +266,7 @@ const modifiedTime = lastModified
     }
 
     button.open {
-      top: 5em;
+      top: max(20vh, 5em);
       position: fixed;
       background-color: #0e3e6b;
       padding: 0.25em 0.5em;
@@ -401,16 +403,23 @@ const modifiedTime = lastModified
     justify-content: space-between;
   }
 
+  main {
+    width: 100%;
+    max-width: 70em;
+    margin: auto;
+  }
+
   article {
-    div.title {
+    & > div.title {
       text-align: center;
       background-color: #071521;
       display: block;
       z-index: 5;
-      padding: 0px 0.5em 0.5em 0.5em;
+      margin: 0px 3em;
 
       h1 {
         margin: 0px;
+        line-height: 1.2em;
       }
       p {
         margin: 0px 0px 1em 0px;
@@ -422,24 +431,24 @@ const modifiedTime = lastModified
         align-items: center;
         justify-content: space-between;
         padding: 0.6em 0.25em 0em 0.25em;
-      }
 
-      div.modified {
-        font-size: 0.8em;
-        color: #ffffff80;
-      }
-
-      div.options {
-        z-index: 5;
-        display: flex;
-        justify-content: center;
-        gap: 1em;
-
-        a {
-          display: inline-block;
-          box-sizing: border-box;
-          border-radius: 0.33em;
+        div.modified {
+          font-size: 0.8em;
           color: #ffffff80;
+        }
+
+        div.options {
+          z-index: 5;
+          display: flex;
+          justify-content: center;
+          gap: 1em;
+
+          a {
+            display: inline-block;
+            box-sizing: border-box;
+            border-radius: 0.33em;
+            color: #ffffff80;
+          }
         }
       }
     }
@@ -488,7 +497,7 @@ const modifiedTime = lastModified
     }
   }
 
-  @media screen and (min-width: 1600px) {
+  @media screen and (min-width: 1400px) {
     div.columns {
       height: calc(100% - $header-height);
       display: grid;
@@ -528,6 +537,9 @@ const modifiedTime = lastModified
   @media screen and (max-width: 800px) {
     article > div.content {
       padding: 1em 1.5em;
+    }
+    article > div.title {
+      margin: 0px 0.5em;
     }
   }
 

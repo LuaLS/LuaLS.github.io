@@ -1,0 +1,43 @@
+---
+title: Introduction
+description: An introduction for beginners to the language server and Lua.
+---
+
+[Lua](https://lua.org/about.html) is a [scripting language](https://en.wikipedia.org/wiki/Scripting_language), primarily designed to be embedded into other programs. Its simplicity and versatility results in it [being found everywhere](https://en.wikipedia.org/wiki/List_of_applications_using_Lua) including games, compositing and audio software, databases, websites, and more. It is even [used in one of the largest websites in the world, Wikipedia](https://en.wikipedia.org/wiki/Wikipedia:Lua)
+
+Lua can be used for simple scripts, like bash, using the official Lua interpreter, but it is most often found running inside C/C++ programs due to its simple C API and limited standard library. Extending Lua, often with [LuaRocks](https://luarocks.org/) modules, can make it very powerful, providing advanced support for filesystems, networking, and more.
+
+## Lua's Superpower
+
+Lua's superpower of being usable almost anywhere is also what can make development tooling very challenging. The environment in [Redis](https://redis.io/docs/latest/develop/programmability/eval-intro/) will look very different from [CC:Tweaked's](https://tweaked.cc/).
+
+Sometimes, you may have an HTTP API available but no metatables, other times you will have a filesystem API, but no [debug library](https://www.lua.org/pil/23.html). Its adaptability is its greatest superpower, but it can also be viewed as a negative as no two environments will look the same. The Lua Language Server provides various configuration options to get a greatly improved development experience, even with some challenging runtime environments.
+
+## Setting Up Your Workspace
+
+If you haven't already, [install the Lua Language Server](/#install). Ignoring the many preferential settings for now, let's go through some of the [settings](/wiki/settings) that can help you [configure your workspace](/wiki/configuration/) for developing for various target environments.
+
+### Setting Lua Version
+
+The various Lua versions have subtle yet important differences. Use [runtime.version](/wiki/settings#runtimeversion) to set the Lua version. This will load the features as well as definitions for the standard libraries and functions of that Lua version.
+
+### Disabling Standard Libraries
+
+Using the [runtime.builtin](/wiki/settings#runtimebuiltin) setting, you can disable [standard libraries](https://www.lua.org/pil/contents.html#P3) such as `debug`, and some standard features like [coroutines](https://www.lua.org/pil/9.html). Many sandboxed runtimes such as in games will not contain the `debug`, `io`, and `os` libraries.
+
+### Configuring Require Search Path
+
+At runtime, [`require`](https://www.lua.org/pil/8.1.html) can be configured to search custom paths when loading a module via [`package.path`](https://www.lua.org/manual/5.1/manual.html#pdf-package.path). The Lua Language Server can be made aware of these custom require paths at dev time using the [runtime.path](/wiki/settings#runtimepath) setting.
+
+### Loading External Code
+
+The Lua Language Server will load and work on the files in your workspace, but you may need to load Lua that is outside of your workspace, for example, a LuaRocks package from `~/.luarocks/share/lua/5.3`. Alternatively, you may have created a [definition file](/wiki/definition-files) or installed an [addon](/wiki/addons) that describes runtime variables and functions. The [workspace.library](/wiki/settings#workspacelibrary) setting allows you to specify additional directories/files to load as part of the workspace.
+
+## Recommendations
+
+Even though Lua almost outright rejects being opinionated, in this section we'll provide some more opinion-based recommendations.
+
+If you are working on a simple project, especially one where definitions are unlikely to be re-used, your [definitions](/wiki/definition-files) should be placed and committed under a `types/`, `stubs/`, or similar directory within your workspace. This means you don't have to use [workspace.library](/wiki/settings#workspacelibrary). For large projects, or when the definitions will be used in multiple projects, they should be packaged as an [addon](/wiki/addons) and loaded with [workspace.library](/wiki/settings#workspacelibrary).
+
+
+Borrowing from TypeScript, [definition files](/wiki/definition-files) should be named `*.d.lua`, such as `filesystem.d.lua` so that they can quickly be identified as non-implementation ["meta"](/wiki/annotations#meta) code.

@@ -28,8 +28,9 @@ body {
 }
 
 *:focus-visible {
-  outline: var(--link-color) 2px solid;
-  border-radius: 0.5em;
+  outline: var(--link-color) 0.1em solid;
+  background-color: color-mix(in srgb, var(--link-color), #000000 75%);
+  border-radius: 0.2em;
 }
 
 h1,
@@ -42,18 +43,20 @@ h6 {
   text-align: center;
   word-wrap: break-word;
   white-space: normal;
-  font-weight: 500;
+  font-weight: 400;
 }
 
 h1 {
   font-size: 2.5em;
+  font-weight: 600;
 }
 
 article h2 {
-  border-bottom: #b9b9b9 solid 0.01em;
+  border-bottom: #bbb solid 0.05em;
 }
 
 h2 {
+  font-weight: 600;
   font-size: 2.2em;
 }
 
@@ -116,5 +119,11 @@ blockquote {
 button {
   &:hover {
     cursor: pointer;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  body {
+    font-size: 0.9rem;
   }
 }

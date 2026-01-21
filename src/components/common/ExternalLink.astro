@@ -1,4 +1,5 @@
 ---
+import Icon from "./Icon.astro";
 import Tooltip from "./Tooltip.astro";
 
 const {
@@ -27,7 +28,10 @@ export interface Props {
   class?: string;
 }
 
-const classes = [className, "external"];
+const classes = ["external"];
+if (className) {
+  classes.push(className);
+}
 if (icon === false) {
   classes.push("no-icon");
 }
@@ -38,28 +42,43 @@ if (!refer) {
 }
 ---
 
-<Tooltip content={hostname}>
-  <a
-    href={url}
-    target={newTab ? "_blank" : null}
-    rel={relationships.join(" ")}
-    class={classes.join(" ")}
-    set:html={child}
-  />
-</Tooltip>
+<span class="external-link">
+  <Tooltip content={hostname}>
+    <a
+      href={url}
+      target={newTab ? "_blank" : null}
+      rel={relationships.join(" ")}
+      class={classes.join(" ")}
+      set:html={child}
+    />{
+      icon !== false && (
+        <Icon
+          group="solid"
+          name="up-right-from-square"
+          class="external-indicator"
+        />
+      )
+    }
+  </Tooltip>
+</span>
 
 <style lang="scss">
-  a.external {
+  .external-link {
     color: var(--link-color);
-    font-weight: 500;
-    white-space: normal;
-  }
-  a.external:not(.no-icon)::after {
-    content: "\f08e";
-    vertical-align: text-top;
-    font-family: "Font Awesome 7 Free";
-    font-size: 0.5em;
-    display: inline-block;
-    padding-left: 0.2em;
+
+    &:not(.no-icon) {
+      margin-right: -0.2em;
+    }
+
+    a {
+      font-weight: 500;
+    }
+
+    & > :global(.tooltip > .icon.external-indicator) {
+      display: inline;
+      margin-left: -0.3em;
+      vertical-align: text-top;
+      font-size: 0.4em;
+    }
   }
 </style>

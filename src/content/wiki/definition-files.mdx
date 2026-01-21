@@ -4,7 +4,11 @@ description: Add files that define libaries, APIs, etc.
 getting-started: true
 ---
 
+import Remark from "~/components/common/Remark.astro";
+
 So you are using a framework like Busted or OpenResty, but whenever you are using a function from them, you are receiving warnings. This is because the language server has not been told about their existence or how they should be used. Luckily, we can use definition files to supplement this data and receive completion, proper [diagnostics](/wiki/diagnostics), and more.
+
+If you are familiar with TypeScript type definition or Python stub files, these should feel familiar.
 
 [Addons](/wiki/addons) use definition files to define the various functions and variables of a project. For example, there is already an [OpenResty addon](https://github.com/LuaCATS/openresty) that can be found in the [LuaCATS organization](https://github.com/LuaCATS).
 
@@ -20,11 +24,16 @@ Here is a simple example that adds a global class `Character`:
 ---@class Character
 Character = {}
 
+---Commands the character to say "Hello {name}"
 ---@param name string
-function Character.hello(name)
-    print("Hello " .. name .. "!")
-end
+function Character.hello(name) end
 ```
+
+Note how the above function has no implementation code. This is because this is just a "meta" definition file that explains the signature of the actual implementation code that lives elsewhere.
+
+<Remark type="recommendation" display="folded">
+Name your definition files `*.d.lua`, such as `filesystem.d.lua`, to make it clear which files are purely for documentation and not implementation code.
+</Remark>
 
 ## Using Definition Files
 

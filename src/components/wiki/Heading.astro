@@ -12,27 +12,39 @@ import Icon from "../common/Icon.astro";
 ---
 
 <div class="heading" id={id}>
-  <a href={`#${id}`}><Icon name="link" group="solid" /></a>
-  <Element><slot /></Element>
+  <a href={`#${id}`}
+    ><Icon name="link" group="solid" class="icon" /><Element><slot /></Element
+    ></a
+  >
 </div>
 
 <style lang="scss">
   :global(details.accordion > summary div.heading) {
     margin: 0px;
+
+    & > a > :global(i.icon) {
+      display: none;
+    }
   }
 
   div.heading {
-    width: calc(100% + 3em);
-    margin: 2em 0px 0px -3em;
-    display: flex;
-    align-items: center;
+    width: calc(100%);
+    margin: 1em 0px 0.5em 0em;
+    line-height: 3ch;
 
     & > a {
       color: white;
-      opacity: 0;
-      font-size: 1.25em;
-      padding: 0.25em 0.5em;
-      transition: opacity 0.3s ease-in-out;
+      display: flex;
+      align-items: center;
+      position: relative;
+
+      & > :global(i.icon) {
+        position: absolute;
+        left: -1.75em;
+        font-size: 1.25em;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+      }
     }
 
     :global(h1),
@@ -50,23 +62,18 @@ import Icon from "../common/Icon.astro";
       &::after {
         content: "";
         display: block;
-        width: 0.1em;
-        height: 100%;
-        background-color: var(--link-color);
+        width: calc(100% + 0.2em);
+        height: 140%;
+        background-color: #ff9500;
+        opacity: 0.2;
         position: absolute;
-        bottom: 0px;
-        border-radius: 99em;
-        left: -0.15em;
+        bottom: -24%;
+        border-radius: 0.1em;
+        left: -0.1em;
         z-index: -1;
         padding: 0px;
         clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%);
-        transition: clip-path cubic-bezier(0.65, 0.05, 0.36, 1) 0.75s;
-      }
-    }
-
-    &:hover {
-      a {
-        opacity: 1;
+        transition: clip-path cubic-bezier(0.65, 0.05, 0.36, 1) 1s;
       }
     }
 
@@ -81,7 +88,7 @@ import Icon from "../common/Icon.astro";
           clip-path: polygon(0 0, 100% 0%, 100% 100%, 0% 100%);
         }
       }
-      a {
+      a > :global(i.icon) {
         opacity: 1;
       }
     }
@@ -94,10 +101,11 @@ import Icon from "../common/Icon.astro";
   @media screen and (max-width: 800px) {
     div.heading {
       width: 100%;
-      margin: 2em auto 0px -1.5em;
+      font-size: 0.8em;
+      margin: 2em 0px 0px 0px;
 
-      & > a {
-        font-size: 0.9em;
+      & > a > :global(i.icon) {
+        display: none;
       }
     }
   }

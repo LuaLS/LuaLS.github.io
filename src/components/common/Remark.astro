@@ -8,6 +8,7 @@ const TYPES = {
   WIP: { displayName: "WIP", icon: "pen-ruler" },
   deprecated: { displayName: "Deprecated", icon: "trash-can" },
   issue: { displayName: "Issue", icon: "circle-dot" },
+  recommendation: {displayName: "Recommendation", icon: "asterisk"}
 };
 
 type RemarkType =
@@ -16,7 +17,8 @@ type RemarkType =
   | "important"
   | "WIP"
   | "deprecated"
-  | "issue";
+  | "issue"
+  | "recommendation"
 
 export interface Props {
   type: RemarkType;
@@ -31,7 +33,21 @@ if (!remark) {
   throw new Error("Invalid remark type: " + type);
 }
 
-const classList = [type, "remark", display ?? "block"];
+const classList = [type, "remark"];
+
+if (display) {
+  classList.push(display);
+} else {
+  // If display mode is not specified, fetch the slot text content length and determine best mode.
+  const content = await Astro.slots.render("default");
+  const text = content.replace(/<[^>]*>/g, "").replace(/\s+/g, ' ').trim();
+
+  if (text.length < 115) {
+    classList.push("compact");
+  } else {
+    classList.push("block");
+  }
+}
 ---
 
 <div class:list={classList}>
@@ -39,7 +55,9 @@ const classList = [type, "remark", display ?? "block"];
     <Icon name={remark.icon} group="solid" />
     {remark.displayName}
   </div>
-  <slot />
+  <div class="content">
+    <slot />
+  </div>
 </div>
 
 <style lang="scss">
@@ -55,17 +73,13 @@ const classList = [type, "remark", display ?? "block"];
     background-color: color-mix(in srgb, var(--remark-color), #071521 80%);
 
     &.block {
-      width: 90%;
+      width: 95%;
     }
 
     &.compact {
       display: flex;
       align-items: center;
       gap: 0.5em;
-
-      & > :global(*) {
-        margin: 0px;
-      }
     }
 
     &.note {
@@ -92,21 +106,28 @@ const classList = [type, "remark", display ?? "block"];
       --remark-color: #2ea043;
     }
 
-    & > div {
+    &.recommendation {
+      --remark-color: #1aecbe;
+    }
+
+    & > div:first-of-type {
       font-size: 1.1em;
       display: flex;
-      gap: 0.5em;
+      gap: 0.2em;
       align-items: center;
       font-weight: bold;
+
+      :global(i.fa-solid) {
+        margin-left: -0.3em;
+        font-size: 1.3em;
+        color: color-mix(in srgb, var(--remark-color), white 60%);
+      }
     }
 
-    :global(i.fa-solid) {
-      font-size: 1.3em;
-      color: color-mix(in srgb, var(--remark-color), white 60%);
-    }
-
-    & > :global(p) {
-      margin: 0.5em auto 0.2em auto;
+    & > .content {
+      :global(p) {
+        margin: 0.1em auto;
+      }
     }
   }
 </style>

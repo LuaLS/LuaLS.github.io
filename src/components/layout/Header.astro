@@ -1,5 +1,4 @@
 ---
-import ExternalLink from "../common/ExternalLink.astro";
 import Icon from "../common/Icon.astro";
 import Tooltip from "../common/Tooltip.astro";
 
@@ -25,7 +24,7 @@ const { class: className } = Astro.props;
       </a>
     </div>
     <Tooltip
-      content="<div align='center'>Search <br/><kbd>/</kbd></div>"
+      content="<div align='center'>Search<br/><kbd>/</kbd></div>"
       allowHTML
     >
       <button class="site-search-icon" aria-keyshortcuts="/">
@@ -33,12 +32,11 @@ const { class: className } = Astro.props;
       </button>
     </Tooltip>
     <span class="github">
-      <ExternalLink
-        url="https://github.com/luals/lua-language-server"
-        icon={false}
-      >
-        <Icon name="github" group="brands" />
-      </ExternalLink>
+      <a href="https://github.com/luals/lua-language-server">
+        <Tooltip content="View Project on GitHub">
+          <Icon name="github" group="brands" ariaLabel="View Project on GitHub"/>
+        </Tooltip>
+      </a>
     </span>
   </nav>
 </header>
@@ -78,8 +76,7 @@ const { class: className } = Astro.props;
         margin: auto;
       }
 
-      a,
-      :global(a.external) {
+      a{
         color: white;
       }
 
