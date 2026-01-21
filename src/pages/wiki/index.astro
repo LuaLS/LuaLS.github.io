@@ -86,6 +86,11 @@ if (!contributors) {
         <h2>Install</h2>
         <p>Install instructions for the Lua Language Server.</p>
       </a>
+      <a href="/wiki/introduction/">
+        <Icon name="signs-post" group="solid" class="icon" />
+        <h2>Introduction</h2>
+        <p>An intro for beginners to the language server and Lua.</p>
+      </a>
       <a href="/wiki/faq/">
         <Icon name="question" group="solid" class="icon" />
         <h2>FAQ</h2>
@@ -252,8 +257,8 @@ if (!contributors) {
 <style lang="scss">
   #quick-links {
     display: flex;
-    justify-content: center;
-    gap: 5vw 5vw;
+    justify-content: space-evenly;
+    gap: 2vw 2vw;
     margin: 0px 1em;
 
     & > a {
@@ -270,14 +275,14 @@ if (!contributors) {
       }
 
       :global(.icon) {
-        font-size: 2.5em;
+        font-size: 2em;
         display: inline-block;
       }
 
       h2 {
         display: inline-block;
         width: fit-content;
-        margin: 0px 0px 0px 0.5em;
+        margin: 0px 0px 0px 0.2em;
         font-size: 2em;
       }
 
@@ -485,6 +490,10 @@ if (!contributors) {
       grid-column: unset;
       grid-row: 3 / 3;
     }
+
+    #quick-links {
+      font-size: 0.8em;
+    }
   }
 
   @media screen and (max-width: 700px) {
@@ -493,7 +502,8 @@ if (!contributors) {
     }
 
     #quick-links {
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: 1fr;
     }
   }
 </style>
