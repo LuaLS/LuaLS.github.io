@@ -45,14 +45,14 @@ importers:
         specifier: ^11.12.2
         version: 11.12.2
       playwright:
-        specifier: ^1.57.0
-        version: 1.57.0
+        specifier: ^1.58.0
+        version: 1.58.0
       rehype-mdx-code-props:
         specifier: ^3.0.1
         version: 3.0.1
       rehype-mermaid:
         specifier: ^3.0.0
-        version: 3.0.0(playwright@1.57.0)
+        version: 3.0.0(playwright@1.58.0)
       sass:
         specifier: ^1.97.3
         version: 1.97.3
@@ -2766,8 +2766,18 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
+  playwright-core@1.58.0:
+    resolution: {integrity: sha512-aaoB1RWrdNi3//rOeKuMiS65UCcgOVljU46At6eFcOFPFHWtd2weHRRow6z/n+Lec0Lvu0k9ZPKJSjPugikirw==}
+    engines: {node: '>=18'}
+    hasBin: true
+
   playwright@1.57.0:
     resolution: {integrity: sha512-ilYQj1s8sr2ppEJ2YVadYBN0Mb3mdo9J0wQ+UuDhzYqURwSoW4n1Xs5vs7ORwgDGmyEh33tRMeS8KhdkMoLXQw==}
+    engines: {node: '>=18'}
+    hasBin: true
+
+  playwright@1.58.0:
+    resolution: {integrity: sha512-2SVA0sbPktiIY/MCOPX8e86ehA/e+tDNq+e5Y8qjKYti2Z/JG7xnronT/TXTIkKbYGWlCbuucZ6dziEgkoEjQQ==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -6338,12 +6348,12 @@ snapshots:
 
   merge2@1.4.1: {}
 
-  mermaid-isomorphic@3.0.4(playwright@1.57.0):
+  mermaid-isomorphic@3.0.4(playwright@1.58.0):
     dependencies:
       '@fortawesome/fontawesome-free': 6.7.2
       mermaid: 11.12.2
     optionalDependencies:
-      playwright: 1.57.0
+      playwright: 1.58.0
 
   mermaid@11.12.2:
     dependencies:
@@ -6879,9 +6889,17 @@ snapshots:
 
   playwright-core@1.57.0: {}
 
+  playwright-core@1.58.0: {}
+
   playwright@1.57.0:
     dependencies:
       playwright-core: 1.57.0
+    optionalDependencies:
+      fsevents: 2.3.2
+
+  playwright@1.58.0:
+    dependencies:
+      playwright-core: 1.58.0
     optionalDependencies:
       fsevents: 2.3.2
 
@@ -7048,19 +7066,19 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  rehype-mermaid@3.0.0(playwright@1.57.0):
+  rehype-mermaid@3.0.0(playwright@1.58.0):
     dependencies:
       '@types/hast': 3.0.4
       hast-util-from-html-isomorphic: 2.0.0
       hast-util-to-text: 4.0.2
-      mermaid-isomorphic: 3.0.4(playwright@1.57.0)
+      mermaid-isomorphic: 3.0.4(playwright@1.58.0)
       mini-svg-data-uri: 1.4.4
       space-separated-tokens: 2.0.2
       unified: 11.0.5
       unist-util-visit-parents: 6.0.2
       vfile: 6.0.3
     optionalDependencies:
-      playwright: 1.57.0
+      playwright: 1.58.0
 
   rehype-parse@9.0.1:
     dependencies:
