@@ -21,7 +21,7 @@
     "fuse.js": "^7.1.0",
     "highlight.js": "^11.11.1",
     "jsdom": "^27.4.0",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "mermaid": "^11.12.2",
     "playwright": "^1.57.0",
     "rehype-mdx-code-props": "^3.0.1",
