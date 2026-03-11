@@ -1,8 +1,10 @@
 ---
-// Icon fonts
-import "@fortawesome/fontawesome-free/scss/fontawesome.scss";
-import "@fortawesome/fontawesome-free/scss/brands.scss";
-import "@fortawesome/fontawesome-free/scss/solid.scss";
+// Load FontAwesome
+import "@fortawesome/fontawesome-svg-core/styles.css";
+import * as fa from "@fortawesome/fontawesome-svg-core";
+import { fas } from "@fortawesome/free-solid-svg-icons";
+import { fab } from "@fortawesome/free-brands-svg-icons";
+fa.library.add(fas, fab);
 
 // Highlight.js
 import "highlight.js/scss/github-dark.scss";

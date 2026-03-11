@@ -1,6 +1,8 @@
 ---
 import Icon from "./Icon.astro";
 
+import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+
 export interface Props {
   /** Whether or not the accordion should default to open. Defaults to false (closed). */
   open?: boolean;
@@ -10,9 +12,7 @@ const open = Astro.props.open ?? false;
 ---
 
 <details open={open} class="accordion">
-  <summary
-    ><Icon name="chevron-right" group="solid" /><slot name="summary" /></summary
-  >
+  <summary><Icon icon={faChevronRight} /><slot name="summary" /></summary>
   <div class="content"><slot /></div>
 </details>
 
@@ -53,7 +53,7 @@ const open = Astro.props.open ?? false;
       list-style: none;
       padding: 0.25em;
 
-      :global(i.fa-chevron-right) {
+      :global(.icon.fa-chevron-right) {
         margin: 0px 1em 0px 0.5em;
         transform: rotate(0);
         transition: transform ease-in-out 0.25s;

@@ -2,6 +2,8 @@
 import ExternalLink from "../common/ExternalLink.astro";
 import Icon from "../common/Icon.astro";
 
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
+
 export interface Props {
   class?: string;
 }
@@ -26,7 +28,7 @@ const { class: className } = Astro.props;
         <ExternalLink
           url="https://github.com/LuaLS/lua-language-server/issues/484"
         >
-          Sponsor <Icon name="heart" group="solid" color="red" />
+          Sponsor <Icon icon={faHeart} color="red" />
         </ExternalLink>
       </li>
     </ul>
@@ -81,7 +83,8 @@ const { class: className } = Astro.props;
     }
 
     :global(a),
-    :global(.external-link) {
+    :global(.external-link),
+    :global(.external-link .icon) {
       color: inherit;
       font-weight: normal;
     }

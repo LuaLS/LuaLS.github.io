@@ -1,9 +1,11 @@
 ---
 import Icon from "./Icon.astro";
+
+import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 ---
 
 <div class="loading-container loading">
-  <Icon name="circle-notch" group="solid" class="spinner" />
+  <Icon icon={faCircleNotch} classes={["spinner"]} />
   <div class="content">
     <slot />
   </div>

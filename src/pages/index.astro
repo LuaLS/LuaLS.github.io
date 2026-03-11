@@ -15,6 +15,24 @@ import "../scss/fonts/_Prompt.scss";
 
 import { getExtensionInstalls } from "~/util/vscode";
 
+import {
+  faArrowDown,
+  faArrowRight,
+  faAt,
+  faBold,
+  faBolt,
+  faBookOpenReader,
+  faCommentDots,
+  faFileCode,
+  faLanguage,
+  faMessage,
+  faPaintbrush,
+  faPlug,
+  faQuestion,
+  faStar,
+  faTriangleExclamation,
+} from "@fortawesome/free-solid-svg-icons";
+
 const numberFormatter = Intl.NumberFormat(undefined, {
   notation: "compact",
   roundingMode: "trunc",
@@ -47,7 +65,7 @@ const annotationCount = annotationsPage
           <Tooltip content="Stars on GitHub">
             <span class="stat stars">
               <b>3K+</b>
-              <Icon name="star" group="solid" color="#ffcb00" />
+              <Icon icon={faStar} color="#ffcb00" />
             </span>
           </Tooltip>
         </div>
@@ -76,9 +94,7 @@ const annotationCount = annotationsPage
         <p>It's time that Lua gets proper support in your editor!</p>
 
         <div class="quick-links">
-          <a href="#install">
-            Install <Icon name="arrow-down" group="solid" /></a
-          >
+          <a href="#install"> Install <Icon icon={faArrowDown} /></a>
         </div>
       </div>
       <video autoplay loop muted>
@@ -91,7 +107,7 @@ const annotationCount = annotationsPage
       <h2>Features</h2>
       <div class="grid">
         <div>
-          <Icon name="at" group="solid" />
+          <Icon icon={faAt} />
           <div>Powerful Annotations</div>
           <p>
             <a href="/wiki/annotations/" target="_blank"
@@ -100,7 +116,7 @@ const annotationCount = annotationsPage
           </p>
         </div>
         <div>
-          <Icon name="bolt" group="solid" />
+          <Icon icon={faBolt} />
           <div>Dynamic Type System</div>
           <p>
             A type system fit for Lua that helps improve safety and catch type
@@ -108,7 +124,7 @@ const annotationCount = annotationsPage
           </p>
         </div>
         <div>
-          <Icon name="triangle-exclamation" group="solid" />
+          <Icon icon={faTriangleExclamation} />
           <div>Diagnostics</div>
           <p>
             Provides <a href="/wiki/diagnostics/" target="_blank"
@@ -119,12 +135,12 @@ const annotationCount = annotationsPage
           </p>
         </div>
         <div>
-          <Icon name="comment-dots" group="solid" />
+          <Icon icon={faCommentDots} />
           <div>Autocompletion</div>
           <p>Offers completion options while you program to speed things up.</p>
         </div>
         <div>
-          <Icon name="message" group="solid" />
+          <Icon icon={faMessage} />
           <div>Hover for Details</div>
           <p>
             Hover signatures in your code to receive detailed information about
@@ -132,7 +148,7 @@ const annotationCount = annotationsPage
           </p>
         </div>
         <div>
-          <Icon name="language" group="solid" />
+          <Icon icon={faLanguage} />
           <div>Localization Support</div>
           <p>
             Currently available in English, Chinese, Taiwanese, Portuguese. <a
@@ -142,7 +158,7 @@ const annotationCount = annotationsPage
           </p>
         </div>
         <div>
-          <Icon name="file-code" group="solid" />
+          <Icon icon={faFileCode} />
           <div>Supports Definition Files</div>
           <p>
             <a href="/wiki/definition-files/" target="_blank">Make your own</a> or
@@ -151,7 +167,7 @@ const annotationCount = annotationsPage
           </p>
         </div>
         <div>
-          <Icon name="paintbrush" group="solid" />
+          <Icon icon={faPaintbrush} />
           <div>Built-in Formatting</div>
           <p>
             Provides a <a href="/wiki/formatter/" target="_blank"
@@ -160,7 +176,7 @@ const annotationCount = annotationsPage
           </p>
         </div>
         <div>
-          <Icon name="plug" group="solid" />
+          <Icon icon={faPlug} />
           <div>Custom Plugins</div>
           <p>
             Use <a href="/wiki/plugins/" target="_blank">plugins</a> to add custom
@@ -168,7 +184,7 @@ const annotationCount = annotationsPage
           </p>
         </div>
         <div>
-          <Icon name="book-open-reader" group="solid" />
+          <Icon icon={faBookOpenReader} />
           <div>Documentation Generation</div>
           <p>
             <a href="/wiki/export-docs/" target="_blank"
@@ -192,7 +208,7 @@ const annotationCount = annotationsPage
           <Image src={jetbrainsImg} alt="JetBrains" />
         </button>
         <button value="other-install" class="other" tabindex="0"
-          ><Icon name="question" group="solid" /></button
+          ><Icon icon={faQuestion} /></button
         >
       </div>
 
@@ -368,7 +384,7 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
       <p>Check out the wiki to learn more about the language server.</p>
       <a href="/wiki/">
         Wiki
-        <Icon name="arrow-right" group="solid" />
+        <Icon icon={faArrowRight} />
       </a>
     </section>
   </main>
@@ -611,7 +627,7 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
         font-size: calc(0.7rem + 0.4vw);
         text-align: center;
 
-        :global(i) {
+        :global(.icon) {
           margin: auto;
           display: block;
           font-size: 2em;
@@ -723,7 +739,7 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
         }
 
         img,
-        :global(i) {
+        :global(.icon) {
           height: 1em;
           width: 1em;
         }

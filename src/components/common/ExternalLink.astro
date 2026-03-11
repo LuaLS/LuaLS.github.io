@@ -2,12 +2,14 @@
 import Icon from "./Icon.astro";
 import Tooltip from "./Tooltip.astro";
 
+import { faUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
+
 const {
   url,
   newTab = true,
   class: className,
   refer = false,
-  icon = true,
+  noIcon,
 } = Astro.props;
 
 const hostname = new URL(url).hostname;
@@ -22,8 +24,8 @@ export interface Props {
   newTab?: boolean;
   /** Whether to [refer](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referer) when navigating away. Defaults to `false`. */
   refer?: boolean;
-  /** Whether or not to display the "external" icon next to the link. Defaults to `false`. */
-  icon?: boolean;
+  /** Don't display external link icon. */
+  noIcon?: true;
   /** Allows you to pass in a class to be applied to the link. */
   class?: string;
 }
@@ -32,7 +34,7 @@ const classes = ["external"];
 if (className) {
   classes.push(className);
 }
-if (icon === false) {
+if (noIcon) {
   classes.push("no-icon");
 }
 
@@ -42,43 +44,40 @@ if (!refer) {
 }
 ---
 
-<span class="external-link">
-  <Tooltip content={hostname}>
+<Tooltip content={hostname}>
+  <span class="external-link" class:list={classes}>
     <a
       href={url}
       target={newTab ? "_blank" : null}
       rel={relationships.join(" ")}
-      class={classes.join(" ")}
       set:html={child}
     />{
-      icon !== false && (
-        <Icon
-          group="solid"
-          name="up-right-from-square"
-          class="external-indicator"
-        />
+      noIcon !== true && (
+        <Icon icon={faUpRightFromSquare} classes={["external-indicator"]} />
       )
     }
-  </Tooltip>
-</span>
+  </span>
+</Tooltip>
 
 <style lang="scss">
   .external-link {
+    display: inline;
+    white-space: pre-line;
     color: var(--link-color);
 
     &:not(.no-icon) {
-      margin-right: -0.2em;
+      padding-right: 0.4em;
     }
 
     a {
       font-weight: 500;
     }
+  }
 
-    & > :global(.tooltip > .icon.external-indicator) {
-      display: inline;
-      margin-left: -0.3em;
-      vertical-align: text-top;
-      font-size: 0.4em;
-    }
+  :global(.external-link .icon.external-indicator) {
+    display: inline;
+    margin-right: -0.2em;
+    vertical-align: text-top;
+    font-size: 0.5em;
   }
 </style>

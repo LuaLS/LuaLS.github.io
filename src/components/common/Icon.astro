@@ -1,26 +1,24 @@
 ---
-const { group, name, class: className, color } = Astro.props;
+import * as fa from "@fortawesome/fontawesome-svg-core";
 
-const styles = color ? `color: ${color}` : null;
+const classes = Astro.props.classes ?? [];
+classes.push("icon");
 
-const ariaLabel = Astro.props.ariaLabel ?? name.replaceAll("-", " ");
+const styles: fa.Styles = {};
+if (Astro.props.color) {
+  styles.color = Astro.props.color;
+}
 
 export interface Props {
-  /** The group that the icon belongs to. */
-  group: "brands" | "solid";
-  /** The name of the icon. */
-  name: string;
-  /** The name of a class to apply to the icon. */
-  class?: string;
+  /** Name of the icon to use. */
+  icon: fa.IconDefinition;
+  /** Classes to apply to the icon. */
+  classes?: string[];
   /** The colour of the icon. */
   color?: string;
-  ariaLabel?: string;
 }
+
+const icon = fa.icon(Astro.props.icon, { classes, styles });
 ---
 
-<i
-  class:list={[`fa-${group}`, `fa-${name}`, "icon", className]}
-  aria-label={ariaLabel}
-  style={styles}
->
-</i>
+<Fragment set:html={icon.html} />

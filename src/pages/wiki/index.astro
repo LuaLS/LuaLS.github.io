@@ -8,6 +8,13 @@ import ExternalLink from "~/components/common/ExternalLink.astro";
 
 import { Image } from "astro:assets";
 import { render } from "astro:content";
+import {
+  faDownload,
+  faHeart,
+  faQuestion,
+  faSignsPost,
+  faSort,
+} from "@fortawesome/free-solid-svg-icons";
 
 const CONTRIBUTOR_COUNT = 30;
 
@@ -82,17 +89,17 @@ if (!contributors) {
     <h1>Welcome To The Wiki!</h1>
     <div id="quick-links">
       <a href="/#install">
-        <Icon name="download" group="solid" class="icon" />
+        <Icon icon={faDownload} />
         <h2>Install</h2>
         <p>Install instructions for the Lua Language Server.</p>
       </a>
       <a href="/wiki/introduction/">
-        <Icon name="signs-post" group="solid" class="icon" />
+        <Icon icon={faSignsPost} />
         <h2>Introduction</h2>
         <p>An intro for beginners to the language server and Lua.</p>
       </a>
       <a href="/wiki/faq/">
-        <Icon name="question" group="solid" class="icon" />
+        <Icon icon={faQuestion} />
         <h2>FAQ</h2>
         <p>Frequently asked questions and answers to them.</p>
       </a>
@@ -126,7 +133,7 @@ if (!contributors) {
           </p>
           <div class="sorts">
             <Tooltip content="Sort Method">
-              <Icon group="solid" name="sort" />
+              <Icon icon={faSort} />
             </Tooltip>
             <select name="sort" id="sort">
               <option value="alphabetical">A-Z</option>
@@ -160,8 +167,7 @@ if (!contributors) {
         <h2>Top Contributors</h2>
         <p>
           Thank you to all contributors to the wiki! <Icon
-            name="heart"
-            group="solid"
+            icon={faHeart}
             color="red"
           />
         </p>

@@ -3,6 +3,7 @@ import type { XOR } from "~/util/types";
 import Icon from "./Icon.astro";
 import jsdom from "jsdom";
 import { Image } from "astro:assets";
+import { type IconDefinition } from "@fortawesome/fontawesome-svg-core";
 
 type BaseButtonDefinition = {
   name: string;
@@ -10,7 +11,7 @@ type BaseButtonDefinition = {
 };
 
 type ButtonDefinition = XOR<
-  BaseButtonDefinition & { icon: string },
+  BaseButtonDefinition & { icon: IconDefinition },
   BaseButtonDefinition & { image: ImageMetadata }
 >;
 
@@ -43,7 +44,7 @@ body.querySelector(`[data-tab="${active}"]`)?.classList.add("active");
         >
           <span>
             {button.image && <Image src={button.image} alt={button.name} />}
-            {button.icon && <Icon name={button.icon} group="solid" />}
+            {button.icon && <Icon icon={button.icon} />}
             {button.name}
           </span>
         </button>
@@ -169,7 +170,7 @@ body.querySelector(`[data-tab="${active}"]`)?.classList.add("active");
         }
 
         img,
-        :global(i) {
+        :global(.icon) {
           width: 1em;
           height: 1em;
           text-align: center;
@@ -177,7 +178,7 @@ body.querySelector(`[data-tab="${active}"]`)?.classList.add("active");
         img {
           font-size: 1.5em;
         }
-        :global(i) {
+        :global(.icon) {
           font-size: 1.8em;
         }
       }
@@ -204,7 +205,7 @@ body.querySelector(`[data-tab="${active}"]`)?.classList.add("active");
         text-align: center;
         font-size: 1.2em;
 
-        :global(i) {
+        :global(.icon) {
           font-size: 2em;
         }
 

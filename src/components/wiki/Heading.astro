@@ -1,4 +1,8 @@
 ---
+import Icon from "../common/Icon.astro";
+
+import { faLink } from "@fortawesome/free-solid-svg-icons";
+
 const { id, level } = Astro.props;
 
 const Element = `h${level}`;
@@ -7,15 +11,11 @@ export interface Props {
   id: string;
   level: 1 | 2 | 3 | 4 | 5 | 6;
 }
-
-import Icon from "../common/Icon.astro";
 ---
 
 <div class="heading" id={id}>
-  <a href={`#${id}`}
-    ><Icon name="link" group="solid" class="icon" /><Element><slot /></Element
-    ></a
-  >
+  <a href={`#${id}`}><Icon icon={faLink} /></a>
+  <Element><slot /></Element>
 </div>
 
 <style lang="scss">
