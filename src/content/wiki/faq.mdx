@@ -13,6 +13,8 @@ import windowsImg from "~/assets/images/windows.svg";
 import wslImg from "~/assets/images/wsl.svg";
 import linuxImg from "~/assets/images/linux.svg";
 
+import { faQuestion } from "@fortawesome/free-solid-svg-icons";
+
 <AccordionGroup>
   <Accordion>
   <span slot="summary">
@@ -25,7 +27,7 @@ For debugging and a more detailed log file, you can add [`--loglevel=trace`](/wi
   active="VS Code"
   buttons={[
     { name: "VS Code", image: vscodeImg, accent: "#23a9f2" },
-    { name: "Other", icon: "question", accent: "#ff158e" },
+    { name: "Other", icon: faQuestion, accent: "#ff158e" },
   ]}
 >
   <div data-tab="VS Code">

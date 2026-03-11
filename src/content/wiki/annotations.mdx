@@ -9,6 +9,8 @@ import Accordion from "~/components/common/Accordion.astro";
 import Tabs from "~/components/common/Tabs.astro";
 import CodeBlock from "~/components/common/CodeBlock.astro";
 
+import { faCircle, faShapes } from "@fortawesome/free-solid-svg-icons";
+
 The language server does its best to infer types through contextual analysis, however, sometimes manual documentation is necessary to improve completion and signature information. It does this through LuaCATS (**L**ua **C**omment **A**nd **T**ype **S**ystem) annotations, which are based off of [EmmyLua annotations](https://emmylua.github.io/annotation.html).
 
 Annotations are prefixed with `---`, like a Lua comment with one extra dash.
@@ -170,8 +172,8 @@ An alias can be used to create your own type. You can also use it to create an e
 <Tabs
   active="Simple"
   buttons={[
-    { name: "Simple", icon: "circle", accent: "#00ff00" },
-    { name: "Enum", icon: "shapes", accent: "#ff8800" },
+    { name: "Simple", icon: faCircle, accent: "#00ff00" },
+    { name: "Enum", icon: faShapes, accent: "#ff8800" },
   ]}
 >
   <div data-tab="Simple">

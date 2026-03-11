@@ -8,6 +8,8 @@ import Tabs from "~/components/common/Tabs.astro";
 
 import vscodeImg from "~/assets/images/vscode.svg";
 
+import { faQuestion } from "@fortawesome/free-solid-svg-icons";
+
 ## Example
 
 <Accordion>
@@ -254,7 +256,7 @@ import vscodeImg from "~/assets/images/vscode.svg";
   active="VS Code"
   buttons={[
     { name: "VS Code", image: vscodeImg, accent: "#23a9f2" },
-    { name: "Other", icon: "question", accent: "#ff158e" },
+    { name: "Other", icon: faQuestion, accent: "#ff158e" },
   ]}
 >
   <div data-tab="VS Code">Use the `Lua: Export Document` command</div>

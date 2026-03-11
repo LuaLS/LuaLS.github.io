@@ -6,6 +6,8 @@ description: Addons allow users to add their own content to the language server.
 import Remark from "~/components/common/Remark.astro";
 import Icon from "~/components/common/Icon.astro";
 
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
+
 Addons can be used to add additional content for the Lua Language Server by doing the following:
 
 - Providing [definitions](/wiki/definition-files) for a framework/library/API.
@@ -90,7 +92,7 @@ The addon manager can be opened from the command palette <kbd>Ctrl + Shift + P</
 
 The addon manager is a [webview](https://code.visualstudio.com/api/extension-guides/webview) (basically an iframe) that contains a [Vue.js webapp](https://github.com/LuaLS/vscode-lua-webvue).
 
-If you have feedback on the addon manager, please leave it in the [vscode-lua repository](https://github.com/LuaLS/vscode-lua) <Icon name="heart" group="fas" color="red"/>.
+If you have feedback on the addon manager, please leave it in the [vscode-lua repository](https://github.com/LuaLS/vscode-lua) <Icon icon={faHeart} color="red"/>.
 
 <Remark type="note">
   The addon manager uses Git to retrieve addons, make sure you have access to
@@ -164,7 +166,7 @@ We'd love feedback with publishing and installing addons via LuaRocks. Using Lua
 2. Plugins are now automatically discovered and enabled upon addon installation.
 3. Addons can depend on each other using the native `dependencies` table of the `*.rockspec` file.
 
-See the [README for the luarocks build backend](https://github.com/LuaLS/luarocks-build-addon#readme) to learn more. Please provide all feedback in that repo. <Icon name="heart" group="fas" color="red"/>
+See the [README for the luarocks build backend](https://github.com/LuaLS/luarocks-build-addon#readme) to learn more. Please provide all feedback in that repo. <Icon icon={faHeart} color="red"/>
 
 See https://gitlab.com/carsakiller/lls-addon-cc-tweaked as an example, which is a migrated version of the [cc-tweaked addon](https://gitlab.com/carsakiller/cc-tweaked-documentation).
 
