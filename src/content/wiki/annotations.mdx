@@ -1180,6 +1180,17 @@ local function isEnabled() end
 </Accordion>
 
 <Accordion>
+<span slot="summary">Multiple Named, Described Function Returns</span>
+
+```Lua
+---@return boolean ok # true on success
+---@return table|nil result # the parsed result or nil on error
+local function parse() end
+```
+
+</Accordion>
+
+<Accordion>
 <span slot="summary">Described Function Return</span>
 
 ```Lua
