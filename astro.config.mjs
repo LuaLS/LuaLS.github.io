@@ -9,6 +9,9 @@ import rehypeMdxCodeProps from "rehype-mdx-code-props";
 export default defineConfig({
   site: "https://luals.github.io",
   integrations: [mdx()],
+  image: {
+    domains: ["avatars.githubusercontent.com"],
+  },
   markdown: {
     /** We use our own syntax highlight from highlight.js */
     syntaxHighlight: false,
