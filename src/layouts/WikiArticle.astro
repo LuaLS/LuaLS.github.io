@@ -11,6 +11,14 @@ import path from "path";
 import dayjs from "~/services/time";
 import Tooltip from "~/components/common/Tooltip.astro";
 import Time from "~/components/common/Time.astro";
+import {
+  faCircleExclamation,
+  faClockRotateLeft,
+  faList,
+  faNewspaper,
+  faPencil,
+  faX,
+} from "@fortawesome/free-solid-svg-icons";
 
 const articles = await getCollection("wiki");
 
@@ -39,20 +47,14 @@ const modifiedTime = lastModified
 
 <Layout title="Wiki" transition={true} displayFooter={false}>
   <div class="columns">
-    <aside id="article-browser" class="sidebar">
-      <button class="open"
-        ><Icon
-          name="newspaper"
-          group="solid"
-          ariaLabel="Open article browser"
-        /></button
-      >
-      <button class="close"
-        ><Icon
-          name="x"
-          group="solid"
-          ariaLabel="Close article browser"
-        /></button
+    <aside
+      id="article-browser"
+      class="sidebar"
+      aria-label="Open Article Browser"
+    >
+      <button class="open"><Icon icon={faNewspaper} /></button>
+      <button class="close" aria-label="Close article browser"
+        ><Icon icon={faX} /></button
       >
       <h2 class="title">Articles</h2>
       <div class="content">
@@ -80,7 +82,7 @@ const modifiedTime = lastModified
             <div class="topbar">
               <div class="modified">
                 <Tooltip content={modifiedTime} placement="bottom">
-                  <Icon name="clock-rotate-left" group="solid" />
+                  <Icon icon={faClockRotateLeft} />
                   <Time datetime={lastModified}>{modifiedTime}</Time>
                 </Tooltip>
               </div>
@@ -92,7 +94,7 @@ const modifiedTime = lastModified
                     href={`https://github.com/LuaLS/LuaLS.github.io/edit/main/src/content/wiki/${article.id}.mdx`}
                     aria-label="Edit page"
                   >
-                    <Icon name="pencil" group="solid"/>
+                    <Icon icon={faPencil} />
                   </a>
                 </Tooltip>
                 <Tooltip content="Report issue with page" placement="bottom">
@@ -104,7 +106,7 @@ const modifiedTime = lastModified
                     )}`}
                     aria-label="Report issue"
                   >
-                    <Icon name="circle-exclamation" group="solid"/>
+                    <Icon icon={faCircleExclamation} />
                   </a>
                 </Tooltip>
               </div>
@@ -127,11 +129,11 @@ const modifiedTime = lastModified
       <Footer />
     </div>
     <aside id="outline" class="sidebar">
-      <button class="open"
-        ><Icon name="list" group="solid" ariaLabel="Open outline" /></button
+      <button class="open" aria-label="Open outline"
+        ><Icon icon={faList}/></button
       >
-      <button class="close"
-        ><Icon name="x" group="solid" ariaLabel="Close outline" /></button
+      <button class="close" aria-label="Close outline"
+        ><Icon icon={faX}/></button
       >
       <h2 class="title">Outline</h2>
       <nav class="content">
@@ -464,7 +466,7 @@ const modifiedTime = lastModified
       margin: auto;
     }
 
-    :global(svg) {
+    :global(svg:not(.icon)) {
       display: block;
       margin: auto;
     }

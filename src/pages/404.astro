@@ -1,4 +1,5 @@
 ---
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import ExternalLink from "../components/common/ExternalLink.astro";
 import Icon from "../components/common/Icon.astro";
 import Layout from "../layouts/Main.astro";
@@ -18,7 +19,7 @@ import Layout from "../layouts/Main.astro";
       >.
     </p>
 
-    <button id="back"><Icon group="solid" name="arrow-left" /> Go Back</button>
+    <button id="back"><Icon icon={faArrowLeft} /> Go Back</button>
   </main>
 </Layout>
 

@@ -1,4 +1,4 @@
-import { defineConfig } from "astro/config";
+import { defineConfig, fontProviders } from "astro/config";
 
 import mdx from "@astrojs/mdx";
 import rehypeMermaid from "rehype-mermaid";
@@ -9,6 +9,26 @@ import rehypeMdxCodeProps from "rehype-mdx-code-props";
 export default defineConfig({
   site: "https://luals.github.io",
   integrations: [mdx()],
+  image: {
+    domains: ["avatars.githubusercontent.com"],
+  },
+  fonts: [
+    {
+      name: "Poppins",
+      cssVariable: "--font-poppins",
+      provider: fontProviders.google(),
+    },
+    {
+      name: "Prompt",
+      cssVariable: "--font-prompt",
+      provider: fontProviders.google(),
+    },
+    {
+      name: "Source Code Pro",
+      cssVariable: "--font-source-code-pro",
+      provider: fontProviders.google(),
+    },
+  ],
   markdown: {
     /** We use our own syntax highlight from highlight.js */
     syntaxHighlight: false,

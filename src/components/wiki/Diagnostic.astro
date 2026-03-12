@@ -2,11 +2,18 @@
 import Icon from "../common/Icon.astro";
 import Tooltip from "../common/Tooltip.astro";
 
+import {
+  faExclamation,
+  faInfo,
+  faLightbulb,
+  faTriangleExclamation,
+} from "@fortawesome/free-solid-svg-icons";
+
 const LEVEL_ICONS = {
-  Information: "info",
-  Warning: "triangle-exclamation",
-  Error: "exclamation",
-  Hint: "lightbulb",
+  Information: faInfo,
+  Warning: faTriangleExclamation,
+  Error: faExclamation,
+  Hint: faLightbulb,
 };
 
 const { level } = Astro.props;
@@ -22,7 +29,7 @@ export interface Props {
   <div>
     <slot name="name" />
     <Tooltip content={`Default severity: ${level}`}>
-      <Icon name={icon} group="solid" />
+      <Icon icon={icon} />
     </Tooltip>
   </div>
   <slot />

@@ -128,17 +128,17 @@ Free icons from [fontawesome](https://fontawesome.com/icons).
 
 ### Arguments
 
-| Name    | Type                  | Description                                       |
-| ------- | --------------------- | ------------------------------------------------- |
-| `group` | `"brands" \| "solid"` | The group that the icon belongs to i.e. "brands". |
-| `name`  | `string`              | The name of the icon.                             |
-| `class` | `string?`             | The name of a class to apply to the icon.         |
-| `color` | `string?`             | The colour of the icon.                           |
+| Name    | Type                | Description                               |
+| ------- | ------------------- | ----------------------------------------- |
+| `icon`  | `fa.IconDefinition` | The fontawesome icon to display           |
+| `name`  | `string`            | The name of the icon.                     |
+| `class` | `string?`           | The name of a class to apply to the icon. |
+| `color` | `string?`           | The colour of the icon.                   |
 
 ### Example
 
 ```HTML
-<Icon group="solid" name="peace" color="#9400ff"/>
+<Icon icon={faPeace} color="#9400ff"/>
 ```
 
 ## [Loading](./Loading.astro)

@@ -1,14 +1,24 @@
 ---
 import Icon from "./Icon.astro";
 
+import {
+  faAsterisk,
+  faCircleDot,
+  faExclamation,
+  faNoteSticky,
+  faPenRuler,
+  faTrashCan,
+  faWarning,
+} from "@fortawesome/free-solid-svg-icons";
+
 const TYPES = {
-  note: { displayName: "Note", icon: "note-sticky" },
-  warning: { displayName: "Warning", icon: "warning" },
-  important: { displayName: "Important", icon: "exclamation" },
-  WIP: { displayName: "WIP", icon: "pen-ruler" },
-  deprecated: { displayName: "Deprecated", icon: "trash-can" },
-  issue: { displayName: "Issue", icon: "circle-dot" },
-  recommendation: {displayName: "Recommendation", icon: "asterisk"}
+  note: { displayName: "Note", icon: faNoteSticky },
+  warning: { displayName: "Warning", icon: faWarning },
+  important: { displayName: "Important", icon: faExclamation },
+  WIP: { displayName: "WIP", icon: faPenRuler },
+  deprecated: { displayName: "Deprecated", icon: faTrashCan },
+  issue: { displayName: "Issue", icon: faCircleDot },
+  recommendation: { displayName: "Recommendation", icon: faAsterisk },
 };
 
 type RemarkType =
@@ -18,7 +28,7 @@ type RemarkType =
   | "WIP"
   | "deprecated"
   | "issue"
-  | "recommendation"
+  | "recommendation";
 
 export interface Props {
   type: RemarkType;
@@ -40,7 +50,10 @@ if (display) {
 } else {
   // If display mode is not specified, fetch the slot text content length and determine best mode.
   const content = await Astro.slots.render("default");
-  const text = content.replace(/<[^>]*>/g, "").replace(/\s+/g, ' ').trim();
+  const text = content
+    .replace(/<[^>]*>/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
 
   if (text.length < 115) {
     classList.push("compact");
@@ -52,7 +65,7 @@ if (display) {
 
 <div class:list={classList}>
   <div>
-    <Icon name={remark.icon} group="solid" />
+    <Icon icon={remark.icon} />
     {remark.displayName}
   </div>
   <div class="content">

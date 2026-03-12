@@ -2,11 +2,20 @@
 import Icon from "./Icon.astro";
 import Tooltip from "./Tooltip.astro";
 
-const TYPE_ICONS = {
-  file: "file",
-  code: "file-code",
-  image: "file-image",
-  directory: "folder",
+import { type IconDefinition } from "@fortawesome/fontawesome-svg-core";
+import {
+  faBan,
+  faFile,
+  faFileCode,
+  faFileImage,
+  faFolder,
+} from "@fortawesome/free-solid-svg-icons";
+
+const TYPE_ICONS: { [key: string]: IconDefinition } = {
+  file: faFile,
+  code: faFileCode,
+  image: faFileImage,
+  directory: faFolder,
 };
 
 const { name, type, open, gitignored } = Astro.props;
@@ -31,12 +40,12 @@ export interface Props {
 
 <details class="file-tree-item" open={open}>
   <summary>
-    <Icon name={icon} group="solid" />
+    <Icon icon={icon} />
     {name}
     {
       gitignored && (
         <Tooltip content="Git ignored" placement="right">
-          <Icon name="ban" group="solid" />
+          <Icon icon={faBan} />
         </Tooltip>
       )
     }
