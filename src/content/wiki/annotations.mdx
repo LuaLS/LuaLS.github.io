@@ -1185,8 +1185,8 @@ local function isEnabled() end
 <span slot="summary">Multiple Named, Described Function Returns</span>
 
 ```Lua
----@return boolean ok # true on success
 ---@return table|nil result # the parsed result or nil on error
+---@return string|nil error # error message or nil on success
 local function parse() end
 ```
 
