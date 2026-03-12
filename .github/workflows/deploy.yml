@@ -28,10 +28,10 @@ jobs:
         run: bun install
 
       - name: Install Playwright (for MermaidJS)
-        run: bun playwright install --with-deps chromium
+        run: bunx --bun playwright install --with-deps chromium
 
       - name: Build Website
-        run: bun run build
+        run: bunx --bun astro build
 
       - name: Upload Built Website
         uses: actions/upload-pages-artifact@v3
