@@ -11,13 +11,13 @@
     "format": "prettier . --write"
   },
   "dependencies": {
-    "@astrojs/mdx": "^5.0.1",
+    "@astrojs/mdx": "^5.0.4",
     "@fortawesome/fontawesome-free": "^7.2.0",
     "@fortawesome/fontawesome-svg-core": "^7.2.0",
     "@fortawesome/free-brands-svg-icons": "^7.2.0",
     "@fortawesome/free-solid-svg-icons": "^7.2.0",
     "@types/lodash": "^4.17.24",
-    "astro": "^6.0.5",
+    "astro": "^6.1.9",
     "autoprefixer": "^10.4.27",
     "axios": "^1.13.6",
     "dayjs": "^1.11.20",
