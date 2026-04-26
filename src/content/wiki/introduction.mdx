@@ -39,5 +39,4 @@ Even though Lua almost outright rejects being opinionated, in this section we'll
 
 If you are working on a simple project, especially one where definitions are unlikely to be re-used, your [definitions](/wiki/definition-files) should be placed and committed under a `types/`, `stubs/`, or similar directory within your workspace. This means you don't have to use [workspace.library](/wiki/settings#workspacelibrary). For large projects, or when the definitions will be used in multiple projects, they should be packaged as an [addon](/wiki/addons) and loaded with [workspace.library](/wiki/settings#workspacelibrary).
 
-
 Borrowing from TypeScript, [definition files](/wiki/definition-files) should be named `*.d.lua`, such as `filesystem.d.lua` so that they can quickly be identified as non-implementation ["meta"](/wiki/annotations#meta) code.

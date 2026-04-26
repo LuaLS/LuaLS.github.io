@@ -20,7 +20,7 @@ export interface Props {
 
 const icon = fa.icon(Astro.props.icon, { classes, styles });
 if (!icon?.html) {
-  throw new Error(`Failed to retrieve icon HTML for ${Astro.props.icon}`)
+  throw new Error(`Failed to retrieve icon HTML for ${Astro.props.icon}`);
 }
 ---
 
