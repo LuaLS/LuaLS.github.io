@@ -30,8 +30,6 @@ export default defineConfig({
     },
   ],
   markdown: {
-    /** We use our own syntax highlight from highlight.js */
-    syntaxHighlight: false,
     smartypants: false,
     rehypePlugins: [
       () => rehypeMermaid({ mermaidConfig: { darkMode: true, theme: "dark" } }),

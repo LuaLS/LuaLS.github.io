@@ -6,7 +6,9 @@ import CodeBlock from "../components/common/CodeBlock.astro";
 import Remark from "../components/common/Remark.astro";
 import Tooltip from "../components/common/Tooltip.astro";
 
+import { Code } from "astro:components";
 import { Image } from "astro:assets";
+
 import vsCodeImg from "~/assets/images/vscode.svg";
 import neovimImg from "~/assets/images/neovim.svg";
 import jetbrainsImg from "~/assets/images/jetbrains.svg";
@@ -366,7 +368,7 @@ const annotationCount = annotationsPage
               below. This is required because the language server expects to
               find files in the current working directory.
             </p>
-            <CodeBlock language="bash">
+            <CodeBlock lang="bash">
               <pre>#!/bin/bash
 exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot;</pre>
             </CodeBlock>
