@@ -7,7 +7,6 @@ getting-started: true
 import Remark from "~/components/common/Remark.astro";
 import Accordion from "~/components/common/Accordion.astro";
 import Tabs from "~/components/common/Tabs.astro";
-import CodeBlock from "~/components/common/CodeBlock.astro";
 
 import { faCircle, faShapes } from "@fortawesome/free-solid-svg-icons";
 
@@ -123,7 +122,7 @@ Below is a list of how you can document more advanced types:
 
 Unions may need to be placed in parentheses in certain situations, such as when defining an array that contains multiple value types:
 
-```Lua
+```lua
 ---@type (string | integer)[]
 local myArray = {}
 ```
@@ -183,7 +182,7 @@ An alias can be used to create your own type. You can also use it to create an e
   </div>
   <div data-tab="Enum">
     <div class="syntax">
-      ```Lua
+      ```lua
       ---@alias <name>
       ---| '<value>' [# description]
       ```
@@ -200,7 +199,7 @@ An alias can be used to create your own type. You can also use it to create an e
 <Accordion>
 <span slot="summary">Simple alias</span>
 
-```Lua
+```lua
 ---@alias userID integer The ID of a user
 ```
 
@@ -208,7 +207,7 @@ An alias can be used to create your own type. You can also use it to create an e
 <Accordion>
 <span slot="summary">Custom Type</span>
 
-```Lua
+```lua
 ---@alias modes "r" | "w"
 ```
 
@@ -216,7 +215,7 @@ An alias can be used to create your own type. You can also use it to create an e
 <Accordion>
 <span slot="summary">Custom Type with Descriptions</span>
 
-```Lua
+```lua
 ---@alias DeviceSide
 ---| '"left"' # The left side of the device
 ---| '"right"' # The right side of the device
@@ -233,7 +232,7 @@ local function checkSide(side) end
 <Accordion>
 <span slot="summary">Literal Custom Type</span>
 
-```Lua
+```lua
 local A = "Hello"
 local B = "World"
 
@@ -247,7 +246,7 @@ function foo(x) end
 <Accordion>
 <span slot="summary">Literal Custom Type with Descriptions</span>
 
-```Lua
+```lua
 local A = "Hello"
 local B = "World"
 
@@ -287,7 +286,7 @@ Force a type onto an expression.
 <Accordion>
 <span slot="summary">Override Type</span>
 
-```Lua
+```lua
 ---@param key string Must be a string
 local function doSomething(key) end
 
@@ -311,7 +310,7 @@ Mark a function as being asynchronous. When [`hint.await`](/wiki/settings/#hinta
 <Accordion>
 <span slot="summary">Mark Function Async</span>
 
-```Lua
+```lua
 ---@async
 ---Perform an asynchronous HTTP GET request
 function http.get(url) end
@@ -332,7 +331,7 @@ Cast a variable to a different type or types.
 <Accordion>
 <span slot="summary">Simple Cast</span>
 
-```Lua
+```lua
 ---@type integer | string
 local x
 
@@ -344,7 +343,7 @@ print(x) --> x: string
 <Accordion>
 <span slot="summary">Add Type</span>
 
-```Lua
+```lua
 ---@type integer
 local x
 
@@ -356,7 +355,7 @@ print(x) --> x: integer | boolean
 <Accordion>
 <span slot="summary">Remove Type</span>
 
-```Lua
+```lua
 ---@type integer|string
 local x
 
@@ -368,7 +367,7 @@ print(x) --> x: string
 <Accordion>
 <span slot="summary">Cast Multiple Types</span>
 
-```Lua
+```lua
 ---@type string
 local x --> x: string
 
@@ -380,7 +379,7 @@ print(x) --> x:string | boolean | number
 <Accordion>
 <span slot="summary">Cast Possibly `nil`</span>
 
-```Lua
+```lua
 ---@type string
 local x
 
@@ -405,7 +404,7 @@ Define a class. Can be used with [`@field`](#field) to define a table structure.
 <Accordion>
 <span slot="summary">Define a Class</span>
 
-```Lua
+```lua
 ---@class Car
 local Car = {}
 ```
@@ -414,7 +413,7 @@ local Car = {}
 <Accordion>
 <span slot="summary">Class Inheritance</span>
 
-```Lua
+```lua
 ---@class Vehicle
 local Vehicle = {}
 
@@ -426,7 +425,7 @@ local Plane = {}
 <Accordion>
 <span slot="summary">Create exact class</span>
 
-```Lua
+```lua
 ---@class (exact) Point
 ---@field x number
 ---@field y number
@@ -440,7 +439,7 @@ Point.z = 3 -- Warning
 <Accordion>
 <span slot="summary">How the `table` Class is Implemented</span>
 
-```Lua
+```lua
 ---@class table<K, V>: { [K]: V }
 ```
 
@@ -459,7 +458,7 @@ Mark a function as deprecated. This will trigger the [`deprecated` diagnostic](/
 <Accordion>
 <span slot="summary">Mark a Function as Deprecated</span>
 
-```Lua
+```lua
 ---@deprecated
 function outdated() end
 ```
@@ -487,7 +486,7 @@ Toggle [diagnostics](/wiki/diagnostics/) for the next line, current line, or who
 <Accordion>
 <span slot="summary">Disable Diagnostic on Next Line</span>
 
-```Lua
+```lua
 ---@diagnostic disable-next-line: unused-local
 ```
 
@@ -495,7 +494,7 @@ Toggle [diagnostics](/wiki/diagnostics/) for the next line, current line, or who
 <Accordion>
 <span slot="summary">Enable Spell Checking in this File</span>
 
-```Lua
+```lua
 ---@diagnostic enable:spell-check
 ```
 
@@ -518,7 +517,7 @@ Mark a Lua table as an enum, giving it similar functionality to [`@alias`](#alia
 <Accordion>
 <span slot="summary">Define Table as Enum</span>
 
-```Lua
+```lua
 ---@enum colors
 local COLORS = {
 	black = 0,
@@ -539,7 +538,7 @@ setColor(COLORS.green)
 <Accordion>
 <span slot="summary">Define Table Keys as Enum</span>
 
-```Lua
+```lua
 ---@enum (key) Direction
 local direction = {
     LEFT = 1,
@@ -585,7 +584,7 @@ It is also possible to allow _any_ key of a certain type to be added using the b
 <Accordion>
 <span slot="summary">Simple Documentation of a Class</span>
 
-```Lua
+```lua
 ---@class Person
 ---@field height number The height of this person in cm
 ---@field weight number The weight of this person in kg
@@ -601,7 +600,7 @@ local function hire(person) end
 <Accordion>
 <span slot="summary">Mark Field as Private</span>
 
-```Lua
+```lua
 ---@class Animal
 ---@field private legs integer
 ---@field eyes integer
@@ -619,7 +618,7 @@ end
 <Accordion>
 <span slot="summary">Mark Field as Protected</span>
 
-```Lua
+```lua
 ---@class Animal
 ---@field protected legs integer
 ---@field eyes integer
@@ -637,7 +636,7 @@ end
 <Accordion>
 <span slot="summary">Typed Field</span>
 
-```Lua
+```lua
 ---@class Numbers
 ---@field named string
 ---@field [string] integer
@@ -661,7 +660,7 @@ Generics allow code to be reused and serve as a sort of "placeholder" for a type
 <Accordion>
 <span slot="summary">Generic Function</span>
 
-```Lua
+```lua
 ---@generic T : integer
 ---@param p1 T
 ---@return T, T[]
@@ -680,7 +679,7 @@ local v3, v4 = Generic(10)
 <Accordion>
 <span slot="summary">Capture with Backticks</span>
 
-```Lua
+```lua
 ---@class Vehicle
 
 ---@generic T
@@ -704,7 +703,7 @@ local obj2 = newWithoutCapture("Vehicle")
 <Accordion>
 <span slot="summary">Array Class Using Generics</span>
 
-```Lua
+```lua
 ---@class Array<T>: { [integer]: T }
 
 ---@type Array<string>
@@ -722,7 +721,7 @@ See [Issue #734](https://github.com/LuaLS/lua-language-server/issues/734#issueco
 <Accordion>
 <span slot="summary">Dictionary Class Using Generics</span>
 
-```Lua
+```lua
 ---@class Dictionary<T>: { [string]: T }
 
 ---@type Dictionary<boolean>
@@ -753,7 +752,7 @@ Marks a file as "meta", meaning it is used for definitions and not for its funct
 <Accordion>
 <span slot="summary">Mark Meta File</span>
 
-```Lua
+```lua
 ---@meta [name]
 ```
 
@@ -774,7 +773,7 @@ Simulates `require`-ing a file.
 <Accordion>
 <span slot="summary">"Require" a File</span>
 
-```Lua
+```lua
 ---@module 'http'
 
 --The above provides the same as
@@ -786,7 +785,7 @@ require 'http'
 <Accordion>
 <span slot="summary">"Require" a File and Assign to a Variable</span>
 
-```Lua
+```lua
 ---@module 'http'
 local http
 
@@ -810,7 +809,7 @@ Mark a function as having return values that **cannot** be ignored/discarded. Th
 <Accordion>
 <span slot="summary">Prevent Ignoring a Function's Returns</span>
 
-```Lua
+```lua
 ---@return string username
 ---@nodiscard
 function getUsername() end
@@ -841,7 +840,7 @@ Provides type declarations for an [operator metamethod](http://lua-users.org/wik
 <Accordion>
 <span slot="summary">Declare `__add` Metamethod</span>
 
-```Lua
+```lua
 ---@class Vector
 ---@operator add(Vector): Vector
 
@@ -858,7 +857,7 @@ local v3 = v1 + v2
 <Accordion>
 <span slot="summary">Declare Unary Minus Metamethod</span>
 
-```Lua
+```lua
 ---@class Passcode
 ---@operator unm:integer
 
@@ -878,7 +877,7 @@ local pB = -pA
   signature for a class.
 </Remark>
 
-```Lua
+```lua
 ---@class URL
 ---@operator call:string
 local URL = {}
@@ -916,7 +915,7 @@ Define an additional signature for a function.
 <Accordion>
 <span slot="summary">Define Function Overload</span>
 
-```Lua
+```lua
 ---@param objectID integer The id of the object to remove
 ---@param whenOutOfView boolean Only remove the object when it is not visible
 ---@return boolean success If the object was successfully removed
@@ -929,7 +928,7 @@ local function removeObject(objectID, whenOutOfView) end
 <Accordion>
 <span slot="summary">Define Class Call Signature</span>
 
-```Lua
+```lua
 ---@overload fun(a: string): boolean
 local foo = setmetatable({}, {
 	__call = function(a)
@@ -956,7 +955,7 @@ Mark a function as private to the file it is defined in. A packaged function can
 <Accordion>
 <span slot="summary">Mark a Function as Private to a Package</span>
 
-```Lua
+```lua
 ---@class Animal
 ---@field private eyes integer
 local Animal = {}
@@ -985,7 +984,7 @@ Define a parameter/argument for a function. This tells the language server what 
 <Accordion>
 <span slot="summary">Simple Function Parameter</span>
 
-```Lua
+```lua
 ---@param username string The name to set for this user
 function setUsername(username) end
 ```
@@ -995,7 +994,7 @@ function setUsername(username) end
 <Accordion>
 <span slot="summary">Parameter Union Type</span>
 
-```Lua
+```lua
 ---@param setting string The name of the setting
 ---@param value string|number|boolean The value of the setting
 local function settings.set(setting, value) end
@@ -1006,7 +1005,7 @@ local function settings.set(setting, value) end
 <Accordion>
 <span slot="summary">Optional Parameter</span>
 
-```Lua
+```lua
 ---@param role string The name of the role
 ---@param isActive? boolean If the role is currently active
 ---@return Role
@@ -1018,7 +1017,7 @@ function Role.new(role, isActive) end
 <Accordion>
 <span slot="summary">Variable Number of Parameters</span>
 
-```Lua
+```lua
 ---@param index integer
 ---@param ... string Tags to add to this entry
 local function addTags(index, ...) end
@@ -1029,7 +1028,7 @@ local function addTags(index, ...) end
 <Accordion>
 <span slot="summary">Generic Function Parameter</span>
 
-```Lua
+```lua
 ---@class Box
 
 ---@generic T
@@ -1049,7 +1048,7 @@ See [`@generic`](#generic) for more info.
 <Accordion>
 <span slot="summary">Custom Type Parameter</span>
 
-```Lua
+```lua
 ---@param mode string
 ---|"'immediate'"  # comment 1
 ---|"'async'" # comment 2
@@ -1061,7 +1060,7 @@ function bar(mode) end
 <Accordion>
 <span slot="summary">Literal Custom Type Parameter</span>
 
-```Lua
+```lua
 local A = 0
 local B = 1
 
@@ -1088,7 +1087,7 @@ Mark a function as private to a [`@class`](#class). Private functions can be acc
 <Accordion>
 <span slot="summary">Mark a function as private</span>
 
-```Lua
+```lua
 ---@class Animal
 ---@field private eyes integer
 local Animal = {}
@@ -1120,7 +1119,7 @@ Mark a function as protected within a [`@class`](#class). Protected functions ca
 <Accordion>
 <span slot="summary">Mark a function as protected</span>
 
-```Lua
+```lua
 ---@class Animal
 ---@field private eyes integer
 local Animal = {}
@@ -1154,7 +1153,7 @@ Define a `return` value for a function. This tells the language server what type
 <Accordion>
 <span slot="summary">Simple Function Return</span>
 
-```Lua
+```lua
 ---@return boolean
 local function isEnabled() end
 ```
@@ -1164,7 +1163,7 @@ local function isEnabled() end
 <Accordion>
 <span slot="summary">Named Function Return</span>
 
-```Lua
+```lua
 ---@return boolean enabled
 local function isEnabled() end
 ```
@@ -1174,7 +1173,7 @@ local function isEnabled() end
 <Accordion>
 <span slot="summary">Named, Described Function Return</span>
 
-```Lua
+```lua
 ---@return boolean enabled If the item is enabled
 local function isEnabled() end
 ```
@@ -1184,7 +1183,7 @@ local function isEnabled() end
 <Accordion>
 <span slot="summary">Multiple Named, Described Function Returns</span>
 
-```Lua
+```lua
 ---@return boolean ok # true on success
 ---@return table|nil result # the parsed result or nil on error
 local function parse() end
@@ -1195,7 +1194,7 @@ local function parse() end
 <Accordion>
 <span slot="summary">Described Function Return</span>
 
-```Lua
+```lua
 ---@return boolean # If the item is enabled
 local function isEnabled() end
 ```
@@ -1205,7 +1204,7 @@ local function isEnabled() end
 <Accordion>
 <span slot="summary">Optional Function Return</span>
 
-```Lua
+```lua
 ---@return boolean|nil error
 local function makeRequest() end
 ```
@@ -1215,7 +1214,7 @@ local function makeRequest() end
 <Accordion>
 <span slot="summary">Variable Function Returns</span>
 
-```Lua
+```lua
 ---@return integer count Number of nicknames found
 ---@return string ...
 local function getNicknames() end
@@ -1236,7 +1235,7 @@ Allows you to reference a specific symbol (e.g. `function`, `class`) from the wo
 <Accordion>
 <span slot="summary">Basic Usage</span>
 
-```Lua
+```lua
 ---Hovering the below function will show a link that jumps to http.get()
 
 ---@see http.get
@@ -1259,7 +1258,7 @@ searching for the definition of an item, its `@source` will be used instead.
 <Accordion>
 <span slot="summary">Link to file using absolute path</span>
 
-```Lua
+```lua
 ---@source C:/Users/me/Documents/program/myFile.c
 local a
 ```
@@ -1269,7 +1268,7 @@ local a
 <Accordion>
 <span slot="summary">Link to file using URI</span>
 
-```Lua
+```lua
 ---@source file:///C:/Users/me/Documents/program/myFile.c:10
 local b
 ```
@@ -1279,7 +1278,7 @@ local b
 <Accordion>
 <span slot="summary">Link to file using relative path</span>
 
-```Lua
+```lua
 ---@source local/file.c
 local c
 ```
@@ -1289,7 +1288,7 @@ local c
 <Accordion>
 <span slot="summary">Link to line and character in file</span>
 
-```Lua
+```lua
 ---@source local/file.c:10:8
 local d
 ```
@@ -1309,7 +1308,7 @@ Mark a variable as being of a certain type. Union types are separated with a pip
 <Accordion>
 <span slot="summary">Basic Type Definition</span>
 
-```Lua
+```lua
 ---@type boolean
 local x
 ```
@@ -1319,7 +1318,7 @@ local x
 <Accordion>
 <span slot="summary">Array Type Definition</span>
 
-```Lua
+```lua
 ---@type string[]
 local names
 ```
@@ -1329,7 +1328,7 @@ local names
 <Accordion>
 <span slot="summary">Dictionary Type Definition</span>
 
-```Lua
+```lua
 ---@type { [string]: boolean }
 local statuses
 ```
@@ -1339,7 +1338,7 @@ local statuses
 <Accordion>
 <span slot="summary">Table Type Definition</span>
 
-```Lua
+```lua
 ---@type table<userID, Player>
 local players
 ```
@@ -1349,7 +1348,7 @@ local players
 <Accordion>
 <span slot="summary">Union Type Definition</span>
 
-```Lua
+```lua
 ---@type boolean|number|"yes"|"no"
 local x
 ```
@@ -1359,7 +1358,7 @@ local x
 <Accordion>
 <span slot="summary">Function Type Definition</span>
 
-```Lua
+```lua
 ---@type fun(name: string, value: any): boolean
 local x
 ```
@@ -1384,7 +1383,7 @@ Mark a `function` as having variable arguments. For variable returns, see [`@ret
 <Accordion>
 <span slot="summary">Basic Variable Function Arguments</span>
 
-```Lua
+```lua
 ---@vararg string
 function concat(...) end
 ```
@@ -1412,7 +1411,7 @@ Possible `version` values:
 <Accordion>
 <span slot="summary">Declare Function Version</span>
 
-```Lua
+```lua
 ---@version >5.2, JIT
 function hello() end
 ```
@@ -1422,7 +1421,7 @@ function hello() end
 <Accordion>
 <span slot="summary">Declare Class Version</span>
 
-```Lua
+```lua
 ---@version 5.4
 ---@class Entry
 ```

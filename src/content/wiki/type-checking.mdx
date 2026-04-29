@@ -9,7 +9,7 @@ The language server offers type checking that helps you keep track of the types 
 
 Lua is a dynamically typed language, which means the following is completely valid:
 
-```Lua
+```lua
 local userInput = nil
 
 userInput = "Hello World!"
@@ -29,7 +29,7 @@ The Lua language server has had a type checking feature since `v3.4.0` that brin
 
 The language server is able to keep track of types, like in the below example:
 
-```Lua
+```lua
 local myString = "Hello World"
 
 myString = false
@@ -39,7 +39,7 @@ This will trigger a warning [diagnostic](/wiki/diagnostics), in this case the [`
 
 To get even better diagnostics, you can use [annotations](/wiki/annotations) to provide more context for the language server to work with.
 
-```Lua
+```lua
 local settings = {}
 
 ---@param settingName string The name of the setting to set the value of

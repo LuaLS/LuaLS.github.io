@@ -19,7 +19,7 @@ import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 
     ## concat
 
-    ```Lua
+    ```lua
     (method) Array:concat(array: Array)
     -> Object: Array
     ```
@@ -30,7 +30,7 @@ import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 
     ## every
 
-    ```Lua
+    ```lua
     (method) Array:every(test: fun(index: integer, value: any, array: Array):boolean)
     -> passed: boolean
     ```
@@ -41,7 +41,7 @@ import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 
     ## fill
 
-    ```Lua
+    ```lua
     (method) Array:fill(value: any, start: integer, stop?: integer)
     -> Object: Array
     ```
@@ -62,7 +62,7 @@ import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 <Accordion>
     <span slot="summary">JSON</span>
 
-    ```JSON
+    ```json
     [
         {
             "defines": [
@@ -277,7 +277,7 @@ By specifying [`Lua.docScriptPath` setting](/wiki/settings#docscriptpath), you c
 
     <span slot="summary">API</span>
 
-    ```Lua
+    ```lua
     export.getLocalPath(uri) -- Called when the documentation needs to get the path of a source relative to the DOC path. Returns the relative path, or the absolute path, prefixed with the string '[FOREIGN]'
 
     export.positionOf(rowcol) -- Wrapper for guide.positionOf(rowcol[1], rowcol[2])

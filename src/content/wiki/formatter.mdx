@@ -39,7 +39,7 @@ To set a default global configuration across projects, navigate to your [configu
   <div data-tab="JSON">
 This format is used by Visual Studio Code's `settings.json` and `.luarc.json` files.
 
-```JSON
+```json
 "Lua.format.defaultConfig": {
     "indent_style": "space",
     "indent_size": "2"
@@ -50,7 +50,7 @@ This format is used by Visual Studio Code's `settings.json` and `.luarc.json` fi
   <div data-tab="Lua">
     This format is used by custom configuration files, often used with Neovim.
 
-    ```Lua
+    ```lua
     Lua = {
       format = {
           enable = true,
@@ -76,6 +76,6 @@ This format is used by Visual Studio Code's `settings.json` and `.luarc.json` fi
 
 To enable code style checking, you need to add the following entry to [`diagnostics.neededFileStatus`](/wiki/settings#diagnosticsneededfilestatus):
 
-```JSON
+```json
 ["codestyle-check"] = "Any"
 ```
