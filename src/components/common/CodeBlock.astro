@@ -19,7 +19,9 @@ let displayName: string | undefined;
 
 if (language && !shiki.isPlainLang(language)) {
   const langImport = await shiki.bundledLanguages[language]();
-  const langRegistration = langImport.default.find((l) => l.name === language);
+  const langRegistration = langImport.default.find(
+    (l) => l.name === language || l.aliases?.includes(language),
+  );
   displayName = langRegistration?.displayName;
 }
 
