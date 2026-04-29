@@ -1,0 +1,21 @@
+---
+import CodeBlock from "../common/CodeBlock.astro";
+
+interface Props {
+  ["data-language"]: any;
+}
+
+const lang = Astro.props["data-language"];
+---
+
+{
+  lang === undefined ? (
+    // prettier-ignore
+    <pre class="mermaid"><slot /></pre>
+  ) : (
+    <CodeBlock lang={lang}>
+      {/* prettier-ignore */}
+      <pre><slot /></pre>
+    </CodeBlock>
+  )
+}

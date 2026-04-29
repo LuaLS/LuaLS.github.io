@@ -2,7 +2,7 @@
 import { getCollection } from "astro:content";
 
 import Layout from "~/layouts/WikiArticle.astro";
-import CodeBlock from "~/components/common/CodeBlock.astro";
+import Pre from "~/components/wiki/Pre.astro";
 import WikiLink from "~/components/wiki/WikiLink.astro";
 import type { CollectionEntry } from "astro:content";
 import H1 from "~/components/wiki/headings/H1.astro";
@@ -36,7 +36,7 @@ export interface Props {
 >
   <Content
     components={{
-      pre: CodeBlock,
+      pre: Pre,
       a: WikiLink,
       h1: H1,
       h2: H2,
