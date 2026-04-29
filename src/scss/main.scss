@@ -1,9 +1,5 @@
 @use "variables";
 
-@use "fonts/Source_Code_Pro";
-@use "fonts/Prompt";
-@use "fonts/Poppins";
-
 html,
 body {
   min-height: 100vh;
@@ -21,6 +17,7 @@ html {
 }
 
 body {
+  font-family: var(--font-poppins);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -38,6 +35,7 @@ h3,
 h4,
 h5,
 h6 {
+  font-family: var(--font-prompt);
   text-align: center;
   word-wrap: break-word;
   white-space: normal;
@@ -87,6 +85,7 @@ pre {
 
 :not(pre) > code,
 kbd {
+  font-family: var(--font-source-code-pro);
   font-size: 0.8em;
   display: inline;
   padding: 0.1em 0.3em;
