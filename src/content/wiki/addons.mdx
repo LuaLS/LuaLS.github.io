@@ -130,23 +130,21 @@ The `config.json` file is very important for addons and must be included. A sche
 
 ```json
 {
-    // Name of the addon
-    "name": "My Awesome Addon",
+  // Name of the addon
+  "name": "My Awesome Addon",
 
-    // Lua string patterns to look for in a workspace.
-    // If detected, this addon will be recommended to enable
-    "words": [ "require[%s%(\"']+MAA[%)\"']" ],
+  // Lua string patterns to look for in a workspace.
+  // If detected, this addon will be recommended to enable
+  "words": ["require[%s%(\"']+MAA[%)\"']"],
 
-    // Lua string patterns to look for in filenames.
-    // If detected, this addon will be recommended to enable
-    "files": ["my-awesome-file.lua"],
+  // Lua string patterns to look for in filenames.
+  // If detected, this addon will be recommended to enable
+  "files": ["my-awesome-file.lua"],
 
-    // List of settings to apply when this addon is enabled
-    "settings": {
-        "Lua.diagnostics.globals" : [
-            "awesome"
-        ]
-    }
+  // List of settings to apply when this addon is enabled
+  "settings": {
+    "Lua.diagnostics.globals": ["awesome"]
+  }
 }
 ```
 
