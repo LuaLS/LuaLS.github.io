@@ -54,7 +54,7 @@ Below are some examples for getting set up in Neovim using different tools:
 
 Below is a minimal example showing how to set the runtime version of the language server.
 
-```Lua
+```lua
 vim.lsp.config('lua_ls', {
   cmd = { 'lua-language-server' },
   filetypes = { 'lua' },
@@ -83,7 +83,7 @@ See [github.com/neovim/nvim-lspconfig](https://github.com/neovim/nvim-lspconfig/
 
 And here is an example that can be used when using Luarocks:
 
-```Lua
+```lua
 vim.lsp.config('lua_ls', {
   cmd = { 'lua-language-server' },
   filetypes = { 'lua' },
@@ -132,7 +132,7 @@ vim.lsp.enable('lua_ls')
 2. A JSON file should open
 3. Configure away!
 
-```JSON
+```json
 {
   // Unrelated settings...
   "languageserver": {
@@ -246,7 +246,7 @@ already injected into `.vscode/settings.json` and `.luarc.json` files.
 
 Here is a basic example of a `.luarc.json` file:
 
-```JSON
+```json
 {
   "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
   "workspace.library": ["path/to/library/directory"],
@@ -271,7 +271,7 @@ If writing the file in JSON, it should be formatted like a [`.luarc.json`](#luar
 
 If writing the file in Lua, the configuration file can consist of nested tables;
 
-```Lua
+```lua
 return {
     Lua = {
         runtime = {
@@ -283,7 +283,7 @@ return {
 
 keys;
 
-```Lua
+```lua
 return {
     ["Lua.runtime.version"] = "Lua 5.1"
 }
@@ -291,7 +291,7 @@ return {
 
 or even a combination of both!
 
-```Lua
+```lua
 return {
     Lua = {
         runtime = {

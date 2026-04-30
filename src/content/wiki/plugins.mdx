@@ -34,7 +34,7 @@ For info on how to debug the plugin, see [Developing](/wiki/developing#debugging
 
 This function provides the uri and text of the file that has been edited and expects a list of differences to be returned. The result will be written to `diffed.lua` in your [log location](/wiki/faq#where-can-i-find-the-log-file).
 
-```Lua
+```lua
 ---@class diff
 ---@field start  integer # The number of bytes at the beginning of the replacement
 ---@field finish integer # The number of bytes at the end of the replacement
@@ -49,7 +49,7 @@ function OnSetText(uri, text) end
 <Accordion>
 <span slot="summary" id="demo-example">Example</span>
 
-```Lua
+```lua
 function OnSetText(uri, text)
     if text:sub(1, 4) ~= '--##' then
         return nil
@@ -88,7 +88,7 @@ After the token is generated and before the comments are compiled, so it is poss
 
 You can return new one `ast` or modify the origin `ast`.
 
-```Lua
+```lua
 ---@param  uri  string # The uri of file
 ---@param  ast  parser.object # The file ast
 ---@return parser.object? ast
@@ -102,7 +102,7 @@ This function modifies the behavior of a function when compiling (presumably) th
 `next` is the compiler's default behavior for functions. `func` is the function to be compiled, `param` is the parameter.
 If all functions return `false`, the parameter is defined as `any`.
 
-```Lua
+```lua
 ---@param next  fun(func:parser.object, param:parser.object) # Default behavior
 ---@param func  parser.object                                # The function
 ---@param param parser.object                                # The param
@@ -113,7 +113,7 @@ function VM.OnCompileFunctionParam(next, func, param) end
 <Accordion>
 <span slot="summary">Example</span>
 
-```Lua
+```lua
 local nodeHelper = reuqire 'nodeHelper'
 -- Create pattern that already matches code in the form of `*.components.`
 local pattern = nodeHelper.createFieldPattern("*.components")
@@ -141,7 +141,7 @@ This function allows plugin to manually resolve `require('...')` file paths. Use
 
 Return `nil` to use default LuaLS resolution. If you return an empty table - LuaLS will not resolve paths.
 
-```Lua
+```lua
 ---@param  uri  string # The URI of file
 ---@param  name string # Argument of require()
 ---@return string[]?
@@ -151,7 +151,7 @@ function ResolveRequire(uri, name) end
 <Accordion>
 <span slot="summary" id="demo-example">Example</span>
 
-```Lua
+```lua
 ---@param  uri  string # The URI of file
 ---@param  name string # Argument of require()
 ---@return string[]?

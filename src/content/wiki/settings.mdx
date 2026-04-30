@@ -80,7 +80,7 @@ When the input looks like a file name, automatically require the file.
 
 Whether to show call snippets or not. When disabled, only the function name will be completed. When enabled, a "more complete" snippet will be offered.
 
-```JSON
+```json
 {
   "completion.callSnippet": "Replace"
 }
@@ -190,7 +190,7 @@ Settings to adjust the [diagnostics](/wiki/diagnostics).
 
 Disable certain diagnostics globally.
 
-```JSON
+```json
 {
   "diagnostics.disable": ["lowercase-global"]
 }
@@ -217,7 +217,7 @@ Whether all diagnostics should be enabled or not.
 
 An array of variable names that will be declared as global.
 
-```JSON
+```json
 {
   "diagnostics.globals": ["myGlobal"]
 }
@@ -245,7 +245,7 @@ Find defined global variables using regex.
 
 <span slot="summary">Default Value</span>
 
-```JSON
+```json
 {
   /*
    * ambiguity-1
@@ -371,7 +371,7 @@ Set the file status required for each diagnostic group. This setting is an `Obje
 
 <span slot="summary">Default Value</span>
 
-```JSON
+```json
 {
   /*
    * ambiguity-1
@@ -520,7 +520,7 @@ Set how files loaded with [`workspace.library`](#workspacelibrary) are diagnosed
 
 <span slot="summary">Default Value</span>
 
-```JSON
+```json
 {
   "ambiguity-1": "Any",
   "assign-type-mismatch": "Opened",
@@ -608,7 +608,7 @@ Set how files loaded with [`workspace.library`](#workspacelibrary) are diagnosed
 
 <span slot="summary">Default Value</span>
 
-```JSON
+```json
 {
   "ambiguity-1": "Warning",
   "assign-type-mismatch": "Warning",
@@ -964,7 +964,7 @@ Settings for configuring the runtime environment.
 
 <span slot="summary">Default Value</span>
 
-```JSON
+```json
 {
   "basic": "default",
   "bit": "default",
@@ -1205,7 +1205,7 @@ Adjust this value to balance between precise type hints and efficient analysis, 
 
 Whether it is permitted to assign a union type that contains `nil` to a variable that does not permit it. When `false`, the following will throw an error because `number|nil` cannot be assigned to `number`.
 
-```Lua
+```lua
 ---@alias unionType number|nil
 
 ---@type number
@@ -1221,7 +1221,7 @@ local num
 
 Whether it is permitted to assign a union type which only has one matching type to a variable. When `false`, the following will throw an error because `string|boolean` cannot be assigned to `string`.
 
-```Lua
+```lua
 ---@alias unionType string|boolean
 
 ---@type string
@@ -1251,7 +1251,7 @@ The typeFormat group contains settings that configures the formatting behavior.
 
 <span slot="summary">Default Value</span>
 
-```JSON
+```json
 {
   "auto_complete_end": "true",
   "auto_complete_table_sep": "true",

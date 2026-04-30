@@ -1,76 +1,48 @@
 ---
-import hljs from "highlight.js";
+import * as shiki from "shiki";
 import { JSDOM } from "jsdom";
-import Icon from "./Icon.astro";
-import Tooltip from "./Tooltip.astro";
+
+import { Code } from "astro:components";
+import Tooltip from "../common/Tooltip.astro";
+import Icon from "../common/Icon.astro";
 
 import { faCheck, faCopy } from "@fortawesome/free-solid-svg-icons";
 
-const LANGUAGE_REGEX = /language-([^\s]+)/;
-
-const getLanguageFromCodeElement = (element: Element): string | undefined => {
-  const classes = element.classList.toString();
-  const result = LANGUAGE_REGEX.exec(classes);
-
-  if (!result) return undefined;
-  return result[1];
-};
-
-const getHighlightedLinesFromCodeElement = (
-  element: Element,
-): number[] | undefined => {
-  const attribute = element.getAttribute("metastring");
-  if (!attribute) return;
-  return JSON.parse(attribute);
-};
-
-// Rendering the slot gives us an HTML string, but it still contains the <pre>.
-let code = await Astro.slots.render("default");
-
-// Using jsdom, we can pass everything escaped properly in a <pre> element and
-// then extract just the code as text.
-const dom = new JSDOM(code);
-const element = dom.window.document.body.children[0];
-const text = element.textContent;
-if (!text) {
-  throw new Error("Failed to parse code!");
-}
-
-let language = Astro.props.language ?? getLanguageFromCodeElement(element);
-
-if (language) {
-  code = hljs.highlight(text, { language }).value;
-} else {
-  const result = hljs.highlightAuto(text);
-  code = result.value;
-  language = result.language;
-}
-
-const highlightLines =
-  Astro.props.highlightLines ?? getHighlightedLinesFromCodeElement(element);
-const lines = code.split("\n");
-
-if (highlightLines) {
-  highlightLines.forEach((line) => {
-    lines[line - 1] = `<span class="highlight">${lines[line - 1]}</span>`;
-  });
-}
-
 export interface Props {
-  language?: string;
-  highlightLines?: number[];
+  lang?: shiki.BundledLanguage | shiki.PlainTextLanguage;
+  code?: string;
+}
+
+// ID of language as reported by Shiki
+const language = Astro.props.lang ?? "plaintext";
+let displayName: string | undefined;
+
+if (language && !shiki.isPlainLang(language)) {
+  const langImport = await shiki.bundledLanguages[language]();
+  const langRegistration = langImport.default.find(
+    (l) => l.name === language || l.aliases?.includes(language),
+  );
+  displayName = langRegistration?.displayName;
+}
+
+let code = Astro.props.code ?? "";
+
+// Code has been provided in a slot in a pre tag, we will need to extract the code from it
+if (Astro.slots.has("default")) {
+  const dom = new JSDOM(await Astro.slots.render("default"));
+  code = dom.window.document.querySelector("pre")?.textContent ?? "";
 }
 ---
 
-<div class="code-block">
-  <span class="language">{language}</span>
+<div class="code-block" data-language={language}>
+  {displayName && <span class="language">{displayName}</span>}
   <button class="copy">
     <Tooltip content="Copy to Clipboard">
       <Icon icon={faCopy} />
       <Icon icon={faCheck} />
     </Tooltip>
   </button>
-  <pre><code class="hljs" class={`language-${language}`} set:html={lines.join("\n")} /></pre>
+  <Code code={code} lang={language} />
 </div>
 
 <script>
@@ -105,20 +77,23 @@ export interface Props {
     border-radius: 0.5em;
     overflow: hidden;
 
+    span.language,
+    button.copy {
+      background-color: #ffffff0e;
+      color: white;
+    }
+
     span.language {
       font-size: 0.8em;
       position: absolute;
       top: 0px;
       left: 0px;
       padding: 0px 0.5em;
-      background-color: #222233;
       border-radius: 0.3em 0px 0.3em 0px;
     }
 
     button.copy {
       font-size: 1.2em;
-      background-color: #222233;
-      color: white;
       border: none;
       border-radius: 0.3em;
       position: absolute;
@@ -150,23 +125,17 @@ export interface Props {
       }
     }
 
-    pre {
-      max-height: inherit;
+    &[data-language="plaintext"] pre {
+      padding: 0.5em 0.5em;
     }
-    pre > code {
-      font-family: var(--font-source-code-pro);
-      padding: 1.3em 0.5em 0.5em 0.5em;
-      tab-size: 4;
-      overflow: auto;
 
-      :global(span.highlight) {
-        display: inline-block;
-        width: 100%;
-        background-color: #3392ff45;
-        border-radius: 0.1em;
-        padding: 0px 0.1em;
-        margin: 0px -0.1em;
-      }
+    :global(pre) {
+      max-height: inherit;
+      font-family: var(--font-source-code-pro);
+      tab-size: 4;
+      padding: 1.3em 0.5em 0.5em 0.5em;
+      overflow: auto;
+      background-color: #0d1117 !important;
     }
   }
 </style>

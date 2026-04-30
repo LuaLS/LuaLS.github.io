@@ -53,7 +53,7 @@ This allows for pretty quick and easy development entirely in VS Code by opening
 
 A [plugin](/wiki/plugins) can also be debugged quickly this way:
 
-```Lua
+```lua
 local util   = require 'utility'
 local client = require 'client'
 
@@ -66,7 +66,7 @@ end
 
 You can add an entry to the [log file](/wiki/FAQ#where-can-i-find-the-log-file) using the levels `trace`, `debug`, `info`, `warn`, `error`, and `fatal`. Below is an example of how a [plugin](/wiki/plugins) can be debugged.
 
-```Lua
+```lua
 local util   = require 'utility'
 local client = require 'client'
 
@@ -109,10 +109,10 @@ The below steps guide you through setting up the above:
 1. Install [`actboy168.lua-debug`](https://marketplace.visualstudio.com/items?itemName=actboy168.lua-debug) in Visual Studio Code.
 2. Copy [`.vscode/launch.json`](https://github.com/LuaLS/lua-language-server/blob/master/.vscode/launch.json) into **Debug Host** at `.vscode/launch.json`
 3. Copy the below settings into your [`settings.json`](https://code.visualstudio.com/docs/getstarted/settings#_settingsjson) for the **Debug Target**
-   ```JSON
+   ```json
    "Lua.misc.parameters": [
-    "--develop=true",
-    "--dbgport=11428"
+      "--develop=true",
+      "--dbgport=11428"
    ],
    ```
 4. In the **Debug Host**, open the `Run and Debug` sidepanel (<kbd>Ctrl + Shift + D</kbd>) and select `🍄 attach` from the dropdown
@@ -208,7 +208,7 @@ Every scope has an independent environment for separating global variables, clas
       <FileTreeItem name="luadoc.lua" type="code"><p>Parses LuaCATS annotations from comments</p></FileTreeItem>
       <FileTreeItem name="newparser.lua" type="code">
         <p>Parses Lua code into an AST then wraps it into `state`.</p>
-        ```Lua
+        ```lua
         local state = {
             version = 'Lua 5.4',
             lua     = [[local x = 1]],
@@ -240,12 +240,12 @@ Every scope has an independent environment for separating global variables, clas
       <p>Semantic analysis of the AST and binding status according to the workspace.</p>
       <p>
       Turns:
-      ```Lua
+      ```lua
       ---@class myClass
       local mt
       ```
       into:
-      ```Lua
+      ```lua
       vm.compileNode('mt')
 
       -->
@@ -274,7 +274,7 @@ Every scope has an independent environment for separating global variables, clas
       <FileTreeItem name="ref.lua" type="code"><p>Provides vm.getRefs(source) --> source[]</p></FileTreeItem>
       <FileTreeItem name="runner.lua" type="code">
         <p>Provides vm.compileNode(source) --> node. Process analysis and tracking of local variables</p>
-        ```Lua
+        ```lua
         ---@type number|nil
         local x
 

@@ -1,14 +1,14 @@
 import { defineConfig, fontProviders } from "astro/config";
 
 import mdx from "@astrojs/mdx";
-import rehypeMermaid from "rehype-mermaid";
 import { modifiedTime } from "./src/plugins/modifiedTime.mjs";
 import rehypeMdxCodeProps from "rehype-mdx-code-props";
+import mermaid from "astro-mermaid";
 
 // https://astro.build/config
 export default defineConfig({
   site: "https://luals.github.io",
-  integrations: [mdx()],
+  integrations: [mdx(), mermaid({ theme: "dark" })],
   image: {
     domains: ["avatars.githubusercontent.com"],
   },
@@ -30,13 +30,7 @@ export default defineConfig({
     },
   ],
   markdown: {
-    /** We use our own syntax highlight from highlight.js */
-    syntaxHighlight: false,
-    smartypants: false,
-    rehypePlugins: [
-      () => rehypeMermaid({ mermaidConfig: { darkMode: true, theme: "dark" } }),
-      rehypeMdxCodeProps,
-    ],
+    rehypePlugins: [rehypeMdxCodeProps],
     remarkPlugins: [modifiedTime],
   },
   trailingSlash: "always",

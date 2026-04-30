@@ -6,14 +6,11 @@ import { fas } from "@fortawesome/free-solid-svg-icons";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 fa.library.add(fas, fab);
 
-// Highlight.js
-import "highlight.js/scss/github-dark.scss";
-
 // SASS
 import "~/scss/main.scss";
 
 import Search from "~/components/common/Search.astro";
-import Font from "astro/components/Font.astro";
+import { Font } from "astro:assets";
 
 export interface Props {
   title: string;
@@ -35,30 +32,12 @@ const title = ["Lua Language Server", Astro.props.title].join(" | ");
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <Font cssVariable="--font-poppins" preload />
+    <Font cssVariable="--font-prompt" preload />
+    <Font cssVariable="--font-source-code-pro" preload />
   </head>
   <body>
     <slot />
     <Search />
   </body>
-
-  <Font cssVariable="--font-poppins" preload />
-  <Font cssVariable="--font-prompt" preload />
-  <Font cssVariable="--font-source-code-pro" preload />
-  <style lang="scss" is:global>
-    body {
-      font-family: var(--font-poppins);
-    }
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-      font-family: var(--font-prompt);
-    }
-    :not(pre) > code,
-    kbd {
-      font-family: var(--font-source-code-pro);
-    }
-  </style>
 </html>

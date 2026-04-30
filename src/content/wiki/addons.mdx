@@ -54,7 +54,7 @@ While addons can be installed from anywhere, we are going to go through installi
 
 So in this case, your setting could look like this in your [configuration file](/wiki/configuration#configuration-file):
 
-```JSON
+```json
 {
   "Lua.workspace.userThirdParty": ["C:\Users\me\Documents\LuaAddons"]
 }
@@ -128,25 +128,23 @@ A [plugin](/wiki/plugins) can be included simply by placing it in the addon fold
 
 The `config.json` file is very important for addons and must be included. A schema for it can be found at [`LLS-Addons/schemas/addon.schema.json`](https://github.com/LuaLS/LLS-Addons/blob/main/schemas/addon_config.schema.json). You can also browse some of the addons in that repository to see how the `config.json` file can be used. The `settings` array can contain any [settings for the language server](/wiki/settings), as well as any VS Code settings, if applicable.
 
-```JSON
+```json
 {
-    // Name of the addon
-    "name": "My Awesome Addon",
+  // Name of the addon
+  "name": "My Awesome Addon",
 
-    // Lua string patterns to look for in a workspace.
-    // If detected, this addon will be recommended to enable
-    "words": [ "require[%s%(\"']+MAA[%)\"']" ],
+  // Lua string patterns to look for in a workspace.
+  // If detected, this addon will be recommended to enable
+  "words": ["require[%s%(\"']+MAA[%)\"']"],
 
-    // Lua string patterns to look for in filenames.
-    // If detected, this addon will be recommended to enable
-    "files": ["my-awesome-file.lua"],
+  // Lua string patterns to look for in filenames.
+  // If detected, this addon will be recommended to enable
+  "files": ["my-awesome-file.lua"],
 
-    // List of settings to apply when this addon is enabled
-    "settings": {
-        "Lua.diagnostics.globals" : [
-            "awesome"
-        ]
-    }
+  // List of settings to apply when this addon is enabled
+  "settings": {
+    "Lua.diagnostics.globals": ["awesome"]
+  }
 }
 ```
 
