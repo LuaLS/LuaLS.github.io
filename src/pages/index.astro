@@ -6,7 +6,6 @@ import CodeBlock from "../components/common/CodeBlock.astro";
 import Remark from "../components/common/Remark.astro";
 import Tooltip from "../components/common/Tooltip.astro";
 
-import { Code } from "astro:components";
 import { Image } from "astro:assets";
 
 import vsCodeImg from "~/assets/images/vscode.svg";
@@ -196,43 +195,131 @@ const annotationCount = annotationsPage
 
     <section id="install">
       <h2>Install for...</h2>
-      <div class="install-tabs">
-        <button value="vscode-install" class="vscode active" tabindex="0">
-          <Image src={vsCodeImg} alt="Visual Studio Code" />
-        </button>
-        <button value="neovim-install" class="neovim" tabindex="0">
-          <Image src={neovimImg} alt="Neovim" />
-        </button>
-        <button value="jetbrains-install" class="jetbrains" tabindex="0">
-          <Image src={jetbrainsImg} alt="JetBrains" />
-        </button>
-        <button value="other-install" class="other" tabindex="0"
-          ><Icon icon={faQuestion} /></button
-        >
-      </div>
 
-      <div class="tab-content">
-        <div id="vscode-install" class="active">
-          <h3>Visual Studio Code</h3>
-          <p>
-            Install the <ExternalLink
-              url="https://marketplace.visualstudio.com/items?itemName=sumneko.lua"
-            >
-              sumneko.lua
-            </ExternalLink> extension to get up and running as fast as possible!
-          </p>
-          <div class="instructions">
-            <ol>
-              <li>Search for "Lua" by sumneko in the extension marketplace.</li>
-              <li>Download and install the extension.</li>
-              <li>That's it! It's that easy! Happy Coding!</li>
-            </ol>
-          </div>
+      <div class="install-tabs">
+        <div class="buttons">
+          <button value="vscode-install" class="vscode active" tabindex="0">
+            <Image src={vsCodeImg} alt="Visual Studio Code" />
+          </button>
+          <button value="neovim-install" class="neovim" tabindex="0">
+            <Image src={neovimImg} alt="Neovim" />
+          </button>
+          <button value="jetbrains-install" class="jetbrains" tabindex="0">
+            <Image src={jetbrainsImg} alt="JetBrains" />
+          </button>
+          <button value="other-install" class="other" tabindex="0"
+            ><Icon icon={faQuestion} /></button
+          >
         </div>
-        <div id="neovim-install">
-          <h3>Neovim</h3>
-          <div class="instructions">
-            <div>
+        <div class="content">
+          <div id="vscode-install" class="active">
+            <h3>Visual Studio Code</h3>
+            <p>
+              Install the <ExternalLink
+                url="https://marketplace.visualstudio.com/items?itemName=sumneko.lua"
+              >
+                sumneko.lua
+              </ExternalLink> extension to get up and running as fast as possible!
+            </p>
+            <div class="instructions">
+              <ol>
+                <li>
+                  Search for "Lua" by sumneko in the extension marketplace.
+                </li>
+                <li>Download and install the extension.</li>
+                <li>That's it! It's that easy! Happy Coding!</li>
+              </ol>
+            </div>
+          </div>
+          <div id="neovim-install">
+            <h3>Neovim</h3>
+            <div class="instructions">
+              <div>
+                <ol>
+                  <li>
+                    Install lua-language-server
+                    <ol type="A">
+                      <li>
+                        From package manager
+                        <ul>
+                          <li>
+                            Scoop: <code>scoop install lua-language-server</code
+                            >
+                          </li>
+                          <li>
+                            Homebrew: <code
+                              >brew install lua-language-server</code
+                            >
+                          </li>
+                          <li>
+                            Macports: <code
+                              >sudo port install lua-language-server</code
+                            >
+                          </li>
+                          <li>
+                            mise-en-place: <code
+                              >mise use aqua:LuaLS/lua-language-server</code
+                            >
+                          </li>
+                        </ul>
+                        <li>
+                          From <ExternalLink
+                            url="https://github.com/LuaLS/lua-language-server/releases/latest"
+                          >
+                            latest release
+                          </ExternalLink>
+                        </li>
+                        <li>
+                          <a href="/wiki/build/" target="_blank"
+                            >Build from scratch</a
+                          >
+                        </li>
+                      </li>
+                    </ol>
+                  </li>
+                  <li>
+                    Ensure that the <code>lua-language-server</code> is executable
+                    from the command line. It may need to be added to <code
+                      >$PATH</code
+                    >.
+                  </li>
+                  <li>
+                    See <ExternalLink
+                      url="https://neovim.io/doc/user/lsp.html#lsp-quickstart"
+                      >Neovim's quickstart guide for language servers</ExternalLink
+                    >
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </div>
+          <div id="jetbrains-install">
+            <h3>JetBrains</h3>
+            <p>
+              Install the <ExternalLink
+                url="https://plugins.jetbrains.com/plugin/22315-sumnekolua"
+              >
+                SumnekoLua
+              </ExternalLink> plugin from the JetBrains Marketplace!
+            </p>
+            <p>
+              See <ExternalLink
+                url="https://www.jetbrains.com/help/idea/managing-plugins.html"
+                >JetBrains docs</ExternalLink
+              > for instructions on installing plugins.
+            </p>
+          </div>
+          <div id="other-install">
+            <h3>Other</h3>
+            <p>
+              The language server can also just be run from the command line,
+              allowing it to be used wherever the <ExternalLink
+                url="https://microsoft.github.io/language-server-protocol/"
+              >
+                Language Server Protocol
+              </ExternalLink> is supported!
+            </p>
+            <div class="instructions">
               <ol>
                 <li>
                   Install lua-language-server
@@ -274,105 +361,25 @@ const annotationCount = annotationsPage
                   </ol>
                 </li>
                 <li>
-                  Ensure that the <code>lua-language-server</code> is executable from
-                  the command line. It may need to be added to <code>$PATH</code
+                  Run <code>./bin/lua-language-server</code> and check out the <a
+                    href="/wiki/usage/#arguments">supported arguments</a
                   >.
-                </li>
-                <li>
-                  See <ExternalLink
-                    url="https://neovim.io/doc/user/lsp.html#lsp-quickstart"
-                    >Neovim's quickstart guide for language servers</ExternalLink
-                  >
                 </li>
               </ol>
             </div>
+            <Remark type="note">
+              <p>
+                If you plan to use a symbolic link to point to the language
+                server, you will want to instead use a wrapper script like the
+                one below. This is required because the language server expects
+                to find files in the current working directory.
+              </p>
+              <CodeBlock lang="bash">
+                <pre><code>#!/bin/bash
+exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot;</code></pre>
+              </CodeBlock>
+            </Remark>
           </div>
-        </div>
-        <div id="jetbrains-install">
-          <h3>JetBrains</h3>
-          <p>
-            Install the <ExternalLink
-              url="https://plugins.jetbrains.com/plugin/22315-sumnekolua"
-            >
-              SumnekoLua
-            </ExternalLink> plugin from the JetBrains Marketplace!
-          </p>
-          <p>
-            See <ExternalLink
-              url="https://www.jetbrains.com/help/idea/managing-plugins.html"
-              >JetBrains docs</ExternalLink
-            > for instructions on installing plugins.
-          </p>
-        </div>
-        <div id="other-install">
-          <h3>Other</h3>
-          <p>
-            The language server can also just be run from the command line,
-            allowing it to be used wherever the <ExternalLink
-              url="https://microsoft.github.io/language-server-protocol/"
-            >
-              Language Server Protocol
-            </ExternalLink> is supported!
-          </p>
-          <div class="instructions">
-            <ol>
-              <li>
-                Install lua-language-server
-                <ol type="A">
-                  <li>
-                    From package manager
-                    <ul>
-                      <li>
-                        Scoop: <code>scoop install lua-language-server</code>
-                      </li>
-                      <li>
-                        Homebrew: <code>brew install lua-language-server</code>
-                      </li>
-                      <li>
-                        Macports: <code
-                          >sudo port install lua-language-server</code
-                        >
-                      </li>
-                      <li>
-                        mise-en-place: <code
-                          >mise use aqua:LuaLS/lua-language-server</code
-                        >
-                      </li>
-                    </ul>
-                    <li>
-                      From <ExternalLink
-                        url="https://github.com/LuaLS/lua-language-server/releases/latest"
-                      >
-                        latest release
-                      </ExternalLink>
-                    </li>
-                    <li>
-                      <a href="/wiki/build/" target="_blank"
-                        >Build from scratch</a
-                      >
-                    </li>
-                  </li>
-                </ol>
-              </li>
-              <li>
-                Run <code>./bin/lua-language-server</code> and check out the <a
-                  href="/wiki/usage/#arguments">supported arguments</a
-                >.
-              </li>
-            </ol>
-          </div>
-          <Remark type="note">
-            <p>
-              If you plan to use a symbolic link to point to the language
-              server, you will want to instead use a wrapper script like the one
-              below. This is required because the language server expects to
-              find files in the current working directory.
-            </p>
-            <CodeBlock lang="bash">
-              <pre>#!/bin/bash
-exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot;</pre>
-            </CodeBlock>
-          </Remark>
         </div>
       </div>
     </section>
@@ -417,7 +424,7 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
 <script>
   // Swap active tab on hover of install method
   const installButtons = document.querySelectorAll<HTMLButtonElement>(
-    ".install-tabs > button",
+    ".install-tabs > .buttons > button",
   );
   const tabs: {
     [key: string]: { button: HTMLButtonElement; content: HTMLDivElement };
@@ -434,7 +441,7 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
 
   for (const button of installButtons) {
     const tab = document.querySelector<HTMLDivElement>(
-      `#install .tab-content #${button.value}`,
+      `#install > .install-tabs > .content #${button.value}`,
     );
 
     if (!tab) {
@@ -651,157 +658,167 @@ exec &quot;&lt;path-to-directory&gt;/bin/lua-language-server&quot; &quot;$@&quot
     }
 
     .install-tabs {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      justify-items: center;
-      position: relative;
       width: 100%;
-      margin-bottom: 1em;
-      z-index: 1;
+      height: 100%;
 
-      button {
-        background-color: white;
-        border: none;
-        border-radius: 99em;
-        padding: 0.3em;
-        aspect-ratio: 1;
-        font-size: 4vh;
-        display: flex;
-        align-items: center;
-        gap: 0.3em;
+      .buttons {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        justify-items: center;
         position: relative;
+        width: 100%;
+        margin-bottom: 1em;
+        z-index: 1;
 
-        &::before {
-          content: "";
-          position: absolute;
-          z-index: -1;
-          top: 0%;
-          left: 0%;
-          width: 100%;
-          height: 100%;
+        button {
+          background-color: white;
+          border: none;
           border-radius: 99em;
-          background-color: var(--brand-primary);
-          transition: opacity ease-in-out 0.5s;
-          opacity: 0;
-          filter: blur(10px);
-        }
+          padding: 0.3em;
+          aspect-ratio: 1;
+          font-size: 4vh;
+          display: flex;
+          align-items: center;
+          gap: 0.3em;
+          position: relative;
 
-        &.active::before {
-          opacity: 0.7;
-        }
-
-        &::after {
-          content: "";
-          position: absolute;
-          z-index: -2;
-          top: 10%;
-          left: 10%;
-          width: 80%;
-          height: 80%;
-          border-radius: 20%;
-          background-color: var(--brand-primary);
-          transition: opacity ease-in-out 0.5s;
-          opacity: 0;
-        }
-
-        &.active::after {
-          filter: brightness(150%) hue-rotate(30deg) blur(15px);
-          animation: spin 3s infinite both linear;
-          opacity: 1;
-        }
-
-        @keyframes spin {
-          0% {
-            transform: rotate(0deg);
+          &::before {
+            content: "";
+            position: absolute;
+            z-index: -2;
+            top: -10%;
+            left: -10%;
+            width: 120%;
+            height: 120%;
+            border-radius: 99em;
+            background-color: var(--brand-primary);
+            transition: opacity ease-in-out 0.5s;
+            opacity: 0;
+            filter: blur(0.3em);
           }
-          100% {
-            transform: rotate(360deg);
+
+          &.active::before {
+            opacity: 1;
           }
-        }
 
-        &.vscode {
-          --brand-primary: #23a9f2;
-        }
-        &.neovim {
-          --brand-primary: #78e027;
-        }
-        &.jetbrains {
-          --brand-primary: #fb0240;
-        }
-        &.other {
-          --brand-primary: #ffdc15;
-        }
+          &::after {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+            border-radius: 20%;
+            background-color: var(--brand-primary);
+            transition: opacity ease-in-out 0.5s;
+            opacity: 0;
+            filter: brightness(130%) hue-rotate(30deg) blur(10px);
+            animation: spin 3s infinite both linear;
+          }
 
-        &:hover {
-          cursor: pointer;
-        }
+          &.active::after {
+            opacity: 0.5;
+          }
 
-        img,
-        :global(.icon) {
-          height: 1em;
-          width: 1em;
+          @keyframes spin {
+            0% {
+              transform: rotate(0deg);
+            }
+            100% {
+              transform: rotate(360deg);
+            }
+          }
+
+          &.vscode {
+            --brand-primary: #23a9f2;
+          }
+          &.neovim {
+            --brand-primary: #78e027;
+          }
+          &.jetbrains {
+            --brand-primary: #fb0240;
+          }
+          &.other {
+            --brand-primary: #ff8615;
+          }
+
+          &:hover {
+            cursor: pointer;
+          }
+
+          img,
+          :global(.icon) {
+            height: 1.25em;
+            width: 1.25em;
+          }
         }
       }
-    }
 
-    .tab-content {
-      position: relative;
-      width: fit-content;
-      max-width: 100%;
-      margin: 0px auto auto auto;
-      overflow: auto auto;
+      .content {
+        margin: 0.5em auto auto auto;
+        height: 100%;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
 
-      & > div {
-        position: absolute;
-        left: -999vw;
-        top: -999vh;
-        opacity: 0;
+        & > div {
+          max-width: 1000px;
+          pointer-events: none;
+          height: 100%;
+          overflow: auto auto;
+          margin: 0px auto;
+          opacity: 0;
+          grid-column: 1/1;
+          grid-row: 1/1;
+          transition: opacity ease-in 0.3s;
 
-        h3 {
-          margin-bottom: auto;
-        }
+          h3 {
+            margin-bottom: auto;
+          }
 
-        & > p {
-          text-align: center;
-        }
+          & > p {
+            text-align: center;
+          }
 
-        &.active {
-          transition: opacity ease-in 0.5s;
-          opacity: 1;
-          position: static;
-          padding-bottom: 2em;
-        }
+          &.active {
+            opacity: 1;
+            position: static;
+            padding-bottom: 2em;
+            pointer-events: all;
+          }
 
-        .instructions {
-          ol {
-            margin-left: 0.5em;
+          .instructions {
+            ol {
+              margin-left: 0.5em;
 
-            &[type="1"],
-            &:not([type]) {
-              counter-reset: item;
-              list-style: none;
+              &[type="1"],
+              &:not([type]) {
+                counter-reset: item;
+                list-style: none;
 
-              & > li::before {
-                display: inline-block;
-                content: counter(item);
-                counter-increment: item;
-                font-size: 1.25em;
-                background-color: #ffffff;
-                color: #000000;
-                width: fit-content;
-                min-width: 1.5em;
-                text-align: center;
-                border-radius: 1em;
-                margin-right: 0.5em;
+                & > li::before {
+                  display: inline-block;
+                  content: counter(item);
+                  counter-increment: item;
+                  font-size: 1.25em;
+                  background-color: #ffffff;
+                  color: #000000;
+                  width: fit-content;
+                  min-width: 1.5em;
+                  text-align: center;
+                  border-radius: 1em;
+                  margin-right: 0.5em;
+                }
               }
-            }
 
-            &[type="A"] {
-              list-style-type: upper-alpha;
-            }
+              &[type="A"] {
+                list-style-type: upper-alpha;
+              }
 
-            & > li {
-              margin: 0.5em auto;
+              & > li {
+                margin: 0.5em auto;
+              }
             }
           }
         }
