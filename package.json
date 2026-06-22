@@ -17,7 +17,7 @@
     "@fortawesome/fontawesome-svg-core": "^7.2.0",
     "@fortawesome/free-brands-svg-icons": "^7.2.0",
     "@fortawesome/free-solid-svg-icons": "^7.2.0",
-    "astro": "^6.4.3",
+    "astro": "^7.0.0",
     "astro-mermaid": "^2.0.2",
     "autoprefixer": "^10.5.0",
     "axios": "^1.17.0",
