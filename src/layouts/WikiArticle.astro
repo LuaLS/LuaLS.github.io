@@ -46,7 +46,7 @@ const modifiedTime = lastModified
 ---
 
 <Layout title="Wiki" transition={true} displayFooter={false}>
-  <div class="columns">
+  <main class="columns">
     <aside
       id="article-browser"
       class="sidebar"
@@ -76,56 +76,54 @@ const modifiedTime = lastModified
       </div>
     </aside>
     <div class="center">
-      <main>
-        <article>
-          <div class="title" id={article.id}>
-            <div class="topbar">
-              <div class="modified">
-                <Tooltip content={modifiedTime} placement="bottom">
-                  <Icon icon={faClockRotateLeft} />
-                  <Time datetime={lastModified}>{modifiedTime}</Time>
-                </Tooltip>
-              </div>
-              <div class="options">
-                <Tooltip content="Edit page" placement="bottom">
-                  <a
-                    class="edit-page"
-                    target="_blank"
-                    href={`https://github.com/LuaLS/LuaLS.github.io/edit/main/src/content/wiki/${article.id}.mdx`}
-                    aria-label="Edit page"
-                  >
-                    <Icon icon={faPencil} />
-                  </a>
-                </Tooltip>
-                <Tooltip content="Report issue with page" placement="bottom">
-                  <a
-                    class="open-issue"
-                    target="_blank"
-                    href={`https://github.com/LuaLS/LuaLS.github.io/issues/new?title=${encodeURIComponent(
-                      `Issue with wiki page "${article.id}"`,
-                    )}`}
-                    aria-label="Report issue"
-                  >
-                    <Icon icon={faCircleExclamation} />
-                  </a>
-                </Tooltip>
-              </div>
+      <article>
+        <div class="title" id={article.id}>
+          <div class="topbar">
+            <div class="modified">
+              <Tooltip content={modifiedTime} placement="bottom">
+                <Icon icon={faClockRotateLeft} />
+                <Time datetime={lastModified}>{modifiedTime}</Time>
+              </Tooltip>
             </div>
-            <h1 id={titleSlug}>{article.data.title}</h1>
-            <p>{article.data.description}</p>
+            <div class="options">
+              <Tooltip content="Edit page" placement="bottom">
+                <a
+                  class="edit-page"
+                  target="_blank"
+                  href={`https://github.com/LuaLS/LuaLS.github.io/edit/main/src/content/wiki/${article.id}.mdx`}
+                  aria-label="Edit page"
+                >
+                  <Icon icon={faPencil} />
+                </a>
+              </Tooltip>
+              <Tooltip content="Report issue with page" placement="bottom">
+                <a
+                  class="open-issue"
+                  target="_blank"
+                  href={`https://github.com/LuaLS/LuaLS.github.io/issues/new?title=${encodeURIComponent(
+                    `Issue with wiki page "${article.id}"`,
+                  )}`}
+                  aria-label="Report issue"
+                >
+                  <Icon icon={faCircleExclamation} />
+                </a>
+              </Tooltip>
+            </div>
           </div>
-          {
-            article.data.incomplete && (
-              <Remark type="WIP" display="compact">
-                <p>This article is incomplete and info may be missing.</p>
-              </Remark>
-            )
-          }
-          <div class="content">
-            <slot />
-          </div>
-        </article>
-      </main>
+          <h1 id={titleSlug}>{article.data.title}</h1>
+          <p>{article.data.description}</p>
+        </div>
+        {
+          article.data.incomplete && (
+            <Remark type="WIP" display="compact">
+              <p>This article is incomplete and info may be missing.</p>
+            </Remark>
+          )
+        }
+        <div class="content">
+          <slot />
+        </div>
+      </article>
       <Footer />
     </div>
     <aside id="outline" class="sidebar">
@@ -149,7 +147,7 @@ const modifiedTime = lastModified
         </ol>
       </nav>
     </aside>
-  </div>
+  </main>
 </Layout>
 
 <script>
@@ -268,7 +266,7 @@ const modifiedTime = lastModified
     }
 
     button.open {
-      top: max(20vh, 5em);
+      top: max(10vh, 8em);
       position: fixed;
       background-color: #0e3e6b;
       padding: 0.25em 0.5em;
@@ -394,21 +392,14 @@ const modifiedTime = lastModified
     }
   }
 
-  div.columns,
-  div.columns > div.center {
+  main.columns > div.center {
     height: 100%;
   }
 
-  div.columns > div.center {
+  main.columns > div.center {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-  }
-
-  main {
-    width: 100%;
-    max-width: 70em;
-    margin: 0px auto;
   }
 
   article {
@@ -505,7 +496,7 @@ const modifiedTime = lastModified
   }
 
   @media screen and (min-width: 1400px) {
-    div.columns {
+    main.columns {
       height: calc(100% - $header-height);
       display: grid;
       grid-template-columns: 20% 60% 20%;
@@ -541,7 +532,7 @@ const modifiedTime = lastModified
     }
   }
 
-  @media screen and (max-width: 800px) {
+  @media screen and (max-width: 700px) {
     article > div.content {
       padding: 1em 1.5em;
     }
