@@ -647,7 +647,7 @@ local Numbers = {}
 
 ### @generic
 
-Generics allow code to be reused and serve as a sort of "placeholder" for a type. Surrounding the generic in backticks (<code>`</code>) will capture the string value from the argument and infer the named class/type as the generic type. [Generics are still WIP](https://github.com/LuaLS/lua-language-server/issues/1861).
+Generics allow code to be reused and serve as a sort of "placeholder" for a type. Surrounding the generic in backticks (<code>`</code>) will capture the string value from the argument and infer the named class/type as the generic type. [Generics are still WIP](https://github.com/LuaLS/lua-language-server/issues/1861). Since `v3.17.0`, classes can declare type parameters (e.g. `Box<T>`), classes can inherit from an instantiated generic class (e.g. `IntegerBox: Box<integer>`), generic type parameters work in [`@overload`](#overload) annotations, and `fun<T>(...)` inline generic function types are supported in [`@field`](#field) and [`@type`](#type) annotations.
 
 **Syntax**
 
@@ -731,6 +731,52 @@ local dict = {}
 dict["foo"] = "bar?"
 
 dict["correct"] = true
+```
+
+</Accordion>
+<Accordion>
+<span slot="summary">Generic Class with Fields and Methods</span>
+
+```lua
+---@class Box<T>
+---@field value T
+---@field get fun(self: Box<T>): T
+
+---@type Box<integer>
+local box
+
+-- `v` is an integer here
+local v = box.value
+
+-- `got` is an integer here
+local got = box:get()
+
+---A class can also inherit from an instantiated generic class (v3.17.0+)
+---@class IntegerBox: Box<integer>
+
+---@type IntegerBox
+local ibox
+
+-- `v2` and `got2` are integers here as well
+local v2 = ibox.value
+local got2 = ibox:get()
+```
+
+Note: for the type parameter to be substituted through inheritance, members must be declared as `---@field` entries in the class annotation block. A method declared separately (e.g. `---@return T` above `function Box:m() end`) only has `T` substituted when the receiver's type is the instantiated generic class itself (e.g. a value of type `Box<integer>`), not when the method is reached through an inheriting class like `IntegerBox`.
+
+</Accordion>
+<Accordion>
+<span slot="summary">Inline Generic Function Type (v3.17.0+)</span>
+
+```lua
+---@class Utils
+---@field identity fun<T>(value: T): T
+
+---@type Utils
+local utils
+
+-- `s` is a string here
+local s = utils.identity("hello")
 ```
 
 </Accordion>
