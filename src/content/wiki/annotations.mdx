@@ -727,7 +727,7 @@ See [Issue #734](https://github.com/LuaLS/lua-language-server/issues/734#issueco
 ---@type Dictionary<boolean>
 local dict = {}
 
--- no warning despite assigning a string
+-- Warning: assigning string to boolean
 dict["foo"] = "bar?"
 
 dict["correct"] = true
