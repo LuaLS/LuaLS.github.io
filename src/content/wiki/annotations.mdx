@@ -647,7 +647,7 @@ local Numbers = {}
 
 ### @generic
 
-Generics allow code to be reused and serve as a sort of "placeholder" for a type. Surrounding the generic in backticks (<code>`</code>) will capture the string value from the argument and infer the named class/type as the generic type. [Generics are still WIP](https://github.com/LuaLS/lua-language-server/issues/1861). Since `v3.17.0`, classes can declare type parameters (e.g. `Box<T>`), classes can inherit from an instantiated generic class (e.g. `IntegerBox: Box<integer>`), generic type parameters work in [`@overload`](#overload) annotations, and `fun<T>(...)` inline generic function types are supported in [`@field`](#field) and [`@type`](#type) annotations.
+Generics allow code to be reused and serve as a sort of "placeholder" for a type. Surrounding the generic in backticks (<code>\`</code>) will capture the string value from the argument and infer the named class/type as the generic type. [Generics are still WIP](https://github.com/LuaLS/lua-language-server/issues/1861). Since `v3.17.0`, classes can declare type parameters (e.g. `Box<T>`), classes can inherit from an instantiated generic class (e.g. `IntegerBox: Box<integer>`), generic type parameters work in [`@overload`](#overload) annotations, and `fun<T>(...)` inline generic function types are supported in [`@field`](#field) and [`@type`](#type) annotations.
 
 **Syntax**
 
