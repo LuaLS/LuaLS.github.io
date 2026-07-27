@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^7.2.1",
-    "@astrojs/mdx": "7.0.3",
+    "@astrojs/mdx": "7.0.4",
     "@fortawesome/fontawesome-free": "^7.3.1",
     "@fortawesome/fontawesome-svg-core": "^7.3.1",
     "@fortawesome/free-brands-svg-icons": "^7.3.1",
