@@ -34,7 +34,7 @@
   "devDependencies": {
     "@types/lodash": "^4.17.24",
     "@types/bun": "latest",
-    "@types/jsdom": "^28.0.3",
+    "@types/jsdom": "^30.0.0",
     "@types/node-fetch": "^2.6.13",
     "@types/node-fetch-cache": "^3.0.5",
     "@vscode/vsce": "^3.9.2",
